@@ -4,31 +4,96 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Classes\Utils\Logs\Loggable;
 
 class Candidat extends Model
 {
-    use HasFactory;
+    use HasFactory, Loggable;
+
+    protected $fillable = [ 'nom',
+                            'numero',
+                            'statut',
+                            'date_debut_recrutement',
+                            'date_selection',
+                            'pays_recrutement',
+                            'mission_id',
+                            'emploi_id',
+                            'date_arrive',
+                            'date_debut_emploi',
+                            'date_fin_emploi',
+                            'regroupement_id',
+                            'nom_employeur',
+                            'com_candidat',
+                            'com_recrutement',
+                            'com_immigration',
+                            'com_bureau_etranger',
+                            'eimt_date_envoi',
+                            'eimt_date_accuse_rec',
+                            'eimt_date_reception',
+                            'eimt_numero',
+                            'dst_date_envoi',
+                            'dst_date_accuse_rec',
+                            'dst_date_reception',
+                            'dst_numero',
+                            'permis_date_envoi',
+                            'permis_date_reception',
+                            'permis_date_echeance',
+                            'permis_date_renouvellement',
+                            'date_mandat_immigration',
+                            'immigration_user_id',
+                            'recruteur_id'];
+
+
+
+
+    public function logFields(){ return ['*']; }
+
+
+    public function pays(){
+        return $this->hasOne('App\Models\Pays', 'id', 'pays_recrutement');
+    }
+
+    public function recruteur(){
+        return $this->hasOne('App\Models\User', 'id', 'recruteur_id');
+    }
+
+    public function regroupement(){
+        return $this->hasOne('App\Models\Regroupement', 'id', 'regroupement_id');
+    }
+
+    /**
+     * The news that belong to many projets.
+     */
+    public function projets()
+    {
+        return $this->belongsToMany('App\Models\Projet', 'projet_candidat', 'candidat_id', 'projet_id', 'id', 'id');
+    }
+
+
+    public function emploi(){
+        return $this->hasOne('App\Models\Emploi', 'id', 'emploi_id');
+    }
 
 
     public function statutIconHTML(){
         switch($this->statut){
             case 'disponible':
-                return '<h4><i class="fas fa-check-circle text-success display-5"></i></h4>';
+                return '<i class="fas fa-check-circle text-success display-5"></i>';
                 break;
             case 'en_traitement':
-                return '<h4><i class="fas fa-user-clock text-info display-5"></i></h4>';
+                return '<i class="fas fa-user-clock text-info display-5"></i>';
                 break;
             case 'en_emploi':
-                return '<h4><i class="fas fa-user-hard-hat display-5"></i></h4>';
+                return '<i class="fas fa-user-hard-hat display-5"></i>';
                 break;
             case 'termine':
-                return '<h4><i class="fas fa-check-circle text-grey display-5"></i></h4>';
+                return '<i class="fas fa-check-circle text-grey display-5"></i>';
                 break;
             case 'retire':
-                return '<h4><i class="fas fa-exclamation-triangle text-warning display-5"></i></h4>';
+                return '<i class="fas fa-exclamation-triangle text-warning display-5"></i>';
                 break;
             case 'non_recrute':
-                return '<h4><i class="fas fa-ban text-danger display-5"></i></h4>';;
+                return '<i class="fas fa-ban text-danger display-5"></i>';;
                 break;
         }
     }

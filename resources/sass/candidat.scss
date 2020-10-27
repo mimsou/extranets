@@ -1,0 +1,9 @@
+.content{
+    display: none;
+    &.active{
+        display: block;
+    }
+}
+.mail-window .mail-window-body{
+    background-color: #f4f7fc !important;
+}

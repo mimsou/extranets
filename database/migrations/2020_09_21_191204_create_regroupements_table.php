@@ -15,8 +15,18 @@ class CreateRegroupementsTable extends Migration
     {
         Schema::create('regroupements', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
             $table->timestamps();
         });
+
+
+        // Insert some stuff
+        DB::table('regroupements')->insert([
+            array('title' => 'CCAQ'),
+            array('title' => 'TADA'),
+            array('title' => 'ACVLQ'),
+            array('title' => 'Olymel')]
+        );
     }
 
     /**

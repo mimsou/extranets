@@ -26,7 +26,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'firstname', 'lastname', 'email', 'password', 'role_lvl',
     ];
 
     /**
@@ -61,13 +61,13 @@ class User extends Authenticatable
 
 
     public function initials(){
-        $firstname = $this->name;
+        $firstname = $this->firstname;
         $initials = strtoupper(trim($firstname[0]));
         if(Str::contains($firstname,'-')){
             $exploded_name = explode('-', $firstname);
             $initials .= $exploded_name[1][0];
         }
-        $lastname = trim($this->name);
+        $lastname = trim($this->lastname);
         $initials .= strtoupper($lastname[0]);
 
         return $initials;

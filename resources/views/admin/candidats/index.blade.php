@@ -33,6 +33,12 @@
                                         <th>Statut</th>
                                         <th>Numéro</th>
                                         <th>Nom</th>
+                                        <th>Pays</th>
+                                        <th>Recruteur</th>
+                                        <th>Emploi</th>
+                                        <th>Regroupement</th>
+                                        {{-- <th>Mission</th> --}}
+                                        <th>Dernière modification</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -44,6 +50,12 @@
                                         <th>Statut</th>
                                         <th>Numéro</th>
                                         <th>Nom</th>
+                                        <th>Pays</th>
+                                        <th>Recruteur</th>
+                                        <th>Emploi</th>
+                                        <th>Regroupement</th>
+                                        {{-- <th>Mission</th> --}}
+                                        <th>Dernière modification</th>
                                         <th>Action</th>
                                     </tr>
                                 </tfoot>
@@ -73,9 +85,15 @@
                     processing:     true,
                     ajax: '{{ action('DatatablesController@getCandidats') }}',
                     columns: [
-                        {data: 'statut', class:'d-flex flex-row'},
+                        {data: 'statut'},
                         {data: 'numero'},
                         {data: 'nom'},
+                        {data: 'pays', name: 'pays.title'},
+                        {data: 'recruteur', name: 'recruteur.name'},
+                        {data: 'emploi', name: 'emploi.title'},
+                        {data: 'regroupement', name: 'regroupement.title'},
+                        // {data: 'mission', name: 'mission.numero'},
+                        {data: 'updated_at', class:'text-right'},
                         {data: 'action'},
                     ]
                 });

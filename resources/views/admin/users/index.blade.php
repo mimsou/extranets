@@ -14,7 +14,7 @@
                     <h1>Liste des utilisateurs</h1>
                 </div>
                 <div class="col-md-6 text-white my-auto text-md-right p-b-30">
-                    <a href="{{ action('Admin\UserController@create') }}" class="btn btn-success"><i class="mdi mdi-plus"></i> {{ __('Créer un utilisateur') }}</a>
+                    <a href="{{ action('UserController@create') }}" class="btn btn-success"><i class="mdi mdi-plus"></i> {{ __('Créer un utilisateur') }}</a>
                 </div>
             </div>
         </div>
@@ -30,10 +30,9 @@
                             <table id="datatable" class="table" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th>Lastname</th>
-                                        <th>Firstname</th>
+                                        <th>Prénom</th>
+                                        <th>Nom de famille</th>
                                         <th>Email</th>
-                                        <th>Role</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -42,10 +41,9 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th>Lastname</th>
-                                        <th>Firstname</th>
+                                        <th>Prénom</th>
+                                        <th>Nom de famille</th>
                                         <th>Email</th>
-                                        <th>Role</th>
                                         <th>Action</th>
                                     </tr>
                                 </tfoot>
@@ -73,12 +71,11 @@
                     paging:         true,
                     serverSide:     true,
                     processing:     true,
-                    ajax: '{{ action('Admin\DatatableController@getUsers', [Lang::getLocale()]) }}',
+                    ajax: '{{ action('DatatablesController@getUsers') }}',
                     columns: [
                         {data: 'firstname'},
                         {data: 'lastname'},
                         {data: 'email'},
-                        {data: 'roles.title', name:'roles.title'},
                         {data: 'action'},
                     ]
                 });

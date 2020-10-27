@@ -14,7 +14,7 @@
                 <img src="{{ asset('assets/images/impact_evolution_logo_black_md.png') }}" width="240" alt="">
         </div>
         <h3 class="text-center p-b-20 fw-400">{{ __('Réinitialisation') }}</h3>
-        <p>{{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}</p>
+        <p>{{ __('Vous avez oublié votre mot de passe? Aucun problème! Simplement inscrire votre courriel ci-bas, ceci nous permettra de vous envoyer un courriel incluant un lien de réinitialisation.') }}</p>
 
             @if (session('status'))
                 <div class="alert alert-success" role="alert">

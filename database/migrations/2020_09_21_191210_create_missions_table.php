@@ -15,6 +15,8 @@ class CreateMissionsTable extends Migration
     {
         Schema::create('missions', function (Blueprint $table) {
             $table->id();
+            $table->string('titre');
+            $table->string('numero');
             $table->timestamps();
         });
     }

@@ -27,13 +27,12 @@
 	<link rel="stylesheet" type="text/css" href="{{ asset('vendor/fontawesome/css/all.css') }}">
 	<!--Bootstrap + atmos Admin CSS-->
     <link rel="stylesheet" type="text/css" href="{{ asset('atmos-assets/css/atmos.min.css') }}?v={{ rand() }}">
-	<link rel="stylesheet" type="text/css" href="{{ asset('css/admin.css') }}">
 	<!-- Additional library for page -->
     @yield('head')
     @livewireStyles
 </head>
 <!--body with default sidebar pinned -->
-<body class="sidebar-pinned">
+<body class="{{--sidebar-pinned--}}">
     @yield('modal')
 
 	<!--sidebar Begins-->
@@ -68,7 +67,6 @@
 	<script src="{{ asset('atmos-assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
 	<script src="{{ asset('atmos-assets/vendor/bootstrap-notify/bootstrap-notify.min.js') }}"></script>
 	<script src="{{ asset('atmos-assets/js/atmos.min.js') }}"></script>
-    <script src="{{ asset('js/admin.js') }}?v1.{{rand()}}"></script>
     <script>
         $(document).ready(function(){
             $('li.active').addClass("opened");

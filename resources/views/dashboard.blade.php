@@ -9,7 +9,7 @@
                 <div class="col-md-7 m-auto text-white p-b-30">
                     <h1 class="">Bonjour, {{Auth::user()->firstname}}!</h1>
                     <p class="opacity-75">
-                        Bienvenue dans votre nouveau tableau de bord! Vous trouverez ici une grande quantité d'information utile. N'hésitez surtout pas à nous contacter si vous désirez modifier le contenu de ce dernier afin de combler tous vos besoins d'entreprise.
+                        Bienvenue dans votre nouveau tableau de bord! Vous trouverez ici de l'information utile. N'hésitez surtout pas à nous contacter si vous désirez modifier le contenu de ce dernier afin de combler tous vos besoins d'entreprise.
                     </p>
                 </div>
 
@@ -23,118 +23,143 @@
     </div>
 
     <div class="container pull-up">
-        <div class="row">
 
-            <div class="col-lg-7">
-                <div class="card shadow-lg m-b-30">
-                    <div class="card-body">
-                        <h3>Suivi du développement</h3>
-                        <p>Progression générale</p>
-                        <div class="progress">
-                            <div class="progress-bar" style="width: 95%"></div>
+        <div class="row">
+            <div class="col-md-4 m-b-30">
+
+                <div class="card ">
+                    <div class="card-header">
+                        <div class="card-title">Derniers fichiers envoyés</div>
+
+                        <div class="card-controls">
+
+                            <a href="#" class="js-card-refresh icon"> </a>
+
                         </div>
 
-                        <hr>
+                    </div>
 
-                        <div class="table-responsive">
-                            <table class="table table-hover table-sm">
-                                <thead>
-                                    <tr>
-                                        <th>Module</th>
-                                        <th>Avancement</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Interface administrateur</td>
-                                        <td>
-                                            <div class="progress">
-                                                <div class="progress-bar bg-success" style="width: 100%"></div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Interface administrateur</td>
-                                        <td>
-                                            <div class="progress">
-                                                <div class="progress-bar bg-secondary" style="width: 100%"></div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Interface administrateur</td>
-                                        <td>
-                                            <div class="progress">
-                                                <div class="progress-bar bg-info" style="width: 100%"></div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Évaluation 360 - V1</td>
-                                        <td>
-                                            <div class="progress">
-                                                <div class="progress-bar bg-warning" style="width: 90%"></div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Évaluation 360 - V1</td>
-                                        <td>
-                                            <div class="progress">
-                                                <div class="progress-bar bg-danger" style="width: 90%"></div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    {{-- <tr>
-                                        <td>Système de rapport KPI's</td>
-                                        <td>
-                                            <div class="progress">
-                                                <div class="progress-bar" style="width: 1%"></div>
-                                            </div>
-                                        </td>
-                                    </tr> --}}
+                    <div class="list-group list-group-flush ">
 
-                                </tbody>
-                            </table>
+                        {{-- <div class="list-group-item d-flex align-items-center">
+                            <div class="m-r-20">
+                                <div class="avatar avatar-sm ">
+                                    <div class="avatar-title bg-dark rounded"><i class="mdi mdi-24px mdi-file-pdf"></i></div>
+                                </div>
+                            </div>
+                            <div class="">
+                                <div>SRS Document</div>
+                                <div class="text-muted">25.5 Mb</div>
+                            </div>
+
+                            <div class="ml-auto">
+                                <div class="dropdown">
+                                    <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="mdi  mdi-dots-vertical mdi-18px"></i> </a>
+
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <button class="dropdown-item" type="button">Télécharger</button>
+                                        <button class="dropdown-item" type="button">Copier l'URL</button>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div> --}}
+
+                        <div class="card-body">
+                            <p><i>Système de gestion des fichiers bientôt disponible</i></p>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="col-lg-5">
-                <div class="card m-b-30">
-                    <div class="card-body">
-                        <h3>Message center</h3>
-                        <hr>
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="media">
-                                    <div class="d-inline-block m-r-10 align-middle">
-                                        <div class="avatar avatar">
-                                            <span class="avatar-title rounded-circle  bg-dark">JCG</span>
-                                        </div>
-                                    </div>
-                                    <div class="media-body my-auto">
-                                        <p class="font-secondary m-b-0">Jean-Christophe Gaudette <span class="text-muted font-primary m-l-10">{{ \Carbon\Carbon::parse('2019-05-30 16:50:00')->diffForHumans() }}</span></p>
-                                        <div></div>
-                                        <div class="text-muted">
-                                            <p>Bonjour Impact Évolution! Je suis très heureux de vous accueillir dans ce qui deviendra bientôt votre nouveau système de gestion.</p>
-                                            <p>Si vous avez des questions, n'hésitez surtout pas à nous contacter.</p>
-                                        </div>
-                                    </div>
+            </div>
+            <div class="col-md-8">
+                <div class="row d-block d-md-flex">
+                    <div class="col m-b-30">
+                        <div class="card">
+
+                            <div class="card-body">
+                                <div class="card-controls">
+                                    {{-- <a href="#" class="badge badge-soft-success"> <i class="mdi mdi-arrow-up"></i> 12%</a> --}}
+                                </div>
+                                <div class="text-center p-t-30 p-b-20">
+                                    <div class="text-overline text-muted opacity-75 pb-2">Candidats disponibles</div>
+                                    <h1 class="text-success">{{ \App\Models\Candidat::where('statut', 'disponible')->count() }}</h1>
+                                    {{-- <div class="text-success h5 fw-600">
+                                        <i class="mdi mdi-arrow-up"></i> 12.6%
+                                    </div> --}}
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div class="col m-b-30">
+                        <div class="card ">
+
+                            <div class="card-body">
+                                <div class="card-controls">
+                                    {{-- <a href="#" class="badge badge-soft-success"> <i class="mdi mdi-arrow-up"></i> 12%</a> --}}
+                                </div>
+                                <div class="text-center p-t-30 p-b-20">
+                                    <div class="text-overline text-muted opacity-75 pb-2">Candidats en emploi</div>
+                                    <h1 class="text-muted">{{ \App\Models\Candidat::where('statut', 'en_emploi')->count() }}</h1>
+                                    {{-- <div class="text-danger h5 fw-600">
+                                        <i class="mdi mdi-arrow-down"></i> 4.6%
+                                    </div> --}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col m-b-30">
+                        <div class="card ">
+
+                            <div class="card-body">
+                                <div class="card-controls">
+                                    {{-- <a href="#" class="badge badge-soft-success"> <i class="mdi mdi-arrow-up"></i> 12%</a> --}}
+                                </div>
+                                <div class="text-center p-t-30 p-b-20">
+                                    <div class="text-overline text-muted opacity-75 pb-2">Dossiers complétés</div>
+                                    <h1 class="text-success">{{ \App\Models\Candidat::where('statut', 'termine')->count() }}</h1>
+                                    {{-- <div class="text-success h5 fw-600">
+                                        <i class="mdi mdi-arrow-up"></i> 45%
+                                    </div> --}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col m-b-30">
+                        <div class="card ">
+
+                            <div class="card-body">
+                                <div class="card-controls">
+                                    {{-- <a href="#" class="badge badge-soft-success"> <i class="mdi mdi-arrow-up"></i> 12%</a> --}}
+                                </div>
+                                <div class="text-center p-t-30 p-b-20">
+                                    <div class="text-overline text-muted opacity-75 pb-2">Nombre de projets en cours</div>
+                                    <h1 class="text-muted">{{ \App\Models\Projet::whereNotIn('statut', ['fermer'])->orderBy('titre','asc')->count() }}</h1>
+                                    {{-- <div class="text-muted h5 fw-600">
+                                        <i class="mdi mdi-arrow-up"></i> 0%
+                                    </div> --}}
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+
+
                 </div>
 
-
-
-
-
+                {{-- <small class="text-muted">* Basé sur une période antérieur d'un mois</small> --}}
             </div>
-
         </div>
+
+
+
+
     </div>
 
 @endsection

@@ -1,25 +1,30 @@
+
 <div class="form-row">
     <div class="form-group col-md-6">
         <label for="firstname">Prénom</label>
-        <input type="text" value="{{ old('firstname', $user->firstname) }}" class="form-control" name="firstname" id="firstname" placeholder="Prénom">
+        {!! Form::text('firstname', null, ['required', 'class'=>'form-control', 'placeholder'=>'Prénom']) !!}
     </div>
     <div class="form-group col-md-6">
         <label for="lastname">Nom de famille</label>
-        <input type="text" class="form-control" name="lastname" id="lastname" placeholder="Nom" value="{{ old('lastname', $user->lastname) }}">
-    </div>
+        {!! Form::text('lastname', null, ['required', 'class'=>'form-control', 'placeholder'=>'Nom']) !!}    </div>
 </div>
 
 
 <div class="form-row">
     <div class="form-group col-md-6">
         <label for="email">Email</label>
-        <input type="text" class="form-control" name="email" id="email" placeholder="Email" value="{{ old('email', $user->email) }}">
+        {!! Form::text('email', null, ['required', 'class'=>'form-control', 'placeholder'=>'Email']) !!}
     </div>
     <div class="form-group col-md-6">
-        <label for="role_id">Role</label>
-        <select name="role_id" id="role_id" class="form-control">
-            <option value="1">Super-admin</option>
-        </select>
+        @php
+            $roles = [10=>'Super-admin', 5=>'Admin'];
+            $disabled = '';
+            if(Auth::user()->role_lvl < 10){
+                $disabled = 'disabled';
+            }
+        @endphp
+        <label for="role_lvl">Role</label>
+        {!! Form::select('role_lvl', $roles, null, ['class'=>'form-control', $disabled]) !!}
     </div>
 </div>
 
@@ -35,19 +40,4 @@
     </div>
 </div>
 
-<div class="form-group">
-    <label for="nova_cal_link">Lien calendrier NOVA</label>
-    <input type="text" class="form-control" name="nova_cal_link" id="nova_cal_link" value="{{ old('nova_cal_link', $user->nova_cal_link) }}">
-</div>
-
-<div class="form-group">
-    <label for="retro_cal_link">Lien calendrier 360</label>
-    <input type="text" class="form-control" name="retro_cal_link" id="retro_cal_link" value="{{ old('retro_cal_link', $user->retro_cal_link) }}">
-</div>
-
-<div class="form-group">
-    <label for="bilan_cal_link">Lien calendrier Bilan</label>
-    <input type="text" class="form-control" name="bilan_cal_link" id="bilan_cal_link" value="{{ old('bilan_cal_link', $user->bilan_cal_link) }}">
-</div>
-
-<button type="submit" class="btn btn-success btn-cta">Enregistrer</button>
+<button type="submit" class="btn btn-success btn-cta mt-3">Enregistrer</button>

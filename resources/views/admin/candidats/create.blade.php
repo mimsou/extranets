@@ -27,7 +27,7 @@
                     <div class="col-lg-8 mx-auto  mt-2">
                        <div class="card py-3 m-b-30">
                            <div class="card-body">
-        
+
                                    	<h3 class="">{{ __("Information personnel") }}</h3>
                                    	<p class="text-muted">
                                        Utiliser cette page pour modifier vos informations de contact ainsi que vos informations de connexion
@@ -40,7 +40,7 @@
 
                            </div>
                        </div>
-                        
+
                     </div>
 
                 </div>

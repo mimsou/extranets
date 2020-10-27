@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Validator;
+use App\Models\Candidat;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+
 
 class CandidatController extends Controller
 {
@@ -56,7 +60,8 @@ class CandidatController extends Controller
      */
     public function edit($id)
     {
-        //
+        $candidat = Candidat::find($id);
+        return view('admin.candidats.edit', compact('candidat'));
     }
 
     /**
@@ -68,7 +73,24 @@ class CandidatController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $candidat = Candidat::find($id);
+        $validator = Validator::make($request->all(), [
+            'nom' => 'required',
+            'numero' => ['required', Rule::unique('candidats')->ignore($id)],
+            'statut' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            flash("Oups, une ou des erreurs se sont produites!")->error();
+
+            return back()->withErrors($validator)->withInput();
+        }
+
+        $candidat->update($request->all());
+
+        flash('Le candidat a été mis à jour avec succès')->success();
+
+        return back();
     }
 
     /**
