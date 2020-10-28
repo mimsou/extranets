@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Redirect;
 use Validator;
 use App\Models\Candidat;
 use Illuminate\Http\Request;
@@ -27,7 +28,7 @@ class CandidatController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.candidats.create');
     }
 
     /**
@@ -38,7 +39,23 @@ class CandidatController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'nom' => 'required',
+            'numero' => ['required', Rule::unique('candidats')],
+            'statut' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            flash("Oups, une ou des erreurs se sont produites!")->error();
+
+            return back()->withErrors($validator)->withInput();
+        }
+
+        $candidat = Candidat::create($request->all());
+
+        flash('Le candidat a été créé avec succès')->success();
+
+        return Redirect::action('CandidatController@edit', $candidat->id);
     }
 
     /**

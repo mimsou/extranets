@@ -4,15 +4,15 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="nom">{{ __('Nom du candidat') }}</label>
-                    {{ Form::text('nom', null, ['class'=>'form-control', 'id'=>'nom']) }}
+                    <label for="nom">{{ __('Nom du candidat') }} *</label>
+                    {{ Form::text('nom', null, ['required', 'class'=>'form-control', 'id'=>'nom']) }}
                 </div>
 
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="numero">{{ __('Numéro') }}</label>
-                            {{ Form::text('numero', null, ['class'=>'form-control', 'id'=>'numero']) }}
+                            <label for="numero">{{ __('Numéro') }} *</label>
+                            {{ Form::text('numero', null, ['required', 'class'=>'form-control', 'id'=>'numero']) }}
                         </div>
                     </div>
                     <div class="col-md-6">
