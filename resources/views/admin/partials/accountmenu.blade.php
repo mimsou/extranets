@@ -8,7 +8,7 @@
         </a>
         <div class="dropdown-menu  dropdown-menu-right"   >
             {{-- <a class="dropdown-item" href="{{ route('password.request') }}">  Reset Password</a> --}}
-            <a class="dropdown-item" href="{{ route('profile.show') }}">  {{ __('Votre profil') }}</a>
+            <a class="dropdown-item" href="{{ action('UserController@edit', Auth::user()->id) }}">  {{ __('Votre profil') }}</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"> {{ __('Déconnexion') }}</a>
         </div>
