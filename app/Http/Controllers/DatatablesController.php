@@ -113,7 +113,10 @@ class DatatablesController extends Controller
                             return '<a href="'.action('EmployeurController@edit', $c->id).'"><h5>'.$c->nom . '</h5></a>';
                         })
                         ->editColumn('contact_nom', function(Employeur $c){
-                            return '<strong>'.$c->contact_prenom .' '. $c->contact_nom .'</strong><br>'.'<small>'.$c->contact_titre.'<br><a href="mailto:'.$c->contact_email.'">'.$c->contact_email.'</a><br><a href="tel:'.$c->contact_phone.'">'.$c->contact_phone.'</a></small>';
+                            $titre = '';
+                            if(!empty($c->contact_titre)) $titre = $c->contact_titre.'<br>';
+
+                            return '<strong>'.$c->contact_prenom .' '. $c->contact_nom .'</strong><br><small>'.$titre.'<a href="mailto:'.$c->contact_email.'">'.$c->contact_email.'</a><br><a href="tel:'.$c->contact_phone.'">'.$c->contact_phone.'</a></small>';
                         })
                         ->addColumn('regroupement', function (Employeur $c) {
                             if(!is_null($c->regroupement)) return $c->regroupement->title;
