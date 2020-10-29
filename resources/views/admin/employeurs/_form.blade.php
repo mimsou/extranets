@@ -10,7 +10,7 @@
 </div>
 
 
-<h5 class="mt-3">Adresse de la compagnie</h5>
+<h5 class="mt-4">Adresse de la compagnie</h5>
 
 <div class="form-row">
     <div class="form-group col-md-12">
@@ -53,16 +53,20 @@
 </div>
 
 
-<h5 class="mt-3">Personne contact</h5>
+<h5 class="mt-4">Contact principal</h5>
 
 <div class="form-row">
-    <div class="form-group col-md-6">
-        <label for="ville">Prenom</label>
+    <div class="form-group col-md-4">
+        <label for="contact_prenom">Prenom</label>
         {!! Form::text('contact_prenom', null, ['class'=>'form-control']) !!}
     </div>
-    <div class="form-group col-md-6">
-        <label for="province">Nom</label>
+    <div class="form-group col-md-4">
+        <label for="contact_nom">Nom</label>
         {!! Form::text('contact_nom', null, ['class'=>'form-control']) !!}
+    </div>
+    <div class="form-group col-md-4">
+        <label for="contact_titre">Titre</label>
+        {!! Form::text('contact_titre', null, ['class'=>'form-control']) !!}
     </div>
 </div>
 
@@ -74,6 +78,47 @@
     <div class="form-group col-md-4">
         <label for="province">Téléphone</label>
         {!! Form::text('contact_phone', null, ['class'=>'form-control', 'data-mask'=>'(000) 000-0000', 'placeholder'=>'(000) 000-0000']) !!}
+    </div>
+</div>
+
+
+<div class="form-group col-md-12 mt-3 mb-4">
+    <label class="cstm-switch">
+        <input type="checkbox" name="has_secondary_contact" value="yes" id="has_secondary_contact_switch" class="cstm-switch-input"
+        {{ (old('has_secondary_contact', $employeur->has_secondary_contact) == 'yes') ? ' checked' : '' }}>
+        <span class="cstm-switch-indicator bg-success"></span>
+        <span class="cstm-switch-description">{{ __('Ajouter second contact') }}</span>
+    </label>
+</div>
+
+
+<div class="secondary_contact mb-4">
+    <h5 class="mt-3">Contact secondaire</h5>
+
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label for="secondary_contact_prenom">Prenom</label>
+            {!! Form::text('secondary_contact_prenom', null, ['class'=>'form-control']) !!}
+        </div>
+        <div class="form-group col-md-4">
+            <label for="secondary_contact_nom">Nom</label>
+            {!! Form::text('secondary_contact_nom', null, ['class'=>'form-control']) !!}
+        </div>
+        <div class="form-group col-md-4">
+            <label for="secondary_contact_titre">Titre</label>
+            {!! Form::text('secondary_contact_titre', null, ['class'=>'form-control']) !!}
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-8">
+            <label for="ville">Email</label>
+            {!! Form::text('secondary_contact_email', null, ['class'=>'form-control']) !!}
+        </div>
+        <div class="form-group col-md-4">
+            <label for="province">Téléphone</label>
+            {!! Form::text('secondary_contact_phone', null, ['class'=>'form-control', 'data-mask'=>'(000) 000-0000', 'placeholder'=>'(000) 000-0000']) !!}
+        </div>
     </div>
 </div>
 

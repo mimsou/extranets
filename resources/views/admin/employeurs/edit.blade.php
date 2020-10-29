@@ -45,3 +45,25 @@
                 </div>
             </div>
 @endsection
+
+
+@section('footer')
+
+    <script>
+        $(document).on('change', '#has_secondary_contact_switch', function(e){
+            toggleSecondary();
+        });
+
+        function toggleSecondary(){
+
+            if($('#has_secondary_contact_switch').is(":checked")){
+                $('.secondary_contact').show();
+            }else{
+                $('.secondary_contact').hide();
+            }
+        }
+
+        toggleSecondary();
+    </script>
+
+@endsection

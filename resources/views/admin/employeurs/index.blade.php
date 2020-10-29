@@ -42,8 +42,8 @@
                                     <tr>
                                         <th>Statut</th>
                                         <th>Nom</th>
+                                        <th>Contact principal</th>
                                         <th>Regroupement</th>
-                                        <th>Pays</th>
                                         <th>Dernière modification</th>
                                         <th>Action</th>
                                     </tr>
@@ -55,8 +55,8 @@
                                     <tr>
                                         <th>Statut</th>
                                         <th>Nom</th>
+                                        <th>Contact principal</th>
                                         <th>Regroupement</th>
-                                        <th>Pays</th>
                                         <th>Dernière modification</th>
                                         <th>Action</th>
                                     </tr>
@@ -89,8 +89,8 @@
                     columns: [
                         {data: 'statut'},
                         {data: 'nom'},
+                        {data: 'contact_nom'},
                         {data: 'regroupement', name: 'regroupement.title'},
-                        {data: 'pays', name: 'pays.title'},
                         {data: 'updated_at', class:'text-right'},
                         {data: 'action'},
                     ]

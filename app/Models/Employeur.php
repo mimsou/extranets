@@ -20,8 +20,15 @@ class Employeur extends Model
                            'zip',
                            'contact_nom',
                            'contact_prenom',
+                           'contact_titre',
                            'contact_email',
-                           'contact_phone'
+                           'contact_phone',
+                           'has_secondary_contact',
+                           'secondary_contact_nom',
+                           'secondary_contact_prenom',
+                           'secondary_contact_titre',
+                           'secondary_contact_email',
+                           'secondary_contact_phone'
                           ];
 
 

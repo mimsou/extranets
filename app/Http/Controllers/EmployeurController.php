@@ -102,6 +102,11 @@ class EmployeurController extends Controller
         $employeur = Employeur::find($id);
         $employeur->update($request->all());
 
+        if(!$request->has('has_secondary_contact')){
+            $employeur->has_secondary_contact = null;
+            $employeur->save();
+        }
+
         flash( "L'employeur a été mis à jour avec succès")->success();
 
         return Redirect::back();
