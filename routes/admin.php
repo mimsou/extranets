@@ -8,9 +8,11 @@ Route::get('/', function () {
 
 Route::resource('/candidats', 'CandidatController');
 Route::resource('/projets', 'ProjetController');
-Route::resource('/regroupements', 'RegroupementController');
 Route::resource('/employeurs', 'EmployeurController');
-Route::resource('/utilisateurs', 'UserController');
+Route::post('/employeurs/remove', 'EmployeurController@remove');
+
+Route::resource('/gestion/regroupements', 'RegroupementController');
+Route::resource('/gestion/utilisateurs', 'UserController');
 
 Route::post('/projets/{id}/addCandidat', 'ProjetController@addCandidat');
 Route::get('/projets/{id}/removeCandidat/{candidat_id}', 'ProjetController@removeCandidat');

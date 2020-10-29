@@ -27,6 +27,7 @@
 	<link rel="stylesheet" type="text/css" href="{{ asset('vendor/fontawesome/css/all.css') }}">
 	<!--Bootstrap + atmos Admin CSS-->
     <link rel="stylesheet" type="text/css" href="{{ asset('atmos-assets/css/atmos.min.css') }}?v={{ rand() }}">
+    <link rel="stylesheet" type="text/css" href="{{ mix('css/general.css') }}">
 	<!-- Additional library for page -->
     @yield('head')
     @livewireStyles

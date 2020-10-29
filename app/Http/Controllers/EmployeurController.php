@@ -116,6 +116,12 @@ class EmployeurController extends Controller
      */
     public function destroy($id)
     {
-        //
+
+    }
+
+    public function remove(Request $request){
+        Employeur::find($request->employeur_id)->delete();
+        flash( "L'employeur a été supprimé avec succès")->success();
+        return Redirect::to($request->redirect_to);
     }
 }

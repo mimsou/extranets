@@ -15,20 +15,6 @@
 
 
 
-<li class="menu-item {{ classActiveSegment(2,'regroupements') }}">
-    <a href="{{ action('RegroupementController@index') }}" class="menu-link">
-        <span class="menu-label">
-            <span class="menu-name">{{ __('Regroupements') }}</span>
-        </span>
-
-        <span class="menu-icon">
-            {{-- <span class="icon-badge badge-success badge badge-pill">NEW</span> --}}
-            <i class="icon-placeholder far fa-building"></i>
-        </span>
-    </a>
-</li>
-
-
 <li class="menu-item {{ classActiveSegment(2,'employeurs') }}">
     <a href="{{ action('EmployeurController@index') }}" class="menu-link">
         <span class="menu-label">
@@ -41,7 +27,6 @@
         </span>
     </a>
 </li>
-
 
 
 <li class="menu-item {{ classActiveSegment(2,'projets') }}">
@@ -72,19 +57,35 @@
 
 
 
-<li class="menu-item {{ classActiveSegment(2,'utilisateurs') }}">
-    <a href="{{ action('UserController@index') }}" class="menu-link">
-        <span class="menu-label">
-            <span class="menu-name">{{ __('Utilisateurs') }}</span>
-        </span>
 
-        <span class="menu-icon">
+<li class="menu-item {{ classActiveSegment(2, 'gestion') }}">
+	<a href="#" class="open-dropdown menu-link">
+        <span class="menu-label">
+            <span class="menu-name">Gestion</span>
+		</span>
+		<span class="menu-icon">
             {{-- <span class="icon-badge badge-success badge badge-pill">NEW</span> --}}
-            <i class="icon-placeholder fas fa-user-unlock"></i>
+            <i class="icon-placeholder fas fa-cog"></i>
         </span>
     </a>
-</li>
 
+	<!--submenu-->
+	<ul class="sub-menu">
+		<li class=" menu-item">
+            <a href="{{ action('RegroupementController@index') }}" class="{{ classActiveSegment(3,'regroupements') }} menu-link">
+                <span class="menu-label">
+                    <span class="menu-name">{{ __('Regroupements') }}</span>
+                </span>
+            </a>
+
+			<a href="{{ action('UserController@index') }}" class="{{ classActiveSegment(3,'utilisateurs') }} menu-link">
+                <span class="menu-label">
+                    <span class="menu-name">{{ __('Utilisateurs') }}</span>
+                </span>
+            </a>
+		</li>
+	</ul>
+</li>
 
 
 

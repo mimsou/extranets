@@ -20,6 +20,15 @@
     </div>
 </div>
 
+@php
+    $province = null;
+    $pays = null; //Canada
+    if(!isset($employeur)){
+        $province = 'QC';
+        $pays = 16; //Canada
+    }
+@endphp
+
 
 <div class="form-row">
     <div class="form-group col-md-8">
@@ -28,14 +37,14 @@
     </div>
     <div class="form-group col-md-4">
         <label for="province">Province</label>
-        {!! Form::text('province', null, ['class'=>'form-control', 'placeholder'=>'Ex: QC']) !!}
+        {!! Form::text('province', $province, ['class'=>'form-control', 'placeholder'=>'Ex: QC']) !!}
     </div>
 </div>
 
 <div class="form-row">
     <div class="form-group col-md-6">
         <label for="ville">Pays</label>
-        {!! Form::select('pays', \App\Models\Pays::orderBy('title', 'asc')->pluck('title', 'id'), null, ['class'=>'form-control', 'placeholder'=>'Veuillez choisir']) !!}
+        {!! Form::select('pays', \App\Models\Pays::orderBy('title', 'asc')->pluck('title', 'id'), $pays, ['class'=>'form-control', 'placeholder'=>'Veuillez choisir']) !!}
     </div>
     <div class="form-group col-md-6">
         <label for="zip">Code postale</label>

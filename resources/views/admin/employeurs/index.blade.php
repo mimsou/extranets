@@ -5,6 +5,16 @@
     <link rel="stylesheet" href="{{ asset('atmos-assets/vendor/DataTables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css') }}"></link>
 @endsection
 
+@section('modal')
+    @include('admin.modals.confirmation', [
+		'ident' => 'removeEmp',
+		'title' => __('Êtes-vous certain?'),
+		'text' => __('Voulez-vous vraiment supprimer <strong class="del_emp_non"></strong>?'),
+		'controller' => action('EmployeurController@remove'),
+		'redirect' => action('EmployeurController@index')
+    ])
+@endsection
+
 @section('content')
 
     <div class="bg-dark m-b-30">
@@ -86,6 +96,18 @@
                     ]
                 });
             });
+
+
+            $(document).on('click', '.delete_employeur', function(e){
+                var id = $(this).data('employeurid');
+                var nom = $(this).data('nom');
+
+                $('.del_emp_non').html(nom);
+                $("#modalConfirmation_removeEmp .modal-body .hiddenfields").html("<input type='hidden' name='employeur_id' value='"+id+"'>");
+                $('#modalConfirmation_removeEmp').modal('toggle');
+
+            })
+
         })(window.jQuery);
     </script>
 

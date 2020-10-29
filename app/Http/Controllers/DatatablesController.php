@@ -124,7 +124,9 @@ class DatatablesController extends Controller
                             return $c->updated_at->diffForHumans() .'<br><small>'.$c->updated_at.'</small>';
                         })
                         ->addColumn('action', function(Employeur $c){
-                            return '<a href="'.action('EmployeurController@edit', $c->id).'" class="btn btn-sm btn-primary"><i class="fas fa-user-edit"></i></a>';
+                            $delete = '<button class="btn btn-sm btn-danger delete_employeur" data-employeurid="'.$c->id.'" data-nom="'.$c->nom.'"><i class="fas fa-trash"></i></button>';
+                            if($c->projets()->count()) $delete = '';
+                            return '<a href="'.action('EmployeurController@edit', $c->id).'" class="btn btn-sm btn-primary mr-2"><i class="fas fa-user-edit"></i></a> '.$delete;
                         })
                         ->make(true);
     }

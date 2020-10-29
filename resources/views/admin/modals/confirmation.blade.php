@@ -23,9 +23,9 @@
                                 <i class="mdi mdi-exclamation text-white" style="font-size: 60px"></i>
                             </div>
                         </div>
-                        <h3 class="pt-3">{{ $title }}</h3>
+                        <h3 class="pt-3">{!! $title !!}</h3>
                         <p class="text-muted">
-                            {{ $text }}
+                            {!! $text !!}
                         </p>
 
                     </div>

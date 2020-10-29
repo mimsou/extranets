@@ -19388,6 +19388,17 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /***/ }),
 
+/***/ "./resources/sass/general.scss":
+/*!*************************************!*\
+  !*** ./resources/sass/general.scss ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
 /***/ "./resources/sass/projet.scss":
 /*!************************************!*\
   !*** ./resources/sass/projet.scss ***!
@@ -19400,15 +19411,16 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /***/ }),
 
 /***/ 0:
-/*!***********************************************************************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/sass/candidat.scss ./resources/sass/projet.scss ./resources/css/app.css ***!
-  \***********************************************************************************************************************/
+/*!*****************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/sass/candidat.scss ./resources/sass/projet.scss ./resources/sass/general.scss ./resources/css/app.css ***!
+  \*****************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(/*! /Applications/MAMP/htdocs/immigremploi/resources/js/app.js */"./resources/js/app.js");
 __webpack_require__(/*! /Applications/MAMP/htdocs/immigremploi/resources/sass/candidat.scss */"./resources/sass/candidat.scss");
 __webpack_require__(/*! /Applications/MAMP/htdocs/immigremploi/resources/sass/projet.scss */"./resources/sass/projet.scss");
+__webpack_require__(/*! /Applications/MAMP/htdocs/immigremploi/resources/sass/general.scss */"./resources/sass/general.scss");
 module.exports = __webpack_require__(/*! /Applications/MAMP/htdocs/immigremploi/resources/css/app.css */"./resources/css/app.css");
 
 

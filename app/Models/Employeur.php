@@ -34,6 +34,10 @@ class Employeur extends Model
         return $this->hasOne('App\Models\Regroupement', 'id', 'regroupement_id');
     }
 
+    public function projets(){
+        return $this->hasMany('App\Models\Projet');
+    }
+
 
     public function statutIconHTML(){
         switch($this->statut){
