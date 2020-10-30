@@ -10,8 +10,11 @@ Route::resource('/candidats', 'CandidatController');
 Route::resource('/projets', 'ProjetController');
 Route::resource('/employeurs', 'EmployeurController');
 Route::post('/employeurs/remove', 'EmployeurController@remove');
+Route::post('/projets/remove', 'ProjetController@remove');
 
 Route::resource('/gestion/regroupements', 'RegroupementController');
+Route::resource('/gestion/emplois', 'EmploiController');
+Route::resource('/gestion/pays', 'PaysController');
 Route::resource('/gestion/utilisateurs', 'UserController');
 
 Route::post('/projets/{id}/addCandidat', 'ProjetController@addCandidat');
@@ -25,6 +28,8 @@ Route::prefix('api/datatables')->group(function () {
 	Route::get('/get-regroupements', 'DatatablesController@getRegroupements');
 	Route::get('/get-users', 'DatatablesController@getUsers');
 	Route::get('/get-employeurs', 'DatatablesController@getEmployeurs');
+	Route::get('/get-emplois', 'DatatablesController@getEmplois');
+	Route::get('/get-pays', 'DatatablesController@getPays');
 });
 
 

@@ -5,27 +5,16 @@
     <link rel="stylesheet" href="{{ asset('atmos-assets/vendor/DataTables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css') }}"></link>
 @endsection
 
-@section('modal')
-    @include('admin.modals.confirmation', [
-		'ident' => 'removeProjet',
-		'title' => __('Êtes-vous certain?'),
-		'text' => __('Voulez-vous vraiment supprimer le projet #<strong class="del_emp_non"></strong>? <br><h5>Cette action est irréversible et aura pour effet de dissocier tous les candidats du projet.</h5>'),
-		'controller' => action('ProjetController@remove'),
-		'redirect' => action('ProjetController@index')
-    ])
-@endsection
-
-
 @section('content')
 
     <div class="bg-dark m-b-30">
         <div class="container">
             <div class="row p-b-60 p-t-60">
                 <div class="col-md-6 text-white p-b-30">
-                    <h1>Liste des projets</h1>
+                    <h1>Liste des emplois/postes</h1>
                 </div>
                 <div class="col-md-6 text-white my-auto text-md-right p-b-30">
-                    <a href="{{ action('ProjetController@create') }}" class="btn btn-success"><i class="mdi mdi-plus"></i> {{ __('Ajouter un projet') }}</a>
+                    <a href="{{ action('EmploiController@create') }}" class="btn btn-success"><i class="mdi mdi-plus"></i> {{ __('Ajouter un poste') }}</a>
                 </div>
             </div>
         </div>
@@ -41,11 +30,8 @@
                             <table id="datatable" class="table" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th>Type de projet</th>
-                                        <th>Numéro</th>
+                                        <th>ABREV.</th>
                                         <th>Titre</th>
-                                        <th>Employeur</th>
-                                        <th>Candidats</th>
                                         <th>Dernière modification</th>
                                         <th>Action</th>
                                     </tr>
@@ -55,11 +41,8 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th>Type de projet</th>
-                                        <th>Numéro</th>
+                                        <th>ABREV.</th>
                                         <th>Titre</th>
-                                        <th>Employeur</th>
-                                        <th>Candidats</th>
                                         <th>Dernière modification</th>
                                         <th>Action</th>
                                     </tr>
@@ -88,29 +71,15 @@
                     paging:         true,
                     serverSide:     true,
                     processing:     true,
-                    ajax: '{{ action('DatatablesController@getProjets') }}',
+                    ajax: '{{ action('DatatablesController@getEmplois') }}',
                     columns: [
-                        {data: 'statut'},
-                        {data: 'numero'},
-                        {data: 'titre'},
-                        {data: 'employeur.nom'},
-                        {data: 'statut_candidat'},
+                        {data: 'abrev'},
+                        {data: 'title'},
                         {data: 'updated_at', class:'text-right'},
                         {data: 'action'},
                     ]
                 });
             });
-
-            $(document).on('click', '.delete_projet', function(e){
-                var id = $(this).data('projetid');
-                var nom = $(this).data('num');
-
-                $('.del_emp_non').html(nom);
-                $("#modalConfirmation_removeProjet .modal-body .hiddenfields").html("<input type='hidden' name='projet_id' value='"+id+"'>");
-                $('#modalConfirmation_removeProjet').modal('toggle');
-
-            });
-
         })(window.jQuery);
     </script>
 

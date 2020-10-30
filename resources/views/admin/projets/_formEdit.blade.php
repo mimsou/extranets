@@ -1,14 +1,26 @@
 @php
-    $statuts = ['new'=>__('new'),
-                'recrutement'=>__('recrutement'),
-                'accueil'=>__('accueil'),
-                'a_facturer'=>__('a_facturer'),
-                'fermer'=>__('fermer')];
+    $statuts = ['new_projet'=>__('new_projet'),
+                'Immigration' => [
+                    'imm_eimt_dst_pt'=>__('imm_eimt_dst_pt'),
+                    'imm_eimt_dst_pt_ave'=>__('imm_eimt_dst_pt_ave'),
+                    'imm_pt'=>__('imm_pt'),
+                    'imm_pt_ave'=>__('imm_pt_ave'),
+                    'imm_conf_pt'=>__('imm_conf_pt'),
+                    'imm_individu'=>__('imm_individu'),
+                    'imm_autre'=>__('imm_autre')],
+                'Recrutement' => [
+                    'rec_mission_dedie'=>__('rec_mission_dedie'),
+                    'rec_mission_partagee'=>__('rec_mission_partagee'),
+                    'rec_mission_partenaire'=>__('rec_mission_partenaire'),
+                    'rec_garantie'=>__('rec_garantie'),
+                    'rec_cdts_qualifies'=>__('rec_cdts_qualifies'),
+                ],
+                'acc_accueil' => __('acc_accueil')];
 @endphp
 
 <div class="form-row">
     <div class="form-group col-md-12">
-        <label for="statut">Statut du projet</label>
+        <label for="statut">Type de projet</label>
         {!! Form::select('statut', $statuts, null, ['class'=>'form-control', 'required']) !!}
     </div>
 </div>
@@ -46,8 +58,16 @@
 
 <div class="form-row">
     <div class="form-group col-md-12">
-        <label for="type_emploi[]">Type d'emploi recherché *</label>
+        <label for="type_emploi[]">Poste *</label>
         {!! Form::select('type_emploi[]', \App\Models\Emploi::pluck('title', 'id'), null, ['class'=>'form-control select2', 'multiple']) !!}
+    </div>
+</div>
+
+
+<div class="form-row">
+    <div class="form-group col-md-12">
+        <label for="territoires[]">Territoires *</label>
+        {!! Form::select('territoires[]', \App\Models\Pays::pluck('title', 'id'), null, ['class'=>'form-control select2', 'multiple']) !!}
     </div>
 </div>
 
@@ -55,8 +75,8 @@
 <h5 class="mt-4">Date importantes</h5>
 <div class="form-row">
     <div class="form-group col-md-12">
-        <label for="date_debut_recrutement">Début recrutement</label>
-        {!! Form::date('date_debut_recrutement', null, ['class'=>'form-control', 'required']) !!}
+        <label for="date_selection">Début de sélection</label>
+        {!! Form::date('date_selection', null, ['class'=>'form-control']) !!}
     </div>
 </div>
 

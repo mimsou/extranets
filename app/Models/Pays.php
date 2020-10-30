@@ -9,6 +9,6 @@ class Pays extends Model
 {
     use HasFactory;
 
-
+    protected $fillable = [ 'abrev', 'title'];
 
 }

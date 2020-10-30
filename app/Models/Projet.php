@@ -15,7 +15,9 @@ class Projet extends Model
                            'numero',
                            'date_creation',
                            'date_debut_recrutement',
+                           'date_selection',
                            'nb_candidats',
+                           'territoires',
                            'type_emploi'
                           ];
 
@@ -25,6 +27,16 @@ class Projet extends Model
     }
 
     public function getTypeEmploiAttribute($value)
+    {
+        return explode(',',$value);
+    }
+
+    public function setTerritoiresAttribute($value)
+    {
+        $this->attributes['territoires'] = implode(',',$value);
+    }
+
+    public function getTerritoiresAttribute($value)
     {
         return explode(',',$value);
     }

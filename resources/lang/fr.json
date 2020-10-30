@@ -3,5 +3,22 @@
     "recrutement":"En recrutement",
     "accueil":"En accueil",
     "a_facturer":"À Facturer",
-    "fermer":"Terminé"
+    "fermer":"Terminé",
+
+    "new_projet":"Projet en création",
+    "imm_eimt_dst_pt":"Imm - EIMT-DST-PT",
+    "imm_eimt_dst_pt_ave":"Imm - EIMT-DST-PT-AVE",
+    "imm_pt":"Imm - PT",
+    "imm_pt_ave":"Imm - PT-AVE",
+    "imm_conf_pt":"Imm - Conformité-PT",
+    "imm_individu":"Imm - Individu",
+    "imm_autre":"Imm - Autre",
+    "rec_mission_dedie":"Rec - Mission dédiée",
+    "rec_mission_partagee":"Rec - Mission partagée",
+    "rec_mission_partenaire":"Rec - Mission partenaire",
+    "rec_garantie":"Rec - Garantie",
+    "rec_cdts_qualifies":"Rec - Cdts qualifiés",
+    "acc_accueil":"Acc - Accueil"
 }
+
+

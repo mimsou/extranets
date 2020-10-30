@@ -61,7 +61,8 @@
 <li class="menu-item {{ classActiveSegment(2, 'gestion') }}">
 	<a href="#" class="open-dropdown menu-link">
         <span class="menu-label">
-            <span class="menu-name">Gestion</span>
+            <span class="menu-name">Gestion <span class="menu-arrow"></span></span>
+            <span class="menu-info">Options du système</span>
 		</span>
 		<span class="menu-icon">
             {{-- <span class="icon-badge badge-success badge badge-pill">NEW</span> --}}
@@ -76,11 +77,35 @@
                 <span class="menu-label">
                     <span class="menu-name">{{ __('Regroupements') }}</span>
                 </span>
+                <span class="menu-icon">
+                    <i class="icon-placeholder fas fa-users"></i>
+                </span>
+            </a>
+
+            <a href="{{ action('EmploiController@index') }}" class="{{ classActiveSegment(3,'emplois') }} menu-link">
+                <span class="menu-label">
+                    <span class="menu-name">{{ __('Liste des emplois') }}</span>
+                </span>
+                <span class="menu-icon">
+                    <i class="icon-placeholder fas fa-tools"></i>
+                </span>
+            </a>
+
+            <a href="{{ action('PaysController@index') }}" class="{{ classActiveSegment(3,'pays') }} menu-link">
+                <span class="menu-label">
+                    <span class="menu-name">{{ __('Liste des pays') }}</span>
+                </span>
+                <span class="menu-icon">
+                    <i class="icon-placeholder fas fa-globe-americas"></i>
+                </span>
             </a>
 
 			<a href="{{ action('UserController@index') }}" class="{{ classActiveSegment(3,'utilisateurs') }} menu-link">
                 <span class="menu-label">
                     <span class="menu-name">{{ __('Utilisateurs') }}</span>
+                </span>
+                <span class="menu-icon">
+                    <i class="icon-placeholder fas fa-user-lock"></i>
                 </span>
             </a>
 		</li>

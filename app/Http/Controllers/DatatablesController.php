@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Candidat;
+use App\Models\Emploi;
 use App\Models\Employeur;
 use App\Models\Mission;
+use App\Models\Pays;
 use App\Models\Projet;
 use App\Models\Regroupement;
 use App\Models\User;
@@ -71,7 +73,8 @@ class DatatablesController extends Controller
                             return $m->updated_at->diffForHumans() .'<br><small>'.$m->updated_at.'</small>';
                         })
                         ->addColumn('action', function(Projet $m){
-                            return '<a href="'.action('ProjetController@edit', $m->id).'" class="btn btn-sm btn-primary"><i class="fas fa-user-edit"></i></a>';
+                            $delete = '<button class="btn btn-sm btn-danger delete_projet" data-projetid="'.$m->id.'" data-num="'.$m->numero.'"><i class="fas fa-trash"></i></button>';
+                            return '<a href="'.action('ProjetController@edit', $m->id).'" class="btn btn-sm btn-primary mr-3"><i class="fas fa-user-edit"></i></a> ' . $delete;
                         })
                         ->addColumn('statut_candidat', function(Projet $m){
                             return count($m->candidats) .' / '. $m->nb_candidats;
@@ -87,6 +90,30 @@ class DatatablesController extends Controller
                         })
                         ->addColumn('action', function(Regroupement $r){
                             return '<a href="'.action('RegroupementController@edit', $r->id).'" class="btn btn-sm btn-primary"><i class="fas fa-user-edit"></i></a>';
+                        })
+                        ->make(true);
+    }
+
+    public function getEmplois(){
+        return Datatables::of(Emploi::query())
+                        ->editColumn('updated_at', function(Emploi $r){
+                            if(is_null($r->updated_at)) return '---';
+                            return $r->updated_at->diffForHumans() .'<br><small>'.$r->updated_at.'</small>';
+                        })
+                        ->addColumn('action', function(Emploi $r){
+                            return '<a href="'.action('EmploiController@edit', $r->id).'" class="btn btn-sm btn-primary"><i class="fas fa-user-edit"></i></a>';
+                        })
+                        ->make(true);
+    }
+
+    public function getPays(){
+        return Datatables::of(Pays::query())
+                        ->editColumn('updated_at', function(Pays $r){
+                            if(is_null($r->updated_at)) return '---';
+                            return $r->updated_at->diffForHumans() .'<br><small>'.$r->updated_at.'</small>';
+                        })
+                        ->addColumn('action', function(Pays $r){
+                            return '<a href="'.action('PaysController@edit', $r->id).'" class="btn btn-sm btn-primary"><i class="fas fa-user-edit"></i></a>';
                         })
                         ->make(true);
     }
@@ -136,8 +163,4 @@ class DatatablesController extends Controller
                         })
                         ->make(true);
     }
-
-
-
-
 }

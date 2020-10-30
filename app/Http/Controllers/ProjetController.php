@@ -168,4 +168,16 @@ class ProjetController extends Controller
 
         return Redirect::back();
     }
+
+
+    public function remove(Request $request){
+        $projet = Projet::find($request->projet_id);
+
+        $projet->candidats()->sync([]);
+
+        $projet->delete();
+
+        flash( "Le projet a été supprimé avec succès")->success();
+        return Redirect::to($request->redirect_to);
+    }
 }
