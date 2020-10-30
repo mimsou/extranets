@@ -34,10 +34,10 @@
             </div>
         </div>
 
-        <div class="text-center mt-2 text-muted"><small>En attente documents immigration</small></div>
+        {{-- <div class="text-center mt-2 text-muted"><small>En attente documents immigration</small></div>
         <hr class="mb-0 mt-0">
         <div class="time-progresssion mb-2">
             <div class="progression text-right" id="part_prog_{{ $p->id }}" style="transition: all 0.5s ease; background-color: aquamarine; width:50%; height:3px"></div>
-        </div>
+        </div> --}}
     </div>
 </div>

@@ -58,7 +58,7 @@
 
 <div class="form-row">
     <div class="form-group col-md-12">
-        <label for="type_emploi[]">Poste *</label>
+        <label for="type_emploi[]">Poste</label>
         {!! Form::select('type_emploi[]', \App\Models\Emploi::pluck('title', 'id'), null, ['class'=>'form-control select2', 'multiple']) !!}
     </div>
 </div>
@@ -66,7 +66,7 @@
 
 <div class="form-row">
     <div class="form-group col-md-12">
-        <label for="territoires[]">Territoires *</label>
+        <label for="territoires[]">Territoires</label>
         {!! Form::select('territoires[]', \App\Models\Pays::pluck('title', 'id'), null, ['class'=>'form-control select2', 'multiple']) !!}
     </div>
 </div>
