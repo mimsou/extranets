@@ -54,8 +54,11 @@
             toggleSecondary();
         });
 
-        function toggleSecondary(){
+        $(document).on('change', '#has_third_contact_switch', function(e){
+            toggleThird();
+        });
 
+        function toggleSecondary(){
             if($('#has_secondary_contact_switch').is(":checked")){
                 $('.secondary_contact').show();
             }else{
@@ -63,7 +66,16 @@
             }
         }
 
+        function toggleThird(){
+            if($('#has_third_contact_switch').is(":checked")){
+                $('.third_contact').show();
+            }else{
+                $('.third_contact').hide();
+            }
+        }
+
         toggleSecondary();
+        toggleThird();
     </script>
 
 @endsection

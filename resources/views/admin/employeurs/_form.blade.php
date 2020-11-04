@@ -71,13 +71,17 @@
 </div>
 
 <div class="form-row">
-    <div class="form-group col-md-8">
+    <div class="form-group col-md-6">
         <label for="ville">Email</label>
         {!! Form::text('contact_email', null, ['class'=>'form-control']) !!}
     </div>
     <div class="form-group col-md-4">
         <label for="province">Téléphone</label>
         {!! Form::text('contact_phone', null, ['class'=>'form-control', 'data-mask'=>'(000) 000-0000', 'placeholder'=>'(000) 000-0000']) !!}
+    </div>
+    <div class="form-group col-md-2">
+        <label for="province">Ext.</label>
+        {!! Form::text('contact_ext', null, ['class'=>'form-control', 'data-mask'=>'000000', 'placeholder'=>'000000']) !!}
     </div>
 </div>
 
@@ -111,13 +115,61 @@
     </div>
 
     <div class="form-row">
-        <div class="form-group col-md-8">
+        <div class="form-group col-md-6">
             <label for="ville">Email</label>
             {!! Form::text('secondary_contact_email', null, ['class'=>'form-control']) !!}
         </div>
         <div class="form-group col-md-4">
-            <label for="province">Téléphone</label>
+            <label for="secondary_contact_phone">Téléphone</label>
             {!! Form::text('secondary_contact_phone', null, ['class'=>'form-control', 'data-mask'=>'(000) 000-0000', 'placeholder'=>'(000) 000-0000']) !!}
+        </div>
+        <div class="form-group col-md-2">
+            <label for="secondary_contact_ext">Ext.</label>
+            {!! Form::text('secondary_contact_ext', null, ['class'=>'form-control', 'data-mask'=>'000000', 'placeholder'=>'000000']) !!}
+        </div>
+    </div>
+
+
+    <div class="form-group col-md-12 mt-3 mb-4">
+        <label class="cstm-switch">
+            <input type="checkbox" name="has_third_contact" value="yes" id="has_third_contact_switch" class="cstm-switch-input"
+            {{ (old('has_third_contact', $employeur->has_third_contact) == 'yes') ? ' checked' : '' }}>
+            <span class="cstm-switch-indicator bg-success"></span>
+            <span class="cstm-switch-description">{{ __('Ajouter un troisième contact') }}</span>
+        </label>
+    </div>
+</div>
+
+<div class="third_contact mb-4">
+    <h5 class="mt-3">Contact tertiaire</h5>
+
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label for="third_contact_prenom">Prenom</label>
+            {!! Form::text('third_contact_prenom', null, ['class'=>'form-control']) !!}
+        </div>
+        <div class="form-group col-md-4">
+            <label for="third_contact_nom">Nom</label>
+            {!! Form::text('third_contact_nom', null, ['class'=>'form-control']) !!}
+        </div>
+        <div class="form-group col-md-4">
+            <label for="third_contact_titre">Titre</label>
+            {!! Form::text('third_contact_titre', null, ['class'=>'form-control']) !!}
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="ville">Email</label>
+            {!! Form::text('third_contact_email', null, ['class'=>'form-control']) !!}
+        </div>
+        <div class="form-group col-md-4">
+            <label for="province">Téléphone</label>
+            {!! Form::text('third_contact_phone', null, ['class'=>'form-control', 'data-mask'=>'(000) 000-0000', 'placeholder'=>'(000) 000-0000']) !!}
+        </div>
+        <div class="form-group col-md-2">
+            <label for="third_contact_ext">Ext.</label>
+            {!! Form::text('third_contact_ext', null, ['class'=>'form-control', 'data-mask'=>'000000', 'placeholder'=>'000000']) !!}
         </div>
     </div>
 </div>

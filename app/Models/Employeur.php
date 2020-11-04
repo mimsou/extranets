@@ -23,12 +23,21 @@ class Employeur extends Model
                            'contact_titre',
                            'contact_email',
                            'contact_phone',
+                           'contact_ext',
                            'has_secondary_contact',
                            'secondary_contact_nom',
                            'secondary_contact_prenom',
                            'secondary_contact_titre',
                            'secondary_contact_email',
-                           'secondary_contact_phone'
+                           'secondary_contact_phone',
+                           'secondary_contact_ext',
+                           'has_third_contact',
+                           'third_contact_nom',
+                           'third_contact_prenom',
+                           'third_contact_titre',
+                           'third_contact_email',
+                           'third_contact_phone',
+                           'third_contact_ext',
                           ];
 
 
