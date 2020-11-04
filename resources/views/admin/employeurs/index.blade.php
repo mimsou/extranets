@@ -85,6 +85,7 @@
                     paging:         true,
                     serverSide:     true,
                     processing:     true,
+                    "order":        [[ 1, "asc" ]],
                     ajax: '{{ action('DatatablesController@getEmployeurs') }}',
                     columns: [
                         {data: 'statut'},
