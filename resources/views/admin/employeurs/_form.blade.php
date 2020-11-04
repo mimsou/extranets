@@ -44,7 +44,7 @@
 <div class="form-row">
     <div class="form-group col-md-6">
         <label for="ville">Pays</label>
-        {!! Form::select('pays', \App\Models\Pays::orderBy('title', 'asc')->pluck('title', 'id'), $pays, ['class'=>'form-control', 'placeholder'=>'Veuillez choisir']) !!}
+        {!! Form::select('pays_id', \App\Models\Pays::orderBy('title', 'asc')->pluck('title', 'id'), $pays, ['class'=>'form-control', 'placeholder'=>'Veuillez choisir']) !!}
     </div>
     <div class="form-group col-md-6">
         <label for="zip">Code postale</label>
