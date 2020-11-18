@@ -95,11 +95,9 @@ class ProjetController extends Controller
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'employeur_id' => 'required',
             'titre' => 'required',
             'numero' => 'required',
             'date_creation' => 'required',
-            'nb_candidats' => 'required',
         ]);
 
 
