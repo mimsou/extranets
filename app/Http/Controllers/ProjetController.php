@@ -41,11 +41,9 @@ class ProjetController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'employeur_id' => 'required',
             'titre' => 'required',
             'numero' => 'required',
             'date_creation' => 'required',
-            'nb_candidats' => 'required',
         ]);
 
 
