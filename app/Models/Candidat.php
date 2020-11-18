@@ -2,17 +2,20 @@
 
 namespace App\Models;
 
+use Str;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Classes\Utils\Logs\Loggable;
+use App\Classes\Utils\Notes\Notable;
 
 class Candidat extends Model
 {
-    use HasFactory, Loggable;
+    use HasFactory, Notable, Loggable;
 
     protected $fillable = [ 'nom',
                             'numero',
                             'statut',
+                            'statut_pt',
                             'date_debut_recrutement',
                             'date_selection',
                             'pays_recrutement',
@@ -27,10 +30,6 @@ class Candidat extends Model
                             'com_recrutement',
                             'com_immigration',
                             'com_bureau_etranger',
-                            'eimt_date_envoi',
-                            'eimt_date_accuse_rec',
-                            'eimt_date_reception',
-                            'eimt_numero',
                             'dst_date_envoi',
                             'dst_date_accuse_rec',
                             'dst_date_reception',
@@ -39,8 +38,8 @@ class Candidat extends Model
                             'permis_date_reception',
                             'permis_date_echeance',
                             'permis_date_renouvellement',
-                            'date_mandat_immigration',
-                            'immigration_user_id',
+                            // 'date_mandat_immigration',
+                            // 'immigration_user_id',
                             'recruteur_id'];
 
 
@@ -62,11 +61,43 @@ class Candidat extends Model
     }
 
     /**
-     * The news that belong to many projets.
+     * The news that belong to many demandes.
      */
-    public function projets()
+    public function demandes()
     {
-        return $this->belongsToMany('App\Models\Projet', 'projet_candidat', 'candidat_id', 'projet_id', 'id', 'id');
+        return $this->belongsToMany('App\Models\Demande', 'demande_candidat', 'candidat_id', 'demande_id', 'id', 'id');
+    }
+
+    /**
+     * The news that belong to many demandes.
+     */
+    public function demandesImmigration()
+    {
+        $d_arr = [];
+
+        foreach ($this->demandes as $key => $d) {
+            if(Str::contains($d->projet->statut, 'imm_')) array_push($d_arr, $d);
+        }
+
+        return $d_arr;
+
+        // return $this->belongsToMany('App\Models\Demande', 'demande_candidat', 'candidat_id', 'demande_id', 'id', 'id')->where('statut','LIKE','imm_%');
+    }
+
+
+    /**
+     * The news that belong to many demandes.
+     */
+    public function demandesRecrutement()
+    {
+        $d_arr = [];
+
+        foreach ($this->demandes as $key => $d) {
+            if(Str::contains($d->projet->statut, 'rec_')) array_push($d_arr, $d);
+        }
+
+        return $d_arr;
+        // return $this->belongsToMany('App\Models\Demande', 'demande_candidat', 'candidat_id', 'demande_id', 'id', 'id')->where('statut','LIKE','rec_%');
     }
 
 

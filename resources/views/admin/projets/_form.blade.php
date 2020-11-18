@@ -17,7 +17,7 @@
 
 
 
-<div class="form-row">
+{{-- <div class="form-row">
     <div class="form-group col-md-8">
         <label for="employeur_id">Employeur *</label>
         {!! Form::select('employeur_id', \App\Models\Employeur::orderBy('nom', 'ASC')->pluck('nom', 'id'), null, ['class'=>'form-control', 'required', 'placeholder'=>"Veuillez choisir employeur"]) !!}
@@ -43,7 +43,7 @@
         <label for="territoires[]">Territoires</label>
         {!! Form::select('territoires[]', \App\Models\Pays::pluck('title', 'id'), null, ['class'=>'form-control select2', 'multiple']) !!}
     </div>
-</div>
+</div> --}}
 
 
 <button type="submit" class="btn btn-success btn-cta">Enregistrer</button>

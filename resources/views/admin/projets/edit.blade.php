@@ -6,6 +6,8 @@
 
 @section('content')
     @include('admin.projets.modals.addCandidat')
+    @include('admin.projets.modals.addDemande')
+    @include('admin.projets.modals.editDemande')
 
 	<div class="bg-dark bg-dots m-b-30">
             <div class="container">
@@ -27,12 +29,11 @@
                        <div class="card py-3 m-b-30">
                            <div class="card-body">
 
-                                   	<h3 class="mb-3">{{ __("Information") }}</h3>
+                                <h3 class="mb-3">{{ __("Information") }}</h3>
 
-
-                                    {!! Form::model($projet, ['method' => 'PATCH', 'action' => ['ProjetController@update', $projet] ]) !!}
-										@include('admin.projets._formEdit')
-                                    {!! Form::close() !!}
+                                {!! Form::model($projet, ['method' => 'PATCH', 'action' => ['ProjetController@update', $projet] ]) !!}
+                                    @include('admin.projets._formEdit')
+                                {!! Form::close() !!}
 
                            </div>
                        </div>
@@ -40,22 +41,18 @@
                     </div>
 
                     <div class="col-lg-8 mt-2">
-                        @php
-                            $nb_to_fill = $projet->nb_candidats - count($projet->candidats);
-                        @endphp
+
                         <div class="row  mb-5">
-                            <div class="col-6"><button class="btn btn-secondary" data-toggle="modal" data-target="#addCandidat">AJOUTER CANDIDAT</button></div>
-                            <div class="col-6 text-right text-white"><strong style="font-size: 18px">{{ count($projet->candidats) }} / {{$projet->nb_candidats}}</strong></div>
+                            <div class="col-12">
+                                <button class="btn btn-secondary mr-2" data-toggle="modal" data-target="#addDemande"><i class="fas fa-plus-circle pr-2"></i> DEMANDE D'IMMIGRATION</button>
+                                {{-- <button class="btn btn-success mr-2" data-toggle="modal" data-target="#addDemandeRec"><i class="fas fa-plus-circle pr-2"></i> DEMANDE DE RECRUTEMENT</button> --}}
+                            </div>
+                            {{-- <div class="col-4 text-right text-white"><strong style="font-size: 18px"></strong></div> --}}
                         </div>
 
-                        @foreach ($projet->candidats as $c)
-                            @include('admin.projets.partials._candidat', ['p'=>$c])
+                        @foreach ($projet->demandes as $d)
+                            @include('admin.projets.partials._demande', ['p'=>$d])
                         @endforeach
-
-
-                        @for ($i = 0; $i < $nb_to_fill; $i++)
-                            <div class="empty-spot my-3"></div>
-                        @endfor
                     </div>
 
                 </div>
@@ -68,6 +65,45 @@
         $('.select2').select2();
 
         $('.select2_candidats').select2();
+        $('.select2_employeurs').select2();
+
+        $.ajaxSetup({ headers: { 'X-CSRF-Token' : $('meta[name="csrf-token"]').attr('content') } });
+
+        $(document).on('click', '.addCandidat', function(){
+            var demande_id = $(this).data('demandeid');
+            $('#modal_demande_id').val(demande_id);
+            $('#addCandidat').modal('toggle');
+        });
+
+        $(document).on('click', '.editdemande', function(){
+
+            $('#editDemande .modal_loading').show();
+            $('#editDemande .modal_edit_content').html('').hide();
+
+            $('#editDemande').modal('toggle');
+
+            var demande_id = $(this).data('demandeid');
+
+            $.ajax({
+                url: "{{ action('ProjetController@demandeDetails', $projet->id) }}",
+                type: 'POST',
+                data: {"demande_id":demande_id},
+                success: function(data) {
+
+                    $('#editDemande .modal_loading').hide();
+                    $('#editDemande .modal_edit_content').html(data).show();
+
+                    $('#editDemande .select2').select2();
+
+                },
+                error: function(jqXHR, status, error){
+                    console.log(jqXHR, status, error);
+                    alert(error);
+                }
+            });
+
+
+        });
     </script>
 
 @endsection

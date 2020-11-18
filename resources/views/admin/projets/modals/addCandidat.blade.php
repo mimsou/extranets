@@ -15,7 +15,7 @@
 
                     <hr>
                     {!! Form::open(['action' => array('ProjetController@addCandidat', $projet->id)]) !!}
-
+                        {!! Form::hidden('demande_id', null, ['id'=>'modal_demande_id']) !!}
                         <div class="text-left">
 
                             <div class="form-group">

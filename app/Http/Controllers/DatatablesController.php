@@ -77,7 +77,8 @@ class DatatablesController extends Controller
                             return '<a href="'.action('ProjetController@edit', $m->id).'" class="btn btn-sm btn-primary mr-3"><i class="fas fa-user-edit"></i></a> ' . $delete;
                         })
                         ->addColumn('statut_candidat', function(Projet $m){
-                            return count($m->candidats) .' / '. $m->nb_candidats;
+                            return 0;
+                            // return count($m->candidats) .' / '. $m->nb_candidats;
                         })
                         ->make(true);
     }

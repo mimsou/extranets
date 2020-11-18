@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Classes\Utils\Logs;
+namespace App\Classes\Utils\Notes;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Log extends Model
+class Note extends Model
 {
     /**
      * The attributes that are mass assignable.

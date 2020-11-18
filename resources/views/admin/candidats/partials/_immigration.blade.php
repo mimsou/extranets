@@ -2,7 +2,7 @@
     <div class="container-fluid pt-4">
         <h2 class="mb-3">Immigration</h2>
 
-        <div class="row mb-4">
+        {{-- <div class="row mb-4">
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="immigration_user_id">{{ __('Nom du responsable du projet en immigration') }}</label>
@@ -15,55 +15,105 @@
                     {{ Form::date('date_mandat_immigration', null, ['class'=>'form-control', 'placeholder'=>'Choisir un emploi', 'id'=>'date_mandat_immigration']) }}
                 </div>
             </div>
-        </div>
+        </div> --}}
+
+        @php
+            $last_demande = null;
+            $demandes = $candidat->demandesImmigration();
+
+            // EIMT
+            $eimt_date_envoi = null;
+            $eimt_date_echeance = null;
+            $eimt_date_accuse_rec = null;
+            $eimt_date_reception = null;
+            $eimt_numero = null;
+
+            foreach ($demandes as $d) {
+                $eimt_date_envoi = $d->eimt_date_envoi;
+                $eimt_date_echeance = $d->eimt_date_echeance;
+                $eimt_date_accuse_rec = $d->eimt_date_accuse_rec;
+                $eimt_date_reception = $d->eimt_date_reception;
+                $eimt_numero = $d->eimt_numero;
+            }
+
+            // DST
+            $dst_date_envoi = null;
+            $dst_date_echeance = null;
+            $dst_date_accuse_rec = null;
+            $dst_date_reception = null;
+            $dst_numero = null;
+
+            foreach ($demandes as $d) {
+                $dst_date_envoi = (is_null($candidat->dst_date_envoi))?$d->dst_date_envoi:$candidat->dst_date_envoi;
+                $dst_date_echeance = (is_null($candidat->dst_date_echeance))?$d->dst_date_echeance:$candidat->dst_date_echeance;
+                $dst_date_accuse_rec = (is_null($candidat->dst_date_accuse_rec))?$d->dst_date_accuse_rec:$candidat->dst_date_accuse_rec;
+                $dst_date_reception = (is_null($candidat->dst_date_reception))?$d->dst_date_reception:$candidat->dst_date_reception;
+                $dst_numero = (is_null($candidat->dst_numero))?$d->dst_numero:$candidat->dst_numero;
+            }
+
+        @endphp
 
         <div class="row">
             <div class="col-md-4">
                 <h4>EIMT</h4>
                 <div class="form-group">
                     <label for="eimt_date_envoi">{{ __("Date d'envoi") }}</label>
-                    {{ Form::date('eimt_date_envoi', null, ['class'=>'form-control', 'id'=>'eimt_date_envoi']) }}
+                    {{ Form::date('eimt_date_envoi', $eimt_date_envoi, ['class'=>'form-control', 'readonly', 'id'=>'eimt_date_envoi']) }}
                 </div>
 
                 <div class="form-group">
                     <label for="eimt_date_accuse_rec">{{ __("Date de l'acccusé réception") }}</label>
-                    {{ Form::date('eimt_date_accuse_rec', null, ['class'=>'form-control', 'id'=>'eimt_date_accuse_rec']) }}
+                    {{ Form::date('eimt_date_accuse_rec', $eimt_date_accuse_rec, ['class'=>'form-control', 'readonly', 'id'=>'eimt_date_accuse_rec']) }}
                 </div>
 
                 <div class="form-group">
                     <label for="eimt_date_reception">{{ __("Date de réception") }}</label>
-                    {{ Form::date('eimt_date_reception', null, ['class'=>'form-control', 'id'=>'eimt_date_reception']) }}
+                    {{ Form::date('eimt_date_reception', $eimt_date_reception, ['class'=>'form-control', 'readonly', 'id'=>'eimt_date_reception']) }}
+                </div>
+
+                <div class="form-group">
+                    <label for="eimt_date_echeance">{{ __("Date d'échéance") }}</label>
+                    {{ Form::date('eimt_date_echeance', $eimt_date_echeance, ['class'=>'form-control', 'readonly', 'id'=>'eimt_date_echeance']) }}
                 </div>
 
                 <div class="form-group">
                     <label for="eimt_numero">{{ __("Numéro") }}</label>
-                    {{ Form::text('eimt_numero', null, ['class'=>'form-control', 'id'=>'eimt_numero']) }}
+                    {{ Form::text('eimt_numero', $eimt_numero, ['class'=>'form-control', 'readonly', 'id'=>'eimt_numero']) }}
                 </div>
             </div>
             <div class="col-md-4">
                 <h4>DST</h4>
                 <div class="form-group">
                     <label for="dst_date_envoi">{{ __("Date d'envoi") }}</label>
-                    {{ Form::date('dst_date_envoi', null, ['class'=>'form-control', 'id'=>'dst_date_envoi']) }}
+                    {{ Form::date('dst_date_envoi', $dst_date_envoi, ['class'=>'form-control', 'id'=>'dst_date_envoi']) }}
                 </div>
 
                 <div class="form-group">
                     <label for="dst_date_accuse_rec">{{ __("Date de l'acccusé réception") }}</label>
-                    {{ Form::date('dst_date_accuse_rec', null, ['class'=>'form-control', 'id'=>'dst_date_accuse_rec']) }}
+                    {{ Form::date('dst_date_accuse_rec', $dst_date_accuse_rec, ['class'=>'form-control', 'id'=>'dst_date_accuse_rec']) }}
                 </div>
 
                 <div class="form-group">
                     <label for="dst_date_reception">{{ __("Date de réception") }}</label>
-                    {{ Form::date('dst_date_reception', null, ['class'=>'form-control', 'id'=>'dst_date_reception']) }}
+                    {{ Form::date('dst_date_reception', $dst_date_reception, ['class'=>'form-control', 'id'=>'dst_date_reception']) }}
+                </div>
+
+                <div class="form-group">
+                    <label for="dst_date_echeance">{{ __("Date d'échéance") }}</label>
+                    {{ Form::date('dst_date_echeance', $dst_date_echeance, ['class'=>'form-control', 'id'=>'dst_date_echeance']) }}
                 </div>
 
                 <div class="form-group">
                     <label for="dst_numero">{{ __("Numéro") }}</label>
-                    {{ Form::text('dst_numero', null, ['class'=>'form-control', 'id'=>'dst_numero']) }}
+                    {{ Form::text('dst_numero', $dst_numero, ['class'=>'form-control', 'id'=>'dst_numero']) }}
                 </div>
             </div>
             <div class="col-md-4">
                 <h4>Permis de travail</h4>
+                <div class="form-group">
+                    <label for="permis_date_envoi">{{ __("Statut du permis") }}</label>
+                    {{ Form::select('statut_pt', permisTravailStatuts(), null, ['class'=>'form-control', 'id'=>'permis_date_envoi']) }}
+                </div>
                 <div class="form-group">
                     <label for="permis_date_envoi">{{ __("Date d'envoi de la demande") }}</label>
                     {{ Form::date('permis_date_envoi', null, ['class'=>'form-control', 'id'=>'permis_date_envoi']) }}
@@ -85,13 +135,15 @@
 
         <br>
 
-        <div class="row">
-            <div class="col-lg-8">
-                <div class="form-group">
-                    <label for="com_immigration">{{ __("Commentaires en immigration des individus") }}</label>
-                    {{ Form::textarea('com_immigration', null, ['class'=>'form-control', 'placeholder'=>'Entrer vos commentaires ici', 'id'=>'com_immigration']) }}
-                </div>
-            </div>
-        </div>
+        <h2 class="mt-4">Demandes associées</h2>
+
+        @if (!count($candidat->demandesImmigration()))
+            <p><i>Aucun projet en immigration n'est associé à ce candidat. Veuillez vous rendre dans <a href="{{action('ProjetController@index')}}" style="text-decoration:underline">la section projet</a> pour créer un nouveau projet ou l'associer à un existant.</i></p>
+        @endif
+
+        @foreach ($candidat->demandesImmigration() as $p)
+            @include('admin.candidats.partials._projet', ['p'=>$p])
+        @endforeach
+
     </div>
 </div>

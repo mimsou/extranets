@@ -61,13 +61,13 @@
         </div>
 
 
-        <h2 class="mt-4">Projets associés</h2>
+        <h2 class="mt-4">Demandes associés</h2>
 
-        @if (!count($candidat->projets))
-            <p><i>Aucun projet n'est associé à ce candidat. Veuillez vous rendre dans <a href="{{action('ProjetController@index')}}" style="text-decoration:underline">la section projet</a> pour créer un nouveau projet ou l'associer à un existant.</i></p>
+        @if (!count($candidat->demandesRecrutement()))
+            <p><i>Aucun projet de recrutement n'est associé à ce candidat. Veuillez vous rendre dans <a href="{{action('ProjetController@index')}}" style="text-decoration:underline">la section projet</a> pour créer un nouveau projet ou l'associer à un existant.</i></p>
         @endif
 
-            @foreach ($candidat->projets as $p)
+            @foreach ($candidat->demandesRecrutement() as $p)
                 @include('admin.candidats.partials._projet', ['p'=>$p])
             @endforeach
     </div>

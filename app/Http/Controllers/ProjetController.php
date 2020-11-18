@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Candidat;
+use App\Models\Demande;
 use App\Models\Projet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -128,11 +129,54 @@ class ProjetController extends Controller
     }
 
 
+    public function addDemande(Request $request, $id){
+        $projet = Projet::find($id);
+        // Création de la demande
+        $projet->demandes()->create($request->all());
+
+        flash( "La demande a été ajouté au projet avec succès")->success();
+
+
+        return Redirect::back();
+    }
+
+
+    public function demandeDetails(Request $request, $id){
+        $demande = Demande::find($request->demande_id);
+        $projet = Projet::find($demande->projet_id);
+
+        return view('admin.projets.modals._editDemandeForm', compact('demande', 'projet'));
+    }
+
+
+    public function editDemande(Request $request, $id, $demandeid){
+        $demande = Demande::find($demandeid);
+        // Création de la demande
+        $demande->update($request->all());
+
+        flash( "La demande a été mise à jour avec succès")->success();
+
+        return Redirect::back();
+    }
+
+
+    public function removeDemande($id, $demande_id){
+        $demande_id = base64_decode($demande_id);
+        $demande = Demande::find($demande_id);
+
+        $demande->delete();
+
+        flash( "La demande a été supprimé avec succès")->success();
+
+        return Redirect::back();
+    }
+
 
 
     public function addCandidat(Request $request, $id){
-        $projet = Projet::find($id);
-        $candidats = $projet->candidats()->select('id')->get();
+        $demande = Demande::find($request->demande_id);
+
+        $candidats = $demande->candidats()->select('id')->get();
 
         $final_candidats = [];
         foreach($candidats as $c){
@@ -142,9 +186,9 @@ class ProjetController extends Controller
         if(!empty($request->user_id)){
             array_push($final_candidats, $request->user_id);
 
-            $projet->candidats()->sync($final_candidats);
+            $demande->candidats()->sync($final_candidats);
 
-            flash( "Le candidat a été ajouté au projet avec succès")->success();
+            flash( "Le candidat a été ajouté à la demande avec succès")->success();
         }
 
 
@@ -152,8 +196,8 @@ class ProjetController extends Controller
     }
 
     public function removeCandidat(Request $request, $id, $candidat_id){
-        $projet = Projet::find($id);
-        $candidats = $projet->candidats()->select('id')->get();
+        $demande = Demande::find($id);
+        $candidats = $demande->candidats()->select('id')->get();
 
         $candidat_id = base64_decode($candidat_id);
 
@@ -162,7 +206,7 @@ class ProjetController extends Controller
             if($candidat_id != $c->id) array_push($final_candidats, $c->id);
         }
 
-        $projet->candidats()->sync($final_candidats);
+        $demande->candidats()->sync($final_candidats);
 
         flash( "Le candidat a été retiré au projet avec succès")->success();
 

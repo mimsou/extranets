@@ -34,18 +34,14 @@
 </div>
 
 <div class="form-row">
-    <div class="form-group col-md-6">
+    <div class="form-group col-md-12">
         <label for="numero">No. de projet *</label>
         {!! Form::text('numero', null, ['class'=>'form-control', 'required']) !!}
-    </div>
-    <div class="form-group col-md-6">
-        <label for="date_creation">Date création *</label>
-        {!! Form::date('date_creation', null, ['class'=>'form-control', 'required']) !!}
     </div>
 </div>
 
 
-<div class="form-row">
+{{-- <div class="form-row">
     <div class="form-group col-md-12">
         <label for="employeur_id">Employeur *</label>
         {!! Form::select('employeur_id', \App\Models\Employeur::orderBy('nom', 'ASC')->pluck('nom', 'id'), null, ['class'=>'form-control', 'required', 'placeholder'=>"Veuillez choisir employeur"]) !!}
@@ -69,11 +65,17 @@
         <label for="territoires[]">Territoires</label>
         {!! Form::select('territoires[]', \App\Models\Pays::pluck('title', 'id'), null, ['class'=>'form-control select2', 'multiple']) !!}
     </div>
-</div>
+</div> --}}
 
 
 <h5 class="mt-4">Date importantes</h5>
 <div class="form-row">
+
+    <div class="form-group col-md-12">
+        <label for="date_creation">Date de création *</label>
+        {!! Form::date('date_creation', null, ['class'=>'form-control', 'required']) !!}
+    </div>
+
     <div class="form-group col-md-12">
         <label for="date_selection">Début de sélection</label>
         {!! Form::date('date_selection', null, ['class'=>'form-control']) !!}

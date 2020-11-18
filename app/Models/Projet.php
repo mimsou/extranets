@@ -51,9 +51,9 @@ class Projet extends Model
     /**
      * The news that belong to many candidats.
      */
-    public function candidats()
+    public function demandes()
     {
-        return $this->belongsToMany('App\Models\Candidat', 'projet_candidat', 'projet_id', 'candidat_id', 'id', 'id');
+        return $this->hasMany('App\Models\Demande', 'projet_id', 'id');
     }
 
     /**

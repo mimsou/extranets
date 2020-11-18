@@ -18,7 +18,11 @@ Route::resource('/gestion/pays', 'PaysController');
 Route::resource('/gestion/utilisateurs', 'UserController');
 
 Route::post('/projets/{id}/addCandidat', 'ProjetController@addCandidat');
+Route::post('/projets/{id}/addDemande', 'ProjetController@addDemande');
+Route::post('/projets/{id}/demandeDetails', 'ProjetController@demandeDetails');
+Route::patch('/projets/{id}/editDemande/{demandeid}', 'ProjetController@editDemande');
 Route::get('/projets/{id}/removeCandidat/{candidat_id}', 'ProjetController@removeCandidat');
+Route::get('/projets/{id}/removeDemande/{demande_id}', 'ProjetController@removeDemande');
 
 
 //Système de gestion - API AJAX Datatables
