@@ -44,8 +44,8 @@
                                         <th>Type de projet</th>
                                         <th>Numéro</th>
                                         <th>Titre</th>
-                                        <th>Employeur</th>
-                                        <th>Candidats</th>
+                                        {{-- <th>Employeur</th> --}}
+                                        {{-- <th>Candidats</th> --}}
                                         <th>Dernière modification</th>
                                         <th>Action</th>
                                     </tr>
@@ -58,8 +58,8 @@
                                         <th>Type de projet</th>
                                         <th>Numéro</th>
                                         <th>Titre</th>
-                                        <th>Employeur</th>
-                                        <th>Candidats</th>
+                                        {{-- <th>Employeur</th> --}}
+                                        {{-- <th>Candidats</th> --}}
                                         <th>Dernière modification</th>
                                         <th>Action</th>
                                     </tr>
@@ -94,8 +94,8 @@
                         {data: 'statut'},
                         {data: 'numero'},
                         {data: 'titre'},
-                        {data: 'employeur.nom'},
-                        {data: 'statut_candidat'},
+                        // {data: 'employeur.nom'},
+                        // {data: 'statut_candidat'},
                         {data: 'updated_at', class:'text-right'},
                         {data: 'action'},
                     ]

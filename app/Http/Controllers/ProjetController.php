@@ -213,7 +213,9 @@ class ProjetController extends Controller
     public function remove(Request $request){
         $projet = Projet::find($request->projet_id);
 
-        $projet->candidats()->sync([]);
+        foreach($projet->demandes as $key => $d) {
+            $d->candidats()->sync([]);
+        }
 
         $projet->delete();
 
