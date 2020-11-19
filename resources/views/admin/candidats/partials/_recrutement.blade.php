@@ -61,7 +61,7 @@
         </div>
 
 
-        <h2 class="mt-4">Demandes associés</h2>
+        <h2 class="mt-4">Demandes de recrutement associés</h2>
 
         @if (!count($candidat->demandesRecrutement()))
             <p><i>Aucun projet de recrutement n'est associé à ce candidat. Veuillez vous rendre dans <a href="{{action('ProjetController@index')}}" style="text-decoration:underline">la section projet</a> pour créer un nouveau projet ou l'associer à un existant.</i></p>

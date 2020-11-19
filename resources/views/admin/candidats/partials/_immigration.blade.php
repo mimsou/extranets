@@ -135,7 +135,7 @@
 
         <br>
 
-        <h2 class="mt-4">Demandes associées</h2>
+        <h2 class="mt-4">Demandes d'immigration associées</h2>
 
         @if (!count($candidat->demandesImmigration()))
             <p><i>Aucun projet en immigration n'est associé à ce candidat. Veuillez vous rendre dans <a href="{{action('ProjetController@index')}}" style="text-decoration:underline">la section projet</a> pour créer un nouveau projet ou l'associer à un existant.</i></p>
