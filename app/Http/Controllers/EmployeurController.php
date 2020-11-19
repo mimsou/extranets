@@ -27,7 +27,8 @@ class EmployeurController extends Controller
      */
     public function create()
     {
-        return view('admin.employeurs.create');
+        $employeur = new Employeur;
+        return view('admin.employeurs.create', compact('employeur'));
     }
 
     /**
