@@ -14,7 +14,7 @@
 
                     <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(18px, 25px, 0px);">
 
-                        <button class="dropdown-item" type="button"><a href="{{ action('ProjetController@edit', $p->id) }}" target="_blank">Fiche du projet</a></button>
+                        <button class="dropdown-item" type="button"><a href="{{ action('ProjetController@edit', $p->projet_id) }}" target="_blank">Fiche du projet</a></button>
                         {{-- <button class="dropdown-item editparticipant" type="button" data-type="" data-pid="{{ $p->id }}">Modifier le participant</button> --}}
                         <div class="dropdown-divider"></div>
                         <button class="dropdown-item delete_participant" data-pid="{{$p->id}}" type="button"><a href="{{ action('ProjetController@removeCandidat', [$p->id, base64_encode($candidat->id)]) }}">Retirer le candidat du projet</a></button>
