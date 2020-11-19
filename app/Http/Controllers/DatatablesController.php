@@ -36,7 +36,7 @@ class DatatablesController extends Controller
                             return ' -- ';
                         })
                         ->addColumn('recruteur', function (Candidat $c) {
-                            if(!is_null($c->recruteur)) return $c->recruteur->name;
+                            if(!is_null($c->recruteur)) return $c->recruteur->firstname;
                             return ' -- ';
                         })
                         ->addColumn('emploi', function (Candidat $c) {
@@ -62,7 +62,7 @@ class DatatablesController extends Controller
 
 
     public function getProjets(){
-        return Datatables::of(Projet::with('employeur'))
+        return Datatables::of(Projet::with('employeur')->select('projets.*', 'employeurs.nom'))
                         ->addColumn('statut', function(Projet $m){
                             return __($m->statut);
                         })

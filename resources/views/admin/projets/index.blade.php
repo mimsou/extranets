@@ -41,10 +41,10 @@
                             <table id="datatable" class="table" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th>Type de projet</th>
                                         <th>Numéro</th>
+                                        <th>Employeur</th>
+                                        <th>Type de projet</th>
                                         <th>Titre</th>
-                                        {{-- <th>Employeur</th> --}}
                                         {{-- <th>Candidats</th> --}}
                                         <th>Dernière modification</th>
                                         <th>Action</th>
@@ -55,10 +55,10 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th>Type de projet</th>
                                         <th>Numéro</th>
+                                        <th>Employeur</th>
+                                        <th>Type de projet</th>
                                         <th>Titre</th>
-                                        {{-- <th>Employeur</th> --}}
                                         {{-- <th>Candidats</th> --}}
                                         <th>Dernière modification</th>
                                         <th>Action</th>
@@ -91,10 +91,10 @@
                     "order":        [[ 1, "asc" ]],
                     ajax: '{{ action('DatatablesController@getProjets') }}',
                     columns: [
-                        {data: 'statut'},
                         {data: 'numero'},
+                        {data: 'employeur.nom'},
+                        {data: 'statut'},
                         {data: 'titre'},
-                        // {data: 'employeur.nom'},
                         // {data: 'statut_candidat'},
                         {data: 'updated_at', class:'text-right'},
                         {data: 'action'},

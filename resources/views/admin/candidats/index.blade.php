@@ -90,10 +90,9 @@
                         {data: 'numero'},
                         {data: 'nom'},
                         {data: 'pays', name: 'pays.title'},
-                        {data: 'recruteur', name: 'recruteur.name'},
+                        {data: 'recruteur', name: 'recruteur.firstname'},
                         {data: 'emploi', name: 'emploi.title'},
                         {data: 'regroupement', name: 'regroupement.title'},
-                        // {data: 'mission', name: 'mission.numero'},
                         {data: 'updated_at', class:'text-right'},
                         {data: 'action'},
                     ]
