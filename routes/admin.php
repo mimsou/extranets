@@ -19,6 +19,7 @@ Route::resource('/gestion/utilisateurs', 'UserController');
 
 Route::post('/projets/{id}/addCandidat', 'ProjetController@addCandidat');
 Route::post('/projets/{id}/addDemande', 'ProjetController@addDemande');
+Route::post('/projets/{id}/addDemande/getEmployeurContact', 'ProjetController@getEmployeurContact');
 Route::post('/projets/{id}/demandeDetails', 'ProjetController@demandeDetails');
 Route::patch('/projets/{id}/editDemande/{demandeid}', 'ProjetController@editDemande');
 Route::get('/projets/{id}/removeCandidat/{candidat_id}', 'ProjetController@removeCandidat');

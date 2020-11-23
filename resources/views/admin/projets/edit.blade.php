@@ -104,6 +104,39 @@
 
 
         });
+
+
+        $(document).on('change', "#addDemande #employeur_id", function(){
+            var employeur_id = $(this).val();
+            $.ajax({
+                url: "{{ action('ProjetController@getEmployeurContact', $projet->id) }}",
+                type: 'POST',
+                data: {"employeur_id":employeur_id},
+                success: function(data) {
+                    if(data !== ""){
+                        $('#addDemande #contact_prenom').val(data.contact_prenom);
+                        $('#addDemande #contact_nom').val(data.contact_nom);
+                        $('#addDemande #contact_titre').val(data.contact_titre);
+                        $('#addDemande #contact_phone').val(data.contact_phone);
+                        $('#addDemande #contact_ext').val(data.contact_ext);
+                        $('#addDemande #contact_email').val(data.contact_email);
+                    }else{
+                        $('#addDemande #contact_prenom').val("");
+                        $('#addDemande #contact_nom').val("");
+                        $('#addDemande #contact_titre').val("");
+                        $('#addDemande #contact_phone').val("");
+                        $('#addDemande #contact_ext').val("");
+                        $('#addDemande #contact_email').val("");
+                    }
+
+
+                },
+                error: function(jqXHR, status, error){
+                    console.log(jqXHR, status, error);
+                    alert(error);
+                }
+            });
+        });
     </script>
 
 @endsection

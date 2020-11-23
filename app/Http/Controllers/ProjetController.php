@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Candidat;
 use App\Models\Demande;
+use App\Models\Employeur;
 use App\Models\Projet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -165,6 +166,12 @@ class ProjetController extends Controller
         flash( "La demande a été supprimé avec succès")->success();
 
         return Redirect::back();
+    }
+
+
+
+    public function getEmployeurContact(Request $request, $id){
+        return Employeur::find($request->employeur_id);
     }
 
 

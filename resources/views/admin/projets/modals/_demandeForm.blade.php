@@ -73,30 +73,30 @@
 
             <div class="form-group col-md-4">
                 <label for="contact_prenom">Prenom</label>
-                {!! Form::text('contact_prenom', null, ['class'=>'form-control']) !!}
+                {!! Form::text('contact_prenom', null, ['class'=>'form-control', 'id'=>'contact_prenom']) !!}
             </div>
             <div class="form-group col-md-4">
                 <label for="contact_nom">Nom</label>
-                {!! Form::text('contact_nom', null, ['class'=>'form-control']) !!}
+                {!! Form::text('contact_nom', null, ['class'=>'form-control', 'id'=>'contact_nom']) !!}
             </div>
             <div class="form-group col-md-4">
                 <label for="contact_titre">Titre</label>
-                {!! Form::text('contact_titre', null, ['class'=>'form-control']) !!}
+                {!! Form::text('contact_titre', null, ['class'=>'form-control', 'id'=>'contact_titre']) !!}
             </div>
         </div>
 
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label for="ville">Email</label>
-                {!! Form::text('contact_email', null, ['class'=>'form-control']) !!}
+                {!! Form::text('contact_email', null, ['class'=>'form-control', 'id'=>'contact_email']) !!}
             </div>
             <div class="form-group col-md-4">
                 <label for="province">Téléphone</label>
-                {!! Form::text('contact_phone', null, ['class'=>'form-control', 'data-mask'=>'(000) 000-0000', 'placeholder'=>'(000) 000-0000']) !!}
+                {!! Form::text('contact_phone', null, ['class'=>'form-control', 'id'=>'contact_phone', 'data-mask'=>'(000) 000-0000', 'placeholder'=>'(000) 000-0000']) !!}
             </div>
             <div class="form-group col-md-2">
                 <label for="province">Ext.</label>
-                {!! Form::text('contact_ext', null, ['class'=>'form-control', 'data-mask'=>'000000', 'placeholder'=>'000000']) !!}
+                {!! Form::text('contact_ext', null, ['class'=>'form-control', 'id'=>'contact_ext', 'data-mask'=>'000000', 'placeholder'=>'000000']) !!}
             </div>
         </div>
 
