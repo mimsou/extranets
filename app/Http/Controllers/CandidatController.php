@@ -8,6 +8,10 @@ use App\Models\Candidat;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
+use Pion\Laravel\ChunkUpload\Exceptions\UploadMissingFileException;
+use Pion\Laravel\ChunkUpload\Handler\AbstractHandler;
+use Pion\Laravel\ChunkUpload\Handler\HandlerFactory;
+use Pion\Laravel\ChunkUpload\Receiver\FileReceiver;
 
 class CandidatController extends Controller
 {
@@ -90,6 +94,7 @@ class CandidatController extends Controller
      */
     public function update(Request $request, $id)
     {
+
         $candidat = Candidat::find($id);
         $validator = Validator::make($request->all(), [
             'nom' => 'required',
@@ -105,6 +110,10 @@ class CandidatController extends Controller
 
         $candidat->update($request->all());
 
+        if($request->file('avatar')){
+            $candidat->addMediaFromRequest('avatar')->toMediaCollection('avatar');
+        }
+
         flash('Le candidat a été mis à jour avec succès')->success();
 
         return back();
@@ -119,5 +128,41 @@ class CandidatController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    
+    /**
+     * Upload additional resources using ajax and Dropzone.js
+     *
+     * @param [type] $candidat_id
+     * @param FileReceiver $receiver
+     * @return void
+     */
+    public function uploadAddtionalResources($candidat_id, FileReceiver $receiver)
+    {
+
+        // receive the file
+        $save = $receiver->receive();
+
+        if ($save->isFinished()) {
+            $candidat = Candidat::find($candidat_id);
+            $candidat->addMedia($save->getFile())->toMediaCollection('resources');
+            $resource = $candidat->getMedia('resources')->first();
+            return response()->json([
+                'message' => 'File uploaded successfully',
+                'file_name' => $resource->file_name,
+                'size' => $resource->human_readable_size,
+                'type' => $resource->mime_type,
+                'path' => $resource->getUrl(),
+            ]);
+        }
+
+        // we are in chunk mode, lets send the current progress
+        /** @var AbstractHandler $handler */
+        $handler = $save->handler();
+        return response()->json([
+            "done" => $handler->getPercentageDone(),
+        ]);
+
     }
 }

@@ -5,8 +5,6 @@ Route::get('/', function () {
     return view('dashboard');
 })->name('dashboard');
 
-
-Route::resource('/candidats', 'CandidatController');
 Route::resource('/projets', 'ProjetController');
 Route::resource('/employeurs', 'EmployeurController');
 Route::post('/employeurs/remove', 'EmployeurController@remove');
@@ -25,6 +23,8 @@ Route::patch('/projets/{id}/editDemande/{demandeid}', 'ProjetController@editDema
 Route::get('/projets/{id}/removeCandidat/{candidat_id}', 'ProjetController@removeCandidat');
 Route::get('/projets/{id}/removeDemande/{demande_id}', 'ProjetController@removeDemande');
 
+Route::resource('/candidats', 'CandidatController');
+Route::post('/candidats/{candidat_id}/upload-addtional-reources', 'CandidatController@uploadAddtionalResources');
 
 //Système de gestion - API AJAX Datatables
 Route::prefix('api/datatables')->group(function () {

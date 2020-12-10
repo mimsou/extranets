@@ -5,6 +5,8 @@
     <link rel="stylesheet" href="{{ asset('atmos-assets/vendor/DataTables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css') }}"></link>
 @endsection
 
+
+
 @section('content')
 
     <div class="bg-dark m-b-30">
