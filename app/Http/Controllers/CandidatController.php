@@ -7,7 +7,7 @@ use Validator;
 use App\Models\Candidat;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Pion\Laravel\ChunkUpload\Exceptions\UploadMissingFileException;
 use Pion\Laravel\ChunkUpload\Handler\AbstractHandler;
 use Pion\Laravel\ChunkUpload\Handler\HandlerFactory;
@@ -164,5 +164,17 @@ class CandidatController extends Controller
             "done" => $handler->getPercentageDone(),
         ]);
 
+    }
+
+    public function addMediaCategory(Request $request) {
+        $media = Media::find($request->media_id);
+        $existing_cats = $media->getCustomProperty('categories') ?? [];
+        // dd(array_push($existing_cats, $request->category), $request->category, $existing_cats);
+        array_push($existing_cats, $request->category);
+        $media->setCustomProperty('categories', $existing_cats);
+
+        $media->save();
+        flash('Category has been added successfully')->success();
+        return back();
     }
 }

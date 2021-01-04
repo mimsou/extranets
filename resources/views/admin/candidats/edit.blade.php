@@ -6,6 +6,7 @@
 
 @section('modal')
     @include('admin.modals.preview-doc')
+    @include('admin.modals.media-category')
 @endsection
 
 @section('content')
@@ -143,7 +144,7 @@
                 method: "POST",
                 chunkSize: 30000000,
                 timeout: 2400000,
-                maxFilesize: 512,
+                maxFilesize: 5120,
                 success: function(file, response){
                     var obj = jQuery.parseJSON(file.xhr.response)
                     $('#resource_container').removeClass('d-none').addClass('d-flex');
@@ -155,9 +156,17 @@
             });
 
             $('.media-name').click(function() {
-                alert('adfad');
-                $('#preview_src').attr('src', $(this).data('src'))
+                var embed = '<embed id="preview_src" src="' + $(this).data('src') + '" width="450px" height="900px" />';
+                $('#preview_src').html(embed)
                 $('#preview_doc').modal('show')
+            })
+
+            $('#preview_doc').on('hide.bs.modal', function () {
+                $('#preview_src').html('');
+            })
+
+            $('.cat-modal').click(function() {
+                $('#media_id_cat').val($(this).data('media-id'));
             })
 
         })

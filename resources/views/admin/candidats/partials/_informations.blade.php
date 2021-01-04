@@ -49,7 +49,7 @@
                                 <div id="avatar" class="dropzone p-3 text-center" style="cursor:pointer">
                                     Click here to upload your Profile Picture.
                                 </div>
-                                <input type="file" class="avatar-file-picker" id="user_avatar" name="avatar" required style="position:relative">
+                                <input type="file" class="avatar-file-picker" id="user_avatar" name="avatar" style="position:relative">
                             </label>
                         </div>
                     </div>
@@ -62,9 +62,7 @@
                                 <div class="dz-message" data-dz-message><span>Drop your addtional resources here.</span></div>
                             </div>
                         </div>
-
                         <small class="text-muted">Saving can take some time if a video needs to be uploaded to the server.</small>
-
                     </div>
                 </div>
 
@@ -85,15 +83,30 @@
                                 <th>Name</th>
                                 <th>Type</th>
                                 <th>Modified</th>
-                                <th>Actions</th>
+                                <th>Size</th>
+                                <th>Categories</th>
+
                             </tr>
                         </thead>
+
                         <tbody>
                             @foreach ($candidat->getMedia('resources') as $media)
-                                <td><div class="media-name" data-src="{{ $media->getFullUrl() }}">{{ $media->name }}</div></td>
-                                <td>{{ $media->mime_type }}</td>
-                                <td>{{ $media->updated_at->format('m/d/Y, h:i a') }}</td>
-                                <td>{{ $media->updated_at }}</td>
+                                <tr>
+                                    <td><a class="media-name" data-src="{{ $media->getFullUrl() }}">{{ $media->name }}</a></td>
+                                    <td>{{ $media->mime_type }}</td>
+                                    <td>{{ $media->updated_at->format('m/d/Y, h:i a') }}</td>
+                                    <td>{{ $media->human_readable_size }}</td>
+                                    <td>
+                                        @if(!is_null($media->getCustomProperty('categories')))
+                                            @foreach ($media->getCustomProperty('categories') as $category)
+                                                {{ $category }}
+                                            @endforeach
+                                        @endif    
+                                        <button type="button" class="btn btn-transparent cat-modal" data-toggle="modal" data-target="#mediaCategory" data-media-id="{{ $media->id }}">
+                                        <u>Add category</u>
+                                        </button>
+                                    </td>
+                                </tr>
                             @endforeach
                         </tbody>
                         <tfoot>
@@ -101,6 +114,8 @@
                                 <th>Name</th>
                                 <th>Type</th>
                                 <th>Modified</th>
+                                <th>Size</th>
+                                <th>Categories</th>
                                 <th>Actions</th>
                             </tr>
                         </tfoot>
