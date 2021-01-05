@@ -2,11 +2,15 @@
 
 @section('head')
     <link rel="stylesheet" type="text/css" href="{{ mix('css/candidat.css') }}">
+    <link rel="stylesheet" href="{{ asset('atmos-assets/vendor/dropzone/dropzone.css') }}"/>
 @endsection
 
 @section('modal')
     @include('admin.modals.preview-doc')
     @include('admin.modals.media-category')
+    @include('admin.modals.update-avatar', [
+		'candidat' => $candidat
+	])
 @endsection
 
 @section('content')
@@ -19,8 +23,8 @@
                             <div class="media">
                                 <div class="d-inline-block m-r-10 align-middle">
                                     <div class="avatar avatar">
-                                        <span class="avatar-title rounded-circle  bg-white-translucent">
-                                            @if (!is_null($candidat->getFirstMediaUrl('avatar', 'medium')))
+                                        <span class="avatar-title rounded-circle  bg-white-translucent" @if (!is_null($candidat->getFirstMediaUrl('avatar', 'medium')) && $candidat->getFirstMediaUrl('avatar', 'medium') != "") data-toggle="modal" data-target="#modalUpdateAvatar" @endif>
+                                            @if (!is_null($candidat->getFirstMediaUrl('avatar', 'medium')) && $candidat->getFirstMediaUrl('avatar', 'medium') != "")
                                                 <img src="{{ $candidat->getFirstMediaUrl('avatar', 'medium') }}" class="avatar-img rounded-circle" />
                                             @else 
                                             {!! $candidat->statutIconHTML() !!} 
@@ -121,15 +125,20 @@
 
 @php
     $uploadAddtionalResources = action("CandidatController@uploadAddtionalResources", ["candidat_id" => $candidat->id]);
+    $uploadAvatar = action("CandidatController@updateAvatar", ["candidat_id" => $candidat->id]);
 @endphp
 
 @section('footer')
     <script src="{{ asset('js/candidat.js') }}?v1.{{rand()}}"></script>
     <script src="{{ asset('atmos-assets/vendor/dropzone/dropzone.js') }}?v=2.2.2"></script>
     <script>
+        Dropzone.autoDiscover = false;
         $(document).ready(function() {
+
+          
+
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-            $('#user_avatar').change(function(e) {
+            $('#user_avatar_preview').change(function(e) {
                 var fileName = e.target.files[0].name;
                 $('#avatar').text(fileName);
             });
@@ -155,6 +164,32 @@
                 }
             });
 
+            $("div#avatar").dropzone({
+                url: '{{ $uploadAvatar }}',
+                headers: {
+                        'x-csrf-token': CSRF_TOKEN,
+                    },
+                method: "POST",
+                success: function(file, response){
+                }
+            });
+
+            $("div#update-avatar").dropzone({
+                url: '{{ $uploadAvatar }}',
+                headers: {
+                        'x-csrf-token': CSRF_TOKEN,
+                    },
+                method: "POST",
+                success: function(file, response){
+                    window.location.reload()
+                }
+            });
+
+            
+            
+
+
+
             $('.media-name').click(function() {
                 var embed = '<embed id="preview_src" src="' + $(this).data('src') + '" width="450px" height="900px" />';
                 $('#preview_src').html(embed)
@@ -171,5 +206,5 @@
 
         })
     </script>
-    <link rel="stylesheet" href="{{ asset('atmos-assets/vendor/dropzone/dropzone.css') }}"/>
+  
 @endsection

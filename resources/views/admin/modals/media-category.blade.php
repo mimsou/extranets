@@ -8,19 +8,18 @@
                 </button>
             </div>
             <div class="modal-body py-3 m-b-30">
-                        {!! Form::open(['action' => ['CandidatController@addMediaCategory'] ]) !!}
-                            <div class="form-group">
-                                <label for="nom">{{ __('Category Title') }} *</label>
-                                {{ Form::text('category', null, ['required', 'class'=>'form-control', 'id'=>'nom']) }}
-                                {{ Form::text('media_id', null, ['required', 'class'=>'form-control', 'id'=>'media_id_cat']) }}
+                {!! Form::open(['action' => ['CandidatController@addMediaCategory'] ]) !!}
+                    <div class="form-group">
+                        <label for="nom">{{ __('Category Title') }} *</label>
+                        {{ Form::text('category', null, ['required', 'class'=>'form-control', 'id'=>'nom']) }}
+                        {{ Form::hidden('media_id', null, ['required', 'class'=>'form-control', 'id'=>'media_id_cat']) }}
 
-                            </div>
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-sm btn-success">Add Category</button>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-sm btn-success">Add Category</button>
 
-                            </div>
-                        {!! Form::close() !!}
-
+                    </div>
+                {!! Form::close() !!}
             </div>
         </div>
     </div>

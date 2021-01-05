@@ -43,13 +43,12 @@
                          <label for="avatar">{{ __('Profile Picture:') }}</label>
                         <div class="form-group">
                             @if (!is_null($candidat->getFirstMediaUrl('avatar', 'medium')))
-                                <img src="{{ $candidat->getFirstMediaUrl('avatar', 'medium') }}" class="rounded img-thumbnail"/>
+                                <img src="{{ $candidat->getFirstMediaUrl('avatar', 'medium') }}" class="rounded img-thumbnail" id="user_avatar_preview"/>
                             @endif
                             <label class="avatar-input" style="width: 100%">
                                 <div id="avatar" class="dropzone p-3 text-center" style="cursor:pointer">
-                                    Click here to upload your Profile Picture.
+                                    <div class="dz-message" data-dz-message><span>Drag and drop your avatar here.</span></div>
                                 </div>
-                                <input type="file" class="avatar-file-picker" id="user_avatar" name="avatar" style="position:relative">
                             </label>
                         </div>
                     </div>
@@ -85,7 +84,7 @@
                                 <th>Modified</th>
                                 <th>Size</th>
                                 <th>Categories</th>
-
+                                <th>Actions</th>
                             </tr>
                         </thead>
 

@@ -110,10 +110,6 @@ class CandidatController extends Controller
 
         $candidat->update($request->all());
 
-        if($request->file('avatar')){
-            $candidat->addMediaFromRequest('avatar')->toMediaCollection('avatar');
-        }
-
         flash('Le candidat a été mis à jour avec succès')->success();
 
         return back();
@@ -176,5 +172,19 @@ class CandidatController extends Controller
         $media->save();
         flash('Category has been added successfully')->success();
         return back();
+    }
+
+    public function updateAvatar($candidat_id, Request $request) 
+    {
+        $candidat = Candidat::find($candidat_id);
+
+        if($request->has('file')){
+            $candidat->addMediaFromRequest('file')->toMediaCollection('avatar');
+        }
+
+        return response()->json([
+            'success' => true
+        ]);
+
     }
 }
