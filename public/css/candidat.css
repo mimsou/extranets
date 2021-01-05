@@ -14,3 +14,8 @@
   cursor: pointer;
 }
 
+.select2-container {
+  width: 100% !important;
+  padding: 0;
+}
+

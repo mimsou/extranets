@@ -162,18 +162,22 @@ class CandidatController extends Controller
 
     }
 
+    /**
+     * Add Media categories 
+     * 
+     */
     public function addMediaCategory(Request $request) {
         $media = Media::find($request->media_id);
-        $existing_cats = $media->getCustomProperty('categories') ?? [];
-        // dd(array_push($existing_cats, $request->category), $request->category, $existing_cats);
-        array_push($existing_cats, $request->category);
-        $media->setCustomProperty('categories', $existing_cats);
-
+        $media->setCustomProperty('categories', $request->category);
         $media->save();
         flash('Category has been added successfully')->success();
         return back();
     }
 
+    /**
+     * Update the profile picture of candidat
+     * 
+     */
     public function updateAvatar($candidat_id, Request $request) 
     {
         $candidat = Candidat::find($candidat_id);
@@ -186,5 +190,14 @@ class CandidatController extends Controller
             'success' => true
         ]);
 
+    }
+
+    /**
+     * Get media categories
+     * 
+     */
+    public function getMediaCategories(Request $request) {
+        $media_cats = Media::find($request->media_id)->getCustomProperty('categories');
+        return $media_cats;
     }
 }

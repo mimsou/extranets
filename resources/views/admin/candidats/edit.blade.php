@@ -65,6 +65,7 @@
                             @include('admin.candidats.partials._recrutement')
                             {{-- @include('admin.candidats.partials._administration') --}}
                             @include('admin.candidats.partials._immigration')
+                            @include('admin.candidats.partials._resources')
                             @include('admin.candidats.partials._commentaires')
                             @include('admin.candidats.partials._historique')
 
@@ -134,10 +135,9 @@
     <script>
         Dropzone.autoDiscover = false;
         $(document).ready(function() {
-
-          
-
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+            $.ajaxSetup({ headers: { 'X-CSRF-Token' : CSRF_TOKEN } });
+
             $('#user_avatar_preview').change(function(e) {
                 var fileName = e.target.files[0].name;
                 $('#avatar').text(fileName);
@@ -186,10 +186,6 @@
             });
 
             
-            
-
-
-
             $('.media-name').click(function() {
                 var embed = '<embed id="preview_src" src="' + $(this).data('src') + '" width="450px" height="900px" />';
                 $('#preview_src').html(embed)
@@ -201,9 +197,27 @@
             })
 
             $('.cat-modal').click(function() {
+                var media_id = $(this).data('media-id');
                 $('#media_id_cat').val($(this).data('media-id'));
+                $.ajax({
+                    url: "{{ action('CandidatController@getMediaCategories') }}",
+                    type: 'POST',
+                    data: {"media_id":media_id},
+                    success: function(data) {
+                       $('.select2_media_cat').val(data).trigger('change');
+                    },
+                    error: function(jqXHR, status, error){
+                        console.log(jqXHR, status, error);
+                    }
+                });
             })
 
+            $('.select2_media_cat').select2({
+                placeholder: 'Entrer un category',
+                tags: true,
+                 width: 'element',
+            });
+            
         })
     </script>
   

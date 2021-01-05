@@ -11,7 +11,14 @@
                 {!! Form::open(['action' => ['CandidatController@addMediaCategory'] ]) !!}
                     <div class="form-group">
                         <label for="nom">{{ __('Category Title') }} *</label>
-                        {{ Form::text('category', null, ['required', 'class'=>'form-control', 'id'=>'nom']) }}
+                        <?
+                            $categories = mediaCategories(); 
+                        ?>
+                        <select name="category[]" id="ip" class="select2 select2_media_cat" multiple="multiple">
+                            @foreach ($categories as $cat)
+                                <option value="{{ $cat }}">{{ $cat }}</option>
+                            @endforeach
+                        </select>
                         {{ Form::hidden('media_id', null, ['required', 'class'=>'form-control', 'id'=>'media_id_cat']) }}
 
                     </div>
