@@ -212,4 +212,14 @@ class CandidatController extends Controller
         flash('File has been deleted successfully')->success();
         return Redirect::to($request->redirect_to);
     }
+
+    /**
+     * Delete candidat 
+     * 
+     */
+    public function remove(Request $request){
+        Candidat::find($request->candidat_id)->delete();
+        flash("L'candidat a été supprimé avec succès")->success();
+        return Redirect::to($request->redirect_to);
+    }
 }

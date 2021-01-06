@@ -5,6 +5,15 @@
     <link rel="stylesheet" href="{{ asset('atmos-assets/vendor/DataTables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css') }}"></link>
 @endsection
 
+@section('modal')
+    @include('admin.modals.confirmation', [
+		'ident' => 'removeCandidat',
+		'title' => __('Êtes-vous certain?'),
+		'text' => __('Voulez-vous vraiment supprimer?'),
+		'controller' => action('CandidatController@remove'),
+		'redirect' => action('CandidatController@index')
+    ])
+@endsection
 
 
 @section('content')
@@ -41,7 +50,7 @@
                                         <th>Regroupement</th>
                                         {{-- <th>Mission</th> --}}
                                         <th>Dernière modification</th>
-                                        <th>Action</th>
+                                        <th width="60px">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -99,6 +108,13 @@
                         {data: 'action'},
                     ]
                 });
+
+                $(document).on('click', '.delete_candidate', function(e) {
+                    var id = $(this).data('candidat');
+                    $("#modalConfirmation_removeCandidat .modal-body .hiddenfields").html("<input type='hidden' name='candidat_id' value='"+id+"'>");
+                    $('#modalConfirmation_removeCandidat').modal('toggle');
+
+                })
             });
         })(window.jQuery);
     </script>
