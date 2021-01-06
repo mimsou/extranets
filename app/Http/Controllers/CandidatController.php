@@ -200,4 +200,16 @@ class CandidatController extends Controller
         $media_cats = Media::find($request->media_id)->getCustomProperty('categories');
         return $media_cats;
     }
+
+    /** 
+     * Delete media of a candidat
+     * 
+     */
+    public function removeMedia(Request $request)
+    {
+        $media = Media::find($request->mediaid);
+        $media->delete();
+        flash('File has been deleted successfully')->success();
+        return Redirect::to($request->redirect_to);
+    }
 }

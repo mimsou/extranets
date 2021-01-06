@@ -10,7 +10,14 @@
     @include('admin.modals.media-category')
     @include('admin.modals.update-avatar', [
 		'candidat' => $candidat
-	])
+    ])
+    @include('admin.modals.confirmation', [
+		'ident' => 'removeFile',
+		'title' => __('Êtes-vous certain?'),
+		'text' => __('Voulez-vous vraiment supprimer le file? <br><h5>Cette action est irréversible.</h5>'),
+		'controller' => action('CandidatController@removeMedia'),
+		'redirect' => action('CandidatController@edit', $candidat->id).'#resources'
+    ])
 @endsection
 
 @section('content')
@@ -215,7 +222,15 @@
             $('.select2_media_cat').select2({
                 placeholder: 'Entrer un category',
                 tags: true,
-                 width: 'element',
+                width: 'element',
+            });
+
+
+             $(document).on('click', '.delete_media', function(e){
+                e.preventDefault();
+                var id = $(this).data('mediaid');
+                $("#modalConfirmation_removeFile .modal-body .hiddenfields").html("<input type='hidden' name='mediaid' value='"+id+"'>");
+                $('#modalConfirmation_removeFile').modal('toggle');
             });
             
         })

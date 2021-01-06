@@ -28,6 +28,7 @@ Route::post('/candidats/{candidat_id}/upload-addtional-reources', 'CandidatContr
 Route::post('/candidats/media-category', 'CandidatController@addMediaCategory');
 Route::post('/candidats/{candidat_id}/update-avatar', 'CandidatController@updateAvatar');
 Route::post('/candidats/media-categories', 'CandidatController@getMediaCategories');
+Route::post('/candidats/media-remove', 'CandidatController@removeMedia');
 
 //Système de gestion - API AJAX Datatables
 Route::prefix('api/datatables')->group(function () {

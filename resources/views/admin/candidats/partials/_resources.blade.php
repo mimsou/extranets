@@ -65,6 +65,9 @@
                                         <u>Add category</u>
                                         </button>
                                     </td>
+                                    <td>
+                                        <button type="button" class="btn btn-sm btn-danger delete_media" data-mediaid="{{ $media->id }}"><i class="fas fa-trash"></i></button>
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>
