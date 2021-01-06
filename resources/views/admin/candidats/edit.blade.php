@@ -3,6 +3,8 @@
 @section('head')
     <link rel="stylesheet" type="text/css" href="{{ mix('css/candidat.css') }}">
     <link rel="stylesheet" href="{{ asset('atmos-assets/vendor/dropzone/dropzone.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('atmos-assets/vendor/DataTables/datatables.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('atmos-assets/vendor/DataTables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css') }}" />
 @endsection
 
 @section('modal')
@@ -139,11 +141,16 @@
 @section('footer')
     <script src="{{ asset('js/candidat.js') }}?v1.{{rand()}}"></script>
     <script src="{{ asset('atmos-assets/vendor/dropzone/dropzone.js') }}?v=2.2.2"></script>
+    <script src="{{ asset('atmos-assets/vendor/DataTables/datatables.min.js') }}"></script>
     <script>
         Dropzone.autoDiscover = false;
         $(document).ready(function() {
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
             $.ajaxSetup({ headers: { 'X-CSRF-Token' : CSRF_TOKEN } });
+
+            $('#datatable').DataTable({
+                "order": [[ 1, "desc" ]]
+            });
 
             $('#user_avatar_preview').change(function(e) {
                 var fileName = e.target.files[0].name;
@@ -194,7 +201,7 @@
 
             
             $('.media-name').click(function() {
-                var embed = '<embed id="preview_src" src="' + $(this).data('src') + '" width="450px" height="900px" />';
+                var embed = '<embed id="preview_src" src="' + $(this).data('src') + '" width="450px" />';
                 $('#preview_src').html(embed)
                 $('#preview_doc').modal('show')
             })

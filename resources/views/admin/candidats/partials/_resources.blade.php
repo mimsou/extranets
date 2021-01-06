@@ -12,9 +12,18 @@
                         </div>
                     @endif --}}
                     <label class="avatar-input" style="width: 100%">
-                        <div id="avatar" class="dropzone p-3 text-center" style="cursor:pointer">
-                            <div class="dz-message" data-dz-message><span>Drag and drop your avatar here.</span></div>
-                        </div>
+                        @if (!is_null($candidat->getFirstMediaUrl('avatar', 'medium')) && $candidat->getFirstMediaUrl('avatar', 'medium') != "")
+                            <div class="avatar avatar-xxl">
+                                <img src="{{ $candidat->getFirstMediaUrl('avatar', 'medium') }}" class="avatar-img rounded">
+                            </div><br>
+
+                            <button type="button" class="mt-2 btn-sm btn-primary" data-toggle="modal" data-target="#modalUpdateAvatar">Change profile picture</button><br>
+                            <button type="button" class="mt-2 btn-sm btn-danger delete_media" data-mediaid="{{ $candidat->getFirstMedia('avatar')->id }}">Remove profile picture</button>
+                        @else
+                            <div id="avatar" class="dropzone p-3 text-center" style="cursor:pointer">
+                                <div class="dz-message" data-dz-message><span>Drag and drop your avatar here.</span></div>
+                            </div>
+                        @endif    
                     </label>
                 </div>
             </div>
