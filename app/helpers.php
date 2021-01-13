@@ -249,3 +249,20 @@ if (!function_exists('permisTravailStatuts')) {
         }
     }
 }
+
+/**
+ * Get a list of all media categories in array
+ * 
+ */
+if(!function_exists('mediaCategories')) {
+    function mediaCategories() {
+        $categories = [];
+        $medias = \Spatie\MediaLibrary\MediaCollections\Models\Media::all();
+        foreach($medias as $media) {
+            if(!is_null($media->getCustomProperty('categories'))) {
+                $categories = array_unique(array_merge($categories, $media->getCustomProperty('categories')));
+            }
+        }
+        return array_filter($categories, 'strlen');
+    }
+}

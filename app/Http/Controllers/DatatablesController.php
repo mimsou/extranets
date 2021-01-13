@@ -55,7 +55,11 @@ class DatatablesController extends Controller
                             return $c->updated_at->diffForHumans() .'<br><small>'.$c->updated_at.'</small>';
                         })
                         ->addColumn('action', function(Candidat $c){
-                            return '<a href="'.action('CandidatController@edit', $c->id).'" class="btn btn-sm btn-primary"><i class="fas fa-user-edit"></i></a>';
+                            $delete = '';
+                            if($c->demandes()->count() == 0) 
+                                $delete = '<button class="btn btn-sm btn-danger delete_candidate" data-candidat="'.$c->id.'"><i class="fas fa-trash"></i></button>';
+
+                            return '<a href="'.action('CandidatController@edit', $c->id).'" class="btn btn-sm btn-primary mr-2"><i class="fas fa-user-edit"></i></a>' . $delete;
                         })
                         ->make(true);
     }

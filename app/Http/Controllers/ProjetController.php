@@ -228,9 +228,7 @@ class ProjetController extends Controller
         foreach($projet->demandes as $key => $d) {
             $d->candidats()->sync([]);
         }
-
         $projet->delete();
-
         flash( "Le projet a été supprimé avec succès")->success();
         return Redirect::to($request->redirect_to);
     }

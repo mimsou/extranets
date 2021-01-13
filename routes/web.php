@@ -17,4 +17,3 @@ Route::get('/', function () {
     return Redirect::to('/admin');
 });
 
-

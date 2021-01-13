@@ -39,8 +39,6 @@
                         </div>
                     </div>
                 </div>
-
-
             </div>
             <div class="col-md-6">
 
@@ -49,7 +47,7 @@
                     {{ Form::textarea('com_candidat', null, ['class'=>'form-control', 'placeholder'=>'Entrer vos commentaires ici', 'id'=>'com_candidat']) }}
                 </div>
             </div>
-
+            <hr>
         </div>
     </div>
 </div>

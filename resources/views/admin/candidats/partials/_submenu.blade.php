@@ -9,6 +9,13 @@
         Recrutement
     </div>
 </a>
+
+<a href="#resources" class="mail-sidebar-item btn-ghost">
+    <div class="w-100 text-truncate">
+        Resources
+    </div>
+</a>
+
 {{-- <a href="#administration" class=" mail-sidebar-item btn-ghost">
     <div class="w-100 text-truncate">
         Administration
@@ -32,7 +39,6 @@
         Commentaires
     </div>
 </a>
-
 
 <a href="#historique" class=" mail-sidebar-item btn-ghost">
     <div class="w-100 text-truncate">

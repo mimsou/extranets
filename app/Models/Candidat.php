@@ -7,10 +7,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Classes\Utils\Logs\Loggable;
 use App\Classes\Utils\Notes\Notable;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\Image\Manipulations;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class Candidat extends Model
+
+class Candidat extends Model implements HasMedia
 {
-    use HasFactory, Notable, Loggable;
+    use HasFactory, Notable, Loggable, InteractsWithMedia;
 
     protected $fillable = [ 'nom',
                             'numero',
@@ -40,7 +45,8 @@ class Candidat extends Model
                             'permis_date_renouvellement',
                             // 'date_mandat_immigration',
                             // 'immigration_user_id',
-                            'recruteur_id'];
+                            'recruteur_id'
+                        ];
 
 
 
@@ -150,4 +156,61 @@ class Candidat extends Model
 
         return ucfirst($this->statut);
     }
+
+    /**
+     * Register Media Collections
+     * 
+     */
+	public function registerMediaCollections(): void {
+        
+        $this->addMediaCollection('avatar')
+                ->singleFile()
+                ->registerMediaConversions(function (Media $media) {
+                    $this->addMediaConversion('thumb')
+                        ->fit(Manipulations::FIT_FILL, 100, 100)
+                        ->sharpen(10)
+                        ->performOnCollections('avatar');
+
+                    $this->addMediaConversion('medium')
+                        ->width(250)
+                        ->sharpen(10)
+                        ->performOnCollections('avatar');
+
+                    $this->addMediaConversion('large')
+                        ->width(500)
+                        ->sharpen(10)
+                        ->performOnCollections('avatar');
+
+                    $this->addMediaConversion('xlarge')
+                        ->width(1000)
+                        ->sharpen(10)
+                            ->performOnCollections('avatar');
+                });
+
+        $this->addMediaCollection('resources')
+                ->registerMediaConversions(function (Media $media) {
+                    $this->addMediaConversion('thumb')
+                        ->fit(Manipulations::FIT_FILL, 100, 100)
+                        ->sharpen(10)
+                        ->performOnCollections('resources');
+
+                    $this->addMediaConversion('medium')
+                        ->width(250)
+                        ->sharpen(10)
+                        ->performOnCollections('resources');
+
+                    $this->addMediaConversion('large')
+                        ->width(500)
+                        ->sharpen(10)
+                        ->performOnCollections('resources');
+
+                    $this->addMediaConversion('xlarge')
+                        ->width(1000)
+                        ->sharpen(10)
+                        ->performOnCollections('resources');
+                });    
+    }
+    
+
+
 }

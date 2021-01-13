@@ -5,8 +5,6 @@ Route::get('/', function () {
     return view('dashboard');
 })->name('dashboard');
 
-
-Route::resource('/candidats', 'CandidatController');
 Route::resource('/projets', 'ProjetController');
 Route::resource('/employeurs', 'EmployeurController');
 Route::post('/employeurs/remove', 'EmployeurController@remove');
@@ -16,6 +14,7 @@ Route::resource('/gestion/regroupements', 'RegroupementController');
 Route::resource('/gestion/emplois', 'EmploiController');
 Route::resource('/gestion/pays', 'PaysController');
 Route::resource('/gestion/utilisateurs', 'UserController');
+Route::post('/gestion/utilisateurs/{id}/saveComment', 'UserController@saveComment');
 
 Route::post('/projets/{id}/addCandidat', 'ProjetController@addCandidat');
 Route::post('/projets/{id}/addDemande', 'ProjetController@addDemande');
@@ -25,7 +24,15 @@ Route::patch('/projets/{id}/editDemande/{demandeid}', 'ProjetController@editDema
 Route::get('/projets/{id}/removeCandidat/{candidat_id}', 'ProjetController@removeCandidat');
 Route::get('/projets/{id}/removeDemande/{demande_id}', 'ProjetController@removeDemande');
 
-Route::post('/gestion/utilisateurs/{id}/saveComment', 'UserController@saveComment');
+
+Route::resource('/candidats', 'CandidatController');
+Route::post('/candidats/{candidat_id}/upload-addtional-reources', 'CandidatController@uploadAddtionalResources');
+Route::post('/candidats/media-category', 'CandidatController@addMediaCategory');
+Route::post('/candidats/{candidat_id}/update-avatar', 'CandidatController@updateAvatar');
+Route::post('/candidats/media-categories', 'CandidatController@getMediaCategories');
+Route::post('/candidats/media-remove', 'CandidatController@removeMedia');
+Route::post('/candidat/remove', 'CandidatController@remove');
+
 
 //Système de gestion - API AJAX Datatables
 Route::prefix('api/datatables')->group(function () {
