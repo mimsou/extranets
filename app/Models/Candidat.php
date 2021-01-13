@@ -73,15 +73,15 @@ class Candidat extends Model
      */
     public function demandesImmigration()
     {
-        $d_arr = [];
+        // $d_arr = [];
 
-        foreach ($this->demandes as $key => $d) {
-            if(Str::contains($d->projet->statut, 'imm_')) array_push($d_arr, $d);
-        }
+        // foreach ($this->demandes as $key => $d) {
+        //     if(Str::contains($d->projet->statut, 'imm_')) array_push($d_arr, $d);
+        // }
 
-        return $d_arr;
+        // return $d_arr;
 
-        // return $this->belongsToMany('App\Models\Demande', 'demande_candidat', 'candidat_id', 'demande_id', 'id', 'id')->where('statut','LIKE','imm_%');
+        return $this->belongsToMany('App\Models\Demande', 'demande_candidat', 'candidat_id', 'demande_id', 'id', 'id')->where('type','LIKE','immigration');
     }
 
 
@@ -90,14 +90,14 @@ class Candidat extends Model
      */
     public function demandesRecrutement()
     {
-        $d_arr = [];
+        // $d_arr = [];
 
-        foreach ($this->demandes as $key => $d) {
-            if(Str::contains($d->projet->statut, 'rec_')) array_push($d_arr, $d);
-        }
+        // foreach ($this->demandes as $key => $d) {
+        //     if(Str::contains($d->projet->statut, 'rec_')) array_push($d_arr, $d);
+        // }
 
-        return $d_arr;
-        // return $this->belongsToMany('App\Models\Demande', 'demande_candidat', 'candidat_id', 'demande_id', 'id', 'id')->where('statut','LIKE','rec_%');
+        // return $d_arr;
+        return $this->belongsToMany('App\Models\Demande', 'demande_candidat', 'candidat_id', 'demande_id', 'id', 'id')->where('type','LIKE','recrutement');
     }
 
 

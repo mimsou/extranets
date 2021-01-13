@@ -25,6 +25,7 @@ Route::patch('/projets/{id}/editDemande/{demandeid}', 'ProjetController@editDema
 Route::get('/projets/{id}/removeCandidat/{candidat_id}', 'ProjetController@removeCandidat');
 Route::get('/projets/{id}/removeDemande/{demande_id}', 'ProjetController@removeDemande');
 
+Route::post('/gestion/utilisateurs/{id}/saveComment', 'UserController@saveComment');
 
 //Système de gestion - API AJAX Datatables
 Route::prefix('api/datatables')->group(function () {

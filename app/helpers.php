@@ -148,6 +148,28 @@ if (!function_exists('get_client_ip')) {
 ]);
 
 
+!defined('STATUTS_DEMANDE_REC') && define('STATUTS_DEMANDE_REC', [
+    ['progression' => '3%', 'val' => 'reception_os_signee', 'title' => "Réception de l'OS signée (IE & Client)"],
+    ['progression' => '5%', 'val' => 'reunion_demarrage', 'title' => 'Réunion de démarrage du projet'],
+    ['progression' => '7%', 'val' => 'definition_besoins', 'title' => "Définition du besoin détaillé avec le client"],
+    ['progression' => '10%', 'val' => 'creation_projet_mission', 'title' => "Création du projet / mission"],
+    ['progression' => '15%', 'val' => 'affichage_poste', 'title' => "Affichage des postes et recherches de candidatures"],
+    ['progression' => '17%', 'val' => 'confirmation_logistique', 'title' => "Confirmation finale de la logistique de mission"],
+    ['progression' => '20%', 'val' => 'analyse_candidatures', 'title' => "Analyse des candidatures (validation des cibles à atteindre)"],
+    ['progression' => '30%', 'val' => 'entretiens_tel', 'title' => "Entretien téléphonique (QT)"],
+    ['progression' => '35%', 'val' => 'convication', 'title' => "Convocation des candidats"],
+    ['progression' => '50%', 'val' => 'mission_rec_entrevue', 'title' => "Mission de recrutement / entrevue de sélection"],
+    ['progression' => '60%', 'val' => 'mission_rec_test', 'title' => "Mission de recrutement / test théoriques et pratiques"],
+    ['progression' => '65%', 'val' => 'debriefing_mission', 'title' => "Débriefing de mission"],
+    ['progression' => '70%', 'val' => 'preparation_dossiers', 'title' => "Préparation des dossiers de candidatures retenus"],
+    ['progression' => '75%', 'val' => 'selection_finale', 'title' => "Sélection finale des candidats"],
+    ['progression' => '80%', 'val' => 'document_candidat', 'title' => "Cueillette des documents du candidat"],
+    ['progression' => '95%', 'val' => 'signature_contrats', 'title' => "Signature des contrats de travail"],
+    ['progression' => '100%', 'val' => 'transfert_imm', 'title' => "Transfert des dossiers à l’immigration"],
+    ['progression' => '0%', 'val' => 'annule', 'title' => 'Dossier suspendu/annulé'],
+]);
+
+
 /**
  * Manage the DEMANDE status globally
  * @param  [FLOAT]  $version Version to compare
@@ -155,9 +177,11 @@ if (!function_exists('get_client_ip')) {
  */
 if (!function_exists('demandeStatuts')) {
 
-    function demandeStatuts($key = null){
+    function demandeStatuts($key = null, $target=null){
+        if(is_null($target)) $target = STATUTS_DEMANDE;
+
         $select_array = [];
-        foreach (STATUTS_DEMANDE as $value) {
+        foreach ($target as $value) {
             if(!is_null($key) && $value['val'] == $key) return $value['title'];
 
             $select_array[$value['val']] = $value['title'];
@@ -165,9 +189,11 @@ if (!function_exists('demandeStatuts')) {
         return $select_array;
     }
 
-    function demandeStatutsDate($key = null){
+    function demandeStatutsDate($key = null, $target=null){
+        if(is_null($target)) $target = STATUTS_DEMANDE;
+
         $select_array = [];
-        foreach (STATUTS_DEMANDE as $value) {
+        foreach ($target as $value) {
             if(!is_null($key) && $value['val'] == $key) return $value['title'];
 
             $select_array[$value['val']] = $value['title'];
@@ -175,8 +201,10 @@ if (!function_exists('demandeStatuts')) {
         return $select_array;
     }
 
-    function demandeProgression($val){
-        foreach (STATUTS_DEMANDE as $value) {
+    function demandeProgression($val, $target=null){
+        if(is_null($target)) $target = STATUTS_DEMANDE;
+
+        foreach ($target as $value) {
             if($val == $value['val']) return $value['progression'];
         }
     }

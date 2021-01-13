@@ -135,6 +135,21 @@ class UserController extends Controller
         return Redirect::action('UserController@edit', $user->id);
     }
 
+
+    public function saveComment(Request $request){
+        // dd($request->all());
+
+        $class = $request->model_type;
+        $model = $class::where('id', '=', $request->model_id)->first();
+
+        if(!is_null($model)){
+            $n = $model->noteThat($request->message, $request->category);
+            return view('admin.partials._message', compact('n'));
+        }else{
+            return 'model does not exist';
+        }
+    }
+
     /**
      * Remove the specified resource from storage.
      *

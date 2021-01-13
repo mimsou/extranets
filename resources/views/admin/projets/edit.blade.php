@@ -5,9 +5,12 @@
 @endsection
 
 @section('content')
+@include('admin.partials._notes', ['model'=>$projet])
     @include('admin.projets.modals.addCandidat')
     @include('admin.projets.modals.addDemande')
+    @include('admin.projets.modals.addDemandeRec')
     @include('admin.projets.modals.editDemande')
+
 
 	<div class="bg-dark bg-dots m-b-30">
             <div class="container">
@@ -44,14 +47,14 @@
 
                         <div class="row  mb-5">
                             <div class="col-12">
-                                <button class="btn btn-secondary mr-2" data-toggle="modal" data-target="#addDemande"><i class="fas fa-plus-circle pr-2"></i> DEMANDE D'IMMIGRATION</button>
-                                {{-- <button class="btn btn-success mr-2" data-toggle="modal" data-target="#addDemandeRec"><i class="fas fa-plus-circle pr-2"></i> DEMANDE DE RECRUTEMENT</button> --}}
+                                <button class="btn btn-danger mr-2" data-toggle="modal" data-target="#addDemande"><i class="fas fa-plus-circle pr-2"></i> DEMANDE D'IMMIGRATION</button>
+                                <button class="btn btn-secondary mr-2" data-toggle="modal" data-target="#addDemandeRec"><i class="fas fa-plus-circle pr-2"></i> DEMANDE DE RECRUTEMENT</button>
                             </div>
                             {{-- <div class="col-4 text-right text-white"><strong style="font-size: 18px"></strong></div> --}}
                         </div>
 
                         @foreach ($projet->demandes as $d)
-                            @include('admin.projets.partials._demande', ['p'=>$d])
+                                @include('admin.projets.partials._demande-'.$d->type, ['p'=>$d])
                         @endforeach
                     </div>
 
@@ -127,6 +130,38 @@
                         $('#addDemande #contact_phone').val("");
                         $('#addDemande #contact_ext').val("");
                         $('#addDemande #contact_email').val("");
+                    }
+
+
+                },
+                error: function(jqXHR, status, error){
+                    console.log(jqXHR, status, error);
+                    alert(error);
+                }
+            });
+        });
+
+        $(document).on('change', "#addDemandeRec #employeur_id", function(){
+            var employeur_id = $(this).val();
+            $.ajax({
+                url: "{{ action('ProjetController@getEmployeurContact', $projet->id) }}",
+                type: 'POST',
+                data: {"employeur_id":employeur_id},
+                success: function(data) {
+                    if(data !== ""){
+                        $('#addDemandeRec #contact_prenom').val(data.contact_prenom);
+                        $('#addDemandeRec #contact_nom').val(data.contact_nom);
+                        $('#addDemandeRec #contact_titre').val(data.contact_titre);
+                        $('#addDemandeRec #contact_phone').val(data.contact_phone);
+                        $('#addDemandeRec #contact_ext').val(data.contact_ext);
+                        $('#addDemandeRec #contact_email').val(data.contact_email);
+                    }else{
+                        $('#addDemandeRec #contact_prenom').val("");
+                        $('#addDemandeRec #contact_nom').val("");
+                        $('#addDemandeRec #contact_titre').val("");
+                        $('#addDemandeRec #contact_phone').val("");
+                        $('#addDemandeRec #contact_ext').val("");
+                        $('#addDemandeRec #contact_email').val("");
                     }
 
 

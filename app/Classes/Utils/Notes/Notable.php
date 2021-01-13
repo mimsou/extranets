@@ -30,6 +30,8 @@ trait Notable
         $log->message = $message;
         $log->ip = $this->note_getIp();
         $log->save();
+
+        return $log;
     }
 
     /**
@@ -43,17 +45,17 @@ trait Notable
         $notes = Note::where('model_id', '=', $this->id)
                    ->where('model_type', '=', $this->note_getModel())
                    ->whereNotNull('user_id')
-                   ->orderBy('created_at', 'DESC');
+                   ->orderBy('created_at', 'ASC');
 
         if(!is_null($include_category)){
-            if(gettype($include_category) != 'Array')
-                throw new Exception("Included categories must be provided in an array");
+            if(gettype($include_category) != 'array')
+                throw new Exception("Included categories must be provided in an a");
 
             $notes->whereIn('category', $include_category);
         }
 
         if(!is_null($exclude_category)){
-            if(gettype($exclude_category) != 'Array')
+            if(gettype($exclude_category) != 'array')
                 throw new Exception("Exluded categories must be provided in an array");
 
             $notes->whereNotIn('category', $exclude_category);

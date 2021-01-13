@@ -32,7 +32,22 @@ class Demande extends Model
                            'contact_phone',
                            'contact_ext',
                            'territoires',
-                           'type_emploi'
+                           'type_emploi',
+                           'type',
+                           'conv_collective',
+                           'rec_categorie',
+                           'test_pratique',
+                           'bas_salaire',
+                           'description_poste',
+                           'poste_fonctions',
+                           'poste_competences',
+                           'autre_information',
+                           'annee_exp',
+                           'diplome',
+                           'langue',
+                           'salaire',
+                           'lieu_travail',
+                           'code_cnp'
                           ];
 
     public function setTypeEmploiAttribute($value)
@@ -55,6 +70,7 @@ class Demande extends Model
         return explode(',',$value);
     }
 
+
     public function projet(){
         return $this->hasOne('App\Models\Projet', 'id', 'projet_id');
     }
@@ -69,6 +85,11 @@ class Demande extends Model
     public function candidats()
     {
         return $this->belongsToMany('App\Models\Candidat', 'demande_candidat', 'demande_id', 'candidat_id', 'id', 'id');
+    }
+
+    public function postes($separator = ', '){
+        $emplois = \App\Models\Emploi::whereIn('id', $this->type_emploi)->pluck('title')->toArray();
+        return implode($separator, $emplois);
     }
 
 }

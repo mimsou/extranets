@@ -4,6 +4,8 @@
 @endsection
 
 @section('content')
+    @include('admin.partials._notes', ['model'=>$employeur])
+
 	<div class="bg-dark bg-dots m-b-30">
             <div class="container">
                 <div class="row p-b-60 p-t-60">
@@ -27,16 +29,14 @@
                     <div class="col-lg-8 mx-auto  mt-2">
                        <div class="card py-3 m-b-30">
                            <div class="card-body">
+                                <h3 class="">{{ __("Information") }}</h3>
+                                <p class="text-muted">
+                                    Utiliser cette page pour modifier les informations d'un employeur
+                                </p>
 
-                                   	<h3 class="">{{ __("Information") }}</h3>
-                                   	<p class="text-muted">
-                                       Utiliser cette page pour modifier les informations d'un employeur
-                                   	</p>
-
-                                    {!! Form::model($employeur, ['method' => 'PATCH', 'action' => ['EmployeurController@update', $employeur] ]) !!}
-										@include('admin.employeurs._form')
-                                    {!! Form::close() !!}
-
+                                {!! Form::model($employeur, ['method' => 'PATCH', 'action' => ['EmployeurController@update', $employeur] ]) !!}
+                                    @include('admin.employeurs._form')
+                                {!! Form::close() !!}
                            </div>
                        </div>
 

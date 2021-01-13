@@ -28,6 +28,7 @@
 	<!--Bootstrap + atmos Admin CSS-->
     <link rel="stylesheet" type="text/css" href="{{ asset('atmos-assets/css/atmos.min.css') }}?v={{ rand() }}">
     <link rel="stylesheet" type="text/css" href="{{ mix('css/general.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ mix('css/chat.css') }}">
 	<!-- Additional library for page -->
     @yield('head')
     @livewireStyles
@@ -67,7 +68,9 @@
 	<script src="{{ asset('atmos-assets/vendor/daterangepicker/daterangepicker.js') }}"></script>
 	<script src="{{ asset('atmos-assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
 	<script src="{{ asset('atmos-assets/vendor/bootstrap-notify/bootstrap-notify.min.js') }}"></script>
-	<script src="{{ asset('atmos-assets/js/atmos.min.js') }}"></script>
+    <script src="{{ asset('atmos-assets/js/atmos.min.js') }}"></script>
+    <script src="{{ mix('js/app.js') }}"></script>
+    {
     <script>
         $(document).ready(function(){
             $('li.active').addClass("opened");

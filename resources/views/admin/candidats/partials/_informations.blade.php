@@ -1,4 +1,6 @@
 <div class="content active" id="informations">
+    @include('admin.partials._notes', ['model'=>$candidat, 'category'=>'information '])
+
     <div class="container-fluid pt-4">
         <h2>Information</h2>
         <div class="row">

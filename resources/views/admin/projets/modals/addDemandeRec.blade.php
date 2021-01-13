@@ -1,4 +1,4 @@
-<div class="modal fade"   id="addDemande" data-backdrop="static"  role="dialog" aria-hidden="true">
+<div class="modal fade"   id="addDemandeRec" data-backdrop="static"  role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -14,12 +14,12 @@
                     {!! Form::open(['action' => array('ProjetController@addDemande', $projet->id)]) !!}
 
                         {!! Form::hidden('projet_id', $projet->id) !!}
-                        {!! Form::hidden('type', 'immigration') !!}
+                        {!! Form::hidden('type', 'recrutement') !!}
 
                         <h3 class="pt-3 ">{{ __("Ajouter une nouvelle demande") }}</h3>
 
 
-                        @include('admin.projets.modals._demandeForm')
+                        @include('admin.projets.modals._demandeRecForm')
                     {!! Form::close() !!}
                 </div>
             </div>

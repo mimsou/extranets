@@ -142,7 +142,12 @@ class ProjetController extends Controller
         $demande = Demande::find($request->demande_id);
         $projet = Projet::find($demande->projet_id);
 
-        return view('admin.projets.modals._editDemandeForm', compact('demande', 'projet'));
+
+
+        if($demande->type == 'immigration') $form = '_demandeForm';;
+        if($demande->type == 'recrutement') $form = '_demandeRecForm';
+
+        return view('admin.projets.modals._editDemandeForm', compact('demande', 'projet', 'form'));
     }
 
 

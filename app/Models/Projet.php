@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Classes\Utils\Notes\Notable;
 
 class Projet extends Model
 {
-    use HasFactory;
+    use HasFactory, Notable;
 
     protected $fillable = ['employeur_id',
                            'statut',

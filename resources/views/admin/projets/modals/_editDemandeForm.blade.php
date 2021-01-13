@@ -4,5 +4,5 @@
 
     <h3 class="pt-3 ">{{ __("Modifier la demande") }}</h3>
 
-    @include('admin.projets.modals._demandeForm')
+    @include('admin.projets.modals.'.$form)
 {!! Form::close() !!}

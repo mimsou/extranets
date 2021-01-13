@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Classes\Utils\Notes\Notable;
+use App\Classes\Utils\Logs\Loggable;
 
 class Employeur extends Model
 {
-    use HasFactory;
+    use HasFactory, Notable, Loggable;
 
     protected $fillable = ['nom',
                            'regroupement_id',
@@ -39,6 +41,9 @@ class Employeur extends Model
                            'third_contact_phone',
                            'third_contact_ext',
                           ];
+
+
+    public function logFields(){ return ['*']; }
 
 
     public function pays(){

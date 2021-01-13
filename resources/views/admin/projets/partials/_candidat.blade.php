@@ -25,20 +25,27 @@
         </div>
 
         <div class="d-flex justify-content-between">
-            <div class="text-muted">
-                <i class="fas fa-paper-plane mr-2 ml-1"></i> <i class="pr-2">Envoi</i> {{ (!empty($p->permis_date_envoi))?$p->permis_date_envoi:'---- / -- / --' }}
-            </div>
+            @if ($demande->type != 'recrutement')
+                <div class="text-muted">
+                    <i class="fas fa-paper-plane mr-2 ml-1"></i> <i class="pr-2">Envoi</i> {{ (!empty($p->permis_date_envoi))?$p->permis_date_envoi:'---- / -- / --' }}
+                </div>
 
-            <div class="text-muted">
-                <i class="fas fa-calendar-day mr-2 ml-1"></i> <i class="pr-2">Réception</i> {{ (!empty($p->permis_date_reception))?$p->permis_date_reception:'---- / -- / --' }}
-            </div>
+                <div class="text-muted">
+                    <i class="fas fa-calendar-day mr-2 ml-1"></i> <i class="pr-2">Réception</i> {{ (!empty($p->permis_date_reception))?$p->permis_date_reception:'---- / -- / --' }}
+                </div>
 
-            <div class="text-muted">
-                <i class="fas fa-alarm-clock mr-2 ml-1"></i> <i class="pr-2">Échéance</i> {{ (!empty($p->permis_date_echeance))?$p->permis_date_echeance:'---- / -- / --' }}
-            </div>
+                <div class="text-muted">
+                    <i class="fas fa-alarm-clock mr-2 ml-1"></i> <i class="pr-2">Échéance</i> {{ (!empty($p->permis_date_echeance))?$p->permis_date_echeance:'---- / -- / --' }}
+                </div>
+            @else
+                <div class="text-muted">
+                    <i class="fas fa-calendar-day mr-2 ml-1"></i> <i class="pr-2">Date de sélection du travailleur</i> {{ (!empty($p->date_selection))?$p->date_selection:'---- / -- / --' }}
+                </div>
+            @endif
+
         </div>
 
-        @if (!is_null($p->statut_pt) && $p->statut_pt != 'na')
+        @if (!is_null($p->statut_pt) && $p->statut_pt != 'na' && $demande->type != 'recrutement')
         <div class="text-center mt-2 text-muted"><small>{{ permisTravailStatuts($p->statut_pt) }}</small></div>
             <hr class="mb-0 mt-0">
             <div class="time-progresssion mb-2">
