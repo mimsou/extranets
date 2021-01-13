@@ -10,11 +10,6 @@
     </div>
 </a>
 
-<a href="#resources" class="mail-sidebar-item btn-ghost">
-    <div class="w-100 text-truncate">
-        Resources
-    </div>
-</a>
 
 {{-- <a href="#administration" class=" mail-sidebar-item btn-ghost">
     <div class="w-100 text-truncate">
@@ -34,11 +29,18 @@
 </a>
 
 
-<a href="#commentaires" class="m-t-20 mail-sidebar-item btn-ghost clearfix border-bottom border-white">
+<a href="#resources" class="m-t-20 mail-sidebar-item btn-ghost clearfix border-bottom border-white">
+    <div class="w-100 text-truncate">
+        Medias
+    </div>
+</a>
+
+
+{{-- <a href="#commentaires" class="m-t-20 mail-sidebar-item btn-ghost clearfix border-bottom border-white">
     <div class="w-100 text-truncate">
         Commentaires
     </div>
-</a>
+</a> --}}
 
 <a href="#historique" class=" mail-sidebar-item btn-ghost">
     <div class="w-100 text-truncate">

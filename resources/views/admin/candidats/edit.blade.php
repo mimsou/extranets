@@ -16,7 +16,7 @@
     @include('admin.modals.confirmation', [
 		'ident' => 'removeFile',
 		'title' => __('Êtes-vous certain?'),
-		'text' => __('Voulez-vous vraiment supprimer le file? <br><h5>Cette action est irréversible.</h5>'),
+		'text' => __('Voulez-vous vraiment supprimer le fichier? <br><h5>Cette action est irréversible.</h5>'),
 		'controller' => action('CandidatController@removeMedia'),
 		'redirect' => action('CandidatController@edit', $candidat->id).'#resources'
     ])
@@ -35,8 +35,8 @@
                                         <span class="avatar-title rounded-circle  bg-white-translucent" @if (!is_null($candidat->getFirstMediaUrl('avatar', 'medium')) && $candidat->getFirstMediaUrl('avatar', 'medium') != "") data-toggle="modal" data-target="#modalUpdateAvatar" @endif>
                                             @if (!is_null($candidat->getFirstMediaUrl('avatar', 'medium')) && $candidat->getFirstMediaUrl('avatar', 'medium') != "")
                                                 <img src="{{ $candidat->getFirstMediaUrl('avatar', 'medium') }}" class="avatar-img rounded-circle" />
-                                            @else 
-                                            {!! $candidat->statutIconHTML() !!} 
+                                            @else
+                                            {!! $candidat->statutIconHTML() !!}
                                             @endif
                                         </span>
                                     </div>
@@ -156,7 +156,7 @@
                 var fileName = e.target.files[0].name;
                 $('#avatar').text(fileName);
             });
-       
+
 
             $("div#additional_resources").dropzone({
                 url: '{{ $uploadAddtionalResources }}',
@@ -199,9 +199,12 @@
                 }
             });
 
-            
+
             $('.media-name').click(function() {
-                var embed = '<embed id="preview_src" src="' + $(this).data('src') + '" width="450px" />';
+                var height = "";
+                if($(this).data('type') == 'application/pdf') height = 'style="min-height:800px"';
+
+                var embed = '<embed id="preview_src" src="' + $(this).data('src') + '" width="100%" '+height+'/>';
                 $('#preview_src').html(embed)
                 $('#preview_doc').modal('show')
             })
@@ -239,8 +242,8 @@
                 $("#modalConfirmation_removeFile .modal-body .hiddenfields").html("<input type='hidden' name='mediaid' value='"+id+"'>");
                 $('#modalConfirmation_removeFile').modal('toggle');
             });
-            
+
         })
     </script>
-  
+
 @endsection

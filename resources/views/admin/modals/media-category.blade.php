@@ -11,9 +11,10 @@
                 {!! Form::open(['action' => ['CandidatController@addMediaCategory'] ]) !!}
                     <div class="form-group">
                         <label for="nom">{{ __('Category Title') }} *</label>
-                        <?
-                            $categories = mediaCategories(); 
-                        ?>
+                        @php
+                            $categories = mediaCategories();
+                        @endphp
+
                         <select name="category[]" id="ip" class="select2 select2_media_cat" multiple="multiple">
                             @foreach ($categories as $cat)
                                 <option value="{{ $cat }}">{{ $cat }}</option>
