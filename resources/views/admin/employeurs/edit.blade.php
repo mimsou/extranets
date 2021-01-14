@@ -44,7 +44,7 @@
 
                         <div class="card py-3 m-b-30">
                             <div class="card-body">
-                                <h3 class="">{{ __("Projets Recrutement") }}</h3>
+                                <h3 class="">{{ __("Projets - Recrutement") }}</h3>
                                 @if (!$employeur->projets()->where('statut', 'LIKE', 'rec_%')->count())
                                     <p><i>Aucun projet de recrutement n'a été associé à ce compte. </i></p>
                                 @endif
@@ -89,7 +89,7 @@
 
                         <div class="card py-3 m-b-30">
                             <div class="card-body">
-                                 <h3 class="">{{ __("Projets Immigrations") }}</h3>
+                                 <h3 class="">{{ __("Projets - Immigration") }}</h3>
                                  @if (!$employeur->projets()->where('statut', 'LIKE', 'imm_%')->count())
                                     <p><i>Aucun projet de recrutement n'a été associé à ce compte. </i></p>
                                 @endif
