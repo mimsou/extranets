@@ -203,11 +203,13 @@
             $('.media-name').click(function() {
                 var height = "";
                 var isdoc = false;
+                var mimetype = $(this).data('type');
 
-                if($(this).data('type') == 'application/msword' ||
-                    $(this).data('type') == 'application/pdf' ||
-                    $(this).data('type').includes('wordprocessingml') ||
-                    $(this).data('type').includes('spreadsheetml')){
+                if(mimetype == 'application/msword' ||
+                    mimetype == 'application/vnd.ms-excel' ||
+                    mimetype == 'application/pdf' ||
+                    mimetype.includes('wordprocessingml') ||
+                    mimetype.includes('spreadsheetml')){
                         height = 'style="min-height:800px"';
                         isdoc =  true;
                     }
