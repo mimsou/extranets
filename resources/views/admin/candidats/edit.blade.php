@@ -205,6 +205,15 @@
                 if($(this).data('type') == 'application/pdf') height = 'style="min-height:800px"';
 
                 var embed = '<embed id="preview_src" src="' + $(this).data('src') + '" width="100%" '+height+'/>';
+
+                var mime_type = $(this).data('mime-type');
+                if (mime_type == 'application/msword') {
+                    embed = '<iframe id="doc_preview" src="https://docs.google.com/gview?url='+ $(this).data('src') +'&embedded=true" width="100%">'
+                } else {
+                    embed = '<embed id="preview_src" src="' + $(this).data('src') + '" width="100%" '+height+'/>';
+                }
+
+
                 $('#preview_src').html(embed)
                 $('#preview_doc').modal('show')
             })
