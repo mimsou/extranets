@@ -64,8 +64,7 @@
                                 <tr>
                                     <td><a class="media-name"
                                             data-src="{{ $media->getFullUrl() }}"
-                                            data-type="{{ $media->mime_type }}"
-                                            data-mime-type="{{ $media->mime_type }}">
+                                            data-type="{{ $media->mime_type }}">
                                             <strong>{{ $media->name }}</strong>
                                         </a>
                                     </td>

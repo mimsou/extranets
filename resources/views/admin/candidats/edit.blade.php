@@ -202,13 +202,20 @@
 
             $('.media-name').click(function() {
                 var height = "";
-                if($(this).data('type') == 'application/pdf') height = 'style="min-height:800px"';
+                var isdoc = false;
 
-                var embed = '<embed id="preview_src" src="' + $(this).data('src') + '" width="100%" '+height+'/>';
+                if($(this).data('type') == 'application/msword' ||
+                    $(this).data('type') == 'application/pdf' ||
+                    $(this).data('type').includes('wordprocessingml') ||
+                    $(this).data('type').includes('spreadsheetml')){
+                        height = 'style="min-height:800px"';
+                        isdoc =  true;
+                    }
 
-                var mime_type = $(this).data('mime-type');
-                if (mime_type == 'application/msword') {
-                    embed = '<iframe id="doc_preview" src="https://docs.google.com/gview?url='+ $(this).data('src') +'&embedded=true" width="100%">'
+                var embed = '';
+
+                if (isdoc) {
+                    embed = '<iframe id="doc_preview" src="https://docs.google.com/gview?url='+ $(this).data('src') +'&embedded=true" width="100%" '+height+'>'
                 } else {
                     embed = '<embed id="preview_src" src="' + $(this).data('src') + '" width="100%" '+height+'/>';
                 }
