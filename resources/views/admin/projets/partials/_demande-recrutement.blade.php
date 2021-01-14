@@ -49,7 +49,7 @@
                             <p class="m-0 p-0 pr-3"><i>Date de la signature du contrat de travail</i></p>
                         </div>
                         <div class="values">
-                            <p class="m-0 p-0">{{ (empty($p->eimt_date_envoi))?'---- / -- / --' : $p->eimt_date_envoi }}</p>
+                            <p class="m-0 p-0">{{ (empty($p->date_debut_mandat))?'---- / -- / --' : $p->date_debut_mandat }}</p>
                         </div>
                     </div>
                 </small>
