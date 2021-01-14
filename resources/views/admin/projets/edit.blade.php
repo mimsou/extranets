@@ -47,8 +47,13 @@
 
                         <div class="row  mb-5">
                             <div class="col-12">
-                                <button class="btn btn-danger mr-2" data-toggle="modal" data-target="#addDemande"><i class="fas fa-plus-circle pr-2"></i> DEMANDE D'IMMIGRATION</button>
-                                <button class="btn btn-secondary mr-2" data-toggle="modal" data-target="#addDemandeRec"><i class="fas fa-plus-circle pr-2"></i> DEMANDE DE RECRUTEMENT</button>
+                                @if (Str::contains($projet->statut, 'imm') || Str::contains($projet->statut, 'new'))
+                                    <button class="btn btn-danger mr-2" data-toggle="modal" data-target="#addDemande"><i class="fas fa-plus-circle pr-2"></i> DEMANDE D'IMMIGRATION</button>
+                                @endif
+                                @if (Str::contains($projet->statut, 'rec') || Str::contains($projet->statut, 'new'))
+                                    <button class="btn btn-secondary mr-2" data-toggle="modal" data-target="#addDemandeRec"><i class="fas fa-plus-circle pr-2"></i> DEMANDE DE RECRUTEMENT</button>
+                                @endif
+
                             </div>
                             {{-- <div class="col-4 text-right text-white"><strong style="font-size: 18px"></strong></div> --}}
                         </div>
