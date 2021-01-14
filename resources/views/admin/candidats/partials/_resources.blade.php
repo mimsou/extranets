@@ -60,7 +60,7 @@
                         <tbody>
                             @foreach ($candidat->getMedia('resources') as $media)
                                 <tr>
-                                    <td><a class="media-name" data-src="{{ $media->getFullUrl() }}">{{ $media->name }}</a></td>
+                                    <td><a class="media-name" data-mime-type="{{ $media->mime_type }}" data-src="{{ $media->getFullUrl() }}">{{ $media->name }}</a></td>
                                     <td>{{ $media->mime_type }}</td>
                                     <td>{{ $media->updated_at->format('m/d/Y, h:i a') }}</td>
                                     <td>{{ $media->human_readable_size }}</td>

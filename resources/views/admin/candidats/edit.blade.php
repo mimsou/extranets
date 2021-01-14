@@ -201,7 +201,13 @@
 
             
             $('.media-name').click(function() {
-                var embed = '<embed id="preview_src" src="' + $(this).data('src') + '" width="450px" />';
+                var mime_type = $(this).data('mime-type');
+                var embed = '';
+                if (mime_type == 'application/msword') {
+                    embed = '<iframe id="doc_preview" src="https://docs.google.com/gview?url=https://file-examples-com.github.io/uploads/2017/02/file-sample_100kB.doc&embedded=true" width="100%">'
+                } else {
+                    embed = '<embed id="preview_src" src="' + $(this).data('src') + '" width="450px" />';
+                }
                 $('#preview_src').html(embed)
                 $('#preview_doc').modal('show')
             })
