@@ -67,7 +67,7 @@
                                             <div class="d-flex align-items-top">
 
 
-                                                    <div class="content mb-2">
+                                                    <div class="content mb-3">
                                                         {{ $d->employeur->nom }}
 
                                                         <div class="progress-bar-container mt-1">
@@ -112,7 +112,7 @@
                                             <div class="d-flex align-items-top">
 
 
-                                                    <div class="content mb-2">
+                                                    <div class="content mb-3">
                                                         {{ $d->employeur->nom }}
 
                                                         <div class="progress-bar-container mt-1">
