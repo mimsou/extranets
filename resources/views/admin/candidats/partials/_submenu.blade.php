@@ -29,11 +29,11 @@
 </a>
 
 
-<a href="#resources" class="m-t-20 mail-sidebar-item btn-ghost clearfix border-bottom border-white">
+{{-- <a href="#resources" class="m-t-20 mail-sidebar-item btn-ghost clearfix border-bottom border-white">
     <div class="w-100 text-truncate">
         Medias
     </div>
-</a>
+</a> --}}
 
 
 {{-- <a href="#commentaires" class="m-t-20 mail-sidebar-item btn-ghost clearfix border-bottom border-white">
@@ -42,7 +42,7 @@
     </div>
 </a> --}}
 
-<a href="#historique" class=" mail-sidebar-item btn-ghost">
+<a href="#historique" class="m-t-20 mail-sidebar-item btn-ghost clearfix border-top border-white">
     <div class="w-100 text-truncate">
         Historique <span class="badge badge-danger ml-2">{{ count($candidat->getLogs()) }}</span>
     </div>

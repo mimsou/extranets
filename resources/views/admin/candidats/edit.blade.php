@@ -204,9 +204,13 @@
 
 
             $('.media-name').click(function() {
-                var height = "";
+                var height = 'style="min-height:200px"';
                 var isdoc = false;
                 var mimetype = $(this).data('type');
+
+                if(mimetype == 'audio/mp4'){
+                    height = 'style="min-height:400px"';
+                }
 
                 if(mimetype == 'application/msword' ||
                     mimetype == 'application/vnd.ms-excel' ||
