@@ -43,8 +43,28 @@
             <div class="col-md-6">
 
                 <div class="form-group">
-                    <label for="com_candidat">{{ __('Commentaires sur le candidat retenu') }}</label>
-                    {{ Form::textarea('com_candidat', null, ['class'=>'form-control', 'placeholder'=>'Entrer vos commentaires ici', 'id'=>'com_candidat']) }}
+                    <label for="avatar">{{ __('Photo de profil:') }}</label>
+                    <div class="form-group">
+                        {{-- @if (!is_null($candidat->getFirstMediaUrl('avatar', 'medium')))
+                            <div class="avatar avatar-xl">
+                                <img src="{{ $candidat->getFirstMediaUrl('avatar', 'medium') }}" class="avatar-img rounded" id="user_avatar_preview"/>
+                            </div>
+                        @endif --}}
+                        <label class="avatar-input" style="width: 100%">
+                            @if (!is_null($candidat->getFirstMediaUrl('avatar', 'medium')) && $candidat->getFirstMediaUrl('avatar', 'medium') != "")
+                                <div class="avatar avatar-xxl">
+                                    <img src="{{ $candidat->getFirstMediaUrl('avatar', 'medium') }}" class="avatar-img rounded">
+                                </div><br>
+
+                                <button type="button" class="mt-2 btn-sm btn-primary" data-toggle="modal" data-target="#modalUpdateAvatar">Modifier la photo de profil</button><br>
+                                <button type="button" class="mt-2 btn-sm btn-danger delete_media" data-mediaid="{{ $candidat->getFirstMedia('avatar')->id }}">Retirer la photo de profil</button>
+                            @else
+                                <div id="avatar" class="dropzone p-3 text-center" style="cursor:pointer">
+                                    <div class="dz-message" data-dz-message><span>Glisser et déposer l'image ici</span></div>
+                                </div>
+                            @endif
+                        </label>
+                    </div>
                 </div>
             </div>
             <hr>
