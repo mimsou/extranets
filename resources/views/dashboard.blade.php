@@ -41,6 +41,8 @@
                                 if($item->mime_type == 'application/msword') $icon = "fas fa-file-word";
                                 if(Str::contains($item->mime_type, 'image')) $icon = "fas fa-file-image";
                                 if(Str::contains($item->mime_type, 'video')) $icon = "fas fa-file-video";
+                                if(Str::contains($item->mime_type, 'wordprocessingml')) $icon = "fas fa-file-word";
+                                if(Str::contains($item->mime_type, 'spreadsheetml')) $icon = "fas fa-file-spreadsheet";
                             @endphp
                             <div class="list-group-item d-flex align-items-center">
                                 <div class="m-r-20">
