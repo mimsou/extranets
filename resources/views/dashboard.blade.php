@@ -25,56 +25,72 @@
     <div class="container pull-up">
 
         <div class="row">
-            <div class="col-md-4 m-b-30">
+            <div class="col-md-6 m-b-30">
 
                 <div class="card ">
                     <div class="card-header">
                         <div class="card-title">Derniers fichiers envoyés</div>
-
-                        <div class="card-controls">
-
-                            <a href="#" class="js-card-refresh icon"> </a>
-
-                        </div>
-
                     </div>
 
                     <div class="list-group list-group-flush ">
 
-                        {{-- <div class="list-group-item d-flex align-items-center">
-                            <div class="m-r-20">
-                                <div class="avatar avatar-sm ">
-                                    <div class="avatar-title bg-dark rounded"><i class="mdi mdi-24px mdi-file-pdf"></i></div>
+                        @foreach (\Spatie\MediaLibrary\MediaCollections\Models\Media::orderBy('id', 'desc')->limit(10)->get() as $item)
+                            @php
+                                $icon = "fas fa-file-alt";
+                                if($item->mime_type == 'application/pdf') $icon = "fas fa-file-pdf";
+                                if($item->mime_type == 'application/msword') $icon = "fas fa-file-word";
+                                if(Str::contains($item->mime_type, 'image')) $icon = "fas fa-file-image";
+                                if(Str::contains($item->mime_type, 'video')) $icon = "fas fa-file-video";
+                            @endphp
+                            <div class="list-group-item d-flex align-items-center">
+                                <div class="m-r-20">
+                                    <div class="avatar avatar-sm ">
+                                        <div class="avatar-title bg-dark rounded"><i style="font-size:24px" class="{{$icon}}"></i></div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="">
-                                <div>SRS Document</div>
-                                <div class="text-muted">25.5 Mb</div>
-                            </div>
+                                <div class="">
+                                    <div>{{$item->name}}</div>
+                                    @if ($item->model_type == 'App\Models\Candidat')
+                                        @php
+                                            $candidat = \App\Models\Candidat::find($item->model_id);
+                                        @endphp
+                                        <div class="text-muted"><a href="{{ action('CandidatController@edit', $item->model_id) }}#resources"><i class="fas fa-address-card mr-1"></i> {{$candidat->nom}}</a></div>
+                                    @endif
+                                    <div class="text-muted"><small>{{ $item->human_readable_size }} - {{ $item->created_at->diffForHumans() }}</small></div>
+                                </div>
 
-                            <div class="ml-auto">
-                                <div class="dropdown">
-                                    <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="mdi  mdi-dots-vertical mdi-18px"></i> </a>
+                                <div class="ml-auto">
+                                    <div class="dropdown">
+                                        <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="mdi  mdi-dots-vertical mdi-18px"></i> </a>
 
-                                    <div class="dropdown-menu dropdown-menu-right">
-                                        <button class="dropdown-item" type="button">Télécharger</button>
-                                        <button class="dropdown-item" type="button">Copier l'URL</button>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <a class="dropdown-item" target="_blank" href="{{ $item->getFullUrl() }}" type="button">Télécharger</a>
+                                            @if ($item->model_type == 'App\Models\Candidat')
+                                                <a class="dropdown-item" href="{{ action('CandidatController@edit', $item->model_id) }}#resources" type="button">Fiche du candidat</a>
+                                            @endif
 
+
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                        @endforeach
 
-                        </div> --}}
+                    </div>
 
+                    @if (!\Spatie\MediaLibrary\MediaCollections\Models\Media::count())
                         <div class="card-body">
                             <p><i>Système de gestion des fichiers bientôt disponible</i></p>
                         </div>
-                    </div>
+                    @endif
+
+
+
                 </div>
 
             </div>
-            <div class="col-md-8">
+            <div class="col-md-6">
                 <div class="row d-block d-md-flex">
                     <div class="col m-b-30">
                         <div class="card">
@@ -88,41 +104,6 @@
                                     <h1 class="text-success">{{ \App\Models\Candidat::where('statut', 'disponible')->count() }}</h1>
                                     {{-- <div class="text-success h5 fw-600">
                                         <i class="mdi mdi-arrow-up"></i> 12.6%
-                                    </div> --}}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col m-b-30">
-                        <div class="card ">
-
-                            <div class="card-body">
-                                <div class="card-controls">
-                                    {{-- <a href="#" class="badge badge-soft-success"> <i class="mdi mdi-arrow-up"></i> 12%</a> --}}
-                                </div>
-                                <div class="text-center p-t-30 p-b-20">
-                                    <div class="text-overline text-muted opacity-75 pb-2">Candidats en emploi</div>
-                                    <h1 class="text-muted">{{ \App\Models\Candidat::where('statut', 'en_emploi')->count() }}</h1>
-                                    {{-- <div class="text-danger h5 fw-600">
-                                        <i class="mdi mdi-arrow-down"></i> 4.6%
-                                    </div> --}}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col m-b-30">
-                        <div class="card ">
-
-                            <div class="card-body">
-                                <div class="card-controls">
-                                    {{-- <a href="#" class="badge badge-soft-success"> <i class="mdi mdi-arrow-up"></i> 12%</a> --}}
-                                </div>
-                                <div class="text-center p-t-30 p-b-20">
-                                    <div class="text-overline text-muted opacity-75 pb-2">Dossiers complétés</div>
-                                    <h1 class="text-success">{{ \App\Models\Candidat::where('statut', 'termine')->count() }}</h1>
-                                    {{-- <div class="text-success h5 fw-600">
-                                        <i class="mdi mdi-arrow-up"></i> 45%
                                     </div> --}}
                                 </div>
                             </div>
