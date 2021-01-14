@@ -18,7 +18,7 @@
 		'title' => __('Êtes-vous certain?'),
 		'text' => __('Voulez-vous vraiment supprimer le fichier? <br><h5>Cette action est irréversible.</h5>'),
 		'controller' => action('CandidatController@removeMedia'),
-		'redirect' => action('CandidatController@edit', $candidat->id).'#resources'
+		'redirect' => action('CandidatController@edit', $candidat->id)
     ])
 @endsection
 
@@ -74,7 +74,6 @@
                             @include('admin.candidats.partials._recrutement')
                             {{-- @include('admin.candidats.partials._administration') --}}
                             @include('admin.candidats.partials._immigration')
-                            @include('admin.candidats.partials._resources')
                             @include('admin.candidats.partials._commentaires')
                             @include('admin.candidats.partials._historique')
 
@@ -196,6 +195,10 @@
                 method: "POST",
                 success: function(file, response){
                     window.location.reload()
+                },
+                error: function(jqXHR, status, error){
+                    console.log(jqXHR, status, error);
+                    window.location.reload();
                 }
             });
 
