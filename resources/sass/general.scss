@@ -5,3 +5,26 @@
         }
     }
 }
+
+.suivi-projets{
+    .content{
+        width: 100%;
+    }
+
+    .progress-bar-container{
+        position: relative;
+        width: 100%;
+        height: 8px;
+        padding: 2px;
+        background-color:lighten($color: rgb(201, 201, 201), $amount: 15) ;
+        border-radius: 10px;
+        margin-right: 1em;
+
+        .progress-bar{
+            height: 4px;
+            border-radius: 10px;
+            background-color: aquamarine;
+        }
+    }
+}
+
