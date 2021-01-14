@@ -56,7 +56,7 @@
                                         @php
                                             $candidat = \App\Models\Candidat::find($item->model_id);
                                         @endphp
-                                        <div class="text-muted"><a href="{{ action('CandidatController@edit', $item->model_id) }}#resources"><i class="fas fa-address-card mr-1"></i> {{$candidat->nom}}</a></div>
+                                        <div class="text-muted"><a href="{{ action('CandidatController@edit', $item->model_id) }}#recrutement"><i class="fas fa-address-card mr-1"></i> {{$candidat->nom}}</a></div>
                                     @endif
                                     <div class="text-muted"><small>{{ $item->human_readable_size }} - {{ $item->created_at->diffForHumans() }}</small></div>
                                 </div>
@@ -69,7 +69,7 @@
                                         <div class="dropdown-menu dropdown-menu-right">
                                             <a class="dropdown-item" target="_blank" href="{{ $item->getFullUrl() }}" type="button">Télécharger</a>
                                             @if ($item->model_type == 'App\Models\Candidat')
-                                                <a class="dropdown-item" href="{{ action('CandidatController@edit', $item->model_id) }}#resources" type="button">Fiche du candidat</a>
+                                                <a class="dropdown-item" href="{{ action('CandidatController@edit', $item->model_id) }}#recrutement" type="button">Fiche du candidat</a>
                                             @endif
 
 
