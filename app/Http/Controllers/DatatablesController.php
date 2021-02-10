@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Str;
 use App\Models\Candidat;
 use App\Models\Emploi;
 use App\Models\Employeur;
@@ -56,7 +57,7 @@ class DatatablesController extends Controller
                         })
                         ->addColumn('action', function(Candidat $c){
                             $delete = '';
-                            if($c->demandes()->count() == 0) 
+                            if($c->demandes()->count() == 0)
                                 $delete = '<button class="btn btn-sm btn-danger delete_candidate" data-candidat="'.$c->id.'"><i class="fas fa-trash"></i></button>';
 
                             return '<a href="'.action('CandidatController@edit', $c->id).'" class="btn btn-sm btn-primary mr-2"><i class="fas fa-user-edit"></i></a>' . $delete;
@@ -71,7 +72,12 @@ class DatatablesController extends Controller
                             return __($m->statut);
                         })
                         ->editColumn('numero', function(Projet $m){
-                            return '<a href="'.action('ProjetController@edit', $m->id).'" class="btn btn-sm btn-primary"><strong>'.$m->numero.'</strong></a>';
+                            $class = "link";
+                            if(Str::contains($m->statut, 'imm_')) $class = "danger";
+                            if(Str::contains($m->statut, 'rec_')) $class = "primary";
+                            if(Str::contains($m->statut, 'acc_')) $class = "success";
+
+                            return '<a href="'.action('ProjetController@edit', $m->id).'" class="btn btn-sm btn-'. $class .'"><strong>'.$m->numero.'</strong></a>';
                         })
                         ->editColumn('updated_at', function(Projet $m){
                             return $m->updated_at->diffForHumans() .'<br><small>'.$m->updated_at.'</small>';
