@@ -74,7 +74,7 @@ class DatatablesController extends Controller
                         ->editColumn('numero', function(Projet $m){
                             $class = "link";
                             if(Str::contains($m->statut, 'imm_')) $class = "danger";
-                            if(Str::contains($m->statut, 'rec_')) $class = "primary";
+                            if(Str::contains($m->statut, 'rec_')) $class = "secondary";
                             if(Str::contains($m->statut, 'acc_')) $class = "success";
 
                             return '<a href="'.action('ProjetController@edit', $m->id).'" class="btn btn-sm btn-'. $class .'"><strong>'.$m->numero.'</strong></a>';
