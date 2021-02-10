@@ -44,9 +44,10 @@
 
                         <div class="card py-3 m-b-30">
                             <div class="card-body">
-                                <h3 class="">{{ __("Projets - Recrutement") }}</h3>
+                                <h3 class="mb-0">{{ __("Projets") }}</h3>
+                                <h5 class="">{{ __("Recrutement") }}</h5>
                                 @if (!$employeur->projets()->where('statut', 'LIKE', 'rec_%')->count())
-                                    <p><i>Aucun projet de recrutement n'a été associé à ce compte. </i></p>
+                                    <p class="text-muted opacity-50"><i>Aucun projet de recrutement n'a été associé à ce compte. </i></p>
                                 @endif
                             </div>
 
@@ -85,13 +86,11 @@
                                     </div>
                                 @endforeach
                             </div>
-                        </div>
 
-                        <div class="card py-3 m-b-30">
                             <div class="card-body">
-                                 <h3 class="">{{ __("Projets - Immigration") }}</h3>
+                                 <h5 class="mt-3">{{ __("Immigration") }}</h5>
                                  @if (!$employeur->projets()->where('statut', 'LIKE', 'imm_%')->count())
-                                    <p><i>Aucun projet de recrutement n'a été associé à ce compte. </i></p>
+                                 <p class="text-muted opacity-50"><i>Aucun projet d'immigration n'a été associé à ce compte. </i></p>
                                 @endif
                             </div>
 
@@ -125,6 +124,101 @@
 
                                             </div>
                                         @endforeach
+
+
+                                    </div>
+                                @endforeach
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="card py-3 m-b-30">
+                            <div class="card-body">
+                                <h3 class="mb-0">{{ __("Demandes") }}</h3>
+                                <h5 class="">{{ __("Recrutement") }}</h5>
+                                @if (!$employeur->demandes()->where('type', '=', 'recrutement')->count())
+                                    <p class="text-muted opacity-50"><i>Aucun projet de recrutement n'a été associé à ce compte. </i></p>
+                                @endif
+                            </div>
+
+                            <div class="list-group list-group-flush ">
+                                @foreach ($employeur->demandes()->where('type', '=', 'recrutement')->get() as $p)
+                                    <div class="list-group-item suivi-projets">
+
+                                        <div class="d-flex align-items-center">
+                                            <div class="badge badge-secondary mr-3">
+                                                <strong>#{{ $p->projet->numero }}</strong>
+                                            </div>
+                                            <div class="content">
+                                                <h5 class="pt-2"><a href="{{ action('ProjetController@edit', $p->projet_id) }}" target="_blank" class="pr-3">{{ $p->projet->titre }}</a></h5>
+                                            </div>
+                                        </div>
+
+
+                                            <div class="d-flex align-items-top">
+
+
+                                                    <div class="content mb-3">
+                                                        {{ $p->employeur->nom }}
+
+                                                        <div class="progress-bar-container mt-1">
+                                                            <span class="progress-bar" style="width:{{ demandeProgression($p->statut, STATUTS_DEMANDE_REC) }}"></span>
+                                                        </div>
+
+                                                        <small>{{ demandeStatuts($p->statut, STATUTS_DEMANDE_REC) }} <br> <i>{{ $p->candidats()->count() }} sur {{ $p->nb_candidat }} candidats requis ({{$p->postes()}})</i></small>
+
+                                                    </div>
+
+                                            </div>
+
+
+
+                                    </div>
+                                @endforeach
+                            </div>
+
+                            <div class="card-body">
+                                 <h5 class="mt-3">{{ __("Immigration") }}</h5>
+                                 @if (!$employeur->demandes()->where('type', '=', 'immigration')->count())
+                                 <p class="text-muted opacity-50"><i>Aucun projet d'immigration n'a été associé à ce compte. </i></p>
+                                @endif
+                            </div>
+
+                            <div class="list-group list-group-flush ">
+                                @foreach ($employeur->demandes()->where('type', '=', 'immigration')->get() as $p)
+                                    @php
+                                        if(is_null($p->projet)) continue;
+                                    @endphp
+                                    <div class="list-group-item suivi-projets">
+
+                                        <div class="d-flex align-items-center">
+                                            <div class="badge badge-danger mr-3">
+                                                <strong>#{{ $p->projet->numero }}</strong>
+                                            </div>
+                                            <div class="content">
+                                                <h5 class="pt-2"><a href="{{ action('ProjetController@edit', $p->projet_id) }}" target="_blank" class="pr-3">{{ $p->projet->titre }}</a></h5>
+                                            </div>
+                                        </div>
+
+
+                                            <div class="d-flex align-items-top">
+
+
+                                                    <div class="content mb-3">
+                                                        {{ $p->employeur->nom }}
+
+                                                        <div class="progress-bar-container mt-1">
+                                                            <span class="progress-bar" style="width:{{ demandeProgression($p->statut) }}"></span>
+                                                        </div>
+
+                                                        <small>{{ demandeStatuts($p->statut) }} </small>
+
+                                                    </div>
+
+                                            </div>
+
 
 
                                     </div>

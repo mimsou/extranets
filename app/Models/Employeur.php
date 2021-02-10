@@ -59,6 +59,10 @@ class Employeur extends Model
         return $this->hasMany('App\Models\Projet');
     }
 
+    public function demandes(){
+        return $this->hasMany('App\Models\Demande');
+    }
+
 
     public function statutIconHTML(){
         switch($this->statut){
