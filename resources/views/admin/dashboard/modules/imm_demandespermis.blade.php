@@ -5,7 +5,7 @@
     </div>
 
     <div class="card-body">
-        <table id="datatable" class="table" style="width:100%">
+        <table id="imm_demandepermis" class="table" style="width:100%">
             <thead>
                 <tr>
                     <th>#Projet</th>

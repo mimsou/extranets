@@ -58,12 +58,14 @@
                     scrollY: '35vh',
                     order: ['2', 'asc'],
                     scrollCollapse: true,
-                    stateSave: true,
-                    searching: false, paging: false, info: false
+                    // stateSave: true,
+                    searching: false, paging: false, info: true
                 };
 
                 $('#demandes_eimt').DataTable(default_options);
                 $('#rec_projetencours').DataTable(default_options);
+                $('#imm_demandepermis').DataTable(default_options);
+
             });
         })(window.jQuery);
     </script>
