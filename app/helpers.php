@@ -297,6 +297,7 @@ if (!function_exists('imm_demandeEIMT')) {
                                        ->select(['p.numero', 'p.id', 'e.nom', 'p.date_creation'])
                                        ->where('p.date_creation', '<', \Carbon\Carbon::now()->subMonth())
                                        ->whereNull('d.eimt_date_envoi')
+                                       ->whereNotIn('d.statut', ['annule'])
                                        ->where('d.type', 'LIKE', 'imm_%')
                                        ->groupBy('p.id')
                                        ->orderBy('date_creation', 'ASC')
