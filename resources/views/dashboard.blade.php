@@ -33,10 +33,10 @@
             <div class="col-md-6 col-lg-4 m-b-30">
                 @include('admin.dashboard.modules.rec_projetencours')
             </div>
-            <div class="col-md-6 col-lg-4">
+            <div class="col-md-6 col-lg-4 m-b-30">
                 @include('admin.dashboard.modules.imm_demandeseimt')
             </div>
-            <div class="col-md-6 col-lg-4">
+            <div class="col-md-6 col-lg-4 m-b-30">
                 @include('admin.dashboard.modules.imm_demandespermis')
             </div>
         </div>
