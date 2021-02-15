@@ -94,6 +94,7 @@
                     paging:         true,
                     serverSide:     true,
                     processing:     true,
+                    stateSave:      true,
                     "order":        [[ 1, "asc" ]],
                     ajax: '{{ action('DatatablesController@getCandidats') }}',
                     columns: [

@@ -52,7 +52,8 @@
             'use strict';
             $(document).ready(function () {
                 var default_options = {
-                    scrollY:        '25vh',
+                    scrollY: '25vh',
+                    scrollCollapse: true,
                     stateSave: true,
                     searching: false, paging: false, info: false
                 };

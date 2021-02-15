@@ -71,6 +71,7 @@
                     paging:         true,
                     serverSide:     true,
                     processing:     true,
+                    stateSave:      true,
                     ajax: '{{ action('DatatablesController@getRegroupements') }}',
                     columns: [
                         {data: 'id'},
