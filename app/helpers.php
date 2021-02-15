@@ -294,11 +294,11 @@ if (!function_exists('imm_demandeEIMT')) {
         $demandes = DB::table('demandes AS d')
                                        ->join('projets AS p', 'p.id', '=', 'd.projet_id')
                                        ->join('employeurs AS e', 'e.id', '=', 'p.employeur_id')
-                                       ->select(['p.numero', 'd.projet_id', 'e.nom', 'p.date_creation'])
+                                       ->select(['p.numero', 'p.id', 'e.nom', 'p.date_creation'])
                                        ->where('p.date_creation', '<', \Carbon\Carbon::now()->subMonth())
                                        ->whereNull('d.eimt_date_envoi')
                                        ->where('d.type', 'LIKE', 'imm_%')
-                                       ->groupBy('d.projet_id')
+                                       ->groupBy('p.id')
                                        ->get();
 
         return $demandes;

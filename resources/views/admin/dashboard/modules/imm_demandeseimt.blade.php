@@ -19,7 +19,7 @@
                 @endphp
                 @foreach ($demandes as $d)
                     <tr>
-                        <td><a href="{{ action('ProjetController@edit', $d->projet_id) }}" class="btn btn-sm btn-secondary">{{ $d->numero }}</a></td>
+                        <td><a href="{{ action('ProjetController@edit', $d->id) }}" class="btn btn-sm btn-secondary">{{ $d->numero }}</a></td>
                         <td>{{ $d->nom }}</td>
                         <td style="line-height:14px">
                             <p class="mb-0">{{ $d->date_creation }}</p>
