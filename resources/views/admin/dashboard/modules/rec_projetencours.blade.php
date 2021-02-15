@@ -10,7 +10,7 @@
                 <tr>
                     <th>#Projet</th>
                     <th>Client</th>
-                    <th>Date création</th>
+                    <th>Création</th>
                 </tr>
             </thead>
             <tbody>

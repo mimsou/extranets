@@ -53,6 +53,7 @@
             $(document).ready(function () {
                 var default_options = {
                     scrollY:        '25vh',
+                    stateSave: true,
                     searching: false, paging: false, info: false
                 };
 
