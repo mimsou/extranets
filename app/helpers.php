@@ -301,9 +301,8 @@ if (!function_exists('imm_demandeEIMT')) {
                                        ->whereNotIn('d.statut', ['annule'])
                                        ->whereNotIn('p.statut', ['new_projet'])
                                        ->where('d.type', 'LIKE', 'imm_%')
-                                       ->groupBy('p.id')
                                        ->orderBy('date_creation', 'ASC')
-                                       ->get();
+                                       ->get()->unique();
 
         return $demandes;
     }
@@ -314,20 +313,19 @@ if (!function_exists('imm_demandeEIMT')) {
  * Retourne les demandes envoyées mais sans date de réception, en traitement depuis plus de 4 mois
  */
 if (!function_exists('imm_demandeEIMT_enattente')) {
-    function imm_demandeEIMT_enattente()
+    function imm_demandeEIMT_enattente($months)
     {
         $demandes = DB::table('demandes AS d')
                                        ->join('projets AS p', 'p.id', '=', 'd.projet_id')
                                        ->join('employeurs AS e', 'e.id', '=', 'p.employeur_id')
-                                       ->select(['p.numero', 'p.id', 'e.nom', 'p.date_creation'])
-                                       ->where('d.eimt_date_envoi', '<', \Carbon\Carbon::now()->subMonths(4))
+                                       ->select(['p.numero', 'p.id', 'e.nom', 'p.date_creation', 'd.eimt_date_envoi'])
+                                       ->where('d.eimt_date_envoi', '<', \Carbon\Carbon::now()->subMonths($months))
                                        ->whereNull('d.eimt_date_reception')
                                        ->whereNotIn('d.statut', ['annule'])
                                        ->whereNotIn('p.statut', ['new_projet'])
                                        ->where('d.type', 'LIKE', 'imm_%')
-                                       ->groupBy('p.id')
                                        ->orderBy('date_creation', 'ASC')
-                                       ->get();
+                                       ->get()->unique();
 
         return $demandes;
     }
@@ -351,8 +349,33 @@ if (!function_exists('imm_demandePermisTravail')) {
                                        ->whereNull('c.permis_date_envoi')
                                        ->whereNotIn('c.statut_pt', ['na', 'pt_suspendu', 'pt_refuse'])
                                        ->where('d.type', 'LIKE', 'imm_%')
-                                       ->groupBy('d.projet_id')
-                                       ->get();
+                                       ->get()->unique();
+
+
+
+        return $demandes;
+    }
+}
+
+
+
+/**
+ * Retourne les demandes en immigration ayant une EIMT datant de plus de 14 jours mais sans date d'envoi du permis de travail
+ */
+if (!function_exists('imm_demandePermisTravail_enattente')) {
+    function imm_demandePermisTravail_enattente($months)
+    {
+        $demandes = DB::table('demandes AS d')
+                                       ->join('projets AS p', 'p.id', '=', 'd.projet_id')
+                                       ->join('employeurs AS e', 'e.id', '=', 'p.employeur_id')
+                                       ->join('demande_candidat AS dc', 'dc.demande_id', '=', 'd.id')
+                                       ->join('candidats AS c', 'dc.candidat_id', '=', 'c.id')
+                                       ->select(['p.numero', 'd.projet_id', 'e.nom', 'p.date_creation', 'c.permis_date_envoi', 'c.nom AS name', 'c.id AS c_id'])
+                                       ->where('c.permis_date_envoi', '<', \Carbon\Carbon::now()->subMonths(3))
+                                       ->whereNull('c.permis_date_reception')
+                                       ->whereNotIn('c.statut_pt', ['na', 'pt_suspendu', 'pt_refuse'])
+                                       ->where('d.type', 'LIKE', 'imm_%')
+                                       ->get()->unique();
 
 
 

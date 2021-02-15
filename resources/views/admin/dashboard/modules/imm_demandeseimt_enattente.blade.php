@@ -10,20 +10,20 @@
                 <tr>
                     <th>#Projet</th>
                     <th>Client</th>
-                    <th>Création</th>
+                    <th>Envoyé le</th>
                 </tr>
             </thead>
             <tbody>
                 @php
-                    $demandes = imm_demandeEIMT_enattente();
+                    $demandes = imm_demandeEIMT_enattente(4);
                 @endphp
                 @foreach ($demandes as $d)
                     <tr>
                         <td><a href="{{ action('ProjetController@edit', $d->id) }}" class="btn btn-sm btn-danger">{{ $d->numero }}</a></td>
                         <td>{{ $d->nom }}</td>
                         <td style="line-height:14px">
-                            <p class="mb-0">{{ \Carbon\Carbon::parse($d->date_creation)->format('Y-m-d') }}</p>
-                            <small>{{ \Carbon\Carbon::parse($d->date_creation)->diffForHumans() }}</small>
+                            <p class="mb-0">{{ \Carbon\Carbon::parse($d->eimt_date_envoi)->format('Y-m-d') }}</p>
+                            <small>{{ \Carbon\Carbon::parse($d->eimt_date_envoi)->diffForHumans() }}</small>
                         </td>
                     </tr>
                 @endforeach

@@ -40,7 +40,7 @@
             </div>
             <div class="col-md-6 col-lg-4 m-b-30">
                 @include('admin.dashboard.modules.imm_demandespermis')
-                {{-- @include('admin.dashboard.modules.imm_demandespermis_enattente') --}}
+                @include('admin.dashboard.modules.imm_demandespermis_enattente')
             </div>
         </div>
 
