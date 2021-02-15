@@ -317,12 +317,16 @@ if (!function_exists('imm_demandePermisTravail')) {
         $demandes = DB::table('demandes AS d')
                                        ->join('projets AS p', 'p.id', '=', 'd.projet_id')
                                        ->join('employeurs AS e', 'e.id', '=', 'p.employeur_id')
+                                       ->join('demande_candidat AS dc', 'dc.demande_id', '=', 'd.id')
+                                       ->join('candidats AS c', 'dc.candidat_id', '=', 'c.id')
                                        ->select(['p.numero', 'd.projet_id', 'e.nom', 'p.date_creation'])
-                                       ->where('p.date_creation', '<', \Carbon\Carbon::now()->subMonth())
-                                       ->whereNull('d.eimt_date_envoi')
+                                       ->where('d.eimt_date_envoi', '<', \Carbon\Carbon::now()->subDays(14))
+                                       ->whereNull('c.permis_date_envoi')
                                        ->where('d.type', 'LIKE', 'imm_%')
                                        ->groupBy('d.projet_id')
                                        ->get();
+
+
 
         return $demandes;
     }

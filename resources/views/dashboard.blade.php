@@ -27,14 +27,17 @@
         </div>
     </div>
 
-    <div class="container pull-up">
+    <div class="container-fluid pull-up">
 
         <div class="row">
-            <div class="col-md-6 m-b-30">
+            <div class="col-md-6 col-lg-4 m-b-30">
                 @include('admin.dashboard.modules.rec_projetencours')
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 col-lg-4">
                 @include('admin.dashboard.modules.imm_demandeseimt')
+            </div>
+            <div class="col-md-6 col-lg-4">
+                @include('admin.dashboard.modules.imm_demandespermis')
             </div>
         </div>
 
@@ -52,7 +55,8 @@
             'use strict';
             $(document).ready(function () {
                 var default_options = {
-                    scrollY: '25vh',
+                    scrollY: '35vh',
+                    order: ['2', 'asc'],
                     scrollCollapse: true,
                     stateSave: true,
                     searching: false, paging: false, info: false
