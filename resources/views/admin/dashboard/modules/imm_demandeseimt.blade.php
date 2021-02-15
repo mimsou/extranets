@@ -5,7 +5,7 @@
     </div>
 
     <div class="card-body">
-        <table id="datatable" class="table" style="width:100%">
+        <table id="demandes_eimt" class="table" style="width:100%">
             <thead>
                 <tr>
                     <th>#Projet</th>
@@ -22,7 +22,7 @@
                         <td><a href="{{ action('ProjetController@edit', $d->id) }}" class="btn btn-sm btn-danger">{{ $d->numero }}</a></td>
                         <td>{{ $d->nom }}</td>
                         <td style="line-height:14px">
-                            <p class="mb-0">{{ $d->date_creation }}</p>
+                            <p class="mb-0">{{ \Carbon\Carbon::parse($d->date_creation)->format('Y-m-d') }}</p>
                             <small>{{ \Carbon\Carbon::parse($d->date_creation)->diffForHumans() }}</small>
                         </td>
                     </tr>
@@ -38,3 +38,5 @@
         </table>
     </div>
 </div>
+
+

@@ -1,5 +1,10 @@
 @extends('admin.template')
 
+@section('head')
+    <link rel="stylesheet" href="{{ asset('atmos-assets/vendor/DataTables/datatables.min.css') }}"></link>
+    <link rel="stylesheet" href="{{ asset('atmos-assets/vendor/DataTables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css') }}"></link>
+@endsection
+
 @section('content')
 
     <div class="bg-dark m-b-30">
@@ -37,5 +42,24 @@
 
 
     </div>
+
+@endsection
+
+@section('footer')
+    <script src="{{ asset('atmos-assets/vendor/DataTables/datatables.min.js') }}"></script>
+    <script>
+        (function ($) {
+            'use strict';
+            $(document).ready(function () {
+                var default_options = {
+                    scrollY:        '25vh',
+                    searching: false, paging: false, info: false
+                };
+
+                $('#demandes_eimt').DataTable(default_options);
+                $('#rec_projetencours').DataTable(default_options);
+            });
+        })(window.jQuery);
+    </script>
 
 @endsection

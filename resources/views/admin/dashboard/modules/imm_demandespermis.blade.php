@@ -22,7 +22,7 @@
                         <td><a href="{{ action('ProjetController@edit', $d->projet_id) }}" class="btn btn-sm btn-secondary">{{ $d->numero }}</a></td>
                         <td>{{ $d->nom }}</td>
                         <td style="line-height:14px">
-                            <p class="mb-0">{{ $d->date_creation }}</p>
+                            <p class="mb-0">{{ \Carbon\Carbon::parse($d->date_creation)->format('Y-m-d') }}</p>
                             <small>{{ \Carbon\Carbon::parse($d->date_creation)->diffForHumans() }}</small>
                         </td>
                     </tr>
