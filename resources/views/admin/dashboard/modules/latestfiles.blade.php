@@ -1,4 +1,4 @@
-<div class="card ">
+<div class="card  mb-3">
     <div class="card-header">
         <div class="card-title">Derniers fichiers envoyés</div>
     </div>

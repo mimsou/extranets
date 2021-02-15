@@ -1,4 +1,4 @@
-<div class="card ">
+<div class="card mb-3">
     <div class="card-header">
         <div class="card-title">Mandat en cours</div>
         <small>Liste de projet en recrutement avec une date de création, mais pas de date de sélection.</small>

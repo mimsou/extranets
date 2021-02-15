@@ -1,25 +1,25 @@
 <div class="card mb-3">
     <div class="card-header">
-        <div class="card-title">Demandes Permis de travail</div>
-        <small>Liste des projets ayant une date de réception d'EIMT depuis plus de 14 jours mais pas de date d'envoi de permis de travail</small>
+        <div class="card-title">Demandes EIMT latentes</div>
+        <small>Liste des demandes envoyées mais sans date de réception, en traitement depuis plus de 4 mois.</small>
     </div>
 
     <div class="card-body">
-        <table id="imm_demandepermis" class="table" style="width:100%">
+        <table id="demandes_eimt" class="table" style="width:100%">
             <thead>
                 <tr>
                     <th>#Projet</th>
                     <th>Client</th>
-                    <th>Date création</th>
+                    <th>Création</th>
                 </tr>
             </thead>
             <tbody>
                 @php
-                    $demandes = imm_demandePermisTravail();
+                    $demandes = imm_demandeEIMT_enattente();
                 @endphp
                 @foreach ($demandes as $d)
                     <tr>
-                        <td><a href="{{ action('ProjetController@edit', $d->projet_id) }}" class="btn btn-sm btn-danger">{{ $d->numero }}</a></td>
+                        <td><a href="{{ action('ProjetController@edit', $d->id) }}" class="btn btn-sm btn-danger">{{ $d->numero }}</a></td>
                         <td>{{ $d->nom }}</td>
                         <td style="line-height:14px">
                             <p class="mb-0">{{ \Carbon\Carbon::parse($d->date_creation)->format('Y-m-d') }}</p>
@@ -38,3 +38,5 @@
         </table>
     </div>
 </div>
+
+

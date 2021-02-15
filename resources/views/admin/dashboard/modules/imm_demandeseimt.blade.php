@@ -1,4 +1,4 @@
-<div class="card ">
+<div class="card mb-3">
     <div class="card-header">
         <div class="card-title">Demandes EIMT</div>
         <small>Liste des projets créés il y a plus d'un mois pour lesquels la demande d'EIMT n'a pas encore été envoyée</small>

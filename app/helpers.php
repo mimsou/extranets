@@ -310,6 +310,30 @@ if (!function_exists('imm_demandeEIMT')) {
 }
 
 
+/**
+ * Retourne les demandes envoyées mais sans date de réception, en traitement depuis plus de 4 mois
+ */
+if (!function_exists('imm_demandeEIMT_enattente')) {
+    function imm_demandeEIMT_enattente()
+    {
+        $demandes = DB::table('demandes AS d')
+                                       ->join('projets AS p', 'p.id', '=', 'd.projet_id')
+                                       ->join('employeurs AS e', 'e.id', '=', 'p.employeur_id')
+                                       ->select(['p.numero', 'p.id', 'e.nom', 'p.date_creation'])
+                                       ->where('d.eimt_date_envoi', '<', \Carbon\Carbon::now()->subMonths(4))
+                                       ->whereNull('d.eimt_date_reception')
+                                       ->whereNotIn('d.statut', ['annule'])
+                                       ->whereNotIn('p.statut', ['new_projet'])
+                                       ->where('d.type', 'LIKE', 'imm_%')
+                                       ->groupBy('p.id')
+                                       ->orderBy('date_creation', 'ASC')
+                                       ->get();
+
+        return $demandes;
+    }
+}
+
+
 
 /**
  * Retourne les demandes en immigration ayant une EIMT datant de plus de 14 jours mais sans date d'envoi du permis de travail
