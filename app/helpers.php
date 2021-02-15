@@ -322,6 +322,7 @@ if (!function_exists('imm_demandePermisTravail')) {
                                        ->select(['p.numero', 'd.projet_id', 'e.nom', 'p.date_creation'])
                                        ->where('d.eimt_date_envoi', '<', \Carbon\Carbon::now()->subDays(14))
                                        ->whereNull('c.permis_date_envoi')
+                                       ->whereNotIn('c.statut_pt', ['na', 'pt_suspendu', 'pt_refuse'])
                                        ->where('d.type', 'LIKE', 'imm_%')
                                        ->groupBy('d.projet_id')
                                        ->get();
