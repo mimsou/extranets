@@ -22,6 +22,7 @@ class Projet extends Model
                            'type_emploi'
                           ];
 
+
     public function setTypeEmploiAttribute($value)
     {
         $this->attributes['type_emploi'] = implode(',',$value);

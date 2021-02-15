@@ -252,7 +252,7 @@ if (!function_exists('permisTravailStatuts')) {
 
 /**
  * Get a list of all media categories in array
- * 
+ *
  */
 if(!function_exists('mediaCategories')) {
     function mediaCategories() {
@@ -264,5 +264,65 @@ if(!function_exists('mediaCategories')) {
             }
         }
         return array_filter($categories, 'strlen');
+    }
+}
+
+
+
+/**
+ * Retourne les projets en recrutement avec une date de création mais pas de date de sélection
+ */
+if (!function_exists('rec_projetsencours')) {
+    function rec_projetsencours()
+    {
+        return \App\Models\Projet::whereNotNull('date_creation')
+                                 ->whereNull('date_selection')
+                                 ->where('statut', 'LIKE', 'rec_%')
+                                 ->orderBy('date_creation', 'ASC')
+                                 ->get();
+    }
+}
+
+
+
+/**
+ * Retourne les demandes en immigration datant de plus d'un mois sans date d'envoi de l'EIMT
+ */
+if (!function_exists('imm_demandeEIMT')) {
+    function imm_demandeEIMT()
+    {
+        $demandes = DB::table('demandes AS d')
+                                       ->join('projets AS p', 'p.id', '=', 'd.projet_id')
+                                       ->join('employeurs AS e', 'e.id', '=', 'p.employeur_id')
+                                       ->select(['p.numero', 'd.projet_id', 'e.nom', 'p.date_creation'])
+                                       ->where('p.date_creation', '<', \Carbon\Carbon::now()->subMonth())
+                                       ->whereNull('d.eimt_date_envoi')
+                                       ->where('d.type', 'LIKE', 'imm_%')
+                                       ->groupBy('d.projet_id')
+                                       ->get();
+
+        return $demandes;
+    }
+}
+
+
+
+/**
+ * Retourne les demandes en immigration ayant une EIMT datant de plus de 14 jours mais sans date d'envoi du permis de travail
+ */
+if (!function_exists('imm_demandePermisTravail')) {
+    function imm_demandePermisTravail()
+    {
+        $demandes = DB::table('demandes AS d')
+                                       ->join('projets AS p', 'p.id', '=', 'd.projet_id')
+                                       ->join('employeurs AS e', 'e.id', '=', 'p.employeur_id')
+                                       ->select(['p.numero', 'd.projet_id', 'e.nom', 'p.date_creation'])
+                                       ->where('p.date_creation', '<', \Carbon\Carbon::now()->subMonth())
+                                       ->whereNull('d.eimt_date_envoi')
+                                       ->where('d.type', 'LIKE', 'imm_%')
+                                       ->groupBy('d.projet_id')
+                                       ->get();
+
+        return $demandes;
     }
 }
