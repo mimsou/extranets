@@ -5,7 +5,7 @@
     </div>
 
     <div class="card-body">
-        <table id="demandes_eimt" class="table" style="width:100%">
+        <table id="demandes_eimt_enattente" class="table" style="width:100%">
             <thead>
                 <tr>
                     <th>#Projet</th>
@@ -27,13 +27,7 @@
                         </td>
                     </tr>
                 @endforeach
-                @if (count($demandes) == 0)
 
-                    <tr>
-                        <td colspan="4" class="text-center"><i>Aucun mandat en cours</i></td>
-                    </tr>
-
-                @endif
             </tbody>
         </table>
     </div>

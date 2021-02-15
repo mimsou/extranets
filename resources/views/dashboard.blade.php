@@ -66,8 +66,11 @@
                 };
 
                 $('#demandes_eimt').DataTable(default_options);
+                $('#demandes_eimt_enattente').DataTable(default_options);
                 $('#rec_projetencours').DataTable(default_options);
                 $('#imm_demandepermis').DataTable(default_options);
+                $('#imm_demandepermis_enattente').DataTable(default_options);
+
 
             });
         })(window.jQuery);

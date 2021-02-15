@@ -27,13 +27,7 @@
                         </td>
                     </tr>
                 @endforeach
-                @if (count($demandes) == 0)
 
-                    <tr>
-                        <td colspan="4" class="text-center"><i>Aucun mandat en cours</i></td>
-                    </tr>
-
-                @endif
             </tbody>
         </table>
     </div>
