@@ -278,6 +278,7 @@ if (!function_exists('rec_projetsencours')) {
         return \App\Models\Projet::whereNotNull('date_creation')
                                  ->whereNull('date_selection')
                                  ->where('statut', 'LIKE', 'rec_%')
+                                 ->whereNotIn('statut', ['new_projet'])
                                  ->orderBy('date_creation', 'ASC')
                                  ->get();
     }
