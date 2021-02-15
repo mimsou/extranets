@@ -299,6 +299,7 @@ if (!function_exists('imm_demandeEIMT')) {
                                        ->whereNull('d.eimt_date_envoi')
                                        ->where('d.type', 'LIKE', 'imm_%')
                                        ->groupBy('p.id')
+                                       ->orderBy('date_creation', 'ASC')
                                        ->get();
 
         return $demandes;
