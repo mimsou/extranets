@@ -80,10 +80,10 @@
                 <small>
                     <div class="d-flex">
                         <div class="dates">
-                            <p class="m-0 p-0 pr-3"><i>Envoi</i></p>
-                            <p class="m-0 p-0 pr-3"><i>Acc. Réc.</i></p>
-                            <p class="m-0 p-0 pr-3"><i>Réception</i></p>
-                            <p class="m-0 p-0 pr-3"><i>Échéance</i></p>
+                            <p class="m-0 p-0 pr-3"><i>Date d'envoi</i></p>
+                            <p class="m-0 p-0 pr-3"><i>Date d'accusé réception</i></p>
+                            <p class="m-0 p-0 pr-3"><i>Date d'approbation</i></p>
+                            <p class="m-0 p-0 pr-3"><i>Date d'expiration</i></p>
                         </div>
                         <div class="values">
                             <p class="m-0 p-0">{{ (empty($p->dst_date_envoi))?'---- / -- / --' : $p->dst_date_envoi }}</p>

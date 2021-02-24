@@ -104,7 +104,7 @@
 
 
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <h4 class="mt-3">EIMT</h4>
                 <div class="form-group">
                     <label for="eimt_date_envoi">{{ __("Date d'envoi") }}</label>
@@ -117,12 +117,12 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="eimt_date_reception">{{ __("Date de réception") }}</label>
+                    <label for="eimt_date_reception">{{ __("Date de approbation") }}</label>
                     {{ Form::date('eimt_date_reception', null, ['class'=>'form-control', 'id'=>'eimt_date_reception']) }}
                 </div>
 
                 <div class="form-group">
-                    <label for="eimt_date_echeance">{{ __("Date d'échéance") }}</label>
+                    <label for="eimt_date_echeance">{{ __("Date d'expiration") }}</label>
                     {{ Form::date('eimt_date_echeance', null, ['class'=>'form-control', 'id'=>'eimt_date_echeance']) }}
                 </div>
 
@@ -131,7 +131,7 @@
                     {{ Form::text('eimt_numero', null, ['class'=>'form-control', 'id'=>'eimt_numero']) }}
                 </div>
             </div>
-            <div class="col-md-6">
+            {{-- <div class="col-md-6">
                 <h4 class="mt-3">DST</h4>
                 <div class="form-group">
                     <label for="dst_date_envoi">{{ __("Date d'envoi") }}</label>
@@ -157,7 +157,7 @@
                     <label for="dst_numero">{{ __("Numéro") }}</label>
                     {{ Form::text('dst_numero', null, ['class'=>'form-control', 'id'=>'dst_numero']) }}
                 </div>
-            </div>
+            </div> --}}
         </div>
 
 </div>

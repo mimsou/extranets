@@ -47,7 +47,7 @@
         {!! Form::select('pays_id', \App\Models\Pays::orderBy('title', 'asc')->pluck('title', 'id'), $pays, ['class'=>'form-control', 'placeholder'=>'Veuillez choisir']) !!}
     </div>
     <div class="form-group col-md-6">
-        <label for="zip">Code postale</label>
+        <label for="zip">Code postal</label>
         {!! Form::text('zip', null, ['class'=>'form-control', 'style'=>'text-transform: uppercase', 'data-mask'=>'S0S 0S0']) !!}
     </div>
 </div>
