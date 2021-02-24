@@ -283,7 +283,7 @@ if (!function_exists('rec_projetsencours')) {
                                  ->get();
 
         $demande_incomplete = \App\Models\Demande::where('type', 'recrutement')
-                                                 ->whereRaw('nb_candidat != nb_candidat_recrute')
+                                                 ->whereRaw('nb_candidat > nb_candidat_recrute')
                                                  ->whereNotIn('statut', ['annule'])
                                                  ->select('projet_id')
                                                  ->get();
