@@ -275,12 +275,29 @@ if(!function_exists('mediaCategories')) {
 if (!function_exists('rec_projetsencours')) {
     function rec_projetsencours()
     {
-        return \App\Models\Projet::whereNotNull('date_creation')
+        $projet_dates = \App\Models\Projet::whereNotNull('date_creation')
                                  ->whereNull('date_selection')
                                  ->where('statut', 'LIKE', 'rec_%')
                                  ->whereNotIn('statut', ['new_projet'])
                                  ->orderBy('date_creation', 'ASC')
                                  ->get();
+
+        $demande_incomplete = \App\Models\Demande::where('type', 'recrutement')
+                                                 ->whereRaw('nb_candidat != nb_candidat_recrute')
+                                                 ->whereNotIn('statut', ['annule'])
+                                                 ->select('projet_id')
+                                                 ->get();
+
+        $projet_incomplets = \App\Models\Projet::whereNotNull('date_creation')
+                                                ->where('statut', 'LIKE', 'rec_%')
+                                                ->whereNotIn('statut', ['new_projet'])
+                                                ->whereIn('id', $demande_incomplete)
+                                                ->orderBy('date_creation', 'ASC')
+                                                ->get();
+
+        return $projet_dates->merge($projet_incomplets)->unique();
+
+
     }
 }
 

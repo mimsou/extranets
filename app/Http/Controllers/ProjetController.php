@@ -199,6 +199,10 @@ class ProjetController extends Controller
             flash( "Le candidat a été ajouté à la demande avec succès")->success();
         }
 
+        // On met à jour le nombre de candidats dans la DB
+        $demande->nb_candidat_recrute = $demande->candidats->count();
+        $demande->save();
+
 
         return Redirect::back();
     }
@@ -215,6 +219,10 @@ class ProjetController extends Controller
         }
 
         $demande->candidats()->sync($final_candidats);
+
+        // On met à jour le nombre de candidats dans la DB
+        $demande->nb_candidat_recrute = $demande->candidats->count();
+        $demande->save();
 
         flash( "Le candidat a été retiré au projet avec succès")->success();
 
