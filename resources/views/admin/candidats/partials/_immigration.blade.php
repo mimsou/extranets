@@ -70,12 +70,12 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="eimt_date_reception">{{ __("Date de réception") }}</label>
+                    <label for="eimt_date_reception">{{ __("Date d'approbation") }}</label>
                     {{ Form::date('eimt_date_reception', $eimt_date_reception, ['class'=>'form-control', 'readonly', 'id'=>'eimt_date_reception']) }}
                 </div>
 
                 <div class="form-group">
-                    <label for="eimt_date_echeance">{{ __("Date d'échéance") }}</label>
+                    <label for="eimt_date_echeance">{{ __("Date d'expiration") }}</label>
                     {{ Form::date('eimt_date_echeance', $eimt_date_echeance, ['class'=>'form-control', 'readonly', 'id'=>'eimt_date_echeance']) }}
                 </div>
 

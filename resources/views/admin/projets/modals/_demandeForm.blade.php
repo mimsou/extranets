@@ -104,7 +104,7 @@
 
 
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-6">
                 <h4 class="mt-3">EIMT</h4>
                 <div class="form-group">
                     <label for="eimt_date_envoi">{{ __("Date d'envoi") }}</label>
@@ -131,7 +131,7 @@
                     {{ Form::text('eimt_numero', null, ['class'=>'form-control', 'id'=>'eimt_numero']) }}
                 </div>
             </div>
-            {{-- <div class="col-md-6">
+            <div class="col-md-6">
                 <h4 class="mt-3">DST</h4>
                 <div class="form-group">
                     <label for="dst_date_envoi">{{ __("Date d'envoi") }}</label>
@@ -155,9 +155,10 @@
 
                 <div class="form-group">
                     <label for="dst_numero">{{ __("Numéro") }}</label>
-                    {{ Form::text('dst_numero', null, ['class'=>'form-control', 'id'=>'dst_numero']) }}
+                    <p><i><small>Le numéro de DST est spécifique à chaque candidat</small></i></p>
+                    {{-- {{ Form::text('dst_numero', null, ['class'=>'form-control', 'id'=>'dst_numero']) }} --}}
                 </div>
-            </div> --}}
+            </div>
         </div>
 
 </div>

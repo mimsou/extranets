@@ -46,10 +46,10 @@
                 <small>
                     <div class="d-flex">
                         <div class="dates">
-                            <p class="m-0 p-0 pr-3"><i>Date d'envoi</i></p>
-                            <p class="m-0 p-0 pr-3"><i>Date d'accusé réception</i></p>
-                            <p class="m-0 p-0 pr-3"><i>Date d'approbation</i></p>
-                            <p class="m-0 p-0 pr-3"><i>Date d'expiration</i></p>
+                            <p class="m-0 p-0 pr-3"><i>Envoi</i></p>
+                            <p class="m-0 p-0 pr-3"><i>Acc. Réc.</i></p>
+                            <p class="m-0 p-0 pr-3"><i>Approbation</i></p>
+                            <p class="m-0 p-0 pr-3"><i>Expiration</i></p>
                         </div>
                         <div class="values">
                             <p class="m-0 p-0">{{ (empty($p->eimt_date_envoi))?'---- / -- / --' : $p->eimt_date_envoi }}</p>
@@ -60,7 +60,7 @@
                     </div>
                 </small>
             </div>
-            {{-- <div class="text-muted">
+            <div class="text-muted">
                 <h5 class="pb-0 mb-2 text-secondary">DST</h5>
                 <small>
                     <div class="d-flex">
@@ -78,7 +78,7 @@
                         </div>
                     </div>
                 </small>
-            </div> --}}
+            </div>
         </div>
 
         <div class="d-flex justify-content-between mt-5">
