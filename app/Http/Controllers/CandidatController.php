@@ -45,7 +45,7 @@ class CandidatController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'nom' => 'required',
-            'numero' => ['required', Rule::unique('candidats')],
+            // 'numero' => ['required', Rule::unique('candidats')],
             'statut' => 'required'
         ]);
 
@@ -98,7 +98,7 @@ class CandidatController extends Controller
         $candidat = Candidat::find($id);
         $validator = Validator::make($request->all(), [
             'nom' => 'required',
-            'numero' => ['required', Rule::unique('candidats')->ignore($id)],
+            // 'numero' => ['required', Rule::unique('candidats')->ignore($id)],
             'statut' => 'required'
         ]);
 
@@ -126,7 +126,7 @@ class CandidatController extends Controller
         //
     }
 
-    
+
     /**
      * Upload additional resources using ajax and Dropzone.js
      *
@@ -163,8 +163,8 @@ class CandidatController extends Controller
     }
 
     /**
-     * Add Media categories 
-     * 
+     * Add Media categories
+     *
      */
     public function addMediaCategory(Request $request) {
         $media = Media::find($request->media_id);
@@ -176,9 +176,9 @@ class CandidatController extends Controller
 
     /**
      * Update the profile picture of candidat
-     * 
+     *
      */
-    public function updateAvatar($candidat_id, Request $request) 
+    public function updateAvatar($candidat_id, Request $request)
     {
         $candidat = Candidat::find($candidat_id);
 
@@ -194,16 +194,16 @@ class CandidatController extends Controller
 
     /**
      * Get media categories
-     * 
+     *
      */
     public function getMediaCategories(Request $request) {
         $media_cats = Media::find($request->media_id)->getCustomProperty('categories');
         return $media_cats;
     }
 
-    /** 
+    /**
      * Delete media of a candidat
-     * 
+     *
      */
     public function removeMedia(Request $request)
     {
@@ -214,8 +214,8 @@ class CandidatController extends Controller
     }
 
     /**
-     * Delete candidat 
-     * 
+     * Delete candidat
+     *
      */
     public function remove(Request $request){
         Candidat::find($request->candidat_id)->delete();

@@ -1,9 +1,18 @@
-<div class="card mt-3 col-12" style="background-color: #f4f7fb;">
+<div class="card mt-3 col-12 {{ $p->pivot->statut }}" style="background-color: #f4f7fb;">
     <div class="card-body px-1 py-3">
         <div class="d-flex justify-content-between">
             <div>
                 <h5 class="searchBy-name">
-                    <div class="badge badge-soft-secondary mr-3"><small>#{{ $p->numero }}</small></div><a href="{{ action('CandidatController@edit', $p->id) }}" target="_blank">{{ $p->nom }}</a>
+                    @if($p->pivot->statut == 'removed')
+                        <div class="badge badge-soft-danger mr-3">
+                            <small>RETIRÉ</small>
+                        </div>
+                    @else
+                        <div class="badge badge-soft-secondary mr-3">
+                            <small>#{{ $p->numero }}</small>
+                        </div>
+                    @endif
+                    <a href="{{ action('CandidatController@edit', $p->id) }}" target="_blank">{{ $p->nom }}</a>
                 </h5>
 
             </div>
@@ -17,7 +26,8 @@
                         <button class="dropdown-item" type="button"><a href="{{ action('CandidatController@edit', $p->id) }}" target="_blank">Fiche du candidat</a></button>
                         {{-- <button class="dropdown-item editparticipant" type="button" data-type="" data-pid="{{ $p->id }}">Modifier le participant</button> --}}
                         <div class="dropdown-divider"></div>
-                    <button class="dropdown-item delete_participant" data-pid="{{$p->id}}" type="button"><a href="{{ action('ProjetController@removeCandidat', [$demande->id, base64_encode($p->id)]) }}">Retirer le candidat du projet</a></button>
+                        <button class="dropdown-item delete_participant" data-pid="{{$p->id}}" type="button"><a href="{{ action('ProjetController@updateCandidat', [$demande->id, base64_encode($p->id), 'removed']) }}">Le candidat s'est désisté du projet</a></button>
+                        <button class="dropdown-item delete_participant" data-pid="{{$p->id}}" type="button"><a href="{{ action('ProjetController@removeCandidat', [$demande->id, base64_encode($p->id)]) }}">Supprimer le candidat du projet</a></button>
                     </div>
                 </div>
             </div>

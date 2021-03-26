@@ -188,12 +188,13 @@ class ProjetController extends Controller
 
         $final_candidats = [];
         foreach($candidats as $c){
-            array_push($final_candidats, $c->id);
+            $final_candidats[$c->id] = ['statut'=> (is_null($c->pivot->statut))?'approved':$c->pivot->statut ];
         }
 
         if(!empty($request->user_id)){
-            array_push($final_candidats, $request->user_id);
+            $final_candidats[$request->user_id] = ['statut'=>'approved'];
 
+            // dd($final_candidats);
             $demande->candidats()->sync($final_candidats);
 
             flash( "Le candidat a été ajouté à la demande avec succès")->success();
@@ -203,9 +204,34 @@ class ProjetController extends Controller
         $demande->nb_candidat_recrute = $demande->candidats->count();
         $demande->save();
 
+        return Redirect::back();
+    }
+
+
+    public function updateCandidat(Request $request, $id, $candidat_id, $statut){
+        $demande = Demande::find($id);
+        $candidats = $demande->candidats()->select('id')->get();
+
+        $candidat_id = base64_decode($candidat_id);
+
+        $final_candidats = [];
+        foreach($candidats as $c){
+            if($candidat_id != $c->id) $final_candidats[$c->id] = ['statut'=> (is_null($c->pivot->statut))?'approved':$c->pivot->statut ];
+        }
+
+        $final_candidats[$candidat_id] = ['statut'=> $statut];
+
+        $demande->candidats()->sync($final_candidats);
+
+        // On met à jour le nombre de candidats dans la DB
+        $demande->nb_candidat_recrute = $demande->candidats->count();
+        $demande->save();
+
+        flash( "Le candidat a été retiré au projet avec succès")->success();
 
         return Redirect::back();
     }
+
 
     public function removeCandidat(Request $request, $id, $candidat_id){
         $demande = Demande::find($id);
@@ -215,7 +241,7 @@ class ProjetController extends Controller
 
         $final_candidats = [];
         foreach($candidats as $c){
-            if($candidat_id != $c->id) array_push($final_candidats, $c->id);
+            if($candidat_id != $c->id) $final_candidats[$c->id] = ['statut'=> (is_null($c->pivot->statut))?'approved':$c->pivot->statut ];
         }
 
         $demande->candidats()->sync($final_candidats);

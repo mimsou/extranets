@@ -21,6 +21,7 @@ Route::post('/projets/{id}/addDemande', 'ProjetController@addDemande');
 Route::post('/projets/{id}/addDemande/getEmployeurContact', 'ProjetController@getEmployeurContact');
 Route::post('/projets/{id}/demandeDetails', 'ProjetController@demandeDetails');
 Route::patch('/projets/{id}/editDemande/{demandeid}', 'ProjetController@editDemande');
+Route::get('/projets/{id}/updateCandidat/{candidat_id}/{statut}', 'ProjetController@updateCandidat');
 Route::get('/projets/{id}/removeCandidat/{candidat_id}', 'ProjetController@removeCandidat');
 Route::get('/projets/{id}/removeDemande/{demande_id}', 'ProjetController@removeDemande');
 

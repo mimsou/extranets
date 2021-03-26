@@ -4,3 +4,8 @@
   height: 60px;
 }
 
+.removed {
+  border: 1px solid #ffc3c3;
+  background: #fdeaea !important;
+}
+

@@ -71,7 +71,7 @@ class Candidat extends Model implements HasMedia
      */
     public function demandes()
     {
-        return $this->belongsToMany('App\Models\Demande', 'demande_candidat', 'candidat_id', 'demande_id', 'id', 'id');
+        return $this->belongsToMany('App\Models\Demande', 'demande_candidat', 'candidat_id', 'demande_id', 'id', 'id')->withPivot('statut');
     }
 
     /**
@@ -87,7 +87,7 @@ class Candidat extends Model implements HasMedia
 
         // return $d_arr;
 
-        return $this->belongsToMany('App\Models\Demande', 'demande_candidat', 'candidat_id', 'demande_id', 'id', 'id')->where('type','LIKE','immigration');
+        return $this->belongsToMany('App\Models\Demande', 'demande_candidat', 'candidat_id', 'demande_id', 'id', 'id')->where('type','LIKE','immigration')->withPivot('statut');
     }
 
 
@@ -103,7 +103,7 @@ class Candidat extends Model implements HasMedia
         // }
 
         // return $d_arr;
-        return $this->belongsToMany('App\Models\Demande', 'demande_candidat', 'candidat_id', 'demande_id', 'id', 'id')->where('type','LIKE','recrutement');
+        return $this->belongsToMany('App\Models\Demande', 'demande_candidat', 'candidat_id', 'demande_id', 'id', 'id')->where('type','LIKE','recrutement')->withPivot('statut');
     }
 
 
@@ -159,10 +159,10 @@ class Candidat extends Model implements HasMedia
 
     /**
      * Register Media Collections
-     * 
+     *
      */
 	public function registerMediaCollections(): void {
-        
+
         $this->addMediaCollection('avatar')
                 ->singleFile()
                 ->registerMediaConversions(function (Media $media) {
@@ -208,9 +208,9 @@ class Candidat extends Model implements HasMedia
                         ->width(1000)
                         ->sharpen(10)
                         ->performOnCollections('resources');
-                });    
+                });
     }
-    
+
 
 
 }

@@ -60,7 +60,7 @@
         <div class="d-flex justify-content-between mt-5">
             <div>
                 <h4 class="mb-0 pb-0">Candidats</h4>
-                <small>{{ $p->candidats()->count() }} sur {{ $p->nb_candidat }} candidats requis</small>
+                <small>{{ $p->candidats()->wherePivot('statut', 'approved')->count() }} sur {{ $p->nb_candidat }} candidats requis</small>
             </div>
 
             <div><button class="btn btn-sm btn-primary addCandidat" data-demandeid="{{$p->id}}">AJOUTER UN CANDIDAT</button></div>
@@ -71,7 +71,7 @@
         @endforeach
 
         @php
-            $nb_to_fill = $p->nb_candidat - $p->candidats()->count();
+            $nb_to_fill = $p->nb_candidat - $p->candidats()->wherePivot('statut', 'approved')->count();
         @endphp
 
         @for ($i = 0; $i < $nb_to_fill; $i++)

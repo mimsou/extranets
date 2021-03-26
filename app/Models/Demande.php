@@ -84,7 +84,7 @@ class Demande extends Model
      */
     public function candidats()
     {
-        return $this->belongsToMany('App\Models\Candidat', 'demande_candidat', 'demande_id', 'candidat_id', 'id', 'id');
+        return $this->belongsToMany('App\Models\Candidat', 'demande_candidat', 'demande_id', 'candidat_id', 'id', 'id')->withPivot('statut');
     }
 
     public function postes($separator = ', '){
