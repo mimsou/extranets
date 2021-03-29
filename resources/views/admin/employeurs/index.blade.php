@@ -43,9 +43,9 @@
                                         <th>Statut</th>
                                         <th>Nom</th>
                                         <th>Contact principal</th>
-                                        <th>Regroupement</th>
+                                        <th data-orderable="false">Regroupement</th>
                                         <th>Dernière modification</th>
-                                        <th>Action</th>
+                                        <th data-orderable="false">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>

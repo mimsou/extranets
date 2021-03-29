@@ -128,6 +128,7 @@ class ProjetController extends Controller
 
     public function addDemande(Request $request, $id){
         $projet = Projet::find($id);
+
         // Création de la demande
         $projet->demandes()->create($request->all());
 

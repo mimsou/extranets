@@ -41,13 +41,14 @@
                             <table id="datatable" class="table" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th>Numéro</th>
+                                        <th data-orderable="false">Numéro</th>
                                         <th>Employeur</th>
-                                        <th>Type de projet</th>
-                                        <th>Titre</th>
+                                        <th data-orderable="false">Type de projet</th>
+                                        <th data-orderable="false">Titre</th>
+                                        <th data-orderable="false">Facturation horaire</th>
                                         {{-- <th>Candidats</th> --}}
-                                        <th>Dernière modification</th>
-                                        <th>Action</th>
+                                        <th data-orderable="false">Dernière modification</th>
+                                        <th data-orderable="false">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -59,6 +60,7 @@
                                         <th>Employeur</th>
                                         <th>Type de projet</th>
                                         <th>Titre</th>
+                                        <th>Facturation horaire</th>
                                         {{-- <th>Candidats</th> --}}
                                         <th>Dernière modification</th>
                                         <th>Action</th>
@@ -95,6 +97,7 @@
                         {data: 'employeur.nom'},
                         {data: 'statut'},
                         {data: 'titre'},
+                        {data: 'facturation_horaire'},
                         // {data: 'statut_candidat'},
                         {data: 'updated_at', class:'text-right'},
                         {data: 'action'},

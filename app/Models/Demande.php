@@ -12,6 +12,7 @@ class Demande extends Model
     protected $fillable = ['projet_id',
                            'employeur_id',
                            'statut',
+                           'facturation_horaire',
                            'nb_candidat',
                            'procedure',
                            'date_debut_mandat',

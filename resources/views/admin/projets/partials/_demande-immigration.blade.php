@@ -2,7 +2,11 @@
     <div class="card-body px-1 py-3">
         <div class="d-flex justify-content-between">
             <div>
-                <div class="badge badge-danger mr-3 mb-3"><small><strong>IMMIGRATION</strong></small></div>
+                <div ><small class="badge badge-danger mr-1 mb-3"><strong>IMMIGRATION</strong></small>
+                    @if ($p->facturation_horaire == 'on')
+                        <i class="fas fa-stopwatch text-muted opacity-50" style="font-size: 16px;line-height: 19px; position: relative; top: -7px;" data-toggle="tooltip" data-placement="top" title="Facturation horaire"></i>
+                    @endif
+                </div>
                 <h3 class="searchBy-name">
                      <a href="{{ action('EmployeurController@edit', $p->employeur_id) }}" target="_blank">{{ $p->employeur->nom }}</a>
                 </h3>

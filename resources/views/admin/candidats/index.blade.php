@@ -45,7 +45,7 @@
                                         <th>Numéro</th>
                                         <th>Nom</th>
                                         <th>Pays</th>
-                                        <th>Recruteur</th>
+                                        {{-- <th>Recruteur</th> --}}
                                         <th>Emploi</th>
                                         <th>Regroupement</th>
                                         {{-- <th>Mission</th> --}}
@@ -61,10 +61,10 @@
                                         <th>Statut</th>
                                         <th>Numéro</th>
                                         <th>Nom</th>
-                                        <th>Pays</th>
-                                        <th>Recruteur</th>
-                                        <th>Emploi</th>
-                                        <th>Regroupement</th>
+                                        <th data-orderable="false">Pays</th>
+                                        {{-- <th data-orderable="false">Recruteur</th> --}}
+                                        <th data-orderable="false">Emploi</th>
+                                        <th data-orderable="false">Regroupement</th>
                                         {{-- <th>Mission</th> --}}
                                         <th>Dernière modification</th>
                                         <th>Action</th>
@@ -102,7 +102,7 @@
                         {data: 'numero'},
                         {data: 'nom'},
                         {data: 'pays', name: 'pays.title'},
-                        {data: 'recruteur', name: 'recruteur.firstname'},
+                        // {data: 'recruteur', name: 'recruteur.firstname'},
                         {data: 'emploi', name: 'emploi.title'},
                         {data: 'regroupement', name: 'regroupement.title'},
                         {data: 'updated_at', class:'text-right'},

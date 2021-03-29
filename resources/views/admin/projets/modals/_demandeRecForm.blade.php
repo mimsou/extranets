@@ -2,10 +2,18 @@
     $unik_id = uniqid();
 @endphp
 
-<div class="form-group col-md-8 mx-auto mb-4">
+<div class="form-group col-md-10 mx-auto mb-4">
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-8">
             {{ Form::select('statut', demandeStatuts(null, STATUTS_DEMANDE_REC), null, ['class'=>'form-control text-center']) }}
+        </div>
+        <div class="form-group col-md-4 mt-2">
+            {{ Form::hidden('facturation_horaire', 'off') }}
+            <label class="cstm-switch">
+                {{ Form::checkbox('facturation_horaire', 'on', (isset($demande) && $demande->facturation_horaire == 'on')?true:false, ['class'=>'cstm-switch-input', 'id'=>'facturation_horaire_switch']) }}
+                <span class="cstm-switch-indicator bg-success"></span>
+                <span class="cstm-switch-description">{{ __('Facturation horaire') }}</span>
+            </label>
         </div>
     </div>
 
