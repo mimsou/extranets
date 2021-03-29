@@ -118,20 +118,20 @@
                     {{ Form::select('statut_pt', permisTravailStatuts(), null, ['class'=>'form-control', 'id'=>'permis_date_envoi']) }}
                 </div>
                 <div class="form-group">
-                    <label for="permis_date_envoi">{{ __("Date d'envoi de la demande") }}</label>
+                    <label for="permis_date_envoi">{{ __("Date de soumission") }}</label>
                     {{ Form::date('permis_date_envoi', null, ['class'=>'form-control', 'id'=>'permis_date_envoi']) }}
                 </div>
                 <div class="form-group">
-                    <label for="permis_date_reception">{{ __("Date de réception") }}</label>
+                    <label for="permis_date_reception">{{ __("Date d'approbation") }}</label>
                     {{ Form::date('permis_date_reception', null, ['class'=>'form-control', 'id'=>'permis_date_reception']) }}
                 </div>
                 <div class="form-group">
-                    <label for="permis_date_echeance">{{ __("Date d'échéance du permis en vigueur") }}</label>
-                    {{ Form::date('permis_date_echeance', null, ['class'=>'form-control', 'id'=>'permis_date_echeance']) }}
+                    <label for="permis_date_delivrance">{{ __("Date de délivrance du permis") }}</label>
+                    {{ Form::date('permis_date_delivrance', null, ['class'=>'form-control', 'id'=>'permis_date_delivrance']) }}
                 </div>
                 <div class="form-group">
-                    <label for="permis_date_renouvellement">{{ __("Date de la dernière demande de renouvellement") }}</label>
-                    {{ Form::date('permis_date_renouvellement', null, ['class'=>'form-control', 'id'=>'permis_date_renouvellement']) }}
+                    <label for="permis_date_echeance">{{ __("Date d'échéance") }}</label>
+                    {{ Form::date('permis_date_echeance', null, ['class'=>'form-control', 'id'=>'permis_date_echeance']) }}
                 </div>
             </div>
         </div>

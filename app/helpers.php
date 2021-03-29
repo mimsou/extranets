@@ -212,14 +212,15 @@ if (!function_exists('demandeStatuts')) {
 
 
 !defined('STATUTS_PERMIS_TRAVAIL') && define('STATUTS_PERMIS_TRAVAIL', [
-    ['progression' => '0%', 'val' => 'offre_signee', 'title' => 'Offre de service signée'],
-    ['progression' => '10%', 'val' => 'offre_creee', 'title' => "Offre d'emploi créée (Mob. fr.)"],
-    ['progression' => '15%', 'val' => 'pt_encours', 'title' => 'Permis de travail en cours'],
-    ['progression' => '15%', 'val' => 'attente_antecedant', 'title' => "En attente d'antécédants"],
-    ['progression' => '30%', 'val' => 'qa_pt', 'title' => 'Contrôle qualité permis de travail'],
-    ['progression' => '80%', 'val' => 'pt_envoye', 'title' => 'Permis de travail envoyé'],
-    ['progression' => '90%', 'val' => 'pt_depose', 'title' => 'Permis de travail deposé'],
-    ['progression' => '100%', 'val' => 'pt_obtenu', 'title' => 'Permis de travail obtenu'],
+    ['progression' => '0%', 'val' => 'offre_signee', 'title' => 'Demande non débutée'],
+    // ['progression' => '10%', 'val' => 'offre_creee', 'title' => "Offre d'emploi créée (Mob. fr.)"],
+    ['progression' => '25%', 'val' => 'pt_encours', 'title' => 'Permis en préparation'],
+    // ['progression' => '15%', 'val' => 'attente_antecedant', 'title' => "En attente d'antécédants"],
+    // ['progression' => '30%', 'val' => 'qa_pt', 'title' => 'Contrôle qualité permis de travail'],
+    // ['progression' => '80%', 'val' => 'pt_envoye', 'title' => 'Permis de travail envoyé'],
+    ['progression' => '80%', 'val' => 'pt_depose', 'title' => 'Demande soumise'],
+    ['progression' => '90%', 'val' => 'pt_obtenu', 'title' => 'Demande approuvée'],
+    ['progression' => '100%', 'val' => 'pt_archive', 'title' => 'Copie du permis archivée'],
     ['progression' => '0%', 'val' => 'pt_suspendu', 'title' => 'Permis de travail suspendu/annulé'],
     ['progression' => '0%', 'val' => 'pt_refuse', 'title' => 'Permis de travail refusé'],
 ]);
@@ -240,6 +241,9 @@ if (!function_exists('permisTravailStatuts')) {
 
             $select_array[$value['val']] = $value['title'];
         }
+
+        if(!is_null($key)) return 'Non-applicable';
+
         return $select_array;
     }
 
@@ -247,6 +251,8 @@ if (!function_exists('permisTravailStatuts')) {
         foreach (STATUTS_PERMIS_TRAVAIL as $value) {
             if($val == $value['val']) return $value['progression'];
         }
+
+        return '0%';
     }
 }
 

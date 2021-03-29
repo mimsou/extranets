@@ -43,6 +43,7 @@ class Candidat extends Model implements HasMedia
                             'permis_date_reception',
                             'permis_date_echeance',
                             'permis_date_renouvellement',
+                            'permis_date_delivrance',
                             // 'date_mandat_immigration',
                             // 'immigration_user_id',
                             'recruteur_id'
