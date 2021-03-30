@@ -8,22 +8,24 @@
                 </h3>
             </div>
 
-            <div class="text-muted text-center m-b-10 d-flex">
-                {{ PROCEDURE_DEMANDE[$p->procedure] }}
-                <div class="dropdown ml-3">
-                    <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="icon mdi  mdi-dots-vertical"></i> </a>
+            @if(Auth::user()->role_lvl != 3)
+                <div class="text-muted text-center m-b-10 d-flex">
+                    {{ PROCEDURE_DEMANDE[$p->procedure] }}
+                    <div class="dropdown ml-3">
+                        <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="icon mdi  mdi-dots-vertical"></i> </a>
 
-                    <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(18px, 25px, 0px);">
+                        <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(18px, 25px, 0px);">
 
-                        {{-- <button class="dropdown-item" type="button"><a href="{{ action('CandidatController@edit', $p->id) }}" target="_blank">Fiche du candidat</a></button> --}}
-                        <button class="dropdown-item editdemande" type="button" data-demandeid="{{ $p->id }}">Modifier les paramètres de la demande</button>
-                        <div class="dropdown-divider"></div>
-                        <button class="dropdown-item delete_demande" data-demandeid="{{$p->id}}" type="button">
-                            <a href="{{ action('ProjetController@removeDemande', [$projet->id, base64_encode($p->id)]) }}">Supprimer la demande du projet</a>
-                        </button>
+                            {{-- <button class="dropdown-item" type="button"><a href="{{ action('CandidatController@edit', $p->id) }}" target="_blank">Fiche du candidat</a></button> --}}
+                            <button class="dropdown-item editdemande" type="button" data-demandeid="{{ $p->id }}">Modifier les paramètres de la demande</button>
+                            <div class="dropdown-divider"></div>
+                            <button class="dropdown-item delete_demande" data-demandeid="{{$p->id}}" type="button">
+                                <a href="{{ action('ProjetController@removeDemande', [$projet->id, base64_encode($p->id)]) }}">Supprimer la demande du projet</a>
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </div>
+            @endif
 
         </div>
 

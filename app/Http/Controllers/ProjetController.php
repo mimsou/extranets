@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Validation\Rule;
+use Auth;
 
 class ProjetController extends Controller
 {
@@ -80,6 +81,9 @@ class ProjetController extends Controller
      */
     public function edit($id)
     {
+        if(Auth::user()->role_lvl == 3 && !in_array($id, Auth::user()->employerProjects()->get()->pluck('id')->toArray())) { // user with employer role
+            return abort('403');
+        }
         $projet = Projet::find($id);
         return view('admin.projets.edit', compact('projet'));
     }

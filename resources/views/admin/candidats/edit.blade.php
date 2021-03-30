@@ -24,7 +24,7 @@
 
 @section('content')
     <div class="container-fluid ">
-        {!! Form::model($candidat, ['method' => 'PATCH', 'action' => ['CandidatController@update', $candidat->id], 'files' => true ]) !!}
+        {!! Form::model($candidat, ['method' => 'PATCH', 'action' => ['CandidatController@update', $candidat->id], 'files' => true, 'class' => 'candidat-frm' ]) !!}
             <div class="row bg-white">
                 <div class="col d-lg-block d-none p-all-0 text-white  mail-sidebar">
                     <div class="usable-height panel">
@@ -42,7 +42,7 @@
                                     </div>
                                 </div>
                                 <div class="media-body my-auto">
-                                <p class="font-secondary m-b-0">{{ $candidat->nom }}</p>
+                                    <p class="font-secondary m-b-0">{{ $candidat->nom }}</p>
                                     <p class=" m-b-0 opacity-75">
                                         #{{ $candidat->numero }}
                                     </p>
@@ -143,6 +143,9 @@
     <script src="{{ asset('atmos-assets/vendor/DataTables/datatables.min.js') }}"></script>
     <script>
         Dropzone.autoDiscover = false;
+
+        var user_role = '{{ Auth::user()->role_lvl }}';
+
         $(document).ready(function() {
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
             $.ajaxSetup({ headers: { 'X-CSRF-Token' : CSRF_TOKEN } });
@@ -267,6 +270,11 @@
                 $("#modalConfirmation_removeFile .modal-body .hiddenfields").html("<input type='hidden' name='mediaid' value='"+id+"'>");
                 $('#modalConfirmation_removeFile').modal('toggle');
             });
+
+            if(user_role == 3) {
+                $('.candidat-frm :input').prop("disabled", true);
+                $(".dz-hidden-input").prop("disabled",true);
+            }
 
         })
     </script>

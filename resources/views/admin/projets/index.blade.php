@@ -92,7 +92,7 @@
                     ajax: '{{ action('DatatablesController@getProjets') }}',
                     columns: [
                         {data: 'numero'},
-                        {data: 'employeur.nom'},
+                        {data: 'employeur_name'},
                         {data: 'statut'},
                         {data: 'titre'},
                         // {data: 'statut_candidat'},

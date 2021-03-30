@@ -12,6 +12,7 @@ use Pion\Laravel\ChunkUpload\Exceptions\UploadMissingFileException;
 use Pion\Laravel\ChunkUpload\Handler\AbstractHandler;
 use Pion\Laravel\ChunkUpload\Handler\HandlerFactory;
 use Pion\Laravel\ChunkUpload\Receiver\FileReceiver;
+use Auth;
 
 class CandidatController extends Controller
 {
@@ -82,6 +83,11 @@ class CandidatController extends Controller
     public function edit($id)
     {
         $candidat = Candidat::find($id);
+        if(Auth::user()->role_lvl == 3) {
+            $user_demandes = $candidat->demandes()
+                                ->where('projet_id', Auth::user()->employerProjects()->get()->pluck('id')->toArray());
+            if($user_demandes->get()->count() == 0) return abort('403');
+        }
         return view('admin.candidats.edit', compact('candidat'));
     }
 
