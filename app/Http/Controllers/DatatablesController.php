@@ -101,15 +101,13 @@ class DatatablesController extends Controller
                             $delete = '<button class="btn btn-sm btn-danger delete_projet" data-projetid="'.$m->id.'" data-num="'.$m->numero.'"><i class="fas fa-trash"></i></button>';
                             return '<a href="'.action('ProjetController@edit', $m->id).'" class="btn btn-sm btn-primary mr-3"><i class="fas fa-user-edit"></i></a> ' . $delete;
                         })
-<<<<<<< HEAD
                         ->addColumn('facturation_horaire', function(Projet $m){
                             $nb_demande = $m->demandes()->where('facturation_horaire', '=', 'on')->count();
                             if(!$nb_demande) return 'NA';
                             return  '<i class="fas fa-stopwatch text-muted opacity-50" style="font-size: 16px;"></i> X '.$nb_demande;
-=======
+                        })
                         ->addColumn('employeur_name', function(Projet $m) {
                             return $m->employeur->nom;
->>>>>>> bdb4db1435cce18a1e751b62be00f1c13f03875d
                         })
                         ->addColumn('statut_candidat', function(Projet $m){
                             return 0;
