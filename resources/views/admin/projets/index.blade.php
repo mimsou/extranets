@@ -94,7 +94,7 @@
                     ajax: '{{ action('DatatablesController@getProjets') }}',
                     columns: [
                         {data: 'numero'},
-                        {data: 'employeur.nom'},
+                        {data: 'employeur_name'},
                         {data: 'statut'},
                         {data: 'titre'},
                         {data: 'facturation_horaire'},

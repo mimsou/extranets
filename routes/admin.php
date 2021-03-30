@@ -2,12 +2,20 @@
 
 
 Route::get('/', function () {
+    if(Auth::user() && Auth::user()->role_lvl == 3) { //user is employer
+        $employeur = \App\Models\Employeur::find(Auth::user()->employeur_id);
+        return view('admin.employeurs.edit', compact('employeur'));
+    }
     return view('dashboard');
 })->name('dashboard');
 
 Route::resource('/projets', 'ProjetController');
 Route::resource('/employeurs', 'EmployeurController');
 Route::post('/employeurs/remove', 'EmployeurController@remove');
+Route::get('/employeurs/{id}/users', 'EmployeurController@userManagement');
+Route::get('/employeurs/{id}/users/create-user', 'EmployeurController@createUser');
+Route::get('/employeurs/{id}/users/{user_id}/edit', 'EmployeurController@editUser');
+Route::post('/employeurs/{id}/users/delete', 'EmployeurController@deleteUser');
 Route::post('/projets/remove', 'ProjetController@remove');
 
 Route::resource('/gestion/regroupements', 'RegroupementController');

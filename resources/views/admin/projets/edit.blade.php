@@ -34,7 +34,7 @@
 
                                 <h3 class="mb-3">{{ __("Information") }}</h3>
 
-                                {!! Form::model($projet, ['method' => 'PATCH', 'action' => ['ProjetController@update', $projet] ]) !!}
+                                {!! Form::model($projet, ['method' => 'PATCH', 'action' => ['ProjetController@update', $projet], 'class' => 'projet-frm' ]) !!}
                                     @include('admin.projets._formEdit')
                                 {!! Form::close() !!}
 
@@ -44,22 +44,23 @@
                     </div>
 
                     <div class="col-lg-8 mt-2">
-
-                        <div class="row  mb-5">
-                            <div class="col-12">
-                                @if (Str::contains($projet->statut, 'imm') || Str::contains($projet->statut, 'new'))
-                                    <button class="btn btn-danger mr-2" data-toggle="modal" data-target="#addDemande"><i class="fas fa-plus-circle pr-2"></i> DEMANDE D'IMMIGRATION</button>
-                                @endif
-                                @if (Str::contains($projet->statut, 'rec') || Str::contains($projet->statut, 'new'))
-                                    <button class="btn btn-secondary mr-2" data-toggle="modal" data-target="#addDemandeRec"><i class="fas fa-plus-circle pr-2"></i> DEMANDE DE RECRUTEMENT</button>
-                                @endif
-
+                        @if(Auth::user()->role_lvl != 3) {{-- Dont't show this if logged in user is employer --}}
+                            <div class="row  mb-5">
+                                <div class="col-12">
+                                    @if (Str::contains($projet->statut, 'imm') || Str::contains($projet->statut, 'new'))
+                                        <button class="btn btn-danger mr-2" data-toggle="modal" data-target="#addDemande"><i class="fas fa-plus-circle pr-2"></i> DEMANDE D'IMMIGRATION</button>
+                                    @endif
+                                    @if (Str::contains($projet->statut, 'rec') || Str::contains($projet->statut, 'new'))
+                                        <button class="btn btn-secondary mr-2" data-toggle="modal" data-target="#addDemandeRec"><i class="fas fa-plus-circle pr-2"></i> DEMANDE DE RECRUTEMENT</button>
+                                    @endif
+                                </div>
+                                {{-- <div class="col-4 text-right text-white"><strong style="font-size: 18px"></strong></div> --}}
                             </div>
-                            {{-- <div class="col-4 text-right text-white"><strong style="font-size: 18px"></strong></div> --}}
-                        </div>
-
+                        @endif
                         @foreach ($projet->demandes as $d)
-                                @include('admin.projets.partials._demande-'.$d->type, ['p'=>$d])
+                                @if(Auth::user()->role_lvl > 3 || ($projet->employeur_id == Auth::user()->employeur_id || $d->employeur_id == Auth::user()->employeur_id))
+                                    @include('admin.projets.partials._demande-'.$d->type, ['p'=>$d])
+                                @endif
                         @endforeach
                     </div>
 
@@ -74,6 +75,8 @@
 
         $('.select2_candidats').select2();
         $('.select2_employeurs').select2();
+
+        var user_role = '{{ Auth::user()->role_lvl }}';
 
         $.ajaxSetup({ headers: { 'X-CSRF-Token' : $('meta[name="csrf-token"]').attr('content') } });
 
@@ -177,6 +180,10 @@
                 }
             });
         });
+
+        if(user_role == 3) {
+            $('.projet-frm :input').prop('disabled', true);
+        }
     </script>
 
 @endsection

@@ -6,11 +6,10 @@
 @section('content')
     @include('admin.partials._notes', ['model'=>$employeur])
 
-	<div class="bg-dark bg-dots m-b-30">
+	<div class="bg-dark bg-dots m-b-50">
             <div class="container">
-                <div class="row p-b-60 p-t-60">
-
-                    <div class="col-lg-8 text-center mx-auto text-white p-b-30">
+                <div class="row  @if(Auth::user()->role_lvl <= 3) p-b-30 p-t-30 @endif">
+                    <div class="col-lg-12 text-center mx-auto text-white p-t-30  @if(Auth::user()->role_lvl <= 3) p-b-30 @endif">
                         <div class="m-b-10">
                             <div class="avatar avatar-lg ">
                                 <div class="avatar-title bg-info rounded-circle fas fa-user-tie "></div>
@@ -19,6 +18,13 @@
                         <h3>{{ $employeur->nom }}</h3>
                     </div>
                 </div>
+                @if(Auth::user()->role_lvl >3)
+                    <div class="row justify-content-end p-b-45">
+                        <div class="col-lg-4 text-right">
+                            <a href="{{ action('EmployeurController@userManagement', $employeur->id) }}" class="btn btn-primary">User Management</a>
+                        </div>
+                    </div>
+                @endif
             </div>
         </div>
         <section class="pull-up">

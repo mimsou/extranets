@@ -26,7 +26,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'firstname', 'lastname', 'email', 'password', 'role_lvl',
+        'firstname', 'lastname', 'email', 'password', 'role_lvl', 'employeur_id',
     ];
 
     /**
@@ -71,5 +71,25 @@ class User extends Authenticatable
         $initials .= strtoupper($lastname[0]);
 
         return $initials;
+    }
+
+    public function getFullNameAttribute($value)
+    {
+        return $this->firstname . ' ' . $this->lastname;
+    }
+
+    public function employerProjects()
+    {
+        $employer_id = $this->employeur_id;
+        if(is_null($this->employeur_id)) return false;
+
+        $projects = Projet::where(function($query) use($employer_id) {
+            $query->where('employeur_id', '=', $employer_id)
+                    ->orwhereHas('demandes', function($q) use ($employer_id) {
+                        $q->where('employeur_id', '=', \Auth::user()->employeur_id);
+                    });
+        });
+
+        return $projects;
     }
 }

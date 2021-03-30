@@ -67,7 +67,22 @@ class DatatablesController extends Controller
 
 
     public function getProjets(){
-        return Datatables::of(Projet::with('employeur')->select('projets.*', 'employeurs.nom'))
+        $projects = Projet::with('employeur')->select('projets.*');
+
+        if(\Auth::user() && \Auth::user()->role_lvl == 3) {
+            $user_employee_id = \Auth::user()->employeur_id;
+
+            $projects = Projet::where('employeur_id', '=', $user_employee_id);
+
+            $project_demande = Projet::where('employeur_id', '<>', $user_employee_id)
+            ->whereHas('demandes', function($q) use ($user_employee_id) {
+                $q->where('employeur_id', '=', \Auth::user()->employeur_id);
+            });
+
+            $projects = $projects->unionAll($project_demande)->get();
+        }
+
+        return Datatables::of($projects)
                         ->addColumn('statut', function(Projet $m){
                             return __($m->statut);
                         })
@@ -86,10 +101,15 @@ class DatatablesController extends Controller
                             $delete = '<button class="btn btn-sm btn-danger delete_projet" data-projetid="'.$m->id.'" data-num="'.$m->numero.'"><i class="fas fa-trash"></i></button>';
                             return '<a href="'.action('ProjetController@edit', $m->id).'" class="btn btn-sm btn-primary mr-3"><i class="fas fa-user-edit"></i></a> ' . $delete;
                         })
+<<<<<<< HEAD
                         ->addColumn('facturation_horaire', function(Projet $m){
                             $nb_demande = $m->demandes()->where('facturation_horaire', '=', 'on')->count();
                             if(!$nb_demande) return 'NA';
                             return  '<i class="fas fa-stopwatch text-muted opacity-50" style="font-size: 16px;"></i> X '.$nb_demande;
+=======
+                        ->addColumn('employeur_name', function(Projet $m) {
+                            return $m->employeur->nom;
+>>>>>>> bdb4db1435cce18a1e751b62be00f1c13f03875d
                         })
                         ->addColumn('statut_candidat', function(Projet $m){
                             return 0;
@@ -136,7 +156,7 @@ class DatatablesController extends Controller
 
 
     public function getUsers(){
-        return Datatables::of(User::query())
+        return Datatables::of(User::where('role_lvl', '>', 3))
                         ->editColumn('updated_at', function(User $u){
                             return $u->updated_at->diffForHumans() .'<br><small>'.$u->updated_at.'</small>';
                         })

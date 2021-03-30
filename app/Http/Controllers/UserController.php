@@ -52,6 +52,7 @@ class UserController extends Controller
             'new_password_confirm' => 'required|same:new_password',
         ]);
 
+
         if ($validator->fails()) {
             flash("Oups, il semble y avoir un problème!")->error();
 
@@ -67,6 +68,8 @@ class UserController extends Controller
         $user = User::create($new_user);
 
         flash()->success("L'utilisateur à bien été créé");
+
+        if($request->has('employeur_id')) return redirect()->action('EmployeurController@userManagement', ['id' => $request->employeur_id]);
 
         return Redirect::action('UserController@index');
     }
@@ -131,6 +134,8 @@ class UserController extends Controller
         $user->update($req_user);
 
         flash()->success("L'utilisateur à bien été mis à jour");
+
+        if($request->has('employeur_id')) return redirect()->action('EmployeurController@userManagement', ['id' => $request->employeur_id]);
 
         return Redirect::action('UserController@edit', $user->id);
     }

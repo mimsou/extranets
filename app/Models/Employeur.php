@@ -76,4 +76,9 @@ class Employeur extends Model
 
         return 'NA';
     }
+
+    public function users()
+    {
+        return $this->hasMany('App\Models\User');
+    }
 }
