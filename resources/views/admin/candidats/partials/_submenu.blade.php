@@ -42,8 +42,10 @@
     </div>
 </a> --}}
 
-<a href="#historique" class="m-t-20 mail-sidebar-item btn-ghost clearfix border-top border-white">
-    <div class="w-100 text-truncate">
-        Historique <span class="badge badge-danger ml-2">{{ count($candidat->getLogs()) }}</span>
-    </div>
-</a>
+@if(Auth::user()->role_lvl > 3)
+    <a href="#historique" class="m-t-20 mail-sidebar-item btn-ghost clearfix border-top border-white">
+        <div class="w-100 text-truncate">
+            Historique <span class="badge badge-danger ml-2">{{ count($candidat->getLogs()) }}</span>
+        </div>
+    </a>
+@endif

@@ -24,9 +24,11 @@
                 <div class="col-md-6 text-white p-b-30">
                     <h1>Liste des projets</h1>
                 </div>
-                <div class="col-md-6 text-white my-auto text-md-right p-b-30">
-                    <a href="{{ action('ProjetController@create') }}" class="btn btn-success"><i class="mdi mdi-plus"></i> {{ __('Ajouter un projet') }}</a>
-                </div>
+                @if(Auth::user()->role_lvl > 3)
+                    <div class="col-md-6 text-white my-auto text-md-right p-b-30">
+                        <a href="{{ action('ProjetController@create') }}" class="btn btn-success"><i class="mdi mdi-plus"></i> {{ __('Ajouter un projet') }}</a>
+                    </div>
+                @endif
             </div>
         </div>
     </div>

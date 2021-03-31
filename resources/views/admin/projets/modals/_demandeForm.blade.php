@@ -163,4 +163,6 @@
 
 </div>
 
-<button type="submit" class="btn btn-lg btn-success btn-block mb-3 mt-5">{{__('SAUVEGARDER')}}</button>
+@if(Auth::user()->role_lvl > 3)
+    <button type="submit" class="btn btn-lg btn-success btn-block mb-3 mt-5">{{__('SAUVEGARDER')}}</button>
+@endif

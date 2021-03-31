@@ -5,7 +5,8 @@
 @endsection
 
 @section('content')
-@include('admin.partials._notes', ['model'=>$projet])
+
+    @include('admin.partials._notes', ['model'=>$projet])
     @include('admin.projets.modals.addCandidat')
     @include('admin.projets.modals.addDemande')
     @include('admin.projets.modals.addDemandeRec')
@@ -106,12 +107,17 @@
 
                     $('#editDemande .select2').select2();
 
+                    if(user_role == 3) {
+                        $('.demande-frm :input').prop('disabled', true);
+                    }
+
                 },
                 error: function(jqXHR, status, error){
                     console.log(jqXHR, status, error);
                     alert(error);
                 }
             });
+
 
 
         });

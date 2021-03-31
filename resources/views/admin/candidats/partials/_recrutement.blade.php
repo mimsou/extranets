@@ -1,6 +1,7 @@
 <div class="content" id="recrutement">
-    @include('admin.partials._notes', ['model'=>$candidat, 'category'=>'recrutement'])
-
+    @if(Auth::user()->role_lvl > 3)
+        @include('admin.partials._notes', ['model'=>$candidat, 'category'=>'recrutement'])
+    @endif
     <div class="container-fluid pt-4">
         <h2>Recrutement</h2>
         <div class="row">
@@ -55,24 +56,25 @@
             </div>
         </div> --}}
 
+        @if(Auth::user()->role_lvl > 3)
+            <h2 class="mt-3">Documents du candidat</h2>
 
-        <h2 class="mt-3">Documents du candidat</h2>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="course_file">{{ __('Additionnal ressources') }}</label>
+                        <div id="deleted_resource_ids"></div>
 
-        <div class="row">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label for="course_file">{{ __('Additionnal ressources') }}</label>
-                    <div id="deleted_resource_ids"></div>
-
-                    <div id="additional_resources" class="dropzone btn btn-block">
-                        <div class="dz-message" data-dz-message><span>Glisser et déposer les fichiers ici</span></div>
+                        <div id="additional_resources" class="dropzone btn btn-block">
+                            <div class="dz-message" data-dz-message><span>Glisser et déposer les fichiers ici</span></div>
+                        </div>
                     </div>
+                    <small class="text-muted">Téléverser les documents sur le serveur peut prendre un certain temps. Assurez-vous de ne pas éteindre votre navigateur pendant le processus.</small>
                 </div>
-                <small class="text-muted">Téléverser les documents sur le serveur peut prendre un certain temps. Assurez-vous de ne pas éteindre votre navigateur pendant le processus.</small>
             </div>
-        </div>
 
-        <hr/>
+            <hr/>
+        @endif
 
         <div class="row">
             <div class="col-md-12">
@@ -87,7 +89,9 @@
 
                                 <th>Poid</th>
                                 <th>Type</th>
-                                <th>Actions</th>
+                                @if(Auth::user()->role_lvl > 3)
+                                    <th>Actions</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
@@ -106,18 +110,22 @@
                                                     <div class="badge badge-soft-dark mr-1">{{ $category }}</div>
                                                 @endforeach
                                             @endif
-                                            <button type="button" class="btn btn-transparent btn-sm cat-modal" data-toggle="modal" data-target="#mediaCategory" data-media-id="{{ $media->id }}" data-cats={{ $media->getCustomProperty('customproperties') }}>
-                                                <i class="fas fa-plus-square"></i>
-                                            </button>
+                                            @if(Auth::user()->role_lvl > 3)
+                                                <button type="button" class="btn btn-transparent btn-sm cat-modal" data-toggle="modal" data-target="#mediaCategory" data-media-id="{{ $media->id }}" data-cats={{ $media->getCustomProperty('customproperties') }}>
+                                                    <i class="fas fa-plus-square"></i>
+                                                </button>
+                                            @endif
                                         </div>
                                     </td>
 
                                     <td>{{ $media->updated_at->format('Y-m-d H:i') }} <br><small>{{ $media->updated_at->diffForHumans() }}</small></td>
                                     <td>{{ $media->human_readable_size }}</td>
                                     <td>{{ $media->mime_type }}</td>
-                                    <td>
-                                        <button type="button" class="btn btn-sm btn-danger delete_media" data-mediaid="{{ $media->id }}"><i class="fas fa-trash"></i></button>
-                                    </td>
+                                    @if(Auth::user()->role_lvl > 3)
+                                        <td>
+                                            <button type="button" class="btn btn-sm btn-danger delete_media" data-mediaid="{{ $media->id }}"><i class="fas fa-trash"></i></button>
+                                        </td>
+                                    @endif
                                 </tr>
                             @endforeach
                         </tbody>
@@ -130,8 +138,9 @@
 
                                 <th>Poid</th>
                                 <th>Type</th>
-
-                                <th>Actions</th>
+                                @if(Auth::user()->role_lvl > 3)
+                                    <th>Actions</th>
+                                @endif
                             </tr>
                         </tfoot>
 

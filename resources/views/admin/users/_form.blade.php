@@ -17,7 +17,7 @@
     </div>
     <div class="form-group col-md-6">
         @php
-            $roles = [10=>'Super-admin', 5=>'Admin'];
+            $roles = [10=>'Super-admin', 5=>'Admin', 3 => 'Employer'];
             $disabled = '';
             if(Auth::user()->role_lvl < 10){
                 $disabled = 'disabled';

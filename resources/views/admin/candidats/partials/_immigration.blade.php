@@ -1,7 +1,7 @@
 <div class="content" id="immigration">
-
-    @include('admin.partials._notes', ['model'=>$candidat, 'category'=>'immigration'])
-
+    @if(Auth::user()->role_lvl > 3)
+        @include('admin.partials._notes', ['model'=>$candidat, 'category'=>'immigration'])
+    @endif
     <div class="container-fluid pt-4">
         <h2 class="mb-3">Immigration</h2>
 
