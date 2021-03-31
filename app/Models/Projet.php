@@ -23,6 +23,7 @@ class Projet extends Model
                            'type_emploi'
                           ];
 
+
     public function setAssociationsAttribute($value)
     {
         $this->attributes['associations'] = implode(',',$value);

@@ -27,7 +27,7 @@
                         </div>
                     </div>
                     <h3>{{ $employeur->nom }} - Users</h3>
-                    <a href="{{ action('EmployeurController@createUser', $employeur->id) }}" class="btn btn-danger m-t-20 m-b-50"><i class="fas fa-plus-circle pr-2"></i>Ajouter un usager</a>
+                    <a href="{{ action('EmployeurController@createUser', $employeur->id) }}" class="btn btn-warning m-t-20 m-b-50"><i class="fas fa-plus-circle pr-2"></i>Ajouter un usager</a>
                 </div>
             </div>
         </div>

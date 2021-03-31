@@ -47,7 +47,7 @@
                     @if(Auth::user()->role_lvl != 3) {{-- Dont't show this if logged-in user is employer --}}
                         <div class="row  mb-5">
                             <div class="col-12">
-                                <a href="{{ action('EmployeurController@userManagement', $employeur->id) }}" class="btn btn-danger"><i class="fas fa-plus-circle pr-2"></i> Gestion des utilisateurs</a>
+                                <a href="{{ action('EmployeurController@userManagement', $employeur->id) }}" class="btn btn-warning"><i class="fas fa-plus-circle pr-2"></i> Gestion des utilisateurs</a>
                             </div>
                         </div>
                     @endif
@@ -153,6 +153,9 @@
 
                         <div class="list-group list-group-flush ">
                             @foreach ($employeur->demandes()->where('type', '=', 'recrutement')->get() as $p)
+                                @php
+                                    if(is_null($p->projet)) continue;
+                                @endphp
                                 <div class="list-group-item suivi-projets">
 
                                     <div class="d-flex align-items-center">
