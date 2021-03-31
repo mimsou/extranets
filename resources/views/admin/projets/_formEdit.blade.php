@@ -51,6 +51,28 @@
         {!! Form::text('nb_candidats', null, ['class'=>'form-control', 'required']) !!}
     </div> --}}
 </div>
+
+
+<div class="form-row">
+    <div class="form-group col-md-12">
+        <label for="associations[]">Projets associés</label>
+        {!! Form::select('associations[]', \App\Models\Projet::orderBy('numero', 'DESC')->pluck('numero', 'id'), null, ['class'=>'form-control select2', 'required', 'multiple'=>'multiple']) !!}
+    </div>
+
+    @if (isset($projet) && count($projet->associations))
+        @foreach ($projet->associations as $a)
+            @php
+                $tp = \App\Models\Projet::find($a);
+            @endphp
+
+            @if(!is_null($tp))
+                <a href="{{ action('ProjetController@edit', $a) }}"><span class="badge badge-{{ (Str::contains($tp->statut, 'imm'))?'danger':'secondary' }} mr-1 mb-3 ml-1">{{ $tp->numero }}</span></a>
+            @endif
+        @endforeach
+    @endif
+</div>
+
+
 {{--
 <div class="form-row">
     <div class="form-group col-md-12">

@@ -97,6 +97,9 @@ class ProjetController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+        // dd($request->all());
+
         $validator = Validator::make($request->all(), [
             'titre' => 'required',
             'numero' => 'required',

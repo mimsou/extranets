@@ -13,6 +13,7 @@ class Projet extends Model
     protected $fillable = ['employeur_id',
                            'statut',
                            'titre',
+                           'associations',
                            'numero',
                            'date_creation',
                            'date_debut_recrutement',
@@ -21,6 +22,16 @@ class Projet extends Model
                            'territoires',
                            'type_emploi'
                           ];
+
+    public function setAssociationsAttribute($value)
+    {
+        $this->attributes['associations'] = implode(',',$value);
+    }
+
+    public function getAssociationsAttribute($value)
+    {
+        return explode(',',$value);
+    }
 
 
     public function setTypeEmploiAttribute($value)
