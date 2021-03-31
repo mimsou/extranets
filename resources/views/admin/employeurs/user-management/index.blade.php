@@ -39,35 +39,39 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <div class="table-responsive p-t-10">
-                                    <table id="datatable" class="table" style="width:100%">
-                                        <thead>
-                                            <tr>
+                                @if($employeur->users()->get()->count() == 0)
+                                    <h4 class="text-center m-t-30 m-b-30">Aucun usager n'est associé à ce compte</h4>
+                                @else
+                                    <div class="table-responsive p-t-10">
+                                        <table id="datatable" class="table" style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>Nom</th>
+                                                    <th>Email</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($employeur->users as $user)
+                                                    <tr>
+                                                        <td>{{ $user->full_name }}</td>
+                                                        <td>{{ $user->email }}</td>
+                                                        <td>
+                                                            <a href="{{ action('EmployeurController@editUser', ['id' => $employeur->id, 'user_id' => $user->id]) }}" class="btn btn-sm btn-primary mr-2"><i class="fas fa-user-edit"></i></a>
+                                                            <button class="btn btn-sm btn-danger delete_user" data-userid="{{ $user->id }}" data-nom="{{ $user->full_name }}"><i class="fas fa-trash"></i></button>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+
+                                            <tfoot>
                                                 <th>Nom</th>
                                                 <th>Email</th>
                                                 <th>Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($employeur->users as $user)
-                                                <tr>
-                                                    <td>{{ $user->full_name }}</td>
-                                                    <td>{{ $user->email }}</td>
-                                                    <td>
-                                                        <a href="{{ action('EmployeurController@editUser', ['id' => $employeur->id, 'user_id' => $user->id]) }}" class="btn btn-sm btn-primary mr-2"><i class="fas fa-user-edit"></i></a>
-                                                        <button class="btn btn-sm btn-danger delete_user" data-userid="{{ $user->id }}" data-nom="{{ $user->full_name }}"><i class="fas fa-trash"></i></button>
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-                                        </tbody>
-
-                                        <tfoot>
-                                            <th>Nom</th>
-                                            <th>Email</th>
-                                            <th>Action</th>
-                                        </tfoot>
-                                    </table>
-                                </div>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     </div>

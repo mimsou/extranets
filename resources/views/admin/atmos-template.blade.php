@@ -70,7 +70,6 @@
 	<script src="{{ asset('atmos-assets/vendor/bootstrap-notify/bootstrap-notify.min.js') }}"></script>
     <script src="{{ asset('atmos-assets/js/atmos.min.js') }}"></script>
     <script src="{{ mix('js/app.js') }}"></script>
-    {
     <script>
         $(document).ready(function(){
             $('li.active').addClass("opened");
