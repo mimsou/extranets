@@ -30,13 +30,13 @@ class Projet extends Model
 
     public function getAssociationsAttribute($value)
     {
-        return explode(',',$value);
+        return explode(' | ',$value);
     }
 
 
     public function setTypeEmploiAttribute($value)
     {
-        $this->attributes['type_emploi'] = implode(',',$value);
+        $this->attributes['type_emploi'] = implode(' | ',$value);
     }
 
     public function getTypeEmploiAttribute($value)
