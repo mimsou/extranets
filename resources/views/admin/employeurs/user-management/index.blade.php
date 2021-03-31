@@ -27,12 +27,7 @@
                         </div>
                     </div>
                     <h3>{{ $employeur->nom }} - Users</h3>
-                </div>
-            </div>
-
-            <div class="row justify-content-end p-b-45">
-                <div class="col-lg-4 text-right">
-                    <a href="{{ action('EmployeurController@createUser', $employeur->id) }}" class="btn btn-primary">Create User</a>
+                    <a href="{{ action('EmployeurController@createUser', $employeur->id) }}" class="btn btn-danger m-t-20 m-b-50"><i class="fas fa-plus-circle pr-2"></i>Ajouter un usager</a>
                 </div>
             </div>
         </div>

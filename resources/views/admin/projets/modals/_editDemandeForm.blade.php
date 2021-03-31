@@ -1,4 +1,4 @@
-{!! Form::model($demande, ['method' => 'PATCH', 'action' => ['ProjetController@editDemande', $projet->id, $demande->id] ]) !!}
+{!! Form::model($demande, ['method' => 'PATCH', 'action' => ['ProjetController@editDemande', $projet->id, $demande->id], 'class' => 'demande-frm' ]) !!}
 
     {!! Form::hidden('projet_id', $projet->id) !!}
 

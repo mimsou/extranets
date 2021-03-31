@@ -5,7 +5,6 @@
 @endsection
 
 @section('content')
-    @include('admin.partials._notes', ['model'=>$employeur])
 
 	<div class="bg-dark bg-dots m-b-30">
 

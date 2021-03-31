@@ -1,6 +1,7 @@
 <div class="content active" id="informations">
-    @include('admin.partials._notes', ['model'=>$candidat, 'category'=>'information '])
-
+    @if(Auth::user()->role_lvl > 3)
+        @include('admin.partials._notes', ['model'=>$candidat, 'category'=>'information '])
+    @endif
     <div class="container-fluid pt-4">
         <h2>Information</h2>
         <div class="row">
@@ -42,30 +43,33 @@
             </div>
             <div class="col-md-6">
 
-                <div class="form-group">
-                    <label for="avatar">{{ __('Photo de profil:') }}</label>
+                @if(Auth::user()->role_lvl > 3)
                     <div class="form-group">
-                        {{-- @if (!is_null($candidat->getFirstMediaUrl('avatar', 'medium')))
-                            <div class="avatar avatar-xl">
-                                <img src="{{ $candidat->getFirstMediaUrl('avatar', 'medium') }}" class="avatar-img rounded" id="user_avatar_preview"/>
-                            </div>
-                        @endif --}}
-                        <label class="avatar-input" style="width: 100%">
-                            @if (!is_null($candidat->getFirstMediaUrl('avatar', 'medium')) && $candidat->getFirstMediaUrl('avatar', 'medium') != "")
-                                <div class="avatar avatar-xxl">
-                                    <img src="{{ $candidat->getFirstMediaUrl('avatar', 'medium') }}" class="avatar-img rounded">
-                                </div><br>
-
-                                <button type="button" class="mt-2 btn-sm btn-primary" data-toggle="modal" data-target="#modalUpdateAvatar">Modifier la photo de profil</button><br>
-                                <button type="button" class="mt-2 btn-sm btn-danger delete_media" data-mediaid="{{ $candidat->getFirstMedia('avatar')->id }}">Retirer la photo de profil</button>
-                            @else
-                                <div id="avatar" class="dropzone p-3 text-center" style="cursor:pointer">
-                                    <div class="dz-message" data-dz-message><span>Glisser et déposer l'image ici</span></div>
+                        <label for="avatar">{{ __('Photo de profil:') }}</label>
+                        <div class="form-group">
+                            {{-- @if (!is_null($candidat->getFirstMediaUrl('avatar', 'medium')))
+                                <div class="avatar avatar-xl">
+                                    <img src="{{ $candidat->getFirstMediaUrl('avatar', 'medium') }}" class="avatar-img rounded" id="user_avatar_preview"/>
                                 </div>
-                            @endif
-                        </label>
+                            @endif --}}
+                            <label class="avatar-input" style="width: 100%">
+                                @if (!is_null($candidat->getFirstMediaUrl('avatar', 'medium')) && $candidat->getFirstMediaUrl('avatar', 'medium') != "")
+                                    <div class="avatar avatar-xxl">
+                                        <img src="{{ $candidat->getFirstMediaUrl('avatar', 'medium') }}" class="avatar-img rounded">
+                                    </div><br>
+
+                                    <button type="button" class="mt-2 btn-sm btn-primary" data-toggle="modal" data-target="#modalUpdateAvatar">Modifier la photo de profil</button><br>
+                                    <button type="button" class="mt-2 btn-sm btn-danger delete_media" data-mediaid="{{ $candidat->getFirstMedia('avatar')->id }}">Retirer la photo de profil</button>
+                                @else
+                                    <div id="avatar" class="dropzone p-3 text-center" style="cursor:pointer">
+                                        <div class="dz-message" data-dz-message><span>Glisser et déposer l'image ici</span></div>
+                                    </div>
+                                @endif
+                            </label>
+                        </div>
                     </div>
-                </div>
+                @endif
+
             </div>
             <hr>
         </div>

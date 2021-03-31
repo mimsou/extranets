@@ -174,4 +174,6 @@
     </div>
 </div>
 
-<button type="submit" class="btn btn-success btn-cta">Enregistrer</button>
+@if(Auth::user()->role_lvl > 3)
+    <button type="submit" class="btn btn-success btn-cta">Enregistrer</button>
+@endif

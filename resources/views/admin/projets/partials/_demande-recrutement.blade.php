@@ -1,4 +1,4 @@
-<div class="card mt-3 mb-5 col-12">
+<div class="card mb-5 col-12">
     <div class="card-body px-1 py-3">
         <div class="d-flex justify-content-between">
             <div>
@@ -22,11 +22,19 @@
                     <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(18px, 25px, 0px);">
 
                         {{-- <button class="dropdown-item" type="button"><a href="{{ action('CandidatController@edit', $p->id) }}" target="_blank">Fiche du candidat</a></button> --}}
-                        <button class="dropdown-item editdemande" type="button" data-demandeid="{{ $p->id }}">Modifier les paramètres de la demande</button>
-                        <div class="dropdown-divider"></div>
-                        <button class="dropdown-item delete_demande" data-demandeid="{{$p->id}}" type="button">
-                            <a href="{{ action('ProjetController@removeDemande', [$projet->id, base64_encode($p->id)]) }}">Supprimer la demande du projet</a>
+                        <button class="dropdown-item editdemande" type="button" data-demandeid="{{ $p->id }}">
+                            @if(Auth::user()->role_lvl == 3)
+                                Afficher les détails
+                            @else
+                                Modifier les paramètres de la demande
+                            @endif
                         </button>
+                        @if(Auth::user()->role_lvl > 3)
+                            <div class="dropdown-divider"></div>
+                            <button class="dropdown-item delete_demande" data-demandeid="{{$p->id}}" type="button">
+                                <a href="{{ action('ProjetController@removeDemande', [$projet->id, base64_encode($p->id)]) }}">Supprimer la demande du projet</a>
+                            </button>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -68,8 +76,9 @@
                 <h4 class="mb-0 pb-0">Candidats</h4>
                 <small>{{ $p->candidats()->wherePivot('statut', 'approved')->count() }} sur {{ $p->nb_candidat }} candidats requis</small>
             </div>
-
-            <div><button class="btn btn-sm btn-primary addCandidat" data-demandeid="{{$p->id}}">AJOUTER UN CANDIDAT</button></div>
+            @if(Auth::user()->role_lvl > 3)
+                <div><button class="btn btn-sm btn-primary addCandidat" data-demandeid="{{$p->id}}">AJOUTER UN CANDIDAT</button></div>
+            @endif
         </div>
 
         @foreach ($p->candidats as $c)
