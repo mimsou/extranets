@@ -121,6 +121,9 @@ class Candidat extends Model implements HasMedia
             case 'en_traitement':
                 return '<i class="fas fa-user-clock text-info display-5"></i>';
                 break;
+            case 'en_processus':
+                return '<i class="fas fa-user-clock text-muted display-5"></i>';
+                break;
             case 'en_emploi':
                 return '<i class="fas fa-user-hard-hat display-5"></i>';
                 break;
@@ -140,6 +143,9 @@ class Candidat extends Model implements HasMedia
         switch($this->statut){
             case 'en_traitement':
                 return 'En traitement';
+                break;
+            case 'en_processus':
+                return 'En processus';
                 break;
             case 'en_emploi':
                 return 'En emploi';
