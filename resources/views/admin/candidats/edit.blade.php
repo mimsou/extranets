@@ -23,6 +23,9 @@
 @endsection
 
 @section('content')
+
+
+
     <div class="container-fluid ">
         {!! Form::model($candidat, ['method' => 'PATCH', 'action' => ['CandidatController@update', $candidat->id], 'files' => true, 'class' => 'candidat-frm' ]) !!}
             <div class="row bg-white">
@@ -77,12 +80,17 @@
                             @include('admin.candidats.partials._commentaires')
                             @include('admin.candidats.partials._historique')
 
+
+
+
+
                         </div>
 
                     </div>
                 </div>
             </div>
         {!! Form::close() !!}
+
     </div>
     <div class="compose-wrapper">
         <div class="compose-container">
@@ -128,6 +136,8 @@
             </div>
         </div>
     </div>
+
+    @include('admin.candidats.partials._menumobile')
 
 </section>
 @endsection
@@ -206,8 +216,14 @@
             });
 
 
+            var embed = '';
+            var src = '';
+            var height = 'style="min-height:200px"';
+
             $('.media-name').click(function() {
-                var height = 'style="min-height:200px"';
+                height = 'style="min-height:200px"';
+                src = $(this).data('src');
+
                 var isdoc = false;
                 var mimetype = $(this).data('type');
 
@@ -224,17 +240,23 @@
                         isdoc =  true;
                     }
 
-                var embed = '';
-
-                if (isdoc) {
-                    embed = '<iframe id="doc_preview" src="https://docs.google.com/gview?url='+ $(this).data('src') +'&embedded=true" width="100%" '+height+'>'
-                } else {
-                    embed = '<embed id="preview_src" src="' + $(this).data('src') + '" width="100%" '+height+'/>';
-                }
 
 
-                $('#preview_src').html(embed)
-                $('#preview_doc').modal('show')
+
+
+
+
+                    if (isdoc) {
+                        window.open(src, '_blank').focus();
+                        // embed = '<iframe id="doc_preview" src="https://docs.google.com/gview?url='+ src +'&embedded=true" width="100%" '+height+'>'
+                    } else {
+                        embed = '<embed id="preview_src" src="' + src + '" width="100%" '+height+'/>';
+                        $('#preview_doc').modal('show');
+                        $('#preview_src').html(embed);
+                    }
+
+
+
             })
 
             $('#preview_doc').on('hide.bs.modal', function () {
