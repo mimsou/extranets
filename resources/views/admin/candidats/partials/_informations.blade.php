@@ -6,16 +6,27 @@
         <h2>Information</h2>
         <div class="row">
             <div class="col-md-6">
-                <div class="form-group">
-                    <label for="nom">{{ __('Nom du candidat') }} *</label>
-                    {{ Form::text('nom', null, ['required', 'class'=>'form-control', 'id'=>'nom']) }}
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="nom">{{ __('Nom du candidat') }} *</label>
+                            {{ Form::text('nom', null, ['required', 'class'=>'form-control', 'id'=>'nom']) }}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="regroupement_id">{{ __('Regroupement') }} *</label>
+                            {{ Form::select('regroupement_id', \App\Models\Regroupement::pluck('title', 'id'), null, ['required', 'class'=>'form-control', 'id'=>'nom', 'placeholder'=>"S'il y a lieu"]) }}
+                        </div>
+                    </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="numero">{{ __('Numéro') }} *</label>
-                            {{ Form::text('numero', null, ['required', 'class'=>'form-control', 'id'=>'numero']) }}
+                            {{ Form::text('numero', null, ['class'=>'form-control', 'id'=>'numero']) }}
                         </div>
                     </div>
                     <div class="col-md-6">
