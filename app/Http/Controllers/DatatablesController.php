@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use Str;
 use App\Models\Candidat;
 use App\Models\Emploi;
@@ -67,6 +68,10 @@ class DatatablesController extends Controller
 
 
     public function getProjets(){
+        $projets = DB::table('projets')
+                     ->select(['projets.*', 'employeurs.nom'])
+                     ->join('employeurs', 'employeurs.id', '=', 'projets.employeur_id');
+
         $projects = Projet::with('employeur')->select('projets.*');
 
         if(\Auth::user() && \Auth::user()->role_lvl == 3) {
@@ -82,11 +87,11 @@ class DatatablesController extends Controller
             $projects = $projects->unionAll($project_demande)->get();
         }
 
-        return Datatables::of($projects)
-                        ->addColumn('statut', function(Projet $m){
+        return Datatables::of($projets)
+                        ->addColumn('statut', function($m){
                             return __($m->statut);
                         })
-                        ->editColumn('numero', function(Projet $m){
+                        ->editColumn('numero', function($m){
                             $class = "link";
                             if(Str::contains($m->statut, 'imm_')) $class = "danger";
                             if(Str::contains($m->statut, 'rec_')) $class = "secondary";
@@ -94,22 +99,24 @@ class DatatablesController extends Controller
 
                             return '<a href="'.action('ProjetController@edit', $m->id).'" class="btn btn-sm btn-'. $class .'"><strong>'.$m->numero.'</strong></a>';
                         })
-                        ->editColumn('updated_at', function(Projet $m){
-                            return $m->updated_at->diffForHumans() .'<br><small>'.$m->updated_at.'</small>';
+                        ->editColumn('updated_at', function($m){
+                            $date = \Carbon\Carbon::parse($m->updated_at);
+                            return $date->diffForHumans() .'<br><small>'.$m->updated_at.'</small>';
                         })
-                        ->addColumn('action', function(Projet $m){
+                        ->addColumn('action', function($m){
                             $delete = '<button class="btn btn-sm btn-danger delete_projet" data-projetid="'.$m->id.'" data-num="'.$m->numero.'"><i class="fas fa-trash"></i></button>';
                             return '<a href="'.action('ProjetController@edit', $m->id).'" class="btn btn-sm btn-primary mr-3"><i class="fas fa-user-edit"></i></a> ' . $delete;
                         })
-                        ->addColumn('facturation_horaire', function(Projet $m){
+                        ->addColumn('facturation_horaire', function($m){
+                            $m = Projet::find($m->id);
                             $nb_demande = $m->demandes()->where('facturation_horaire', '=', 'on')->count();
                             if(!$nb_demande) return 'NA';
                             return  '<i class="fas fa-stopwatch text-muted opacity-50" style="font-size: 16px;"></i> X '.$nb_demande;
                         })
-                        ->addColumn('employeur_name', function(Projet $m) {
-                            return $m->employeur->nom;
+                        ->addColumn('employeur_name', function($m) {
+                            return $m->nom;
                         })
-                        ->addColumn('statut_candidat', function(Projet $m){
+                        ->addColumn('statut_candidat', function($m){
                             return 0;
                             // return count($m->candidats) .' / '. $m->nb_candidats;
                         })

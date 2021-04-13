@@ -43,13 +43,13 @@
                             <table id="datatable" class="table" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th data-orderable="false">Numéro</th>
+                                        <th>Numéro</th>
                                         <th>Employeur</th>
-                                        <th data-orderable="false">Type de projet</th>
-                                        <th data-orderable="false">Titre</th>
+                                        <th>Type de projet</th>
+                                        <th>Titre</th>
                                         <th data-orderable="false">Facturation horaire</th>
                                         {{-- <th>Candidats</th> --}}
-                                        <th data-orderable="false">Dernière modification</th>
+                                        <th>Dernière modification</th>
                                         <th data-orderable="false">Action</th>
                                     </tr>
                                 </thead>
@@ -96,7 +96,7 @@
                     ajax: '{{ action('DatatablesController@getProjets') }}',
                     columns: [
                         {data: 'numero'},
-                        {data: 'employeur_name'},
+                        {data: 'nom', name:'employeurs.nom'},
                         {data: 'statut'},
                         {data: 'titre'},
                         {data: 'facturation_horaire'},
