@@ -49,7 +49,7 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label for="statut">{{ __('Statut') }}</label>
-                                                    {{ Form::select('statut', ['disponible'=>'Disponible', 'en_processus'=>'En processus', 'en_traitement'=>'En traitement', 'en_emploi'=>'En emploi', 'termine'=>'Terminé', 'retire'=>'retiré', 'non_recrute'=>'Non recruté'], null, ['class'=>'form-control', 'id'=>'statut']) }}
+                                                    {{ Form::select('statut', ['en_processus'=>'En processus', 'disponible'=>'Disponible', 'en_traitement'=>'En traitement', 'en_emploi'=>'En emploi', 'termine'=>'Terminé', 'retire'=>'retiré', 'non_recrute'=>'Non recruté'], null, ['class'=>'form-control', 'id'=>'statut']) }}
                                                 </div>
                                             </div>
                                         </div>
