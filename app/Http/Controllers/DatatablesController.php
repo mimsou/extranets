@@ -72,19 +72,25 @@ class DatatablesController extends Controller
                      ->select(['projets.*', 'employeurs.nom'])
                      ->join('employeurs', 'employeurs.id', '=', 'projets.employeur_id');
 
-        $projects = Projet::with('employeur')->select('projets.*');
 
         if(\Auth::user() && \Auth::user()->role_lvl == 3) {
             $user_employee_id = \Auth::user()->employeur_id;
 
-            $projects = Projet::where('employeur_id', '=', $user_employee_id);
+            $projets = $projets->where('employeur_id', '=', $user_employee_id);
 
-            $project_demande = Projet::where('employeur_id', '<>', $user_employee_id)
+            $project_demande = Projet::select('id')->where('employeur_id', '<>', $user_employee_id)
             ->whereHas('demandes', function($q) use ($user_employee_id) {
                 $q->where('employeur_id', '=', \Auth::user()->employeur_id);
             });
 
-            $projects = $projects->unionAll($project_demande)->get();
+
+            $db_pd = DB::table('projets')
+                     ->select(['projets.*', 'employeurs.nom'])
+                     ->join('employeurs', 'employeurs.id', '=', 'projets.employeur_id')
+                     ->whereIn('projets.id', $project_demande);
+
+
+            $projets = $projets->unionAll($db_pd)->get();
         }
 
         return Datatables::of($projets)
