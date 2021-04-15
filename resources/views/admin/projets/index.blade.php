@@ -47,6 +47,7 @@
                                         <th>Employeur</th>
                                         <th>Type de projet</th>
                                         <th>Titre</th>
+                                        <th>Responsable</th>
                                         <th data-orderable="false">Facturation horaire</th>
                                         {{-- <th>Candidats</th> --}}
                                         <th>Dernière modification</th>
@@ -62,6 +63,7 @@
                                         <th>Employeur</th>
                                         <th>Type de projet</th>
                                         <th>Titre</th>
+                                        <th>Responsable</th>
                                         <th>Facturation horaire</th>
                                         {{-- <th>Candidats</th> --}}
                                         <th>Dernière modification</th>
@@ -99,7 +101,8 @@
                         {data: 'nom', name:'employeurs.nom'},
                         {data: 'statut'},
                         {data: 'titre'},
-                        {data: 'facturation_horaire'},
+                        {data: 'responsable', name:'users.firstname'},
+                        {data: 'facturation_horaire', name:'users.lastname'},
                         // {data: 'statut_candidat'},
                         {data: 'updated_at', class:'text-right'},
                         {data: 'action'},

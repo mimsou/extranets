@@ -52,11 +52,25 @@
     </div> --}}
 </div>
 
+<div class="form-row">
+    <div class="form-group col-md-12">
+        @php
+            $users = \App\Models\User::orderBy('lastname', 'ASC')->where('role_lvl', '>', 3)->get();
+            $users_array = [];
+
+            foreach ($users as $u) {
+                $users_array[$u->id] = $u->lastname .', '. $u->firstname;
+            }
+        @endphp
+        <label for="responsable_id">Personne responsable</label>
+        {!! Form::select('responsable_id', $users_array, null, ['class'=>'form-control', 'placeholder'=>'NA']) !!}
+    </div>
+</div>
 
 <div class="form-row">
     <div class="form-group col-md-12">
         <label for="associations[]">Projets associés</label>
-        {!! Form::select('associations[]', \App\Models\Projet::orderBy('numero', 'DESC')->pluck('numero', 'id'), null, ['class'=>'form-control select2', 'required', 'multiple'=>'multiple']) !!}
+        {!! Form::select('associations[]', \App\Models\Projet::orderBy('numero', 'DESC')->pluck('numero', 'id'), null, ['class'=>'form-control select2', 'multiple'=>'multiple']) !!}
     </div>
 
     @if (isset($projet) && count($projet->associations))

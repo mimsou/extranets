@@ -11,6 +11,7 @@ class Projet extends Model
     use HasFactory, Notable;
 
     protected $fillable = ['employeur_id',
+                           'responsable_id',
                            'statut',
                            'titre',
                            'associations',
@@ -76,6 +77,15 @@ class Projet extends Model
     public function employeur()
     {
         return $this->hasOne('App\Models\Employeur', 'id', 'employeur_id');
+    }
+
+
+    /**
+     * The news that belong to many candidats.
+     */
+    public function responsable()
+    {
+        return $this->hasOne('App\Models\User', 'id', 'responsable_id');
     }
 
 }

@@ -70,7 +70,8 @@ class DatatablesController extends Controller
     public function getProjets(){
         $projets = DB::table('projets')
                      ->select(['projets.*', 'employeurs.nom'])
-                     ->join('employeurs', 'employeurs.id', '=', 'projets.employeur_id');
+                     ->join('employeurs', 'employeurs.id', '=', 'projets.employeur_id')
+                     ->leftjoin('users', 'users.id', '=', 'projets.responsable_id');
 
 
         if(\Auth::user() && \Auth::user()->role_lvl == 3) {
@@ -121,6 +122,11 @@ class DatatablesController extends Controller
                         })
                         ->addColumn('employeur_name', function($m) {
                             return $m->nom;
+                        })
+                        ->addColumn('responsable', function($m) {
+                            $m = Projet::find($m->id);
+                            if(!is_null($m->responsable)) return $m->responsable->fullname;
+                            return 'NA';
                         })
                         ->addColumn('statut_candidat', function($m){
                             return 0;
