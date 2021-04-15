@@ -84,6 +84,8 @@
             </div>
         {!! Form::close() !!}
     </div>
+
+
     <div class="compose-wrapper">
         <div class="compose-container">
             <div class="panel compose-dialog">
@@ -225,10 +227,20 @@
                         isdoc =  true;
                     }
 
+                var isVideo = false;
+                if(mimetype.includes("video")) {
+                    isVideo = true;
+                }
+
                 var embed = '';
 
                 if (isdoc) {
                     embed = '<iframe id="doc_preview" src="https://docs.google.com/gview?url='+ $(this).data('src') +'&embedded=true" width="100%" '+height+'>'
+                }
+                else if(isVideo) {
+                    embed = '<video width="100%" controls>' +
+                                '<source src="' + $(this).data('src') + '">' +
+                            '</video>';
                 } else {
                     embed = '<embed id="preview_src" src="' + $(this).data('src') + '" width="100%" '+height+'/>';
                 }
