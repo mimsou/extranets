@@ -206,7 +206,8 @@
             });
 
 
-            $('.media-name').click(function() {
+            $("#datatable").on('click','.media-name', function () {
+
                 var height = 'style="min-height:200px"';
                 var isdoc = false;
                 var mimetype = $(this).data('type');
