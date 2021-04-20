@@ -218,9 +218,14 @@
             });
 
 
-            $("#datatable").on('click','.media-name', function () {
+            var embed = '';
+            var src = '';
+            var height = 'style="min-height:200px"';
 
-                var height = 'style="min-height:200px"';
+            $('.media-name').click(function() {
+                height = 'style="min-height:200px"';
+                src = $(this).data('src');
+
                 var isdoc = false;
                 var mimetype = $(this).data('type');
 
@@ -237,23 +242,6 @@
                         isdoc =  true;
                     }
 
-                var isVideo = false;
-                if(mimetype.includes("video")) {
-                    isVideo = true;
-                }
-
-                var embed = '';
-
-                if (isdoc) {
-                    embed = '<iframe id="doc_preview" src="https://docs.google.com/gview?url='+ $(this).data('src') +'&embedded=true" width="100%" '+height+'>'
-                }
-                else if(isVideo) {
-                    embed = '<video width="100%" controls>' +
-                                '<source src="' + $(this).data('src') + '">' +
-                            '</video>';
-                } else {
-                    embed = '<embed id="preview_src" src="' + $(this).data('src') + '" width="100%" '+height+'/>';
-                }
 
 
 
