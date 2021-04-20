@@ -17,7 +17,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="regroupement_id">{{ __('Regroupement') }} *</label>
-                            {{ Form::select('regroupement_id', \App\Models\Regroupement::pluck('title', 'id'), null, ['required', 'class'=>'form-control', 'id'=>'nom', 'placeholder'=>"Aucun"]) }}
+                            {{ Form::select('regroupement_id', \App\Models\Regroupement::pluck('title', 'id'), null, ['class'=>'form-control', 'id'=>'nom', 'placeholder'=>"Aucun"]) }}
                         </div>
                     </div>
                 </div>
