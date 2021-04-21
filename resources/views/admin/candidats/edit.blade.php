@@ -229,7 +229,7 @@
                 var isdoc = false;
                 var mimetype = $(this).data('type');
 
-                if(mimetype == 'audio/mp4'){
+                if(mimetype == 'audio/mp4' || mimetype == 'video/mp4'){
                     height = 'style="min-height:400px"';
                 }
                 console.log(mimetype);
