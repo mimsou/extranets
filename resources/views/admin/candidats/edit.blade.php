@@ -222,7 +222,7 @@
             var src = '';
             var height = 'style="min-height:200px"';
 
-            $('.media-name').click(function() {
+            $(document).on('click', '.media-name', function() {
                 height = 'style="min-height:200px"';
                 src = $(this).data('src');
 
@@ -232,20 +232,16 @@
                 if(mimetype == 'audio/mp4'){
                     height = 'style="min-height:400px"';
                 }
-
+                console.log(mimetype);
                 if(mimetype == 'application/msword' ||
                     mimetype == 'application/vnd.ms-excel' ||
+                    mimetype == 'application/zip' ||
                     mimetype == 'application/pdf' ||
                     mimetype.includes('wordprocessingml') ||
                     mimetype.includes('spreadsheetml')){
                         height = 'style="min-height:800px"';
                         isdoc =  true;
                     }
-
-
-
-
-
 
                     if (isdoc) {
                         window.open(src, '_blank').focus();
