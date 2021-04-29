@@ -10,6 +10,10 @@
                 <h3 class="searchBy-name">
                      <a href="{{ action('EmployeurController@edit', $p->employeur_id) }}" target="_blank">{{ $p->employeur->nom }}</a>
                 </h3>
+                <div><button class="btn btn-sm btn-primary addAdmin" data-demandeid="{{$p->id}}">Select Admin</button></div>
+                <div class="avatar avatar-sm avatar-online">
+                    <span class="avatar-title rounded-circle bg-dark">MM</span>
+                </div>
             </div>
 
 

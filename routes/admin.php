@@ -33,6 +33,8 @@ Route::get('/projets/{id}/updateCandidat/{candidat_id}/{statut}', 'ProjetControl
 Route::get('/projets/{id}/removeCandidat/{candidat_id}', 'ProjetController@removeCandidat');
 Route::get('/projets/{id}/removeDemande/{demande_id}', 'ProjetController@removeDemande');
 
+Route::post('/projets/{id}/addAdmin', 'ProjetController@addAdmin');
+
 
 Route::resource('/candidats', 'CandidatController');
 Route::post('/candidats/{candidat_id}/upload-addtional-reources', 'CandidatController@uploadAddtionalResources');

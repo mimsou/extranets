@@ -75,6 +75,7 @@ class User extends Authenticatable
 
     public function getFullNameAttribute($value)
     {
+        return "{$this->firstname} {$this->lastname}";
         return $this->firstname . ' ' . $this->lastname;
     }
 
@@ -91,5 +92,9 @@ class User extends Authenticatable
         });
 
         return $projects;
+    }
+
+    public function assignedUsers(){
+        return $this->belongsToMany('App\Models\Demande');
     }
 }

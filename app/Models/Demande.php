@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\DemandeUser;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Demande extends Model
 {
@@ -91,6 +92,11 @@ class Demande extends Model
     public function postes($separator = ', '){
         $emplois = \App\Models\Emploi::whereIn('id', $this->type_emploi)->pluck('title')->toArray();
         return implode($separator, $emplois);
+    }
+
+    public function assignedUsers()
+    {
+        return $this->belongsToMany('App\Models\DemandeUser', 'demande_users', );
     }
 
 }

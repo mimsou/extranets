@@ -17,8 +17,6 @@
                         {!! Form::hidden('type', 'immigration') !!}
 
                         <h3 class="pt-3 ">{{ __("Ajouter une nouvelle demande") }}</h3>
-
-
                         @include('admin.projets.modals._demandeForm')
                     {!! Form::close() !!}
                 </div>

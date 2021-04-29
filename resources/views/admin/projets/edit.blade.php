@@ -7,6 +7,7 @@
 @section('content')
 
     @include('admin.partials._notes', ['model'=>$projet])
+    @include('admin.projets.modals.addAdmin')
     @include('admin.projets.modals.addCandidat')
     @include('admin.projets.modals.addDemande')
     @include('admin.projets.modals.addDemandeRec')
@@ -85,6 +86,12 @@
             var demande_id = $(this).data('demandeid');
             $('#modal_demande_id').val(demande_id);
             $('#addCandidat').modal('toggle');
+        });
+
+        $(document).on('click', '.addAdmin', function(){
+            var demande_id = $(this).data('demandeid');
+            $('#modal_demande_id').val(demande_id);
+            $('#addAdmin').modal('toggle');
         });
 
         $(document).on('click', '.editdemande', function(){
