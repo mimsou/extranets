@@ -96,7 +96,7 @@ class Demande extends Model
 
     public function assignedUsers()
     {
-        return $this->belongsToMany('App\Models\DemandeUser', 'demande_users', );
+        return $this->belongsToMany('App\Models\User', 'demande_users');
     }
 
 }

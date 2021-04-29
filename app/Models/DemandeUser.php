@@ -9,5 +9,6 @@ class DemandeUser extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['demande_id', 'user_id']
+    protected $fillable = ['demande_id', 'user_id'];
+
 }

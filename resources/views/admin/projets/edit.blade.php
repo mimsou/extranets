@@ -197,6 +197,32 @@
         if(user_role == 3) {
             $('.projet-frm :input').prop('disabled', true);
         }
+
+        // show assign dropdown
+        $('.add-new-assignee').click(function() {
+            $('.add-new-assignee-wrapper').toggle('show')
+        })
+
+        // assign user to demande
+        $('#assign_demande').change(function() {
+            var user_id = $(this).val();
+            var demande_id = $(this).data('demande-id')
+            alert('asdas');
+            $.ajax({
+                url: "{{ action('DemandeController@assingUser') }}",
+                type: 'POST',
+                data: {"user_id": user_id, "demande_id": demande_id},
+                success: function(data) {
+                    $('.assigned-users').append('<div class="avatar avatar-sm">' +
+                        '<span class="avatar-title rounded-circle bg-dark">' + data.initials + '</span>' +
+                        '</div>')
+                },
+                error: function(jqXHR, status, error){
+                    console.log(jqXHR, status, error);
+                    alert(error);
+                }
+            });
+        })
     </script>
 
 @endsection

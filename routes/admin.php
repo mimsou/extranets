@@ -33,7 +33,8 @@ Route::get('/projets/{id}/updateCandidat/{candidat_id}/{statut}', 'ProjetControl
 Route::get('/projets/{id}/removeCandidat/{candidat_id}', 'ProjetController@removeCandidat');
 Route::get('/projets/{id}/removeDemande/{demande_id}', 'ProjetController@removeDemande');
 
-Route::post('/projets/{id}/addAdmin', 'ProjetController@addAdmin');
+// assign user to demande
+Route::post('/projets/assign-user', 'DemandeController@assingUser');
 
 
 Route::resource('/candidats', 'CandidatController');

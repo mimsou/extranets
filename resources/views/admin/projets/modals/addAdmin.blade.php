@@ -14,7 +14,7 @@
                     <h3 class="pt-3 ">{{ __("Ajouter un admin") }}</h3>
 
                     <hr>
-                    {!! Form::open(['action' => array('ProjetController@addAdmin', $projet->id)]) !!}
+                    {{-- {!! Form::open(['action' => array('#', $projet->id)]) !!} --}}
                         {!! Form::hidden('demande_id', null, ['id'=>'modal_demande_id']) !!}
                         <div class="text-left">
 

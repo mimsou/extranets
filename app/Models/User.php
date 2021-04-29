@@ -95,6 +95,6 @@ class User extends Authenticatable
     }
 
     public function assignedUsers(){
-        return $this->belongsToMany('App\Models\Demande');
+        return $this->belongsToMany('App\Models\Demande', 'demande_users');
     }
 }
