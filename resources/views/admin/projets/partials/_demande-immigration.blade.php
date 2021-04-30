@@ -26,10 +26,6 @@
                 <div class="add-new-assignee-wrapper mt-2" style="display: none">
                     {!! Form::select('assign_user', \App\Models\User::whereIn('role_lvl', [10, 5])->get()->pluck('full_name', 'id'), null, ['class'=>'form-control select2', 'id' => 'assign_demande', 'data-demande-id' => $p->id]) !!}
                 </div>
-                <div><button class="btn btn-sm btn-primary addAdmin" data-demandeid="{{$p->id}}">Select Admin</button></div>
-                <div class="avatar avatar-sm avatar-online">
-                    <span class="avatar-title rounded-circle bg-dark">MM</span>
-                </div>
             </div>
 
 

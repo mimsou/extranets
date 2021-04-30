@@ -274,21 +274,4 @@ class ProjetController extends Controller
         flash( "Le projet a été supprimé avec succès")->success();
         return Redirect::to($request->redirect_to);
     }
-
-    public function addAdmin(Request $request, $id){
-        $demande = Demande::find($request->demande_id);
-        foreach($request->user_id as $c){
-            $data['user_id']    =   $c;
-            $data['demande_id'] =   $request->demande_id;
-            DB::table('demande_admin')->insert($data);
-        }
-
-        flash( "Le candidat a été ajouté à la demande avec succès")->success();
-
-        // On met à jour le nombre de candidats dans la DB
-
-        return Redirect::back();
-    }
-
-
 }

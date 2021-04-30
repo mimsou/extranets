@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\DemandeAssigned;
 use App\Models\Demande;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class DemandeController extends Controller
 {
@@ -86,8 +89,13 @@ class DemandeController extends Controller
 
     public function assingUser(Request $request) {
         $demande = Demande::find($request->demande_id);
-        $demande->assignedUsers()->attach($request->user_id);
         $user = User::find($request->user_id);
-        return response()->json(['initials' => $user->initials()]);
+        if(is_null($demande->assignedUsers->find($request->user_id))) {
+            $demande->assignedUsers()->syncWithoutDetaching($request->user_id);
+            if(sendEmailEnv($user->email)) {
+                Mail::to($user->email)->queue(new DemandeAssigned($user, Auth::user()->full_name, $demande->projet, $demande));
+            }
+            return response()->json(['initials' => $user->initials()]);
+        }
     }
 }
