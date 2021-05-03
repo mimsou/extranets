@@ -186,7 +186,7 @@ if (!function_exists('demandeStatuts')) {
 
             $select_array[$value['val']] = $value['title'];
         }
-        return $select_array;
+        return (!is_null($key))? 'NA' : $select_array;
     }
 
     function demandeStatutsDate($key = null, $target=null){
@@ -198,7 +198,7 @@ if (!function_exists('demandeStatuts')) {
 
             $select_array[$value['val']] = $value['title'];
         }
-        return $select_array;
+        return (!is_null($key))? 'NA' : $select_array;
     }
 
     function demandeProgression($val, $target=null){
@@ -207,6 +207,8 @@ if (!function_exists('demandeStatuts')) {
         foreach ($target as $value) {
             if($val == $value['val']) return $value['progression'];
         }
+
+        return 0;
     }
 }
 

@@ -1,1 +1,40 @@
-.menu-link.active .menu-name{color:#fff!important}.suivi-projets .content{width:100%}.suivi-projets .progress-bar-container{position:relative;width:100%;height:8px;padding:2px;background-color:#efefef;border-radius:10px;margin-right:1em}.suivi-projets .progress-bar-container .progress-bar{height:4px;border-radius:10px;background-color:#7fffd4}
+.menu-link.active .menu-name {
+  color: white !important;
+}
+
+.suivi-projets .content {
+  width: 100%;
+}
+
+.suivi-projets .progress-bar-container {
+  position: relative;
+  width: 100%;
+  height: 8px;
+  padding: 2px;
+  background-color: #efefef;
+  border-radius: 10px;
+  margin-right: 1em;
+}
+
+.suivi-projets .progress-bar-container .progress-bar {
+  height: 4px;
+  border-radius: 10px;
+  background-color: aquamarine;
+}
+
+tr.dark-row {
+  background-color: #f7f9fb !important;
+  margin-bottom: 40px;
+  border-bottom: 10px solid white;
+}
+
+td.dark-row {
+  padding: 0;
+}
+
+.child-row-table,
+.child-row-table tr,
+.child-row-table td {
+  padding: 0;
+}
+
