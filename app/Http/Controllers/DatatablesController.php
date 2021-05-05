@@ -177,7 +177,7 @@ class DatatablesController extends Controller
 
 
     public function getUsers(){
-        return Datatables::of(User::where('role_lvl', '>=', 3))
+        return Datatables::of(User::where('role_lvl', '>', 3))
                         ->editColumn('updated_at', function(User $u){
                             return $u->updated_at->diffForHumans() .'<br><small>'.$u->updated_at.'</small>';
                         })
