@@ -4,7 +4,7 @@
         {!! Form::text('abrev', null, ['class'=>'form-control', 'required']) !!}
     </div>
     <div class="form-group col-md-10">
-        <label for="title">Titre du poste *</label>
+        <label for="title">Nom du pays *</label>
         {!! Form::text('title', null, ['class'=>'form-control', 'required']) !!}
     </div>
 </div>

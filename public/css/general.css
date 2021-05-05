@@ -22,3 +22,19 @@
   background-color: aquamarine;
 }
 
+tr.dark-row {
+  background-color: #f7f9fb !important;
+  margin-bottom: 40px;
+  border-bottom: 10px solid white;
+}
+
+td.dark-row {
+  padding: 0;
+}
+
+.child-row-table,
+.child-row-table tr,
+.child-row-table td {
+  padding: 0;
+}
+

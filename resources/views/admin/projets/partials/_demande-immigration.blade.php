@@ -131,15 +131,16 @@
         @for ($i = 0; $i < $nb_to_fill; $i++)
             <div class="empty-spot my-3"></div>
         @endfor
-
-        <div>
+        @php($notes = $p->getNotes())
+        @php($scope = \Illuminate\Support\Str::random(10))
+        <div id="{{ $scope }}">
             <div class="row">
                 <div class="col-md-12 mt-4">
                     <h3 class="color-light-blue">Commeantaires</h3>
-                    <p class="font-weight-bold ml-1 color-light-blue">Voir tous les commenataires ( 7 )</p>
+                    <p class="font-weight-bold ml-1 color-light-blue">Voir tous les commenataires ( <span class="comment-counts">{{ $notes->count()}}</span> )</p>
                 </div>
                 <div class="col-md-12">
-                    @include('admin.partials._comments',['demande'=>$p])
+                    @include('admin.partials._comments',['demande'=>$p,'notes'=>$notes])
                 </div>
             </div>
         </div>

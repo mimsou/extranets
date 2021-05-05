@@ -52,7 +52,7 @@ class Candidat extends Model implements HasMedia
 
 
 
-    public function logFields(){ return ['*']; }
+
 
 
     public function pays(){
