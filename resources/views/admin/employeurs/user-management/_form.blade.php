@@ -20,9 +20,9 @@
         @php
             $roles = [3 => 'Employeur'];
             $disabled = '';
-            if(Auth::user()->role_lvl < 10){
-                $disabled = 'disabled';
-            }
+            // if(Auth::user()->role_lvl < 10){
+            //     $disabled = 'disabled';
+            // }
         @endphp
         <label for="role_lvl">Role</label>
         {!! Form::select('role_lvl', $roles, null, ['class'=>'form-control', $disabled]) !!}
