@@ -8,6 +8,5 @@ La demande {{ $modelToUpdate->projet()->first()->numero }} a été modifiée.
 Accéder à la demande
 @endcomponent
 
-Thanks,<br>
 {{ config('app.name') }}
 @endcomponent
