@@ -77,11 +77,11 @@ class DatatablesController extends Controller
         if(\Auth::user() && \Auth::user()->role_lvl == 3) {
             $user_employee_id = \Auth::user()->employeur_id;
 
-            $projets = $projets->where('employeur_id', '=', $user_employee_id);
+            $projets = $projets->where('projets.employeur_id', '=', $user_employee_id);
 
             $project_demande = Projet::select('id')->where('employeur_id', '<>', $user_employee_id)
             ->whereHas('demandes', function($q) use ($user_employee_id) {
-                $q->where('employeur_id', '=', \Auth::user()->employeur_id);
+                $q->where('projets.employeur_id', '=', \Auth::user()->employeur_id);
             });
 
 
