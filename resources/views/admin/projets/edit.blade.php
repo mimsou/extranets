@@ -1,6 +1,7 @@
 @extends('admin.template')
 
 @section('head')
+
     <link rel="stylesheet" type="text/css" href="{{ mix('css/projet.css') }}">
 @endsection
 
@@ -73,7 +74,7 @@
     @endsection
 
     @section('footer')
-
+    <script src="{{ asset('js/projects.js?ref='.rand(1111,9999)) }}"></script>
         <script>
             $('.select2').select2();
 
@@ -221,10 +222,12 @@
                         "demande_id": demande_id
                     },
                     success: function(data) {
-                        $('.assigned-users').append('<div class="avatar avatar-sm">' +
-                            '<span class="avatar-title rounded-circle bg-dark">' + data.initials +
-                            '</span>' +
+                        if(data.status == true){
+                            $('.assigned-users').append('<div class="avatar avatar-sm ml-1">' +
+                            '<span class="avatar-title rounded-circle bg-dark remove_assignee">' + data.initials +
+                            '<i class="fas fa-times remove_assignee_icon"></i></span>' +
                             '</div>')
+                        }
                     },
                     error: function(jqXHR, status, error) {
                         console.log(jqXHR, status, error);

@@ -85,7 +85,8 @@ class ProjetController extends Controller
             return abort('403');
         }
         $projet = Projet::find($id);
-        return view('admin.projets.edit', compact('projet'));
+
+        return view('admin.projets.edit', compact('projet','id'));
     }
 
     /**
@@ -274,4 +275,5 @@ class ProjetController extends Controller
         flash( "Le projet a été supprimé avec succès")->success();
         return Redirect::to($request->redirect_to);
     }
+
 }

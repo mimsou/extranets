@@ -17,8 +17,7 @@
                     </div>
                     @foreach ($p->assignedUsers()->get() as $user)
                         <div class="avatar avatar-sm ml-1">
-                            <span class="avatar-title rounded-circle bg-dark">{{ $user->initials() }} <i class="fas fa-rimes remove_assignee text-danger"></i></span>
-
+                        <span data-id="{{ $user->id }}" data-demand-id="{{ $p->id }}" class="remove_assignee avatar-title rounded-circle bg-dark">{{ $user->initials() }} <i class="fas fa-times remove_assignee_icon"></i></span>
                         </div>
                     @endforeach
                 </div>
@@ -132,5 +131,19 @@
         @for ($i = 0; $i < $nb_to_fill; $i++)
             <div class="empty-spot my-3"></div>
         @endfor
+
+        <div>
+            <div class="row">
+                <div class="col-md-12 mt-4">
+                    <h3 class="color-light-blue">Commeantaires</h3>
+                    <p class="font-weight-bold ml-1 color-light-blue">Voir tous les commenataires ( 7 )</p>
+                </div>
+                <div class="col-md-12">
+                    @include('admin.partials._comments',['demande'=>$p])
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+
+

@@ -45,6 +45,8 @@ Route::post('/candidats/media-categories', 'CandidatController@getMediaCategorie
 Route::post('/candidats/media-remove', 'CandidatController@removeMedia');
 Route::post('/candidat/remove', 'CandidatController@remove');
 
+//Ajax Route
+Route::post('remove/assignee','DemandeController@removeAssignee');
 
 //Système de gestion - API AJAX Datatables
 Route::prefix('api/datatables')->group(function () {
@@ -56,6 +58,8 @@ Route::prefix('api/datatables')->group(function () {
 	Route::get('/get-emplois', 'DatatablesController@getEmplois');
 	Route::get('/get-pays', 'DatatablesController@getPays');
 });
+
+
 
 
 // Route::get('/users', function () {

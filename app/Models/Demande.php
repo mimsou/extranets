@@ -5,10 +5,11 @@ namespace App\Models;
 use App\Models\DemandeUser;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use  App\Classes\Utils\Notify\Notify;
 
 class Demande extends Model
 {
-    use HasFactory;
+    use HasFactory, Notify;
 
     protected $fillable = ['projet_id',
                            'employeur_id',

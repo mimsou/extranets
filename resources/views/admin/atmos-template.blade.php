@@ -29,7 +29,11 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('atmos-assets/css/atmos.min.css') }}?v={{ rand() }}">
     <link rel="stylesheet" type="text/css" href="{{ mix('css/general.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ mix('css/chat.css') }}">
-	<!-- Additional library for page -->
+    <link rel="stylesheet" type="text/css" href="{{ mix('css/comments.css') }}">
+    <!-- Additional library for page -->
+    <script>
+        window.route = '{{ url('/') }}/admin/';
+    </script>
     @yield('head')
     @livewireStyles
 </head>

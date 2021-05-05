@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use App\Models\DemandeUser;
 
 class DemandeController extends Controller
 {
@@ -95,7 +96,14 @@ class DemandeController extends Controller
             if(sendEmailEnv($user->email)) {
                 Mail::to($user->email)->queue(new DemandeAssigned($user, Auth::user()->full_name, $demande->projet, $demande));
             }
-            return response()->json(['initials' => $user->initials()]);
+            return response()->json(['initials' => $user->initials(),'status'=>true]);
+        }else{
+            return response()->json(['status'=>false,'message'=>'Already assigned!']);
         }
+    }
+
+    public function removeAssignee(Request $request){
+        $demandeModel = DemandeUser::where(['demande_id'=>$request->demand_id,'user_id'=>$request->assignee_id])->delete();
+        return response()->json(['status'=>true,'demande deleted successfully!']);
     }
 }
