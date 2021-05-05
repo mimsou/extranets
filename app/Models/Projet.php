@@ -88,4 +88,10 @@ class Projet extends Model
         return $this->hasOne('App\Models\User', 'id', 'responsable_id');
     }
 
+
+    public function childRowHtml(){
+        $projet = $this;
+        return view('admin.projets.partials._childrow', compact('projet'));
+    }
+
 }

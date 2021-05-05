@@ -119,9 +119,23 @@ __webpack_require__(/*! ./comments */ "./resources/js/comments.js");
   'use strict';
 
   var scope;
+
+  try {
+    scrollToBottomComment();
+  } catch (e) {}
+
   $(document).on('click', '#note_trigger', openChat);
   $(document).on('click', '#close-comments', closeChat);
-  $(document).on('click', '#note-comment-form .btn', submitComment);
+  $(document).on('click', '#note-comment-form .btn', submitComment); //For Comment Demande
+
+  $(document).on('click', '#demande-comment-form .btn', submitComment);
+
+  function scrollToBottomComment() {
+    var elem = $('#demande_notes #note-messages');
+    elem.animate({
+      scrollTop: elem.height()
+    });
+  }
 
   function init_comments() {
     $.ajaxSetup({
@@ -155,7 +169,11 @@ __webpack_require__(/*! ./comments */ "./resources/js/comments.js");
         $(scope + 'textarea.note').html('');
         $(scope + 'textarea.note').val('');
         $(scope + 'textarea.note').prop('disabled', false);
+        $(scope + '#no-comment').hide();
+        var commentCounts = $(scope + '.comment-counts').text();
+        $(scope + '.comment-counts').text(parseInt(commentCounts) + 1);
         scrollBottom();
+        scrollToBottomComment();
       },
       error: function error(jqXHR, status, _error) {
         console.log(jqXHR, status, _error);

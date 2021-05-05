@@ -132,6 +132,10 @@ class DatatablesController extends Controller
                             return 0;
                             // return count($m->candidats) .' / '. $m->nb_candidats;
                         })
+                        ->addColumn('childrow_html', function($m){
+                            $m = Projet::find($m->id);
+                            return $m->childRowHtml();
+                        })
                         ->make(true);
     }
 

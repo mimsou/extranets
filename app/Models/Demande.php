@@ -6,10 +6,11 @@ use App\Models\DemandeUser;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use  App\Classes\Utils\Notify\Notify;
+use App\Classes\Utils\Notes\Notable;
 
 class Demande extends Model
 {
-    use HasFactory, Notify;
+    use HasFactory, Notify, Notable;
 
     protected $fillable = ['projet_id',
                            'employeur_id',
@@ -99,5 +100,6 @@ class Demande extends Model
     {
         return $this->belongsToMany('App\Models\User', 'demande_users');
     }
+
 
 }

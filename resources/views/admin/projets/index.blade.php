@@ -40,7 +40,7 @@
 
                     <div class="card-body">
                         <div class="table-responsive p-t-10">
-                            <table id="datatable" class="table" style="width:100%">
+                            <table id="datatable" class="table dataTable-async" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th>Numéro</th>
@@ -52,6 +52,7 @@
                                         {{-- <th>Candidats</th> --}}
                                         <th>Dernière modification</th>
                                         <th data-orderable="false">Action</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -68,6 +69,7 @@
                                         {{-- <th>Candidats</th> --}}
                                         <th>Dernière modification</th>
                                         <th>Action</th>
+                                        <th></th>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -85,15 +87,18 @@
 
     <script src="{{ asset('atmos-assets/vendor/DataTables/datatables.min.js') }}"></script>
     <script>
+        var project_table;
+
         (function ($) {
             'use strict';
             $(document).ready(function () {
-                $('#datatable').DataTable({
+                project_table = $('#datatable').DataTable({
                     scrollY:        '55vh',
                     scrollCollapse: true,
                     paging:         true,
                     serverSide:     true,
                     processing:     true,
+                    searchDelay:    2000,
                     "order":        [[ 1, "asc" ]],
                     ajax: '{{ action('DatatablesController@getProjets') }}',
                     columns: [
@@ -106,8 +111,35 @@
                         // {data: 'statut_candidat'},
                         {data: 'updated_at', class:'text-right'},
                         {data: 'action'},
-                    ]
+                        {data: 'childrow_html'},
+                    ],
+                    'fnInitComplete': function(){
+                        this.fnSetColumnVis( 8, false);
+                    }
+                }).on('draw.dt', function () {
+
+
+
+                    $('.dataTable-async tr').each(function(i,e){
+                        var tr = $(this);
+                        var row = project_table.row( tr );
+
+                        console.log($( window ).width());
+                        console.log(row.data());
+
+                        if(typeof row.data() != 'undefined' && $( window ).width() > 1024){
+                            // this.fnSetColumnVis( 5, false);
+
+                            if ( !row.child.isShown() ) {
+                                row.child( row.data().childrow_html, 'dark-row' );
+                                row.child.show();
+                                tr.addClass('shown');
+
+                            }
+                        }
+                    });
                 });
+
             });
 
             $(document).on('click', '.delete_projet', function(e){
@@ -117,8 +149,8 @@
                 $('.del_emp_non').html(nom);
                 $("#modalConfirmation_removeProjet .modal-body .hiddenfields").html("<input type='hidden' name='projet_id' value='"+id+"'>");
                 $('#modalConfirmation_removeProjet').modal('toggle');
-
             });
+
 
         })(window.jQuery);
     </script>

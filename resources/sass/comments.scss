@@ -1,112 +1,6 @@
-// #demande_notes{
-
-//     font-size: 1.5em;
-//     line-height: 2.3em;
-//     text-align: center;
-//     background-color: #FFF;
-//     box-shadow: 1px 1px 3px 0px #00000014;
-//     border: 1px solid #b6b6b65e;
-//     height: 90%;
-//     width: 90%;
-//     max-height: 500px;
-//     border-radius: 0.3em;
-
-//     &.active{
-//         right: 25px;
-//     }
-
-//     .note_window_container{
-//         position: relative;
-//         width: 100%;
-//         height: 100%;
-
-//         .note_window_header{
-//             position: absolute;
-//             top: 0px;
-//             width: 100%;
-//             height: 50px;
-//             border-bottom: 1px solid #d3e0e9;
-//             display: flex;
-//             justify-content:space-between;
-//             .note_window_header_text{
-//                 text-align: left;
-//                 font-size: 14px;
-//                 padding-left: 1em;
-//             }
-//         }
-
-//         #demande-messages{
-//             position: absolute;
-//             top:50px;
-//             bottom: 90px;
-//             width: 100%;
-//             overflow-y: scroll;
-
-//             .first-comment{
-//                 font-size: 14px;
-//                 color: silver;
-//             }
-
-//             .message{
-//                 margin: 15px 15px;
-//                 text-align: left;
-//                 display: flex;
-//                 margin-right: 30px;
-//                 .content{
-//                     display: block !important;
-//                     line-height: 1em;
-//                     padding: 2px 5px;
-//                     .username, .moment{
-//                         font-size: 11px;
-//                         color: silver;
-//                     }
-//                     .message-bubble{
-//                         background-color:#ececec;
-//                         font-size: 14px;
-//                         border-radius: 0.5em;
-//                         padding: 5px 10px;
-//                         p{ margin:0; }
-//                         a{
-//                             text-decoration: underline;
-//                             overflow-wrap: anywhere;
-//                         }
-//                     }
-//                 }
-
-//                 &.mine{
-//                     flex-direction: row-reverse;
-//                     margin-right: 15px;
-//                     margin-left: 30px;
-//                     .content{
-//                         .message-bubble{
-//                             color: rgb(250, 250, 250) !important;
-//                             background-color: #3e4676 !important;
-//                         }
-//                     }
-//                 }
-//             }
-
-//         }
-
-//         #demande-comment-form{
-//             width: 100%;
-//             position: absolute;
-//             bottom: 0px;
-//             padding: 8px;
-//             height: 90px;
-//             border-top: 1px solid #d3e0e9;
-
-//             display: flex;
-//             textarea.note{
-//                 border-bottom-left-radius: 0.3em;
-//             }
-//         }
-//     }
-// }
-
-
 #demande_notes{
     width: 100%;
+    height: 300px;
     .note_window_container{
         position: relative;
         .demande_old_messages_shadow{
@@ -120,13 +14,17 @@
             opacity: 0.9;
         }
     }
-    #demande-messages{
-        // position: absolute;
-        // top:50px;
-        // bottom: 90px;
-        // width: 100%;
-        // overflow-y: scroll;
-
+    #note-messages{
+        height: 218px;
+        overflow: scroll;
+        overflow-x: hidden;
+        #no-comment{
+            color: #e8e8e8;
+            margin: 0 auto;
+            position: relative;
+            top: 50%;
+            left: 39%;
+        }
         .first-comment{
             font-size: 14px;
             color: silver;
@@ -174,7 +72,7 @@
         }
     }
 
-    #demande-comment-form{
+    #note-comment-form{
         width: 100%;
         padding: 8px;
         height: 77px;

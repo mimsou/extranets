@@ -1,5 +1,6 @@
 #demande_notes {
   width: 100%;
+  height: 300px;
 }
 
 #demande_notes .note_window_container {
@@ -17,32 +18,46 @@
   opacity: 0.9;
 }
 
-#demande_notes #demande-messages .first-comment {
+#demande_notes #note-messages {
+  height: 218px;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+
+#demande_notes #note-messages #no-comment {
+  color: #e8e8e8;
+  margin: 0 auto;
+  position: relative;
+  top: 50%;
+  left: 39%;
+}
+
+#demande_notes #note-messages .first-comment {
   font-size: 14px;
   color: silver;
 }
 
-#demande_notes #demande-messages .message {
+#demande_notes #note-messages .message {
   margin: 15px 15px;
   text-align: left;
   display: flex;
   margin-right: 30px;
 }
 
-#demande_notes #demande-messages .message .content {
+#demande_notes #note-messages .message .content {
   display: block !important;
   line-height: 1em;
   padding: 0px 6px;
   margin-top: -5px;
 }
 
-#demande_notes #demande-messages .message .content .username,
-#demande_notes #demande-messages .message .content .moment {
+#demande_notes #note-messages .message .content .username,
+#demande_notes #note-messages .message .content .moment {
   font-size: 11px;
   color: silver;
 }
 
-#demande_notes #demande-messages .message .content .message-bubble {
+#demande_notes #note-messages .message .content .message-bubble {
   background-color: #ececec;
   font-size: 15px;
   border-radius: 0.4em;
@@ -50,38 +65,38 @@
   line-height: 1.2em;
 }
 
-#demande_notes #demande-messages .message .content .message-bubble p {
+#demande_notes #note-messages .message .content .message-bubble p {
   margin: 0;
 }
 
-#demande_notes #demande-messages .message .content .message-bubble a {
+#demande_notes #note-messages .message .content .message-bubble a {
   text-decoration: underline;
   overflow-wrap: anywhere;
 }
 
-#demande_notes #demande-messages .message.mine {
+#demande_notes #note-messages .message.mine {
   flex-direction: row-reverse;
   margin-right: 15px;
   margin-left: 30px;
 }
 
-#demande_notes #demande-messages .message.mine .content .message-bubble {
+#demande_notes #note-messages .message.mine .content .message-bubble {
   color: #fafafa !important;
   background-color: #3e4676 !important;
 }
 
-#demande_notes #demande-comment-form {
+#demande_notes #note-comment-form {
   width: 100%;
   padding: 8px;
   height: 77px;
   display: flex;
 }
 
-#demande_notes #demande-comment-form textarea.note {
+#demande_notes #note-comment-form textarea.note {
   border-bottom-left-radius: 0.3em;
 }
 
-#demande_notes #demande-comment-form button {
+#demande_notes #note-comment-form button {
   font-size: 20px;
 }
 

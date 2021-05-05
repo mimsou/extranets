@@ -33,3 +33,9 @@
   color: #3e4676;
 }
 
+.todo-strip {
+  width: 200px;
+  height: 50px;
+  background-color: #212841;
+}
+
