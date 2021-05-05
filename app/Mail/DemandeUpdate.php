@@ -7,13 +7,41 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
+/**
+ * Send Email To All Assignees of Demande after any update in Demande
+ *
+ * Class DemandeUpdate
+ * @package App\Mail
+ */
 class DemandeUpdate extends Mailable
 {
     use Queueable, SerializesModels;
 
+    /**
+     * User that is assigned to demande
+     * @var
+     */
     public $user;
+
+    /**
+     * LoggedInUser who made the change in demande
+     *
+     * @var
+     */
     public $loggedInUserName;
+
+    /**
+     * List of updated fields Updated Fields
+     *
+     * @var
+     */
     public $fieldsToUpdate;
+
+    /**
+     * Demande that has been updated
+     *
+     * @var
+     */
     public $modelToUpdate;
 
     /**

@@ -27,7 +27,6 @@
                 </div>
             </div>
 
-
                 <div class="text-muted text-center m-b-10 d-flex">
                     {{ PROCEDURE_DEMANDE[$p->procedure] }}
                     <div class="dropdown ml-3">
