@@ -131,6 +131,7 @@ if (!function_exists('get_client_ip')) {
 
 !defined('STATUTS_DEMANDE') && define('STATUTS_DEMANDE', [
     ['progression' => '0%', 'val' => 'offre_signee', 'title' => 'Offre de service signée'],
+    ['progression' => '0%', 'val' => 'rencontre_projet', 'title' => 'Rencontre de démarrage de projet'],
     ['progression' => '0%', 'val' => 'attente_selection', 'title' => 'Attente sélection ou contrats'],
     ['progression' => '5%', 'val' => 'verif_passport', 'title' => 'Vérification des passeports/AVE'],
     ['progression' => '10%', 'val' => 'eimt_encours', 'title' => 'EIMT en cours'],
