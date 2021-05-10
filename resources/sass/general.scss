@@ -40,3 +40,138 @@ td.dark-row{
 .child-row-table, .child-row-table tr, .child-row-table td{
     padding: 0;
 }
+
+
+.todo-strip.in-active{
+    background-color: #d0d0d0;
+    .fas{
+        color: #d0d0d0;
+    }
+}
+.todo-strip{
+    width: 160px;
+    background-color: #212841;
+    color: #FFF;
+    padding-left: 3px;
+    border-radius: 100px;
+    font-size: 13px;
+    padding-right: 16px;
+    padding-top: 2px;
+    padding-bottom: 3px;
+    .fas{
+        background-color: #FFF;
+        color: #212841;
+        border-radius: 100px;
+        padding: 4px;
+        font-size: 10px;
+        cursor: pointer;
+    }
+    label{
+        margin-bottom: 0px;
+        margin-left: 3px;
+    }
+
+}
+
+.sort-handle{
+    position: absolute;
+    right: 7px;
+    top: 13px;
+    color: #c7c7c7;
+}
+
+.f-loader{
+    display: none;
+    .full-screen-loader{
+        width: 100%;
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        height: 1000px;
+        background-color: #000;
+        opacity: 0.5;
+        z-index: 998;
+    }
+
+    .full-screen-loader-image{
+        position: fixed;
+        z-index: 999;
+        top: 40%;
+        left: 45%;
+    }
+}
+
+//Todo
+#todo-list-modal, #todo-template-modal, #create-todo-template-modal{
+    .todo-tick{
+        background-color: #178ae1;
+        color: #FFF;
+        border-radius: 100px;
+        padding: 28px;
+        font-size: 56px;
+    }
+    .time-progresssion{
+        background: #CCC;
+        border-radius: 13px;
+        height: 7px;
+    }
+    .option-box-grid{
+        display: inherit !important;
+    }
+    .option-box-grid label{
+        border: none !important;
+        border-radius: none;
+        box-shadow: none;
+        top: -4px;
+        left: 2px;
+    }
+    .option-box-grid input[type="checkbox"]:checked+label:before, .option-box-grid input[type="radio"]:checked+label:before{
+        color: #0b436d !important;
+    }
+    p{
+        width: 90%;
+        display: inline-flex;
+        margin: 0px;
+    }
+    .add-todo-list{
+        background: #1ac51a;
+        border-radius: 110px;
+        padding: 6px;
+        font-size: 11px;
+        color: #FFF;
+        line-height: 9px;
+        margin-left: -2px;
+        margin-top: 10px;
+    }
+    .todo-list-section{
+        width: 100%;
+    }
+    .task-completed{
+        text-decoration: line-through;
+    }
+    .todo-list-div{
+        height: auto;
+        overflow: scroll;
+        overflow-x: hidden;
+        max-height: 300px;
+    }
+    .todo-text{
+        font-style: italic;
+        border: none;
+        margin-left: 10px;
+        width: 80%;
+    }
+    .todo-text:focus{
+        outline: none;
+    }
+
+    .save-todo-message{
+        background-color: green;
+        color: #FFF;
+        padding: 5px;
+        border-radius: 4px;
+        font-size: 11px;
+        cursor: pointer;
+        display: none;
+    }
+}

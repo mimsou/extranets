@@ -101,5 +101,8 @@ class Demande extends Model
         return $this->belongsToMany('App\Models\User', 'demande_users');
     }
 
+    public function todos(){
+        return $this->hasMany(Todo::class,'demande_id','id');
+    }
 
 }

@@ -29,9 +29,17 @@
                             </td>
                             <td><small>{{ $d->candidats()->wherePivot('statut', 'approved')->count() }} candidats sur {{ $d->nb_candidat }} requis</small></td>
                             <td>
-                                <div class="todo-strip">
-                                    here
-                                </div>
+                                @if($d->todos()->get()->isEmpty())
+                                    <div class="todo-strip in-active">
+                                        <i class="fas fa-plus create-todo" data-project-id="{{ $projet->id }}" data-demande-id="{{ $d->id }}"></i>
+                                        <label>liste de contrôle</label>
+                                    </div>
+                                @else
+                                    <div class="todo-strip">
+                                        <i class="fas fa-check add-todo" data-project-id="{{ $projet->id }}" data-demande-id="{{ $d->id }}"></i>
+                                        <label><span class="demande-completed-todos">{{ $d->todos()->where(['status'=>1])->count() }}</span> complété sur <span class="demande-total-todos">{{ $d->todos()->count() }}</span></label>
+                                    </div>
+                                @endif
                             </td>
                         <tr>
                     @endforeach
@@ -41,3 +49,4 @@
         </td>
     </tr>
 </table>
+

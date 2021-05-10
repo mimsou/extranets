@@ -207,11 +207,12 @@
 
             // show assign dropdown
             $('.add-new-assignee').click(function() {
-                $('.add-new-assignee-wrapper').toggle('show')
+                $(this).parents('.assignee').find('.add-new-assignee-wrapper').toggle('show');
             })
 
             // assign user to demande
-            $('#assign_demande').change(function() {
+            $('.assign_demande').change(function() {
+                let elem = $(this).parents('.assignee');
                 var user_id = $(this).val();
                 var demande_id = $(this).data('demande-id')
                 $.ajax({
@@ -223,7 +224,7 @@
                     },
                     success: function(data) {
                         if(data.status == true){
-                            $('.assigned-users').append('<div class="avatar avatar-sm ml-1">' +
+                            elem.find('.assigned-users').append('<div class="avatar avatar-sm ml-1">' +
                             '<span class="avatar-title rounded-circle bg-dark remove_assignee">' + data.initials +
                             '<i class="fas fa-times remove_assignee_icon"></i></span>' +
                             '</div>')

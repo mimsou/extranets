@@ -36,6 +36,16 @@ Route::get('/projets/{id}/removeDemande/{demande_id}', 'ProjetController@removeD
 // assign user to demande
 Route::post('/projets/assign-user', 'DemandeController@assingUser');
 
+//Todo
+Route::post('todo/save','TodoController@save');
+Route::get('todo/list/{project_id}/{demande_id}','TodoController@todoList');
+Route::get('todo/templates/list','TodoController@templatesList');
+Route::get('todo/template/create','TodoController@createTemplate');
+Route::post('todo/template/save','TodoController@saveTemplate');
+Route::get('todo/update/status','TodoController@updateStatus');
+Route::post('todo/update/orders','TodoController@updateTodoOrder');
+Route::post('todo/from/template','TodoController@createTodoFromTemplate');
+Route::post('todo/update/{todo_id}','TodoController@updateTodo');
 
 Route::resource('/candidats', 'CandidatController');
 Route::post('/candidats/{candidat_id}/upload-addtional-reources', 'CandidatController@uploadAddtionalResources');

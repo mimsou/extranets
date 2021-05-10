@@ -10,20 +10,21 @@
                 <h3 class="searchBy-name">
                      <a href="{{ action('EmployeurController@edit', $p->employeur_id) }}" target="_blank">{{ $p->employeur->nom }}</a>
                 </h3>
-
-                <div class="assigned-users">
-                    <div class="avatar avatar-sm add-new-assignee">
-                        <span class="avatar-title rounded-circle"> <i class="mdi mdi-account-plus"></i></span>
-                    </div>
-                    @foreach ($p->assignedUsers()->get() as $user)
-                        <div class="avatar avatar-sm ml-1">
-                        <span data-id="{{ $user->id }}" data-demand-id="{{ $p->id }}" class="remove_assignee avatar-title rounded-circle bg-dark">{{ $user->initials() }} <i class="fas fa-times remove_assignee_icon"></i></span>
+                <div class="assignee">
+                    <div class="assigned-users">
+                        <div class="avatar avatar-sm add-new-assignee">
+                            <span class="avatar-title rounded-circle"> <i class="mdi mdi-account-plus"></i></span>
                         </div>
-                    @endforeach
-                </div>
+                        @foreach ($p->assignedUsers()->get() as $user)
+                            <div class="avatar avatar-sm ml-1">
+                                <span data-id="{{ $user->id }}" data-demand-id="{{ $p->id }}" class="remove_assignee avatar-title rounded-circle bg-dark">{{ $user->initials() }} <i class="fas fa-times remove_assignee_icon"></i></span>
+                            </div>
+                        @endforeach
+                    </div>
 
-                <div class="add-new-assignee-wrapper mt-2" style="display: none">
-                    {!! Form::select('assign_user', \App\Models\User::whereIn('role_lvl', [10, 5])->get()->pluck('full_name', 'id'), null, ['class'=>'form-control select2', 'id' => 'assign_demande', 'data-demande-id' => $p->id]) !!}
+                    <div class="add-new-assignee-wrapper mt-2" style="display: none">
+                        {!! Form::select('assign_user', \App\Models\User::whereIn('role_lvl', [10, 5])->get()->pluck('full_name', 'id'), null, ['class'=>'form-control select2 assign_demande', 'data-demande-id' => $p->id]) !!}
+                    </div>
                 </div>
             </div>
 

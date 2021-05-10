@@ -38,3 +38,178 @@ td.dark-row {
   padding: 0;
 }
 
+.todo-strip.in-active {
+  background-color: #d0d0d0;
+}
+
+.todo-strip.in-active .fas {
+  color: #d0d0d0;
+}
+
+.todo-strip {
+  width: 160px;
+  background-color: #212841;
+  color: #FFF;
+  padding-left: 3px;
+  border-radius: 100px;
+  font-size: 13px;
+  padding-right: 16px;
+  padding-top: 2px;
+  padding-bottom: 3px;
+}
+
+.todo-strip .fas {
+  background-color: #FFF;
+  color: #212841;
+  border-radius: 100px;
+  padding: 4px;
+  font-size: 10px;
+  cursor: pointer;
+}
+
+.todo-strip label {
+  margin-bottom: 0px;
+  margin-left: 3px;
+}
+
+.sort-handle {
+  position: absolute;
+  right: 7px;
+  top: 13px;
+  color: #c7c7c7;
+}
+
+.f-loader {
+  display: none;
+}
+
+.f-loader .full-screen-loader {
+  width: 100%;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  height: 1000px;
+  background-color: #000;
+  opacity: 0.5;
+  z-index: 998;
+}
+
+.f-loader .full-screen-loader-image {
+  position: fixed;
+  z-index: 999;
+  top: 40%;
+  left: 45%;
+}
+
+#todo-list-modal .todo-tick,
+#todo-template-modal .todo-tick,
+#create-todo-template-modal .todo-tick {
+  background-color: #178ae1;
+  color: #FFF;
+  border-radius: 100px;
+  padding: 28px;
+  font-size: 56px;
+}
+
+#todo-list-modal .time-progresssion,
+#todo-template-modal .time-progresssion,
+#create-todo-template-modal .time-progresssion {
+  background: #CCC;
+  border-radius: 13px;
+  height: 7px;
+}
+
+#todo-list-modal .option-box-grid,
+#todo-template-modal .option-box-grid,
+#create-todo-template-modal .option-box-grid {
+  display: inherit !important;
+}
+
+#todo-list-modal .option-box-grid label,
+#todo-template-modal .option-box-grid label,
+#create-todo-template-modal .option-box-grid label {
+  border: none !important;
+  border-radius: none;
+  box-shadow: none;
+  top: -4px;
+  left: 2px;
+}
+
+#todo-list-modal .option-box-grid input[type=checkbox]:checked + label:before,
+#todo-list-modal .option-box-grid input[type=radio]:checked + label:before,
+#todo-template-modal .option-box-grid input[type=checkbox]:checked + label:before,
+#todo-template-modal .option-box-grid input[type=radio]:checked + label:before,
+#create-todo-template-modal .option-box-grid input[type=checkbox]:checked + label:before,
+#create-todo-template-modal .option-box-grid input[type=radio]:checked + label:before {
+  color: #0b436d !important;
+}
+
+#todo-list-modal p,
+#todo-template-modal p,
+#create-todo-template-modal p {
+  width: 90%;
+  display: inline-flex;
+  margin: 0px;
+}
+
+#todo-list-modal .add-todo-list,
+#todo-template-modal .add-todo-list,
+#create-todo-template-modal .add-todo-list {
+  background: #1ac51a;
+  border-radius: 110px;
+  padding: 6px;
+  font-size: 11px;
+  color: #FFF;
+  line-height: 9px;
+  margin-left: -2px;
+  margin-top: 10px;
+}
+
+#todo-list-modal .todo-list-section,
+#todo-template-modal .todo-list-section,
+#create-todo-template-modal .todo-list-section {
+  width: 100%;
+}
+
+#todo-list-modal .task-completed,
+#todo-template-modal .task-completed,
+#create-todo-template-modal .task-completed {
+  text-decoration: line-through;
+}
+
+#todo-list-modal .todo-list-div,
+#todo-template-modal .todo-list-div,
+#create-todo-template-modal .todo-list-div {
+  height: auto;
+  overflow: scroll;
+  overflow-x: hidden;
+  max-height: 300px;
+}
+
+#todo-list-modal .todo-text,
+#todo-template-modal .todo-text,
+#create-todo-template-modal .todo-text {
+  font-style: italic;
+  border: none;
+  margin-left: 10px;
+  width: 80%;
+}
+
+#todo-list-modal .todo-text:focus,
+#todo-template-modal .todo-text:focus,
+#create-todo-template-modal .todo-text:focus {
+  outline: none;
+}
+
+#todo-list-modal .save-todo-message,
+#todo-template-modal .save-todo-message,
+#create-todo-template-modal .save-todo-message {
+  background-color: green;
+  color: #FFF;
+  padding: 5px;
+  border-radius: 4px;
+  font-size: 11px;
+  cursor: pointer;
+  display: none;
+}
+
