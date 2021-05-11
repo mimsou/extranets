@@ -40,6 +40,7 @@ Route::post('/projets/assign-user', 'DemandeController@assingUser');
 Route::post('todo/save','TodoController@save');
 Route::get('todo/list/{project_id}/{demande_id}','TodoController@todoList');
 Route::get('todo/templates/list','TodoController@templatesList');
+Route::get('todo/templates/list','TodoController@templatesList');
 Route::get('todo/template/create','TodoController@createTemplate');
 Route::post('todo/template/save','TodoController@saveTemplate');
 Route::get('todo/update/status','TodoController@updateStatus');

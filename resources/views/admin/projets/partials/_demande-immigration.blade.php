@@ -10,7 +10,8 @@
                 <h3 class="searchBy-name">
                      <a href="{{ action('EmployeurController@edit', $p->employeur_id) }}" target="_blank">{{ $p->employeur->nom }}</a>
                 </h3>
-                <div class="assignee">
+                @if(Auth::user()->role_lvl > 3)
+                    <div class="assignee">
                     <div class="assigned-users">
                         <div class="avatar avatar-sm add-new-assignee">
                             <span class="avatar-title rounded-circle"> <i class="mdi mdi-account-plus"></i></span>
@@ -26,6 +27,7 @@
                         {!! Form::select('assign_user', \App\Models\User::whereIn('role_lvl', [10, 5])->get()->pluck('full_name', 'id'), null, ['class'=>'form-control select2 assign_demande', 'data-demande-id' => $p->id]) !!}
                     </div>
                 </div>
+                @endif
             </div>
 
                 <div class="text-muted text-center m-b-10 d-flex">
@@ -131,19 +133,22 @@
         @for ($i = 0; $i < $nb_to_fill; $i++)
             <div class="empty-spot my-3"></div>
         @endfor
-        @php($notes = $p->getNotes())
-        @php($scope = \Illuminate\Support\Str::random(10))
-        <div id="{{ $scope }}">
-            <div class="row">
-                <div class="col-md-12 mt-4">
-                    <h3 class="color-light-blue">Commeantaires</h3>
-                    <p class="font-weight-bold ml-1 color-light-blue">Voir tous les commenataires ( <span class="comment-counts">{{ $notes->count()}}</span> )</p>
-                </div>
-                <div class="col-md-12">
-                    @include('admin.partials._comments',['demande'=>$p,'notes'=>$notes])
+
+        @if(Auth::user()->role_lvl == 3)
+            @php($notes = $p->getNotes())
+            @php($scope = \Illuminate\Support\Str::random(10))
+            <div id="{{ $scope }}">
+                <div class="row">
+                    <div class="col-md-12 mt-4">
+                        <h3 class="color-light-blue">Commeantaires</h3>
+                        <p class="font-weight-bold ml-1 color-light-blue">Voir tous les commenataires ( <span class="comment-counts">{{ $notes->count()}}</span> )</p>
+                    </div>
+                    <div class="col-md-12">
+                        @include('admin.partials._comments',['demande'=>$p,'notes'=>$notes])
+                    </div>
                 </div>
             </div>
-        </div>
+        @endif
     </div>
 </div>
 
