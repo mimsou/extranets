@@ -28,6 +28,6 @@ class DemandeComment extends Mailable
      */
     public function build()
     {
-        return $this->view('email.demande.commented');
+        return $this->markdown('email.demande.commented');
     }
 }
