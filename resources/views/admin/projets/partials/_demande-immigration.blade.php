@@ -150,7 +150,7 @@
         @endfor
 
         @if(Auth::user()->role_lvl > 3)
-            @php($notes = $p->getNotes()->sortByDesc('id'))
+            @php($notes = $p->getNotes()->sortByDesc('id')->take(2)->reverse())
             @php($scope = \Illuminate\Support\Str::random(10))
             <div id="{{ $scope }}">
                 <div class="row">

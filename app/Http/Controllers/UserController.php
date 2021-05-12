@@ -9,6 +9,7 @@ use Auth;
 use Hash;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Mail;
 use Redirect;
 use Validator;
 
@@ -192,7 +193,7 @@ class UserController extends Controller
     public function getComments(Request $request)
     {
         if ($request->has('limit') && $request->limit != null) {
-            $comments = Demande::find($request->demande_id)->getNotes()->sortByDesc('id')->take(4)->reverse();
+            $comments = Demande::find($request->demande_id)->getNotes()->sortByDesc('id')->take(2)->reverse();
         } else {
             $comments = Demande::find($request->demande_id)->getNotes();
         }

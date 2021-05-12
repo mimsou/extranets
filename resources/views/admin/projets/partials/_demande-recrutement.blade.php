@@ -123,7 +123,7 @@
             <div class="empty-spot my-3"></div>
         @endfor
         @if(Auth::user()->role_lvl > 3)
-            @php($notes = $p->getNotes()->sortByDesc('id')->take(4)->reverse())
+            @php($notes = $p->getNotes()->sortByDesc('id')->take(2)->reverse())
             @php($scope = \Illuminate\Support\Str::random(10))
             <div id="{{ $scope }}">
                 <div class="row">
