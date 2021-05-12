@@ -14,10 +14,11 @@
     //For Comment Demande
     $(document).on('click', '#demande-comment-form .btn', submitComment);
 
-    function scrollToBottomComment() {
-        var elem = $('#demande_notes #note-messages');
-        elem.animate({
-            scrollTop: elem.height()
+    function scrollToBottomComment(elem) {
+        var element = elem.parents('.comment-section').find('#note-messages');
+        var height = elem.parents('.comment-section').find('#note-messages')[0].scrollHeight;
+        element.animate({
+            scrollTop: height
         });
     }
 
@@ -28,7 +29,7 @@
     function submitComment(e) {
         e.preventDefault();
         scope = '#' + $(this).data('scope') + " ";
-
+        let elem = $(this);
         var url = $(scope + '#note-comment-form').data('url');
 
         var id = $(scope + '#note_model_id').val();
@@ -53,7 +54,7 @@
                 let commentCounts = $(scope + '.comment-counts').text();
                 $(scope + '.comment-counts').text(parseInt(commentCounts) + 1);
                 scrollBottom();
-                scrollToBottomComment();
+                scrollToBottomComment(elem);
             },
             error: function (jqXHR, status, error) {
                 console.log(jqXHR, status, error);
@@ -87,18 +88,24 @@
         if ($(this).hasClass('active-show-all')) {
             let demande_id = $(this).data('demande-id');
             getComments(demande_id, $(this), function (elem) {
-                elem.find('a').text('Voir tous les commentaires');
+                elem.find('.show-comment-text').text('Voir tous les commentaires');
                 elem.removeClass('active-show-all');
-                elem.parents('#demande_notes').find('.demande_old_messages_shadow').show();
-                elem.parents('#demande_notes').find('#note-messages').css('height', '300px');
+                elem.parents('.comment-section').find('.demande_old_messages_shadow').show();
+                elem.parents('.comment-section').find('#note-messages').css({
+                    'height': '300px',
+                    'overflow-y': 'scroll'
+                });
             }, 2);
         } else {
             let demande_id = $(this).data('demande-id');
             getComments(demande_id, $(this), function (elem) {
-                elem.find('a').text('Afficher les derniers commentaires');
+                elem.find('.show-comment-text').text('Afficher les derniers commentaires');
                 elem.addClass('active-show-all');
-                elem.parents('#demande_notes').find('.demande_old_messages_shadow').hide();
-                elem.parents('#demande_notes').find('#note-messages').css('height', 'auto');
+                elem.parents('.comment-section').find('.demande_old_messages_shadow').hide();
+                elem.parents('.comment-section').find('#note-messages').css({
+                    'height': 'auto',
+                    'overflow-y': 'inherit'
+                });
             });
         }
     });
@@ -112,7 +119,8 @@
                 limit: limit
             },
             success: function (result) {
-                elem.parents('#demande_notes').find('#note-messages').html(result);
+                elem.parents('.comment-section').find('#note-messages').html(result.html);
+                elem.find('.comment-counts').text(result.count);
                 callback(elem);
             }
         });

@@ -58,8 +58,11 @@ td.dark-row {
   padding-bottom: 3px;
 }
 
+.todo-strip .bg-aqua {
+  background-color: #7fffd4;
+}
+
 .todo-strip .fas {
-  background-color: #FFF;
   color: #212841;
   border-radius: 100px;
   padding: 4px;
@@ -107,8 +110,20 @@ td.dark-row {
   background-color: #178ae1;
   color: #FFF;
   border-radius: 100px;
-  padding: 28px;
+  padding: 22px;
   font-size: 56px;
+}
+
+#todo-list-modal .create-template,
+#todo-template-modal .create-template,
+#create-todo-template-modal .create-template {
+  cursor: pointer;
+}
+
+#todo-list-modal .sort-handle,
+#todo-template-modal .sort-handle,
+#create-todo-template-modal .sort-handle {
+  cursor: move;
 }
 
 #todo-list-modal .time-progresssion,
@@ -184,6 +199,7 @@ td.dark-row {
   overflow: scroll;
   overflow-x: hidden;
   max-height: 300px;
+  padding-left: 4px;
 }
 
 #todo-list-modal .todo-text,
@@ -218,8 +234,6 @@ td.dark-row {
 }
 
 .see-all-comments {
-  display: block;
-  z-index: 999;
-  position: relative;
+  cursor: pointer;
 }
 

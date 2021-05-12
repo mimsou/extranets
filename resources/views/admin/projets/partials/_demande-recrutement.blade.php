@@ -123,19 +123,10 @@
             <div class="empty-spot my-3"></div>
         @endfor
         @if(Auth::user()->role_lvl > 3)
-            @php($notes = $p->getNotes()->sortByDesc('id')->take(2)->reverse())
+            @php($notes = $p->getNotes()->sortByDesc('id'))
             @php($scope = \Illuminate\Support\Str::random(10))
-            <div id="{{ $scope }}">
-                <div class="row">
-                    <div class="col-md-12 mt-4">
-                        <h3 class="color-light-blue">Commentaires</h3>
-                        <p class="font-weight-bold ml-1 color-light-blue">Voir tous les commenataires ( <span
-                                class="comment-counts">{{ $notes->count()}}</span> )</p>
-                    </div>
-                    <div class="col-md-12">
-                        @include('admin.partials._comments',['demande'=>$p,'notes'=>$notes])
-                    </div>
-                </div>
+            <div id="{{ $scope }}" class="comment-section">
+                @include('admin.partials._comments',['demande'=>$p,'notes'=> $notes])
             </div>
         @endif
     </div>

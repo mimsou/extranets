@@ -201,6 +201,6 @@ class UserController extends Controller
         foreach ($comments as $key => $comment) {
             $html .= view('admin.partials._message', ['n' => $comment])->render();
         }
-        return $html;
+        return ['count' => $comments->count(), 'html' => $html];
     }
 }

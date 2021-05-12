@@ -132,10 +132,11 @@ __webpack_require__(/*! ./todo */ "./resources/js/todo.js");
 
   $(document).on('click', '#demande-comment-form .btn', submitComment);
 
-  function scrollToBottomComment() {
-    var elem = $('#demande_notes #note-messages');
-    elem.animate({
-      scrollTop: elem.height()
+  function scrollToBottomComment(elem) {
+    var element = elem.parents('.comment-section').find('#note-messages');
+    var height = elem.parents('.comment-section').find('#note-messages')[0].scrollHeight;
+    element.animate({
+      scrollTop: height
     });
   }
 
@@ -150,6 +151,7 @@ __webpack_require__(/*! ./todo */ "./resources/js/todo.js");
   function submitComment(e) {
     e.preventDefault();
     scope = '#' + $(this).data('scope') + " ";
+    var elem = $(this);
     var url = $(scope + '#note-comment-form').data('url');
     var id = $(scope + '#note_model_id').val();
     var type = $(scope + '#note_model_type').val();
@@ -175,7 +177,7 @@ __webpack_require__(/*! ./todo */ "./resources/js/todo.js");
         var commentCounts = $(scope + '.comment-counts').text();
         $(scope + '.comment-counts').text(parseInt(commentCounts) + 1);
         scrollBottom();
-        scrollToBottomComment();
+        scrollToBottomComment(elem);
       },
       error: function error(jqXHR, status, _error) {
         console.log(jqXHR, status, _error);
@@ -208,19 +210,25 @@ __webpack_require__(/*! ./todo */ "./resources/js/todo.js");
     if ($(this).hasClass('active-show-all')) {
       var demande_id = $(this).data('demande-id');
       getComments(demande_id, $(this), function (elem) {
-        elem.find('a').text('Voir tous les commentaires');
+        elem.find('.show-comment-text').text('Voir tous les commentaires');
         elem.removeClass('active-show-all');
-        elem.parents('#demande_notes').find('.demande_old_messages_shadow').show();
-        elem.parents('#demande_notes').find('#note-messages').css('height', '300px');
+        elem.parents('.comment-section').find('.demande_old_messages_shadow').show();
+        elem.parents('.comment-section').find('#note-messages').css({
+          'height': '300px',
+          'overflow-y': 'scroll'
+        });
       }, 2);
     } else {
       var _demande_id = $(this).data('demande-id');
 
       getComments(_demande_id, $(this), function (elem) {
-        elem.find('a').text('Afficher les derniers commentaires');
+        elem.find('.show-comment-text').text('Afficher les derniers commentaires');
         elem.addClass('active-show-all');
-        elem.parents('#demande_notes').find('.demande_old_messages_shadow').hide();
-        elem.parents('#demande_notes').find('#note-messages').css('height', 'auto');
+        elem.parents('.comment-section').find('.demande_old_messages_shadow').hide();
+        elem.parents('.comment-section').find('#note-messages').css({
+          'height': 'auto',
+          'overflow-y': 'inherit'
+        });
       });
     }
   });
@@ -235,7 +243,8 @@ __webpack_require__(/*! ./todo */ "./resources/js/todo.js");
         limit: limit
       },
       success: function success(result) {
-        elem.parents('#demande_notes').find('#note-messages').html(result);
+        elem.parents('.comment-section').find('#note-messages').html(result.html);
+        elem.find('.comment-counts').text(result.count);
         callback(elem);
       }
     });
@@ -351,13 +360,17 @@ __webpack_require__(/*! ./todo */ "./resources/js/todo.js");
       }
     });
   });
-  $('body').on('keyup', '.todo-text', function () {
+  $('body').on('keyup', '.todo-text', function (e) {
     var textValue = $(this).val().trim();
 
     if (textValue != '') {
       $('.save-todo-message').show();
     } else {
       $('.save-todo-message').hide();
+    }
+
+    if (e.keyCode == 13) {
+      $('.save-todo-message').trigger('click');
     }
   });
   $('body').on('click', '.save-todo-message', function () {
@@ -386,6 +399,7 @@ __webpack_require__(/*! ./todo */ "./resources/js/todo.js");
         stripTag.find('label').html('<span class="demande-completed-todos">0</span> complété sur <span class="demande-total-todos">0</span>');
         stripTag.find('.demande-total-todos').text($('.single-todo-div').length);
         stripTag.find('.demande-completed-todos').text($('.todo-list-section').find('.task-completed').length);
+        $('.todo-text').focus();
       }
     });
   });
@@ -402,6 +416,10 @@ __webpack_require__(/*! ./todo */ "./resources/js/todo.js");
       $('.todo-progress').css('width', numberOfCompleted * 100 / numberOfTodos + '%');
       window.click_demande_child.parents('.todo-strip').find('.demande-completed-todos').text(numberOfCompleted);
       status = 1;
+
+      if (numberOfTodos == numberOfCompleted) {
+        window.click_demande_child.parents('.todo-strip').find('.add-todo').removeClass('bg-white').addClass('bg-aqua');
+      }
     } else {
       $(this).parent('.option-box-grid').find('p').removeClass('task-completed');
 
@@ -412,6 +430,7 @@ __webpack_require__(/*! ./todo */ "./resources/js/todo.js");
       $('.todo-progress').css('width', _numberOfCompleted * 100 / numberOfTodos + '%');
       window.click_demande_child.parents('.todo-strip').find('.demande-completed-todos').text(_numberOfCompleted);
       status = 0;
+      window.click_demande_child.parents('.todo-strip').find('.add-todo').removeClass('bg-aqua').addClass('bg-white');
     }
 
     $.ajax({
