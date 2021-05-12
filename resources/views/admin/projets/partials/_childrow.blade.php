@@ -20,7 +20,7 @@
                                     </div>
                                 </div>
                             </td>
-                            <td width="40%">
+                            <td width="30%">
                                 <div class="pl-5">
                                     @if ($d->facturation_horaire == 'on')
                                         <i class="fas fa-stopwatch text-muted opacity-50"
@@ -30,10 +30,10 @@
                                     {{ $d->employeur->nom }}
                                 </div>
                             </td>
-                            <td><small>{{ $d->candidats()->wherePivot('statut', 'approved')->count() }} candidats
+                            <td width="100"><small>{{ $d->candidats()->wherePivot('statut', 'approved')->count() }} candidats
                                     sur {{ $d->nb_candidat }} requis</small></td>
                             @if(Auth::user()->role_lvl > 3)
-                                <td>
+                                <td width="150">
                                     @if($d->todos()->get()->isEmpty())
                                         <div class="todo-strip in-active">
                                             <i class="fas fa-plus create-todo bg-white"
@@ -54,7 +54,17 @@
                                         </div>
                                     @endif
                                 </td>
-                        @endif
+                            @endif
+                            <td width="100">
+                                <div class="assigned-users">
+                                    @foreach($d->assignedUsers()->get() as $key => $user)
+                                        <div class="avatar avatar-xs add-new-assignee ml-1">
+                                            <span class="avatar-title rounded-circle bg-grey">{{ $user->initials() }}</span>
+                                        </div>
+                                    @endforeach
+                                </div>
+
+                            </td>
                         <tr>
                     @endforeach
                 </table>

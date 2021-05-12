@@ -108,36 +108,40 @@
             $('.save-todo-message').trigger('click');
         }
     });
-
+    $('body').on('click','.add-todo-list', function(){
+        $('.save-todo-message').trigger('click');
+    });
     $('body').on('click', '.save-todo-message', function () {
         let elem = $(this);
-        elem.prop('disabled', true).addClass('disabled');
+        //elem.prop('disabled', true).addClass('disabled');
         let todoText = $('.todo-text').val();
-        $('.todo-text').prop('disabled', true);
-        let projetId = $(this).data('project-id');
-        let demandeId = $(this).data('demande-id');
-        $.ajax({
-            type: 'POST',
-            url: route + 'todo/save',
-            data: {
-                projet_id: projetId,
-                demande_id: demandeId,
-                todo: todoText
-            },
-            success: function (result) {
-                elem.prop('disabled', false).removeClass('disabled').hide();
-                $('.todo-text').val('').prop('disabled', false);
-                $('.todo-list-section').append(result.html);
-                $('.total-todos').text($('.single-todo-div').length);
-                let stripTag = window.click_demande_child.parents('.todo-strip');
-                stripTag.removeClass('in-active');
-                stripTag.find('.fa').removeClass('fa-plus').addClass('fa-check');
-                stripTag.find('label').html('<span class="demande-completed-todos">0</span> complété sur <span class="demande-total-todos">0</span>');
-                stripTag.find('.demande-total-todos').text($('.single-todo-div').length);
-                stripTag.find('.demande-completed-todos').text($('.todo-list-section').find('.task-completed').length);
-                $('.todo-text').focus();
-            }
-        });
+        if(todoText.trim() != ''){
+            $('.todo-text').prop('disabled', true);
+            let projetId = $(this).data('project-id');
+            let demandeId = $(this).data('demande-id');
+            $.ajax({
+                type: 'POST',
+                url: route + 'todo/save',
+                data: {
+                    projet_id: projetId,
+                    demande_id: demandeId,
+                    todo: todoText
+                },
+                success: function (result) {
+                    //elem.prop('disabled', false).removeClass('disabled').hide();
+                    $('.todo-text').val('').prop('disabled', false);
+                    $('.todo-list-section').append(result.html);
+                    $('.total-todos').text($('.single-todo-div').length);
+                    let stripTag = window.click_demande_child.parents('.todo-strip');
+                    stripTag.removeClass('in-active');
+                    stripTag.find('.fa').removeClass('fa-plus').addClass('fa-check');
+                    stripTag.find('label').html('<span class="demande-completed-todos">0</span> complété sur <span class="demande-total-todos">0</span>');
+                    stripTag.find('.demande-total-todos').text($('.single-todo-div').length);
+                    stripTag.find('.demande-completed-todos').text($('.todo-list-section').find('.task-completed').length);
+                    $('.todo-text').focus();
+                }
+            });
+        }
     });
 
     $('body').on('click', '.todo-checkbox', function () {

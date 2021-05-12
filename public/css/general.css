@@ -202,6 +202,12 @@ td.dark-row {
   padding-left: 4px;
 }
 
+#todo-list-modal .todo-list-div::-webkit-scrollbar,
+#todo-template-modal .todo-list-div::-webkit-scrollbar,
+#create-todo-template-modal .todo-list-div::-webkit-scrollbar {
+  width: 1em;
+}
+
 #todo-list-modal .todo-text,
 #todo-template-modal .todo-text,
 #create-todo-template-modal .todo-text {
@@ -220,7 +226,7 @@ td.dark-row {
 #todo-list-modal .save-todo-message,
 #todo-template-modal .save-todo-message,
 #create-todo-template-modal .save-todo-message {
-  background-color: green;
+  background-color: #1ac51a;
   color: #FFF;
   padding: 5px;
   border-radius: 4px;
@@ -229,11 +235,15 @@ td.dark-row {
   display: none;
 }
 
-.add-new-assignee {
+.cursor-pointer {
   cursor: pointer;
 }
 
 .see-all-comments {
   cursor: pointer;
+}
+
+.pr-sm {
+  padding-right: 20px;
 }
 

@@ -27,7 +27,7 @@
                                  style="transition: all 0.5s ease; background-color: aquamarine; width:{{ ($numberOfTodos != 0)?(($numberOfCompleted*100)/$numberOfTodos):0 }}%; height:7px; border-radius: 13px;"></div>
                         </div>
                     </div>
-                    <div class="col-md-5 text-right pr-4">
+                    <div class="col-md-5 text-right pr-sm">
                         <small class="create-template" data-project-id="{{ $projectId }}"
                                data-demande-id="{{ $demandeId }}"><u>En faire un gabarit</u></small>
                     </div>
@@ -39,7 +39,7 @@
                         @endforeach
                     </div>
                     <div class="col-md-12 mt-1 ml-1 pl-2 mb-2">
-                        <i class="fas fa-plus add-todo-list"></i>
+                        <i class="fas fa-plus add-todo-list cursor-pointer"></i>
                         {!! Form::text('todo',null,['class'=>'todo-text','placeholder'=>'Ajouter un nouvel élément']) !!}
                         <i class="fa fa-check save-todo-message" data-project-id="{{ $projectId }}"
                            data-demande-id="{{ $demandeId }}"></i>

@@ -16,7 +16,7 @@
                 @if(Auth::user()->role_lvl > 3)
                     <div class="assignee">
                         <div class="assigned-users">
-                            <div class="avatar avatar-sm add-new-assignee">
+                            <div class="avatar avatar-sm add-new-assignee cursor-pointer">
                                 <span class="avatar-title rounded-circle"> <i class="mdi mdi-account-plus"></i></span>
                             </div>
                             @foreach ($p->assignedUsers()->get() as $user)
