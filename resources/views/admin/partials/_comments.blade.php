@@ -14,7 +14,7 @@
                     @if($notes->isEmpty())
                         <i id="no-comment">No any comment yet</i>
                     @endif
-                    @foreach($notes->take(2)->reverse() as $n)
+                    @foreach($notes->reverse() as $n)
                         @include('admin.partials._message', ['n'=>$n])
                     @endforeach
                 </div>

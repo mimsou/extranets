@@ -14,6 +14,16 @@
     //For Comment Demande
     $(document).on('click', '#demande-comment-form .btn', submitComment);
 
+    function allScrollBottom(){
+        $('.comment-section').each(function(){
+            var height = $(this).find('#note-messages')[0].scrollHeight;
+            $(this).find('#note-messages').animate({
+                scrollTop: height
+            });
+        });
+    }
+    allScrollBottom();
+
     function scrollToBottomComment(elem) {
         var element = elem.parents('.comment-section').find('#note-messages');
         var height = elem.parents('.comment-section').find('#note-messages')[0].scrollHeight;
@@ -87,26 +97,24 @@
     $('.see-all-comments').click(function () {
         if ($(this).hasClass('active-show-all')) {
             let demande_id = $(this).data('demande-id');
-            getComments(demande_id, $(this), function (elem) {
-                elem.find('.show-comment-text').text('Voir tous les commentaires');
-                elem.removeClass('active-show-all');
-                elem.parents('.comment-section').find('.demande_old_messages_shadow').show();
-                elem.parents('.comment-section').find('#note-messages').css({
-                    'height': '300px',
-                    'overflow-y': 'scroll'
-                });
-            }, 2);
+            $(this).find('.show-comment-text').text('Voir tous les commentaires');
+            $(this).removeClass('active-show-all');
+            $(this).parents('.comment-section').find('.demande_old_messages_shadow').show();
+            $(this).parents('.comment-section').find('#note-messages').css({
+                'height': '300px',
+                'overflow-y': 'scroll'
+            });
+            allScrollBottom();
         } else {
             let demande_id = $(this).data('demande-id');
-            getComments(demande_id, $(this), function (elem) {
-                elem.find('.show-comment-text').text('Afficher les derniers commentaires');
-                elem.addClass('active-show-all');
-                elem.parents('.comment-section').find('.demande_old_messages_shadow').hide();
-                elem.parents('.comment-section').find('#note-messages').css({
-                    'height': 'auto',
-                    'overflow-y': 'inherit'
-                });
+            $(this).find('.show-comment-text').text('Afficher les derniers commentaires');
+            $(this).addClass('active-show-all');
+            $(this).parents('.comment-section').find('.demande_old_messages_shadow').hide();
+            $(this).parents('.comment-section').find('#note-messages').css({
+                'height': 'auto',
+                'overflow-y': 'inherit'
             });
+            allScrollBottom();
         }
     });
 
