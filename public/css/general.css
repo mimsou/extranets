@@ -47,7 +47,7 @@ td.dark-row {
 }
 
 .todo-strip {
-  width: 160px;
+  width: auto;
   background-color: #212841;
   color: #FFF;
   padding-left: 3px;
@@ -211,5 +211,15 @@ td.dark-row {
   font-size: 11px;
   cursor: pointer;
   display: none;
+}
+
+.add-new-assignee {
+  cursor: pointer;
+}
+
+.see-all-comments {
+  display: block;
+  z-index: 999;
+  position: relative;
 }
 

@@ -204,6 +204,43 @@ __webpack_require__(/*! ./todo */ "./resources/js/todo.js");
     $(scope + '#note_window').removeClass('active');
   }
 
+  $('.see-all-comments').click(function () {
+    if ($(this).hasClass('active-show-all')) {
+      var demande_id = $(this).data('demande-id');
+      getComments(demande_id, $(this), function (elem) {
+        elem.find('a').text('Voir tous les commentaires');
+        elem.removeClass('active-show-all');
+        elem.parents('#demande_notes').find('.demande_old_messages_shadow').show();
+        elem.parents('#demande_notes').find('#note-messages').css('height', '300px');
+      }, 2);
+    } else {
+      var _demande_id = $(this).data('demande-id');
+
+      getComments(_demande_id, $(this), function (elem) {
+        elem.find('a').text('Afficher les derniers commentaires');
+        elem.addClass('active-show-all');
+        elem.parents('#demande_notes').find('.demande_old_messages_shadow').hide();
+        elem.parents('#demande_notes').find('#note-messages').css('height', 'auto');
+      });
+    }
+  });
+
+  function getComments(demande_id, elem, callback) {
+    var limit = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;
+    $.ajax({
+      type: 'POST',
+      url: route + 'comments/view/all',
+      data: {
+        demande_id: demande_id,
+        limit: limit
+      },
+      success: function success(result) {
+        elem.parents('#demande_notes').find('#note-messages').html(result);
+        callback(elem);
+      }
+    });
+  }
+
   init_comments();
 })(window.jQuery);
 

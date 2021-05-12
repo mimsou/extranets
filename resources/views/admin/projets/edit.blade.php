@@ -205,36 +205,57 @@
                 $('.projet-frm :input').prop('disabled', true);
             }
 
+            window.targetClick = null;
             // show assign dropdown
-            $('.add-new-assignee').click(function() {
-                $(this).parents('.assignee').find('.add-new-assignee-wrapper').toggle('show');
-            })
+            $('.add-new-assignee').click(function(e) {
+                window.targetClick = $(e.target);
+                $(this).parents('.assignee').find('.add-new-assignee-wrapper').slideToggle();
+                e.stopPropagation();
+
+            });
+            $('body').click(function(e){
+                let target = $(e.target);
+                console.log(target);
+                if(!target.is('.add-new-assignee') && !target.is('.select2-selection__rendered')) {
+                    $('.assignee').find('.add-new-assignee-wrapper').slideUp();
+                }
+            });
+
 
             // assign user to demande
-            $('.assign_demande').change(function() {
-                let elem = $(this).parents('.assignee');
+            $('.assign_demande').change(function(e) {
+                e.stopPropagation();
+                let elem = $(this);
                 var user_id = $(this).val();
-                var demande_id = $(this).data('demande-id')
-                $.ajax({
-                    url: "{{ action('DemandeController@assingUser') }}",
-                    type: 'POST',
-                    data: {
-                        "user_id": user_id,
-                        "demande_id": demande_id
-                    },
-                    success: function(data) {
-                        if(data.status == true){
-                            elem.find('.assigned-users').append('<div class="avatar avatar-sm ml-1">' +
-                            '<span class="avatar-title rounded-circle bg-dark remove_assignee">' + data.initials +
-                            '<i class="fas fa-times remove_assignee_icon"></i></span>' +
-                            '</div>')
+                console.log(user_id);
+                if(user_id != '' && user_id != null){
+                    var demande_id = $(this).data('demande-id')
+                    $.ajax({
+                        url: "{{ action('DemandeController@assingUser') }}",
+                        type: 'POST',
+                        data: {
+                            "user_id": user_id,
+                            "demande_id": demande_id
+                        },
+                        success: function(data) {
+                            if(data.status == true){
+                                $('.assignee').find('.add-new-assignee-wrapper').slideUp();
+                                $('.assignee').find('.add-new-assignee-wrapper').find('select').val('').trigger('change');
+                                elem.parents('.assignee').find('.assigned-users').append('<div class="avatar avatar-sm ml-1">' +
+                                    '<span class="avatar-title rounded-circle bg-dark remove_assignee"  data-id="'+user_id+'" data-demand-id="'+demande_id+'">' + data.initials +
+                                    '<i class="fas fa-times remove_assignee_icon"></i></span>' +
+                                    '</div>')
+                            }else{
+                                $('.assignee').find('.add-new-assignee-wrapper').slideUp();
+                                $('.assignee').find('.add-new-assignee-wrapper').find('select').val('').trigger('change');
+                            }
+                        },
+                        error: function(jqXHR, status, error) {
+                            console.log(jqXHR, status, error);
+                            alert(error);
                         }
-                    },
-                    error: function(jqXHR, status, error) {
-                        console.log(jqXHR, status, error);
-                        alert(error);
-                    }
-                });
+                    });
+                }
             })
 
         </script>

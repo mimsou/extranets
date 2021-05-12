@@ -2,15 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use Hash;
-use Auth;
-use Redirect;
-use Validator;
+use App\Mail\DemandeComment;
+use App\Models\Demande;
 use App\Models\User;
+use Auth;
+use Hash;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use App\Http\Controllers\Controller;
+use Redirect;
+use Validator;
 
+/**
+ * Class UserController
+ * @package App\Http\Controllers
+ */
 class UserController extends Controller
 {
     /**
@@ -30,7 +35,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        if(Auth::user()->role_lvl < 10) abort(404);
+        if (Auth::user()->role_lvl < 10) abort(404);
         $user = new User;
         return view('admin.users.create', compact('user'));
     }
@@ -39,7 +44,7 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -61,7 +66,7 @@ class UserController extends Controller
 
         $new_user = $request->all();
 
-        if(!empty($request->new_password)){
+        if (!empty($request->new_password)) {
             $new_user['password'] = Hash::make($request->new_password);
         }
 
@@ -69,7 +74,7 @@ class UserController extends Controller
 
         flash()->success("L'utilisateur à bien été créé");
 
-        if($request->has('employeur_id')) return redirect()->action('EmployeurController@userManagement', ['id' => $request->employeur_id]);
+        if ($request->has('employeur_id')) return redirect()->action('EmployeurController@userManagement', ['id' => $request->employeur_id]);
 
         return Redirect::action('UserController@index');
     }
@@ -77,7 +82,7 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -88,21 +93,21 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
         $user = User::find($id);
-        if(Auth::user()->role_lvl < 10 && Auth::user()->id != $user->id) return abort(404);
+        if (Auth::user()->role_lvl < 10 && Auth::user()->id != $user->id) return abort(404);
         return view('admin.users.edit', compact('user'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -125,9 +130,9 @@ class UserController extends Controller
         $req_user = $request->all();
 
         // On met le mot de passe à jour au besoin
-        if(!empty($request->new_password)){
+        if (!empty($request->new_password)) {
             $req_user['password'] = Hash::make($request->new_password);
-        }else{
+        } else {
             $req_user['password'] = $user->password;
         }
 
@@ -135,22 +140,34 @@ class UserController extends Controller
 
         flash()->success("L'utilisateur à bien été mis à jour");
 
-        if($request->has('employeur_id')) return redirect()->action('EmployeurController@userManagement', ['id' => $request->employeur_id]);
+        if ($request->has('employeur_id')) return redirect()->action('EmployeurController@userManagement', ['id' => $request->employeur_id]);
 
         return Redirect::action('UserController@edit', $user->id);
     }
 
 
-    public function saveComment(Request $request){
-        // dd($request->all());
-
+    /**
+     * Save Comment and send email to assigned admin if Model is Demande
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|string
+     */
+    public function saveComment(Request $request)
+    {
         $class = $request->model_type;
         $model = $class::where('id', '=', $request->model_id)->first();
-
-        if(!is_null($model)){
+        if (class_basename($class) == 'Demande') {
+            $users = $model->assignedUsers()->get();
+            foreach ($users as $k => $user) {
+                if (sendEmailEnv($user->email)) {
+                    Mail::to($user->email)->queue(new DemandeComment());
+                }
+            }
+        }
+        if (!is_null($model)) {
             $n = $model->noteThat($request->message, $request->category);
             return view('admin.partials._message', compact('n'));
-        }else{
+        } else {
             return 'model does not exist';
         }
     }
@@ -158,11 +175,31 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Get Comments
+     *
+     * @param Request $request
+     * @return string
+     */
+    public function getComments(Request $request)
+    {
+        if ($request->has('limit') && $request->limit != null) {
+            $comments = Demande::find($request->demande_id)->getNotes()->sortByDesc('id')->take(4)->reverse();
+        } else {
+            $comments = Demande::find($request->demande_id)->getNotes();
+        }
+        $html = '';
+        foreach ($comments as $key => $comment) {
+            $html .= view('admin.partials._message', ['n' => $comment])->render();
+        }
+        return $html;
     }
 }

@@ -24,6 +24,8 @@ Route::resource('/gestion/pays', 'PaysController');
 Route::resource('/gestion/utilisateurs', 'UserController');
 Route::post('/gestion/utilisateurs/{id}/saveComment', 'UserController@saveComment');
 
+Route::post('comments/view/all','UserController@getComments');
+
 Route::post('/projets/{id}/addCandidat', 'ProjetController@addCandidat');
 Route::post('/projets/{id}/addDemande', 'ProjetController@addDemande');
 Route::post('/projets/{id}/addDemande/getEmployeurContact', 'ProjetController@getEmployeurContact');

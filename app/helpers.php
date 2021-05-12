@@ -417,6 +417,9 @@ if (!function_exists('imm_demandePermisTravail_enattente')) {
  * @param [string] $email
  * @return boolean return true if app is in production env OR if emails belongs to devs
  */
-function sendEmailEnv($email) {
-    return env('APP_ENV') == 'production' || $email == 'micbhatti@gmail.com';
+if(!function_exists('sendEmailEnv')){
+    function sendEmailEnv($email) {
+        return env('APP_ENV') == 'production' || $email == 'micbhatti@gmail.com';
+    }
 }
+

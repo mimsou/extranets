@@ -1,6 +1,6 @@
 $(function(){
     $('body').on('click','.remove_assignee',function(){
-        if(confirm('Are you sure to remove?')){
+        if(confirm('Êtes-vous certain de vouloir retirer cet utilisateur?')){
             let elem = $(this);
             let assigneeId = $(this).data('id');
             let demand_id = $(this).data('demand-id')
@@ -20,4 +20,6 @@ $(function(){
             });
         }
     });
+
+
 });

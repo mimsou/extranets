@@ -95,7 +95,7 @@
 
 $(function () {
   $('body').on('click', '.remove_assignee', function () {
-    if (confirm('Are you sure to remove?')) {
+    if (confirm('Êtes-vous certain de vouloir retirer cet utilisateur?')) {
       var elem = $(this);
       var assigneeId = $(this).data('id');
       var demand_id = $(this).data('demand-id');

@@ -175,3 +175,13 @@ td.dark-row{
         display: none;
     }
 }
+.add-new-assignee{
+    cursor: pointer;
+}
+
+.see-all-comments{
+    display: block;
+    z-index: 999;
+    position: relative;
+}
+
