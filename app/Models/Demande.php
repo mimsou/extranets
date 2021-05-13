@@ -58,7 +58,8 @@ class Demande extends Model
         'salaire',
         'lieu_travail',
         'code_cnp',
-        'notes'
+        'notes',
+        'completed'
     ];
 
     /**

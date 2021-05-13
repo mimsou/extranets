@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Redirect;
 
 /**
  * Class DemandeController
@@ -122,5 +123,18 @@ class DemandeController extends Controller
     {
         $demandeModel = DemandeUser::where(['demande_id' => $request->demand_id, 'user_id' => $request->assignee_id])->delete();
         return response()->json(['status' => true, 'demande deleted successfully!']);
+    }
+
+    /**
+     * Mark Demande as completed
+     * 
+     * @param $demande_id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function markAsCompleted($demande_id)
+    {
+        Demande::find($demande_id)->update(['completed' => 1]);
+        flash('Marquer cette demande comme terminée')->success();
+        return Redirect::back();
     }
 }
