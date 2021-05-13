@@ -161,7 +161,7 @@ class UserController extends Controller
             $users = $model->assignedUsers()->get();
             foreach ($users as $k => $user) {
                 if (sendEmailEnv($user->email)) {
-                    Mail::to($user->email)->queue(new DemandeComment());
+                    Mail::to($user->email)->queue(new DemandeComment($user, Auth::user()->full_name, $request->message, $model->projet));
                 }
             }
         }
