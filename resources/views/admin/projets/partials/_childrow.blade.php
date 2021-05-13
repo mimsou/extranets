@@ -10,7 +10,7 @@
                             $type = ($d->type == 'recrutement')?STATUTS_DEMANDE_REC:null;
                         @endphp
                         <tr>
-                            <td width="340px">
+                            <td width="200px">
                                 <div class="pl-3">
                                     <small>{{ demandeStatuts($d->statut, $type) }}</small>
                                     <hr class="mb-0 mt-0">
@@ -21,7 +21,7 @@
                                 </div>
                             </td>
                             <td width="30%">
-                                <div class="pl-5">
+                                <div class="pl-5 mr-4">
                                     @if ($d->facturation_horaire == 'on')
                                         <i class="fas fa-stopwatch text-muted opacity-50"
                                            style="font-size: 16px;line-height: 19px;" data-toggle="tooltip"
@@ -33,9 +33,9 @@
                             <td width="100"><small>{{ $d->candidats()->wherePivot('statut', 'approved')->count() }} candidats
                                     sur {{ $d->nb_candidat }} requis</small></td>
                             @if(Auth::user()->role_lvl > 3)
-                                <td width="150">
+                                <td width="150px">
                                     @if($d->todos()->get()->isEmpty())
-                                        <div class="todo-strip in-active">
+                                        <div class="todo-strip in-active ml-3">
                                             <i class="fas fa-plus create-todo bg-white"
                                                data-project-id="{{ $projet->id }}"
                                                data-demande-id="{{ $d->id }}"></i>
@@ -44,7 +44,7 @@
                                     @else
                                         @php( $completedTodos = $d->todos()->where(['status'=>1])->count())
                                         @php( $totalTodos =$d->todos()->count())
-                                        <div class="todo-strip">
+                                        <div class="todo-strip ml-3">
                                             <i class="fas fa-check add-todo {{ ($completedTodos == $totalTodos)?'bg-aqua':'bg-white' }}"
                                                data-project-id="{{ $projet->id }}" data-demande-id="{{ $d->id }}"></i>
                                             <label><span
@@ -56,7 +56,7 @@
                                 </td>
                             @endif
                             <td width="100">
-                                <div class="assigned-users">
+                                <div class="assigned-users mr-3">
                                     @foreach($d->assignedUsers()->get() as $key => $user)
                                         <div class="avatar avatar-xs add-new-assignee ml-1">
                                             <span class="avatar-title rounded-circle bg-grey">{{ $user->initials() }}</span>

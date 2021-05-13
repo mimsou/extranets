@@ -110,7 +110,7 @@
                         {data: 'facturation_horaire', name:'users.lastname'},
                         // {data: 'statut_candidat'},
                         {data: 'updated_at', class:'text-right'},
-                        {data: 'action'},
+                        {data: 'action', class:'text-right'},
                         {data: 'childrow_html'},
                     ],
                     'fnInitComplete': function(){
