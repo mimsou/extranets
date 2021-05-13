@@ -35,6 +35,6 @@ class DemandeAssigned extends Mailable
      */
     public function build()
     {
-        return $this->markdown('email.demande.assigned');
+        return $this->markdown('email.demande.assigned')->subject("Projet #".$this->project->numero." - Vous avez été assigné à une demande");
     }
 }

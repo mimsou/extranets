@@ -64,6 +64,6 @@ class DemandeUpdate extends Mailable
      */
     public function build()
     {
-        return $this->markdown('email.demande.updated');
+        return $this->markdown('email.demande.updated')->subject("Projet #".$this->modelToUpdate->projet->numero." - Mise à jour demande");
     }
 }

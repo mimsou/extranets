@@ -27,7 +27,7 @@ trait Notify
                 ->where(['demande_id' => $model->id])
                 ->get();
             Mail::to($demandeUsers->pluck('user.email'))
-                ->send(new DemandeUpdate($demandeUsers, Auth::user()->full_name, $model->getDirty(), $model));
+                ->queue(new DemandeUpdate($demandeUsers, Auth::user()->full_name, $model->getDirty(), $model));
         });
     }
 }
