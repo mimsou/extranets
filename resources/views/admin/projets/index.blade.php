@@ -51,7 +51,7 @@
                                         <th data-orderable="false">Facturation horaire</th>
                                         {{-- <th>Candidats</th> --}}
                                         <th>Dernière modification</th>
-                                        <th data-orderable="false">Action</th>
+                                        <th data-orderable="false" width="70px">Action</th>
                                         <th></th>
                                     </tr>
                                 </thead>

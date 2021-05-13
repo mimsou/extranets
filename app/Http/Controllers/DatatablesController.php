@@ -112,7 +112,7 @@ class DatatablesController extends Controller
                         })
                         ->addColumn('action', function($m){
                             $delete = '<button class="btn btn-sm btn-danger delete_projet" data-projetid="'.$m->id.'" data-num="'.$m->numero.'"><i class="fas fa-trash"></i></button>';
-                            return '<a href="'.action('ProjetController@edit', $m->id).'" class="btn btn-sm btn-primary mr-3"><i class="fas fa-user-edit"></i></a> ' . $delete;
+                            return '<a href="'.action('ProjetController@edit', $m->id).'" class="btn btn-sm btn-primary mr-1"><i class="fas fa-user-edit"></i></a>' . $delete;
                         })
                         ->addColumn('facturation_horaire', function($m){
                             $m = Projet::find($m->id);
