@@ -1,7 +1,13 @@
 @component('mail::message')
-    Dear User,
+Bonjour {{ $user->firstname }},
 
-    hé, un nouveau commentaire a été ajouté
+{{ $loggedInUserName }} à commenté la demande {{ $project->numero }} du projet {{ $project->titre }}.
 
-    {{ config('app.name') }}
+### Commentaire:
+{{ $comment }}
+@component('mail::button', ['url' => action('ProjetController@edit', $project->id)])
+    Accéder à la demande
+@endcomponent
+
+{{ config('app.name') }}
 @endcomponent
