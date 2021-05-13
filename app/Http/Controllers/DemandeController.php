@@ -108,7 +108,7 @@ class DemandeController extends Controller
             }
             return response()->json(['initials' => $user->initials(), 'status' => true]);
         } else {
-            return response()->json(['status' => false, 'message' => 'Already assigned!']);
+            return response()->json(['status' => false, 'message' => 'Déjà assigné à la demande!']);
         }
     }
 
