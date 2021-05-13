@@ -78,6 +78,10 @@
         <script>
             $('.select2').select2();
 
+            $(".assign_demande").select2({
+                'placeholder': "Sélectionnez un utilisateur", //Should be text not placeholder
+            });
+
             $('.select2_candidats').select2();
             $('.select2_employeurs').select2();
 

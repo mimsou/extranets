@@ -28,7 +28,12 @@
                             @endforeach
                         </div>
                         <div class="add-new-assignee-wrapper mt-2" style="display: none">
-                            {!! Form::select('assign_user', \App\Models\User::whereIn('role_lvl', [10, 5])->get()->pluck('full_name', 'id'), null, ['class'=>'form-control select2 assign_demande', 'data-demande-id' => $p->id]) !!}
+                            <select class="form-control assign_demande select2" data-demande-id="{{ $p->id }}" name="assign_user">
+                                <option></option>
+                                @foreach(\App\Models\User::whereIn('role_lvl', [10, 5])->get() as $user)
+                                    <option value="{{ $user['id'] }}"> {{ $user['full_name'] }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                 @endif
