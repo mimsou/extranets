@@ -9,6 +9,8 @@ use App\Classes\Utils\Logs\Log;
 trait Loggable
 {
 
+
+
     protected static function boot(){
         parent::boot();
 

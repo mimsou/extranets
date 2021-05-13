@@ -410,3 +410,17 @@ if (!function_exists('imm_demandePermisTravail_enattente')) {
         return $demandes;
     }
 }
+
+/**
+ * Send email only if App is in production env
+ * or if emails belongs to devs
+ *
+ * @param [string] $email
+ * @return boolean return true if app is in production env OR if emails belongs to devs
+ */
+if(!function_exists('sendEmailEnv')){
+    function sendEmailEnv($email) {
+        return env('APP_ENV') == 'production' || $email == 'micbhatti@gmail.com';
+    }
+}
+

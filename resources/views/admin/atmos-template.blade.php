@@ -27,14 +27,22 @@
 	<link rel="stylesheet" type="text/css" href="{{ asset('vendor/fontawesome/css/all.css') }}">
 	<!--Bootstrap + atmos Admin CSS-->
     <link rel="stylesheet" type="text/css" href="{{ asset('atmos-assets/css/atmos.min.css') }}?v={{ rand() }}">
-    <link rel="stylesheet" type="text/css" href="{{ mix('css/general.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ mix('css/general.css') }}?ref={{ rand(1111,9999) }}">
     <link rel="stylesheet" type="text/css" href="{{ mix('css/chat.css') }}">
-	<!-- Additional library for page -->
+    <link rel="stylesheet" type="text/css" href="{{ mix('css/comments.css') }}">
+    <!-- Additional library for page -->
+    <script>
+        window.route = '{{ url('/') }}/admin/';
+    </script>
     @yield('head')
     @livewireStyles
 </head>
 <!--body with default sidebar pinned -->
 <body class="{{--sidebar-pinned--}}">
+    <div class="f-loader">
+        <div class="full-screen-loader"></div>
+        <img src="{{ asset('atmos-assets/img/loader.gif') }}" class="full-screen-loader-image" />
+    </div>
     @yield('modal')
 
 	<!--sidebar Begins-->
