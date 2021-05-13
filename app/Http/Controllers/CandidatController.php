@@ -23,6 +23,7 @@ class CandidatController extends Controller
      */
     public function index()
     {
+        if(Auth::user()->role_lvl <= 3) abort(403);
         return view('admin.candidats.index');
     }
 

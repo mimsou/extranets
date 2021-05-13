@@ -1,7 +1,7 @@
 <div class="mail-window-header row no-gutters">
     <div class="col-8 col-lg-6 ">
 
-    <a class="btn-group" href="{{ action('CandidatController@index') }}">
+    <a class="btn-group" href="{{ URL::previous() }}">
             <span class="btn btn-white">
                 <i class="fa fa-angle-left mr-1"></i> Retour
             </span>
