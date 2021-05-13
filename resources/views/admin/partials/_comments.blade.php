@@ -12,7 +12,7 @@
                 <div class="demande_old_messages_shadow"></div>
                 <div id="note-messages">
                     @if($notes->isEmpty())
-                        <i id="no-comment">No any comment yet</i>
+                        <i id="no-comment">Aucun commentaire pour le moment</i>
                     @endif
                     @foreach($notes->reverse() as $n)
                         @include('admin.partials._message', ['n'=>$n])
