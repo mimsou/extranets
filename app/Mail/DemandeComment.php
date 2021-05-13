@@ -61,6 +61,6 @@ class DemandeComment extends Mailable
      */
     public function build()
     {
-        return $this->markdown('email.demande.commented');
+        return $this->markdown('email.demande.commented')->subject("Projet #".$this->project->numero." - Nouveau commentaire");
     }
 }

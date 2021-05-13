@@ -1,7 +1,7 @@
 @component('mail::message')
 Bonjour {{ $user->firstname }},
 
-{{ $loggedInUserName }} à commenté la demande {{ $project->numero }} du projet {{ $project->titre }}.
+{{ $loggedInUserName }} à commenté la demande **#{{ $project->numero }}** du projet **{{ $project->titre }}**.
 
 ### Commentaire:
 {{ $comment }}
