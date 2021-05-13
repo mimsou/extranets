@@ -47,7 +47,7 @@ td.dark-row {
 }
 
 .todo-strip {
-  width: auto;
+  width: 150px;
   background-color: #212841;
   color: #FFF;
   padding-left: 3px;
@@ -198,8 +198,7 @@ td.dark-row {
   height: auto;
   overflow: scroll;
   overflow-x: hidden;
-  max-height: 300px;
-  padding-left: 4px;
+  padding-left: 7px;
 }
 
 #todo-list-modal .todo-list-div::-webkit-scrollbar,

@@ -38,7 +38,7 @@
                             @include('admin.projets.modals._singleTodo',['todo'=>$todo])
                         @endforeach
                     </div>
-                    <div class="col-md-12 mt-1 ml-1 pl-2 mb-2">
+                    <div class="col-md-12 mt-4 ml-1 pl-2 mb-2">
                         <i class="fas fa-plus add-todo-list cursor-pointer"></i>
                         {!! Form::text('todo',null,['class'=>'todo-text','placeholder'=>'Ajouter un nouvel élément']) !!}
                         <i class="fa fa-check save-todo-message" data-project-id="{{ $projectId }}"
