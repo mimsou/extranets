@@ -8,6 +8,14 @@
                            style="font-size: 16px;line-height: 19px; position: relative; top: -7px;"
                            data-toggle="tooltip" data-placement="top" title="Facturation horaire"></i>
                     @endif
+                    @php
+                        $todos = $p->getTodos();
+                    @endphp
+                    @if($todos->count() > 0)
+                        <i class="fas fa-list create-demande-todo demande-todo" data-project-id="{{ $p->projet_id }}" data-demande-id="{{ $p->id }}"></i>
+                    @else
+                        <i class="fas fa-list text-gray-400 demande-todo new-demande-from-template" data-project-id="{{ $p->projet_id }}" data-demande-id="{{ $p->id }}"></i>
+                    @endif
                 </div>
                 <h3 class="searchBy-name">
                     <a href="{{ action('EmployeurController@edit', $p->employeur_id) }}"

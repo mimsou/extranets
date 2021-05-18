@@ -139,5 +139,7 @@ trait Notable
         return $ipaddress;
     }
 
-
+    public function deleteThat($id){
+        return Note::find($id)->delete();
+    }
 }

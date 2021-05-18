@@ -133,7 +133,12 @@
             }
         });
     }
-
+    $('span[data-toggle="popover"]').popover({
+        html: true
+    });
+    $('.message').on('mouseover', function (e) {
+        $('span[data-toggle="popover"]').not(this).popover('hide');
+    });
     init_comments();
 
 })(window.jQuery);

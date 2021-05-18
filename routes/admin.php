@@ -25,6 +25,7 @@ Route::resource('/gestion/utilisateurs', 'UserController');
 Route::post('/gestion/utilisateurs/{id}/saveComment', 'UserController@saveComment');
 
 Route::post('comments/view/all','UserController@getComments');
+Route::get('comment/delete/{demande_id}/{comment_id}','UserController@deleteComment')->name('delete.comment');
 
 Route::post('/projets/{id}/addCandidat', 'ProjetController@addCandidat');
 Route::post('/projets/{id}/addDemande', 'ProjetController@addDemande');

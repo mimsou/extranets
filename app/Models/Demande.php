@@ -148,4 +148,8 @@ class Demande extends Model
         return $this->hasMany(Todo::class, 'demande_id', 'id');
     }
 
+    public function getTodos(){
+        return $this->todos()->get();
+    }
+
 }

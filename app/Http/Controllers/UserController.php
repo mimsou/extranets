@@ -203,4 +203,10 @@ class UserController extends Controller
         }
         return ['count' => $comments->count(), 'html' => $html];
     }
+
+    public function deleteComment($demande_id, $comment_id){
+        Demande::find($demande_id)->deleteThat($comment_id);
+        flash("Commentaire supprimé avec succès!!")->success();
+        return back();
+    }
 }
