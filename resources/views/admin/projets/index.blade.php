@@ -65,10 +65,10 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="flex-grow-2 pl-md-4">
+                        <div class="flex-grow-2 pl-md-4 col-md-2 mr-2">
                             <div class="form-group">
                                 <label for="account">Employeur</label>
-                                {!! Form::select('employeur',\App\Models\Employeur::orderBy('nom', 'ASC')->pluck('nom', 'id')->prepend('TOUS',''),null,['class'=>'form-control form-control-sm','style'=>'width: 130px']) !!}
+                                {!! Form::select('employeur',\App\Models\Employeur::orderBy('nom', 'ASC')->pluck('nom', 'id')->prepend('TOUS',''),null,['class'=>'form-control form-control-sm select2','style'=>'width: 200px']) !!}
                             </div>
                         </div>
                         <div class="flex-grow-2 pl-md-4 hidden-mobile">
@@ -99,7 +99,7 @@
                         <div class="flex-grow-2 pl-md-4 hidden-mobile pt-4">
                             <div class="form-group m-b-10">
                                 <label class="cstm-switch">
-                                    <input type="checkbox" name="option" value="1" class="cstm-switch-input">
+                                    <input type="checkbox" name="completed_demande" value="1" class="cstm-switch-input">
                                     <span class="cstm-switch-indicator "></span>
                                     <span class="cstm-switch-description">Afficher les demandes terminées </span>
                                 </label>
@@ -109,7 +109,7 @@
                         <div class="d-none d-md-none d-lg-block flex-grow-2 pl-md-4 pt-4 hidden-mobile">
                             <div class="form-group m-b-10">
                                 <label class="cstm-switch">
-                                    <input type="checkbox" name="option" value="1" class="cstm-switch-input">
+                                    <input type="checkbox" name="hourly_checkbox" value="1" class="cstm-switch-input">
                                     <span class="cstm-switch-indicator "></span>
                                     <span class="cstm-switch-description">Afficher facturation horaire </span>
                                 </label>
@@ -227,16 +227,20 @@
             $('#projets_filters').find('select').change(function(){
                 applyFilters();
             });
+            $('input[name=completed_demande], input[name=hourly_checkbox]').click(function(){
+                applyFilters();
+            });
+
             function applyFilters(){
                 var search = "";
                 let personne = ($('select[name=personne] option:selected').val() != '')?$('select[name=personne] option:selected').val():'ALL';
                 let type_de_projet = ($('select[name=type_de_projet]').val() != '')?$('select[name=type_de_projet]').val():'ALL';
                 let employeur = ($('select[name=employeur] option:selected').val() != '')?$('select[name=employeur] option:selected').val():'ALL';
-                let statut_du_dossier = ($('select[name=statut_du_dossier] option:selected').text() != 'ALL')?$('select[name=statut_du_dossier] option:selected').val():'ALL';
+                let statut_du_dossier = ($('select[name=statut_du_dossier] option:selected').val() != '')?$('select[name=statut_du_dossier] option:selected').val():'ALL';
 
-                // search = ($('#store_name option:selected').text() != 'ALL')?$('#store_name option:selected').text()+" ":'';
-                // search += ($('#location option:selected').text() != 'ALL')?$('#location option:selected').text()+" ":'';
-                project_table.ajax.url( dataURL+'/'+personne+'/'+type_de_projet+'/'+employeur+'/'+statut_du_dossier).load();
+                let isCompletedChecked = ($('input[name=completed_demande]').is(':checked'))?true:false;
+                let isHourlyChecked = ($('input[name=hourly_checkbox]').is(':checked'))?true:false;
+                project_table.ajax.url( dataURL+'/'+personne+'/'+type_de_projet+'/'+employeur+'/'+statut_du_dossier+'/'+isCompletedChecked+'/'+isHourlyChecked).load();
                 project_table.search(search).draw();
             }
 

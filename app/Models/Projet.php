@@ -89,10 +89,11 @@ class Projet extends Model
     }
 
 
-    public function childRowHtml($statut_du_dossier = null)
+    public function childRowHtml($statut_du_dossier = null, $isCompletedChecked = false, $isHourlyChecked = false)
     {
         $projet = $this;
-        return view('admin.projets.partials._childrow', compact('projet', 'statut_du_dossier'));
+        return view('admin.projets.partials._childrow', compact('projet', 'statut_du_dossier',
+            'isCompletedChecked','isHourlyChecked'));
     }
 
     public static function getProjetDeType()

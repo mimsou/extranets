@@ -67,9 +67,11 @@ class DatatablesController extends Controller
     }
 
 
-    public function getProjets($personne = null,$type_de_projet = null, $employeur = null, $statut_du_dossier = null){
+    public function getProjets($personne = null,$type_de_projet = null, $employeur = null, $statut_du_dossier = null,
+                               $isCompletedChecked = false, $isHourlyChecked = false){
         $projets = DB::table('projets')
-                     ->select(['projets.*', 'employeurs.nom','demandes.projet_id'])
+                     ->select(['projets.*', 'employeurs.nom','demandes.projet_id','demandes.completed',
+                               'demandes.employeur_id as demande_employeur_id'])
                      ->join('employeurs', 'employeurs.id', '=', 'projets.employeur_id')
                      ->leftjoin('users', 'users.id', '=', 'projets.responsable_id')
                      ->leftJoin('demandes','demandes.projet_id','=','projets.id');
@@ -83,7 +85,9 @@ class DatatablesController extends Controller
         }
 
         if($employeur != 'ALL' && $employeur != null){
-            $projets->where('projets.employeur_id',$employeur);
+            $projets->where(function($query) use ($employeur){
+                $query->where('projets.employeur_id',$employeur)->orWhere('demandes.employeur_id',$employeur);
+            });
         }
 
         if($personne != 'ALL' && $personne != null){
@@ -113,6 +117,12 @@ class DatatablesController extends Controller
         }
 
 
+        if($isHourlyChecked != false && $isHourlyChecked != 'false'){
+            $projets->where('demandes.facturation_horaire','on');
+        }
+
+
+
         if(\Auth::user() && \Auth::user()->role_lvl == 3) {
             $user_employee_id = \Auth::user()->employeur_id;
 
@@ -132,9 +142,9 @@ class DatatablesController extends Controller
 
             $projets = $projets->unionAll($db_pd)->get();
         }
-        $projets->distinct('projets.id');
-//        dd($projets->get());
-//        dd($projets->get()->groupBy('demande_user_id'));
+//        $projets->distinct('projets.id');
+        $projets = $projets->get()->unique('id');
+
         return Datatables::of($projets)
                         ->addColumn('statut', function($m){
                             return __($m->statut);
@@ -173,9 +183,9 @@ class DatatablesController extends Controller
                             return 0;
                             // return count($m->candidats) .' / '. $m->nb_candidats;
                         })
-                        ->addColumn('childrow_html', function($m) use ($statut_du_dossier){
+                        ->addColumn('childrow_html', function($m) use ($statut_du_dossier,$isCompletedChecked, $isHourlyChecked){
                             $m = Projet::find($m->id);
-                            return $m->childRowHtml($statut_du_dossier);
+                            return $m->childRowHtml($statut_du_dossier, $isCompletedChecked, $isHourlyChecked);
                         })
                         ->make(true);
     }

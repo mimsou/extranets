@@ -24,6 +24,17 @@
                             $demandes = $projet->demandes;
                         @endphp
                     @endif
+                    @if($isCompletedChecked == false || $isCompletedChecked == 'false')
+                        @php
+                          $demandes = $demandes->where('completed','!=',1);
+                        @endphp
+                    @endif
+
+                    @if($isHourlyChecked != false && $isHourlyChecked != 'false')
+                        @php
+                            $demandes = $demandes->where('facturation_horaire','on');
+                        @endphp
+                    @endif
                     @foreach ($demandes as $d)
                         @php
                             $type = ($d->type == 'recrutement')?STATUTS_DEMANDE_REC:null;
