@@ -5,7 +5,26 @@
                 <i class="text-muted">Aucune demande dans ce projet</i>
             @else
                 <table width="100%" class="child-row-table">
-                    @foreach ($projet->demandes as $d)
+                    @if($statut_du_dossier != null && $statut_du_dossier != 'ALL')
+                        @if(in_array($statut_du_dossier,['IMMIGRATION','RECRUTEMENT']))
+                            @php
+                                $demandeStatuArray = [];
+                                $demandeStatuArray['IMMIGRATION'] = demandeStatuts();
+                                $demandeStatuArray['RECRUTEMENT'] = demandeStatuts(null,STATUTS_DEMANDE_REC);
+                                $statut_du_dossier = array_keys($demandeStatuArray[$statut_du_dossier]);
+                                $demandes = $projet->demandes->whereIn('statut',$statut_du_dossier);
+                            @endphp
+                        @else
+                            @php
+                                $demandes = $projet->demandes->where('statut',$statut_du_dossier);
+                            @endphp
+                        @endif
+                    @else
+                        @php
+                            $demandes = $projet->demandes;
+                        @endphp
+                    @endif
+                    @foreach ($demandes as $d)
                         @php
                             $type = ($d->type == 'recrutement')?STATUTS_DEMANDE_REC:null;
                         @endphp
@@ -30,7 +49,8 @@
                                     {{ $d->employeur->nom }}
                                 </div>
                             </td>
-                            <td width="100"><small>{{ $d->candidats()->wherePivot('statut', 'approved')->count() }} candidats
+                            <td width="100"><small>{{ $d->candidats()->wherePivot('statut', 'approved')->count() }}
+                                    candidats
                                     sur {{ $d->nb_candidat }} requis</small></td>
                             @if(Auth::user()->role_lvl > 3)
                                 <td width="150px">
@@ -59,7 +79,8 @@
                                 <div class="assigned-users mr-3">
                                     @foreach($d->assignedUsers()->get() as $key => $user)
                                         <div class="avatar avatar-xs add-new-assignee ml-1">
-                                            <span class="avatar-title rounded-circle bg-grey">{{ $user->initials() }}</span>
+                                            <span
+                                                class="avatar-title rounded-circle bg-grey">{{ $user->initials() }}</span>
                                         </div>
                                     @endforeach
                                 </div>

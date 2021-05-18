@@ -17,7 +17,9 @@
 
 
 @section('content')
-
+    @php
+        $statuts = \App\Models\Projet::getProjetDeType();
+    @endphp
     <div class="bg-dark m-b-30">
         <div class="container">
             <div class="row p-b-60 p-t-60">
@@ -36,8 +38,87 @@
     <div class="container-fluid  pull-up">
         <div class="row">
             <div class="col-12">
-                <div class="card">
+                <div class="card m-b-10 m-t-30 bg-dots p-4" id="projets_filters">
+                    <div class="d-flex flex-md-row flex-column">
+                        <div class="flex-grow-2 hidden-mobile">
+                            <div class="form-group">
+                                <label for="auditor">Filtrer par personne</label>
+                                {!! Form::select('personne',$personne,null,['class'=>'form-control form-control-sm']) !!}
+                            </div>
+                        </div>
+                        <div class="flex-grow-2 pl-md-4 hidden-mobile">
+                            <div class="form-group">
+                                <label for="market" class="">Type de projet</label>
+                                <select name="type_de_projet" class="form-control form-control-sm">
+                                    <option value="">TOUS</option>
+                                    @foreach($statuts as $key => $options)
 
+                                        @if(is_array($options))
+                                            <option value="{{ $key }}" class="optionGroup">{{ $key }}</option>
+                                            @foreach($options as $k => $option)
+                                                <option value="{{ $k }}">&nbsp;&nbsp;&nbsp;{{ $option }}</option>
+                                            @endforeach
+                                        @else
+                                            <option value="{{ $key }}">{{ $options }}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="flex-grow-2 pl-md-4">
+                            <div class="form-group">
+                                <label for="account">Employeur</label>
+                                {!! Form::select('employeur',\App\Models\Employeur::orderBy('nom', 'ASC')->pluck('nom', 'id')->prepend('TOUS',''),null,['class'=>'form-control form-control-sm','style'=>'width: 130px']) !!}
+                            </div>
+                        </div>
+                        <div class="flex-grow-2 pl-md-4 hidden-mobile">
+                            <div class="form-group">
+                                @php
+                                    $demandeStatuArray = [];
+                                    $demandeStatuArray['IMMIGRATION'] = demandeStatuts();
+                                    $demandeStatuArray['RECRUTEMENT'] = demandeStatuts(null,STATUTS_DEMANDE_REC);
+                                @endphp
+                                <label for="market" class="">Statut du dossier</label>
+                                <select name="statut_du_dossier" class="form-control form-control-sm" style="width: 130px;">
+                                    <option value="">TOUS</option>
+                                    @foreach($demandeStatuArray as $key => $options)
+
+                                        @if(is_array($options))
+                                            <option value="{{ $key }}" class="optionGroup">{{ $key }}</option>
+                                            @foreach($options as $k => $option)
+                                                <option value="{{ $k }}">&nbsp;&nbsp;&nbsp;{{ $option }}</option>
+                                            @endforeach
+                                        @else
+                                            <option value="{{ $key }}">{{ $options }}</option>
+                                        @endif
+
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="flex-grow-2 pl-md-4 hidden-mobile pt-4">
+                            <div class="form-group m-b-10">
+                                <label class="cstm-switch">
+                                    <input type="checkbox" name="option" value="1" class="cstm-switch-input">
+                                    <span class="cstm-switch-indicator "></span>
+                                    <span class="cstm-switch-description">Afficher les demandes terminées </span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="d-none d-md-none d-lg-block flex-grow-2 pl-md-4 pt-4 hidden-mobile">
+                            <div class="form-group m-b-10">
+                                <label class="cstm-switch">
+                                    <input type="checkbox" name="option" value="1" class="cstm-switch-input">
+                                    <span class="cstm-switch-indicator "></span>
+                                    <span class="cstm-switch-description">Afficher facturation horaire </span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
                     <div class="card-body">
                         <div class="table-responsive p-t-10">
                             <table id="datatable" class="table dataTable-async" style="width:100%">
@@ -91,6 +172,8 @@
 
         (function ($) {
             'use strict';
+
+            let dataURL = '{{ action('DatatablesController@getProjets') }}';
             $(document).ready(function () {
                 project_table = $('#datatable').DataTable({
                     scrollY:        '55vh',
@@ -100,7 +183,7 @@
                     processing:     true,
                     searchDelay:    2000,
                     "order":        [[ 1, "asc" ]],
-                    ajax: '{{ action('DatatablesController@getProjets') }}',
+                    ajax: dataURL,
                     columns: [
                         {data: 'numero'},
                         {data: 'nom', name:'employeurs.nom'},
@@ -124,8 +207,8 @@
                         var tr = $(this);
                         var row = project_table.row( tr );
 
-                        console.log($( window ).width());
-                        console.log(row.data());
+                        //console.log($( window ).width());
+                        //console.log(row.data());
 
                         if(typeof row.data() != 'undefined' && $( window ).width() > 1024){
                             // this.fnSetColumnVis( 5, false);
@@ -141,6 +224,21 @@
                 });
 
             });
+            $('#projets_filters').find('select').change(function(){
+                applyFilters();
+            });
+            function applyFilters(){
+                var search = "";
+                let personne = ($('select[name=personne] option:selected').val() != '')?$('select[name=personne] option:selected').val():'ALL';
+                let type_de_projet = ($('select[name=type_de_projet]').val() != '')?$('select[name=type_de_projet]').val():'ALL';
+                let employeur = ($('select[name=employeur] option:selected').val() != '')?$('select[name=employeur] option:selected').val():'ALL';
+                let statut_du_dossier = ($('select[name=statut_du_dossier] option:selected').text() != 'ALL')?$('select[name=statut_du_dossier] option:selected').val():'ALL';
+
+                // search = ($('#store_name option:selected').text() != 'ALL')?$('#store_name option:selected').text()+" ":'';
+                // search += ($('#location option:selected').text() != 'ALL')?$('#location option:selected').text()+" ":'';
+                project_table.ajax.url( dataURL+'/'+personne+'/'+type_de_projet+'/'+employeur+'/'+statut_du_dossier).load();
+                project_table.search(search).draw();
+            }
 
             $(document).on('click', '.delete_projet', function(e){
                 var id = $(this).data('projetid');

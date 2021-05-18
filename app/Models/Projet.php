@@ -22,38 +22,38 @@ class Projet extends Model
                            'nb_candidats',
                            'territoires',
                            'type_emploi'
-                          ];
+    ];
 
 
     public function setAssociationsAttribute($value)
     {
-        $this->attributes['associations'] = implode(',',$value);
+        $this->attributes['associations'] = implode(',', $value);
     }
 
     public function getAssociationsAttribute($value)
     {
-        return explode(' | ',$value);
+        return explode(' | ', $value);
     }
 
 
     public function setTypeEmploiAttribute($value)
     {
-        $this->attributes['type_emploi'] = implode(' | ',$value);
+        $this->attributes['type_emploi'] = implode(' | ', $value);
     }
 
     public function getTypeEmploiAttribute($value)
     {
-        return explode(',',$value);
+        return explode(',', $value);
     }
 
     public function setTerritoiresAttribute($value)
     {
-        $this->attributes['territoires'] = implode(',',$value);
+        $this->attributes['territoires'] = implode(',', $value);
     }
 
     public function getTerritoiresAttribute($value)
     {
-        return explode(',',$value);
+        return explode(',', $value);
     }
 
     public function getDateCreationAttribute($value)
@@ -89,9 +89,33 @@ class Projet extends Model
     }
 
 
-    public function childRowHtml(){
+    public function childRowHtml($statut_du_dossier = null)
+    {
         $projet = $this;
-        return view('admin.projets.partials._childrow', compact('projet'));
+        return view('admin.projets.partials._childrow', compact('projet', 'statut_du_dossier'));
     }
+
+    public static function getProjetDeType()
+    {
+        return ['new_projet' => __('new_projet'),
+                'Immigration' => [
+                    'imm_eimt_dst_pt' => __('imm_eimt_dst_pt'),
+                    'imm_eimt_dst_pt_ave' => __('imm_eimt_dst_pt_ave'),
+                    'imm_pt' => __('imm_pt'),
+                    'imm_pt_ave' => __('imm_pt_ave'),
+                    'imm_conf_pt' => __('imm_conf_pt'),
+                    'imm_individu' => __('imm_individu'),
+                    'imm_autre' => __('imm_autre')],
+                'Recrutement' => [
+                    'rec_mission_dedie' => __('rec_mission_dedie'),
+                    'rec_mission_partagee' => __('rec_mission_partagee'),
+                    'rec_mission_partenaire' => __('rec_mission_partenaire'),
+                    'rec_garantie' => __('rec_garantie'),
+                    'rec_cdts_qualifies' => __('rec_cdts_qualifies'),
+                ],
+                'acc_accueil' => __('acc_accueil')
+        ];
+    }
+
 
 }

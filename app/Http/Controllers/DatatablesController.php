@@ -67,11 +67,50 @@ class DatatablesController extends Controller
     }
 
 
-    public function getProjets(){
+    public function getProjets($personne = null,$type_de_projet = null, $employeur = null, $statut_du_dossier = null){
         $projets = DB::table('projets')
-                     ->select(['projets.*', 'employeurs.nom'])
+                     ->select(['projets.*', 'employeurs.nom','demandes.projet_id'])
                      ->join('employeurs', 'employeurs.id', '=', 'projets.employeur_id')
-                     ->leftjoin('users', 'users.id', '=', 'projets.responsable_id');
+                     ->leftjoin('users', 'users.id', '=', 'projets.responsable_id')
+                     ->leftJoin('demandes','demandes.projet_id','=','projets.id');
+        if($type_de_projet != 'ALL' && $type_de_projet != null){
+            if(in_array($type_de_projet,['Immigration','new_projet','Recrutement'])){
+                $statut = \App\Models\Projet::getProjetDeType();
+                $projets->whereIn('projets.statut',array_keys($statut[$type_de_projet]));
+            }else{
+                $projets->where('projets.statut',$type_de_projet);
+            }
+        }
+
+        if($employeur != 'ALL' && $employeur != null){
+            $projets->where('projets.employeur_id',$employeur);
+        }
+
+        if($personne != 'ALL' && $personne != null){
+            $projets->join('demande_users','demandes.id','=','demande_users.demande_id')
+                ->select(['projets.*', 'employeurs.nom','demandes.projet_id','demandes.id as projet_demande_id',
+                          'demande_users.user_id as demande_user_id'])
+                ->where('demande_users.user_id',$personne);
+        }
+
+        if($statut_du_dossier != 'ALL' && $statut_du_dossier != null){
+            if($personne == null || $personne == 'ALL'){
+                $projets->leftJoin('demande_users','demandes.id','=','demande_users.demande_id');
+            }
+            $projets->select(['projets.*', 'employeurs.nom','demandes.projet_id',
+                              'demandes.id as projet_demande_id','demande_users.user_id as demande_user_id',
+                              'demandes.statut as demandes_statut']);
+            if(in_array($statut_du_dossier,['IMMIGRATION','RECRUTEMENT'])){
+                $demandeStatuArray = [];
+                $demandeStatuArray['IMMIGRATION'] = demandeStatuts();
+                $demandeStatuArray['RECRUTEMENT'] = demandeStatuts(null,STATUTS_DEMANDE_REC);
+                $projets->whereIn('demandes.statut',array_keys($demandeStatuArray[$statut_du_dossier]));
+                $projets->groupBy('projets.id');
+            }else{
+                $projets->where('demandes.statut',$statut_du_dossier);
+                $projets->groupBy('projets.id');
+            }
+        }
 
 
         if(\Auth::user() && \Auth::user()->role_lvl == 3) {
@@ -93,7 +132,9 @@ class DatatablesController extends Controller
 
             $projets = $projets->unionAll($db_pd)->get();
         }
-
+        $projets->distinct('projets.id');
+//        dd($projets->get());
+//        dd($projets->get()->groupBy('demande_user_id'));
         return Datatables::of($projets)
                         ->addColumn('statut', function($m){
                             return __($m->statut);
@@ -132,9 +173,9 @@ class DatatablesController extends Controller
                             return 0;
                             // return count($m->candidats) .' / '. $m->nb_candidats;
                         })
-                        ->addColumn('childrow_html', function($m){
+                        ->addColumn('childrow_html', function($m) use ($statut_du_dossier){
                             $m = Projet::find($m->id);
-                            return $m->childRowHtml();
+                            return $m->childRowHtml($statut_du_dossier);
                         })
                         ->make(true);
     }

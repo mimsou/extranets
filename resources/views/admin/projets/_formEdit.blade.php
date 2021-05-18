@@ -1,21 +1,5 @@
 @php
-    $statuts = ['new_projet'=>__('new_projet'),
-                'Immigration' => [
-                    'imm_eimt_dst_pt'=>__('imm_eimt_dst_pt'),
-                    'imm_eimt_dst_pt_ave'=>__('imm_eimt_dst_pt_ave'),
-                    'imm_pt'=>__('imm_pt'),
-                    'imm_pt_ave'=>__('imm_pt_ave'),
-                    'imm_conf_pt'=>__('imm_conf_pt'),
-                    'imm_individu'=>__('imm_individu'),
-                    'imm_autre'=>__('imm_autre')],
-                'Recrutement' => [
-                    'rec_mission_dedie'=>__('rec_mission_dedie'),
-                    'rec_mission_partagee'=>__('rec_mission_partagee'),
-                    'rec_mission_partenaire'=>__('rec_mission_partenaire'),
-                    'rec_garantie'=>__('rec_garantie'),
-                    'rec_cdts_qualifies'=>__('rec_cdts_qualifies'),
-                ],
-                'acc_accueil' => __('acc_accueil')];
+    $statuts = \App\Models\Projet::getProjetDeType();
 @endphp
 
 <div class="form-row">

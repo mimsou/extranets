@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Validation\Rule;
+use App\Models\DemandeUser;
 use Auth;
 use DB;
 class ProjetController extends Controller
@@ -21,7 +22,9 @@ class ProjetController extends Controller
      */
     public function index()
     {
-        return view('admin.projets.index');
+        $demandeAdminUsers = DemandeUser::with(['user'])->get()->unique('user_id')
+            ->pluck('user.firstname','user_id')->prepend('TOUS','');
+        return view('admin.projets.index',['personne'=>array_filter($demandeAdminUsers->toArray())]);
     }
 
     /**

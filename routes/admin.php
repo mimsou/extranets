@@ -64,7 +64,7 @@ Route::post('remove/assignee','DemandeController@removeAssignee');
 //Système de gestion - API AJAX Datatables
 Route::prefix('api/datatables')->group(function () {
 	Route::get('/get-candidats', 'DatatablesController@getCandidats');
-	Route::get('/get-projets', 'DatatablesController@getProjets');
+	Route::get('/get-projets/{personne?}/{type_de_projet?}/{employeur?}/{statut_du_dossier?}', 'DatatablesController@getProjets');
 	Route::get('/get-regroupements', 'DatatablesController@getRegroupements');
 	Route::get('/get-users', 'DatatablesController@getUsers');
 	Route::get('/get-employeurs', 'DatatablesController@getEmployeurs');
