@@ -15,7 +15,7 @@
                         <i id="no-comment">Aucun commentaire pour le moment</i>
                     @endif
                     @foreach($notes->reverse() as $n)
-                        @include('admin.partials._message', ['n'=>$n])
+                        @include('admin.partials._message', ['n'=>$n,'p'=>$p])
                     @endforeach
                 </div>
 

@@ -2,35 +2,22 @@
     <div class="card-body px-1 py-3">
         <div class="d-flex justify-content-between">
             <div>
-                <div><small class="badge badge-danger mr-1 mb-3"><strong>IMMIGRATION</strong></small>
+                <div class="badge-icon">
+                    <small class="badge badge-danger mr-1 mb-3"><strong>IMMIGRATION</strong></small>
                     @if ($p->facturation_horaire == 'on')
                         <i class="fas fa-stopwatch text-muted opacity-50"
                            style="font-size: 16px;line-height: 19px; position: relative; top: -7px;"
                            data-toggle="tooltip" data-placement="top" title="Facturation horaire"></i>
                     @endif
+                    @php
+                        $todos = $p->getTodos();
+                    @endphp
                 </div>
-
-                <h3 class="searchBy-name align-items-center d-flex">
-                    @if(!$p->completed)
-                        <a href="{{ action('DemandeController@markAsCompleted', $p->id) }}" data-toggle="tooltip" data-placement="top" title="Marquer cette demande comme terminée">
-                            <div class="avatar avatar-xs mr-2">
-                                <span class="avatar-title rounded-circle bg-transparent border mt-1"></span>
-                            </div>
-                        </a>
-                    @else
-                        <div class="avatar avatar-xs mr-2">
-                            <span class="avatar-title rounded-circle bg-success"><i class="fas fa-check text-white font-weight-bold"></i> </span>
-                        </div>
-                    @endif
-                    <a href="{{ action('EmployeurController@edit', $p->employeur_id) }}"
-                       target="_blank">{{ $p->employeur->nom }}</a>
-                </h3>
-
                 @if(Auth::user()->role_lvl > 3)
-                    <div class="assignee">
-                        <div class="assigned-users">
+                    <div class="assignee mb-3">
+                        <div class="assigned-users d-flex">
                             <div class="avatar avatar-sm add-new-assignee cursor-pointer">
-                                <span class="avatar-title rounded-circle"> <i class="mdi mdi-account-plus"></i></span>
+                                <span class="avatar-title rounded-circle"> <i class="mdi mdi-account-plus-outline add-admin-icon"></i></span>
                             </div>
                             @foreach ($p->assignedUsers()->get() as $user)
                                 <div class="avatar avatar-sm ml-1">
@@ -51,14 +38,34 @@
                         </div>
                     </div>
                 @endif
+                <h3 class="searchBy-name align-items-center d-flex">
+                    @if(!$p->completed)
+                        <a href="{{ action('DemandeController@markAsCompleted', $p->id) }}" data-toggle="tooltip" data-placement="top" title="Marquer cette demande comme terminée">
+                            <div class="avatar avatar-xs mr-2">
+                                <span class="avatar-title rounded-circle bg-transparent border mt-1"></span>
+                            </div>
+                        </a>
+                    @else
+                        <div class="avatar avatar-xs mr-2">
+                            <span class="avatar-title rounded-circle bg-success"><i class="fas fa-check text-white font-weight-bold"></i> </span>
+                        </div>
+                    @endif
+                    <a href="{{ action('EmployeurController@edit', $p->employeur_id) }}"
+                       target="_blank">{{ $p->employeur->nom }}</a>
+                </h3>
+
+
             </div>
 
             <div class="text-muted text-center m-b-10 d-flex">
-                {{ PROCEDURE_DEMANDE[$p->procedure] }}
+{{--                {{ PROCEDURE_DEMANDE[$p->procedure] }}--}}
                 <div class="dropdown ml-3">
-                    <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i
+                    <a href="#" class="d-flex flex-row-reverse" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i
                             class="icon mdi  mdi-dots-vertical"></i> </a>
-
+                    @php
+                        $completedTodos = $p->todos()->where(['status'=>1])->count();
+                        $totalTodos =$p->todos()->count();
+                    @endphp
                     <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end"
                          style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(18px, 25px, 0px);">
 
@@ -77,6 +84,12 @@
                                     la demande du projet</a>
                             </button>
                         @endif
+                    </div>
+
+                    <div class="todo-strip {{ ($totalTodos == 0)?'in-active':'' }} ml-3 mt-5">
+                        <i class="fas {{ ($totalTodos == 0)?'fa-plus create-todo':'fa-check add-todo' }} bg-white" data-project-id="{{ $p->projet_id }}" data-demande-id="{{ $p->id }}"></i>
+                        <label><span class="demande-completed-todos">{{ $completedTodos }}</span>
+                            complété sur <span class="demande-total-todos">{{ $totalTodos }}</span></label>
                     </div>
                 </div>
             </div>

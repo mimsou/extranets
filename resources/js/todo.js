@@ -6,10 +6,18 @@
     }
 
     window.click_demande_child = null;
-    $('body').on('click', '.todo-strip .add-todo', function () {
+    $('body').on('click', '.todo-strip label',function(){
+        let elem = $(this).parents('.todo-strip');
+        if(elem.hasClass('in-active')){
+            $(this).parents('.todo-strip').find('.create-todo').click();
+        }else{
+            $(this).parents('.todo-strip').find('.add-todo').click();
+        }
+    });
+    $('body').on('click', '.todo-strip .add-todo, .create-demande-todo', function () {
         let project_id = $(this).data('project-id');
         let demande_id = $(this).data('demande-id');
-        $('.f-loader').fadeIn(300);
+        $('.f-loader').show();
         window.click_demande_child = $(this);
         showTodoList(project_id, demande_id);
     });
@@ -19,7 +27,7 @@
             type: 'GET',
             url: route + 'todo/list/' + project_id + '/' + demande_id,
             success: function (result) {
-                $('.f-loader').fadeOut(300);
+                $('.f-loader').hide();
                 $('body').append(result);
                 $('#todo-list-modal').modal({
                     'show': true,
@@ -132,9 +140,13 @@
                     $('.todo-text').val('').prop('disabled', false);
                     $('.todo-list-section').append(result.html);
                     $('.total-todos').text($('.single-todo-div').length);
+                    if(window.click_demande_child.hasClass('demande-todo')){
+                        window.click_demande_child.removeClass('text-gray-400').removeClass('new-demande-from-template').addClass('create-demande-todo');
+                    }
                     let stripTag = window.click_demande_child.parents('.todo-strip');
                     stripTag.removeClass('in-active');
-                    stripTag.find('.fa').removeClass('fa-plus').addClass('fa-check');
+                    stripTag.find('.fas').removeClass('create-todo').addClass('add-todo');
+                    stripTag.find('.fas').removeClass('fa-plus').addClass('fa-check');
                     stripTag.find('label').html('<span class="demande-completed-todos">0</span> complété sur <span class="demande-total-todos">0</span>');
                     stripTag.find('.demande-total-todos').text($('.single-todo-div').length);
                     stripTag.find('.demande-completed-todos').text($('.todo-list-section').find('.task-completed').length);
@@ -183,11 +195,11 @@
         });
     });
 
-    $('body').on('click', '.todo-strip .create-todo', function () {
+    $('body').on('click', '.todo-strip .create-todo, .new-demande-from-template', function () {
         let project_id = $(this).data('project-id');
         let demande_id = $(this).data('demande-id');
         window.click_demande_child = $(this);
-        $('.f-loader').fadeIn(300);
+        $('.f-loader').show();
         $.ajax({
             type: 'GET',
             url: route + 'todo/templates/list',
@@ -196,7 +208,7 @@
                 demande_id: demande_id
             },
             success: function (result) {
-                $('.f-loader').fadeOut(300);
+                $('.f-loader').hide();
                 $('body').append(result);
                 $('#todo-template-modal').modal({
                     show: true,
@@ -237,7 +249,7 @@
                     showTodoList(projet_id, demande_id, function (result) {
                         let stripTag = window.click_demande_child.parents('.todo-strip');
                         stripTag.removeClass('in-active');
-                        stripTag.find('.fa').removeClass('fa-plus').addClass('fa-check');
+                        stripTag.find('.fas').removeClass('fa-plus').addClass('fa-check');
                         stripTag.find('label').html('<span class="demande-completed-todos">0</span> complété sur <span class="demande-total-todos">0</span>');
                         stripTag.find('.demande-total-todos').text($('.single-todo-div').length);
                     });
@@ -250,34 +262,41 @@
         $(this).attr('contenteditable', true).focus();
     });
 
+    $('body').on('blur','.option-box-grid p', function(){
+        removeTodoMessage($(this));
+    });
+
     $('body').on('keypress', '.option-box-grid p', function (e) {
         if (e.keyCode == 13) {
-            let elem = $(this);
-            let updatedText = $(this).text().trim();
-            let todoId = $(this).data('todo-id');
-            $(this).attr('contenteditable', false);
-            $.ajax({
-                type: 'POST',
-                url: route + 'todo/update/' + todoId,
-                data: {
-                    todo: updatedText
-                },
-                success: function (result) {
-                    if (result.status == true) {
-                        $.notify({
-                            message: result.message
-                        }, {type: 'success'});
-                        if (updatedText == '') {
-                            elem.parents('.single-todo-div').remove();
-                            window.click_demande_child.parents('.todo-strip').find('.demande-total-todos').text($('.single-todo-div').length);
-                            $('.total-todos').text($('.single-todo-div').length);
-                        }
-                    }
-                    elem.attr('contenteditable', false);
-                }
-            });
+            removeTodoMessage($(this));
         }
     });
+
+    function removeTodoMessage(elem){
+        let updatedText = elem.text().trim();
+        let todoId = elem.data('todo-id');
+        elem.attr('contenteditable', false);
+        $.ajax({
+            type: 'POST',
+            url: route + 'todo/update/' + todoId,
+            data: {
+                todo: updatedText
+            },
+            success: function (result) {
+                if (result.status == true) {
+                    $.notify({
+                        message: result.message
+                    }, {type: 'success'});
+                    if (updatedText == '') {
+                        elem.parents('.single-todo-div').remove();
+                        window.click_demande_child.parents('.todo-strip').find('.demande-total-todos').text($('.single-todo-div').length);
+                        $('.total-todos').text($('.single-todo-div').length);
+                    }
+                }
+                elem.attr('contenteditable', false);
+            }
+        });
+    }
 
     $('body').on('hidden.bs.modal', '#create-todo-template-modal', function () {
         $('#create-todo-template-modal').remove();

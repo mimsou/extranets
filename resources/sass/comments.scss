@@ -7,7 +7,7 @@
             width: 100%;
             height: 56px;
             position: absolute;
-            z-index: 998;
+            z-index: 800;
             top: -10px;
             background-color: #FFF;
             filter: blur(15px);
@@ -31,13 +31,45 @@
         }
 
         .message{
+            .action-menu-left{
+                position: absolute;
+                top: 26px;
+                cursor: pointer;
+                text-align: right;
+                right: -10px;
+            }
+        }
+
+        .message.mine{
+            .action-menu{
+                position: absolute;
+                left: -10px;
+                top: 26px;
+                cursor: pointer;
+            }
+        }
+        .message:hover{
+            .action-menu-left{
+                display: block !important;
+            }
+        }
+        .message.mine:hover{
+            .action-menu{
+                display: block !important;
+            }
+
+        }
+
+        .message{
             margin: 15px 15px;
             text-align: left;
             display: flex;
+            position: relative;
             margin-right: 30px;
             .content{
                 display: block !important;
                 line-height: 1em;
+                position: relative;
                 padding: 0px 6px;
                 margin-top: -5px;
                 .username, .moment{
@@ -63,13 +95,37 @@
                 margin-right: 15px;
                 margin-left: 30px;
                 .content{
+                    position: relative;
                     .message-bubble{
                         color: rgb(250, 250, 250) !important;
                         background-color: #3e4676 !important;
                     }
                 }
             }
+            /*&.mine:hover{
+                &:before{
+                    content: '⋮';
+                    position: absolute;
+                    font-size: 20px;
+                    font-weight: 600;
+                    height: 24px;
+                    right: 141px;
+                    top: 12px;
+                    cursor: pointer;
+                }
+            }*/
+            //&.mine:before{
+            //    content: '⋮';
+            //    position: absolute;
+            //    font-size: 20px;
+            //    font-weight: 600;
+            //    height: 24px;
+            //    right: 141px;
+            //    top: 12px;
+            //    cursor: pointer;
+            //}
         }
+
     }
 
     #note-comment-form{

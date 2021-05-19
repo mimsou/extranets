@@ -54,6 +54,7 @@ td.dark-row {
 
 .todo-strip {
     width: 150px;
+    cursor: pointer;
     background-color: #212841;
     color: #FFF;
     padding-left: 3px;
@@ -62,7 +63,9 @@ td.dark-row {
     padding-right: 16px;
     padding-top: 2px;
     padding-bottom: 3px;
-
+    label{
+        cursor: pointer;
+    }
     .bg-aqua {
         background-color: #7fffd4;
     }
@@ -225,7 +228,32 @@ td.dark-row {
 #datatable .assigned-users{
     text-align: right;
 }
+
 .optionGroup {
     font-weight: bold;
+}
 
+.demande-todo{
+    display: inline-block;
+    position: relative;
+    top: -7px;
+    cursor: pointer;
+}
+
+.text-gray-400{
+    color: #cdcdcd;
+}
+
+.badge-icon{
+    margin-top: -29px;
+}
+
+.add-admin-icon{
+    font-size: 20px;
+    transform: scaleX(-1);
+    color: #000000;
+}
+
+.avatar-title{
+    background-color: #f0eff0;
 }
