@@ -64,6 +64,7 @@
                 let commentCounts = $(scope + '.comment-counts').text();
                 $(scope + '.comment-counts').text(parseInt(commentCounts) + 1);
                 scrollBottom();
+                init_popover();
                 scrollToBottomComment(elem);
             },
             error: function (jqXHR, status, error) {
@@ -133,12 +134,15 @@
             }
         });
     }
-    $('span[data-toggle="popover"]').popover({
-        html: true
-    });
-    $('.message').on('mouseover', function (e) {
-        $('span[data-toggle="popover"]').not(this).popover('hide');
-    });
+    function init_popover(){
+        $('span[data-toggle="popover"]').popover({
+            html: true
+        });
+        $('.message').on('mouseover', function (e) {
+            $('span[data-toggle="popover"]').not(this).popover('hide');
+        });
+    }
+    init_popover();
     init_comments();
 
 })(window.jQuery);

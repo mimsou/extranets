@@ -19,46 +19,47 @@ class Demande extends Model
      * @var string[]
      */
     protected $fillable = ['projet_id',
-        'employeur_id',
-        'statut',
-        'facturation_horaire',
-        'nb_candidat',
-        'procedure',
-        'date_debut_mandat',
-        'eimt_date_envoi',
-        'eimt_date_accuse_rec',
-        'eimt_date_reception',
-        'eimt_date_echeance',
-        'eimt_numero',
-        'dst_date_envoi',
-        'dst_date_accuse_rec',
-        'dst_date_reception',
-        'dst_date_echeance',
-        'dst_numero',
-        'contact_nom',
-        'contact_prenom',
-        'contact_titre',
-        'contact_email',
-        'contact_phone',
-        'contact_ext',
-        'territoires',
-        'type_emploi',
-        'type',
-        'conv_collective',
-        'rec_categorie',
-        'test_pratique',
-        'bas_salaire',
-        'description_poste',
-        'poste_fonctions',
-        'poste_competences',
-        'autre_information',
-        'annee_exp',
-        'diplome',
-        'langue',
-        'salaire',
-        'lieu_travail',
-        'code_cnp',
-        'notes'
+                           'employeur_id',
+                           'statut',
+                           'facturation_horaire',
+                           'nb_candidat',
+                           'procedure',
+                           'date_debut_mandat',
+                           'eimt_date_envoi',
+                           'eimt_date_accuse_rec',
+                           'eimt_date_reception',
+                           'eimt_date_echeance',
+                           'eimt_numero',
+                           'dst_date_envoi',
+                           'dst_date_accuse_rec',
+                           'dst_date_reception',
+                           'dst_date_echeance',
+                           'dst_numero',
+                           'contact_nom',
+                           'contact_prenom',
+                           'contact_titre',
+                           'contact_email',
+                           'contact_phone',
+                           'contact_ext',
+                           'territoires',
+                           'type_emploi',
+                           'type',
+                           'conv_collective',
+                           'rec_categorie',
+                           'test_pratique',
+                           'bas_salaire',
+                           'description_poste',
+                           'poste_fonctions',
+                           'poste_competences',
+                           'autre_information',
+                           'annee_exp',
+                           'diplome',
+                           'langue',
+                           'salaire',
+                           'lieu_travail',
+                           'code_cnp',
+                           'notes',
+                           'completed'
     ];
 
     /**
@@ -148,7 +149,13 @@ class Demande extends Model
         return $this->hasMany(Todo::class, 'demande_id', 'id');
     }
 
-    public function getTodos(){
+    /**
+     * Get ToDos of demande
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getTodos()
+    {
         return $this->todos()->get();
     }
 

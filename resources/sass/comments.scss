@@ -29,31 +29,37 @@
             font-size: 14px;
             color: silver;
         }
-        .action-menu{
-            position: absolute;
-            left: -10px;
-            top: 26px;
-            cursor: pointer;
+
+        .message{
+            .action-menu-left{
+                position: absolute;
+                top: 26px;
+                cursor: pointer;
+                text-align: right;
+                right: -10px;
+            }
+        }
+
+        .message.mine{
+            .action-menu{
+                position: absolute;
+                left: -10px;
+                top: 26px;
+                cursor: pointer;
+            }
         }
         .message:hover{
+            .action-menu-left{
+                display: block !important;
+            }
+        }
+        .message.mine:hover{
             .action-menu{
                 display: block !important;
             }
 
         }
-        //.message.mine:hover{
-        //    .message-bubble:before{
-        //        content: "\22EE";
-        //        position: absolute;
-        //        font-size: 20px;
-        //        font-weight: 600;
-        //        height: 24px;
-        //        top: 22px;
-        //        cursor: pointer;
-        //        color: #000000;
-        //        left: -11px;
-        //    }
-        //}
+
         .message{
             margin: 15px 15px;
             text-align: left;
@@ -63,6 +69,7 @@
             .content{
                 display: block !important;
                 line-height: 1em;
+                position: relative;
                 padding: 0px 6px;
                 margin-top: -5px;
                 .username, .moment{

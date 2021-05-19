@@ -219,10 +219,10 @@
             });
             $('body').click(function(e){
                 let target = $(e.target);
-                console.log(target);
-                if(!target.is('.add-new-assignee') && !target.is('.select2-selection__rendered')) {
+                if(e.target.className != 'select2-selection__placeholder' && !target.is('.select2-dropdown')) {
                     $('.assignee').find('.add-new-assignee-wrapper').slideUp();
                 }
+
             });
 
 

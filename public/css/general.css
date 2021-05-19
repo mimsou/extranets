@@ -266,3 +266,13 @@ td.dark-row {
   color: #cdcdcd;
 }
 
+.badge-icon {
+  margin-top: -29px;
+}
+
+.add-admin-icon {
+  font-size: 20px;
+  transform: scaleX(-1);
+  color: #000000;
+}
+

@@ -6,6 +6,10 @@ use Auth;
 use Exception;
 use App\Classes\Utils\Notes\Note;
 
+/**
+ * Trait Notable
+ * @package App\Classes\Utils\Notes
+ */
 trait Notable
 {
 
@@ -17,7 +21,8 @@ trait Notable
      * @param  [category_class] $category_class [description]
      * @return [void]
      */
-    public function noteThat($message, $category = null, $category_class = null){
+    public function noteThat($message, $category = null, $category_class = null)
+    {
         if(is_null($message) || empty($message))
             throw new Exception("Le message ne peut être vide");
 
@@ -40,21 +45,22 @@ trait Notable
      * @param  [Array] $exclude_category [description]
      * @return [type]                   [description]
      */
-    public function getNotes($include_category = null, $exclude_category = null){
+    public function getNotes($include_category = null, $exclude_category = null)
+    {
 
         $notes = Note::where('model_id', '=', $this->id)
-                   ->where('model_type', '=', $this->note_getModel())
-                   ->whereNotNull('user_id')
-                   ->orderBy('created_at', 'ASC');
+            ->where('model_type', '=', $this->note_getModel())
+            ->whereNotNull('user_id')
+            ->orderBy('created_at', 'ASC');
 
-        if(!is_null($include_category)){
+        if(!is_null($include_category)) {
             if(gettype($include_category) != 'array')
                 throw new Exception("Included categories must be provided in an a");
 
             $notes->whereIn('category', $include_category);
         }
 
-        if(!is_null($exclude_category)){
+        if(!is_null($exclude_category)) {
             if(gettype($exclude_category) != 'array')
                 throw new Exception("Exluded categories must be provided in an array");
 
@@ -71,20 +77,21 @@ trait Notable
      * @param  [Array] $exclude_category [description]
      * @return [type]                   [description]
      */
-    public function getNotesForUser($user_id, $qty = 100, $include_category = null, $exclude_category = null){
+    public function getNotesForUser($user_id, $qty = 100, $include_category = null, $exclude_category = null)
+    {
 
         $notes = Note::where('user_id', '=', $user_id)
-                   ->orderBy('created_at', 'DESC')
-                   ->limit($qty);
+            ->orderBy('created_at', 'DESC')
+            ->limit($qty);
 
-        if(!is_null($include_category)){
+        if(!is_null($include_category)) {
             if(gettype($include_category) != 'Array')
                 throw new Exception("Included categories must be provided in an array");
 
             $notes->whereIn('category', $include_category);
         }
 
-        if(!is_null($exclude_category)){
+        if(!is_null($exclude_category)) {
             if(gettype($exclude_category) != 'Array')
                 throw new Exception("Exluded categories must be provided in an array");
 
@@ -99,7 +106,8 @@ trait Notable
      * Retreive user id if it's a logged in user
      * @return [int]
      */
-    private function note_getUserId(){
+    private function note_getUserId()
+    {
         if(Auth::guest()) return null;
         return Auth::user()->id;
     }
@@ -109,7 +117,8 @@ trait Notable
      * Retreive the class name of the model
      * @return [String]
      */
-    private function note_getModel(){
+    private function note_getModel()
+    {
         return get_class($this);
     }
 
@@ -118,11 +127,12 @@ trait Notable
      * Retreive end user IP
      * @return [String]
      */
-    private function note_getIp(){
+    private function note_getIp()
+    {
         $ipaddress = '';
-        if (isset($_SERVER["HTTP_CF_CONNECTING_IP"]))
+        if(isset($_SERVER["HTTP_CF_CONNECTING_IP"]))
             $ipaddress = $_SERVER["HTTP_CF_CONNECTING_IP"];
-        else if (isset($_SERVER['HTTP_CLIENT_IP']))
+        else if(isset($_SERVER['HTTP_CLIENT_IP']))
             $ipaddress = $_SERVER['HTTP_CLIENT_IP'];
         else if(isset($_SERVER['HTTP_X_FORWARDED_FOR']))
             $ipaddress = $_SERVER['HTTP_X_FORWARDED_FOR'];
@@ -139,7 +149,14 @@ trait Notable
         return $ipaddress;
     }
 
-    public function deleteThat($id){
+
+    /**
+     * Delete note
+     * @param $id
+     * @return mixed
+     */
+    public function deleteThat($id)
+    {
         return Note::find($id)->delete();
     }
 }

@@ -424,3 +424,8 @@ if(!function_exists('sendEmailEnv')){
     }
 }
 
+if(!function_exists('isMineMessage')){
+    function isMineMessage($userId){
+        return ($userId == Auth::user()->id);
+    }
+}

@@ -39,14 +39,26 @@
   color: silver;
 }
 
-#demande_notes #note-messages .action-menu {
+#demande_notes #note-messages .message .action-menu-left {
+  position: absolute;
+  top: 26px;
+  cursor: pointer;
+  text-align: right;
+  right: -10px;
+}
+
+#demande_notes #note-messages .message.mine .action-menu {
   position: absolute;
   left: -10px;
   top: 26px;
   cursor: pointer;
 }
 
-#demande_notes #note-messages .message:hover .action-menu {
+#demande_notes #note-messages .message:hover .action-menu-left {
+  display: block !important;
+}
+
+#demande_notes #note-messages .message.mine:hover .action-menu {
   display: block !important;
 }
 
@@ -73,6 +85,7 @@
 #demande_notes #note-messages .message .content {
   display: block !important;
   line-height: 1em;
+  position: relative;
   padding: 0px 6px;
   margin-top: -5px;
 }
