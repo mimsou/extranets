@@ -38,18 +38,18 @@
     <div class="container-fluid  pull-up">
         <div class="row">
             <div class="col-12">
-                <div class="card m-b-10 m-t-30 bg-dots p-4" id="projets_filters">
-                    <div class="d-flex flex-md-row flex-column">
-                        <div class="flex-grow-2 hidden-mobile">
+                <div class="card m-b-10 m-t-30 bg-dots p-4 projets_filters" id="projets_filters">
+                    <div class="filters d-flex flex-md-row flex-column align-items-center justify-content-between">
+                        <div class="filter_per_personne">
                             <div class="form-group">
                                 <label for="auditor">Filtrer par personne</label>
-                                {!! Form::select('personne',$personne,null,['class'=>'form-control form-control-sm']) !!}
+                                {!! Form::select('personne',$personne,null,['class'=>'form-control form-control-sm height-35']) !!}
                             </div>
                         </div>
-                        <div class="flex-grow-2 pl-md-4 hidden-mobile">
+                        <div class="filter_per_type">
                             <div class="form-group">
-                                <label for="market" class="">Type de projet</label>
-                                <select name="type_de_projet" class="form-control form-control-sm">
+                                <label for="type_de_projet" class="">Type de projet</label>
+                                <select name="type_de_projet" class="form-control form-control-sm height-35">
                                     <option value="">TOUS</option>
                                     @foreach($statuts as $key => $options)
 
@@ -65,13 +65,13 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="flex-grow-2 pl-md-4 col-md-2 mr-2">
+                        <div class="filter_per_employer">
                             <div class="form-group">
-                                <label for="account">Employeur</label>
-                                {!! Form::select('employeur',\App\Models\Employeur::orderBy('nom', 'ASC')->pluck('nom', 'id')->prepend('TOUS',''),null,['class'=>'form-control form-control-sm select2','style'=>'width: 200px']) !!}
+                                <label for="employeur">Employeur</label><br>
+                                {!! Form::select('employeur',\App\Models\Employeur::orderBy('nom', 'ASC')->pluck('nom', 'id')->prepend('TOUS',''),null,['class'=>'form-control form-control-sm select2','style'=>'width: 184px !important; height: 25px !important;']) !!}
                             </div>
                         </div>
-                        <div class="flex-grow-2 pl-md-4 hidden-mobile">
+                        <div class="filter_per_status">
                             <div class="form-group">
                                 @php
                                     $demandeStatuArray = [];
@@ -79,7 +79,7 @@
                                     $demandeStatuArray['RECRUTEMENT'] = demandeStatuts(null,STATUTS_DEMANDE_REC);
                                 @endphp
                                 <label for="market" class="">Statut du dossier</label>
-                                <select name="statut_du_dossier" class="form-control form-control-sm" style="width: 130px;">
+                                <select name="statut_du_dossier" class="form-control form-control-sm height-35" >
                                     <option value="">TOUS</option>
                                     @foreach($demandeStatuArray as $key => $options)
 
@@ -96,7 +96,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="flex-grow-2 pl-md-4 hidden-mobile pt-4">
+                        <div class="filter_per_termine">
                             <div class="form-group m-b-10">
                                 <label class="cstm-switch">
                                     <input type="checkbox" name="completed_demande" value="1" class="cstm-switch-input">
@@ -106,7 +106,7 @@
                             </div>
                         </div>
 
-                        <div class="d-none d-md-none d-lg-block flex-grow-2 pl-md-4 pt-4 hidden-mobile">
+                        <div class="filter_per_horaire">
                             <div class="form-group m-b-10">
                                 <label class="cstm-switch">
                                     <input type="checkbox" name="hourly_checkbox" value="1" class="cstm-switch-input">

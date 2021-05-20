@@ -37,7 +37,7 @@ Route::get('/projets/{id}/removeDemande/{demande_id}', 'ProjetController@removeD
 
 // assign user to demande
 Route::post('/projets/assign-user', 'DemandeController@assingUser');
-Route::get('/demande/{demande_id}/mark-completed', 'DemandeController@markAsCompleted');
+Route::get('/demande/{demande_id}/mark-completed-incomplete', 'DemandeController@markAsCompletedOrIncomeplete');
 
 //Todo
 Route::post('todo/save','TodoController@save');

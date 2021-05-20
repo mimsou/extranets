@@ -254,3 +254,23 @@ td.dark-row {
   font-weight: bold;
 }
 
+.hide-demande-tick-icon {
+  display: none;
+}
+
+.select2-dropdown {
+  width: 325px !important;
+}
+
+.height-35 {
+  height: 35px;
+}
+
+.complete_demande .bg-success {
+  margin-top: -5px;
+}
+
+.projets_filters .filters div {
+  max-width: 250px;
+}
+

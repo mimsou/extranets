@@ -117,6 +117,32 @@ $(function () {
     }
   });
   $('.select2').select2();
+  $('.complete_demande').click(function (e) {
+    var url = $(this).attr('href');
+    var elem = $(this);
+    e.preventDefault();
+    $(this).hide();
+    $('.loader').show();
+    $.ajax({
+      type: 'GET',
+      url: $(this).attr('href'),
+      data: {},
+      success: function success(result) {
+        $('.complete_demande').show();
+        $('.loader').hide();
+
+        if (result.status == 0) {
+          elem.find('.avatar-title').addClass('bg-transparent border mt-1').removeClass('bg-success');
+          elem.find('.avatar-title i').addClass('hide-demande-tick-icon');
+        } else {
+          elem.find('.avatar-title').addClass('bg-success').removeClass('bg-transparent border mt-1');
+          elem.find('.avatar-title i').removeClass('hide-demande-tick-icon');
+        }
+
+        console.log(result);
+      }
+    });
+  });
 });
 
 /***/ }),
@@ -128,7 +154,7 @@ $(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\MAMP\htdocs\immigremploi\resources\js\projects.js */"./resources/js/projects.js");
+module.exports = __webpack_require__(/*! /Applications/MAMP/htdocs/mediasimple/immigremploi/resources/js/projects.js */"./resources/js/projects.js");
 
 
 /***/ })

@@ -74,7 +74,6 @@
     @endsection
 
     @section('footer')
-    <script src="{{ asset('js/projects.js?ref='.rand(1111,9999)) }}"></script>
         <script>
             $('.select2').select2();
 
@@ -98,7 +97,7 @@
                 $('#modal_demande_id').val(demande_id);
                 $('#addCandidat').modal('toggle');
             });
-
+            
             $(document).on('click', '.editdemande', function() {
 
                 $('#editDemande .modal_loading').show();
