@@ -85,9 +85,16 @@ class CandidatController extends Controller
     {
         $candidat = Candidat::find($id);
         if(Auth::user()->role_lvl == 3) {
-            $user_demandes = $candidat->demandes()
-                                ->where('projet_id', Auth::user()->employerProjects()->get()->pluck('id')->toArray());
-            if($user_demandes->get()->count() == 0) return abort('403');
+            $is_allowed = false;
+
+            foreach ($candidat->demandes as $d) {
+                if(Auth::user()->employeur_id == $d->employeur_id || Auth::user()->employeur_id == $d->projet->employeur_id){
+                    $is_allowed = true;
+                    continue;
+                }
+            }
+
+            if(!$is_allowed) return abort('403');
         }
         return view('admin.candidats.edit', compact('candidat'));
     }
