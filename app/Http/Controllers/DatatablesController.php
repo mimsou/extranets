@@ -142,8 +142,21 @@ class DatatablesController extends Controller
 
             $projets = $projets->unionAll($db_pd)->get();
         }
+        if($isCompletedChecked == false || $isCompletedChecked == 'false'){
+            $projectCloned = clone $projets;
+            $projectIdsToRemove = [];
+            $projectCloned->get()->groupBy('id')->map(function($item) use(&$projectIdsToRemove){
+                if($item->count() == $item->where('completed',1)->count()){
+                    $projectIdsToRemove[] = $item->first()->id;
+                }
+            });
+            $projets = $projets->get()->whereNotIn('id',$projectIdsToRemove)->unique('id');
+        }else{
+            $projets = $projets->get()->unique('id');
+        }
+
 //        $projets->distinct('projets.id');
-        $projets = $projets->get()->unique('id');
+
 
         return Datatables::of($projets)
                         ->addColumn('statut', function($m){

@@ -9,7 +9,6 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Redirect;
 
 /**
  * Class DemandeController
@@ -102,9 +101,9 @@ class DemandeController extends Controller
     {
         $demande = Demande::find($request->demande_id);
         $user = User::find($request->user_id);
-        if (is_null($demande->assignedUsers->find($request->user_id))) {
+        if(is_null($demande->assignedUsers->find($request->user_id))) {
             $demande->assignedUsers()->syncWithoutDetaching($request->user_id);
-            if (sendEmailEnv($user->email)) {
+            if(sendEmailEnv($user->email)) {
                 Mail::to($user->email)->queue(new DemandeAssigned($user, Auth::user()->full_name, $demande->projet, $demande));
             }
             return response()->json(['initials' => $user->initials(), 'status' => true]);
@@ -127,14 +126,22 @@ class DemandeController extends Controller
 
     /**
      * Mark Demande as completed
-     * 
+     *
      * @param $demande_id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function markAsCompleted($demande_id)
+    public function markAsCompletedOrIncomeplete($demande_id)
     {
-        Demande::find($demande_id)->update(['completed' => 1]);
-        flash('Marquer cette demande comme terminée')->success();
-        return Redirect::back();
+        $status = 0;
+        $demandeModel = Demande::find($demande_id);
+        if($demandeModel->completed) {
+            $demandeModel->completed = 0;
+            $status = 0;
+        } else {
+            $demandeModel->completed = 1;
+            $status = 1;
+        }
+        $demandeModel->save();
+        return response()->json(['status' => $status]);
     }
 }
