@@ -17,7 +17,7 @@ class Todo extends Model
     /**
      * @var string[]
      */
-    protected $fillable = ['projet_id', 'demande_id', 'to_do', 'status', 'created_by'];
+    protected $fillable = ['projet_id', 'group_id', 'demande_id', 'to_do', 'status', 'created_by'];
 
     /**
      * Get todos
@@ -38,13 +38,17 @@ class Todo extends Model
      * @param $demandeId
      * @return int
      */
-    public static function getMaxOrder($projetId, $demandeId)
+    public static function getMaxOrder($projetId, $demandeId, $groupId)
     {
-        $record = self::where(['projet_id' => $projetId, 'demande_id' => $demandeId])->orderBy('order', 'desc')->first();
+        $record = self::where(['projet_id' => $projetId, 'demande_id' => $demandeId,'group_id'=>$groupId])->orderBy('order', 'desc')->first();
         if ($record != null) {
             return $record->order;
         } else {
             return 0;
         }
+    }
+
+    public function assigned_user(){
+        return $this->hasMany(TodoAssignee::class,'todo_id','id');
     }
 }

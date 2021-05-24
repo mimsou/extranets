@@ -34,7 +34,7 @@
                                     sur {{ $d->nb_candidat }} requis</small></td>
                             @if(Auth::user()->role_lvl > 3)
                                 <td width="150px">
-                                    @if($d->todos()->get()->isEmpty())
+                                    @if($d->todo_groups()->get()->isEmpty())
                                         <div class="todo-strip in-active ml-3">
                                             <i class="fas fa-plus create-todo bg-white"
                                                data-project-id="{{ $projet->id }}"
@@ -42,8 +42,8 @@
                                             <label>liste de contrôle</label>
                                         </div>
                                     @else
-                                        @php( $completedTodos = $d->todos()->where(['status'=>1])->count())
-                                        @php( $totalTodos =$d->todos()->count())
+                                        @php($completedTodos = App\Models\TodoGroup::getCompletedTodos($d->projet_id,$d->id))
+                                        @php($totalTodos = App\Models\TodoGroup::getTotalTodos($d->projet_id,$d->id))
                                         <div class="todo-strip ml-3">
                                             <i class="fas fa-check add-todo {{ ($completedTodos == $totalTodos)?'bg-aqua':'bg-white' }}"
                                                data-project-id="{{ $projet->id }}" data-demande-id="{{ $d->id }}"></i>

@@ -51,6 +51,10 @@ Route::get('todo/update/status','TodoController@updateStatus');
 Route::post('todo/update/orders','TodoController@updateTodoOrder');
 Route::post('todo/from/template','TodoController@createTodoFromTemplate');
 Route::post('todo/update/{todo_id}','TodoController@updateTodo');
+Route::post('todo/group/create','TodoController@createGroup');
+Route::post('todo/assign/user','TodoController@assignUser');
+Route::post('todo/remove/assignee','TodoController@removeAssignee');
+Route::post('todo/group/update','TodoController@updateTodoGroup');
 
 Route::resource('/candidats', 'CandidatController');
 Route::post('/candidats/{candidat_id}/upload-addtional-reources', 'CandidatController@uploadAddtionalResources');

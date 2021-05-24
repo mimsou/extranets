@@ -1,7 +1,7 @@
 <!-- Modal -->
 <div class="modal fade" id="todo-list-modal" tabindex="-1" role="dialog"
      aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">×</span>
@@ -18,8 +18,8 @@
                 <hr/>
                 <div class="row">
                     <div class="col-md-7">
-                        @php($numberOfCompleted = $todos->where('status',1)->count())
-                        @php($numberOfTodos = $todos->count())
+                        @php($numberOfCompleted = App\Models\TodoGroup::getCompletedTodos($projectId,$demandeId))
+                        @php($numberOfTodos = App\Models\TodoGroup::getTotalTodos($projectId,$demandeId))
                         <small><span class="number-of-completed-todos">{{ $numberOfCompleted }}</span> complété sur
                             <span class="total-todos">{{ $numberOfTodos }}</span></small>
                         <div class="time-progresssion mb-2">
@@ -33,16 +33,15 @@
                     </div>
                 </div>
                 <div class="row todo-list-div">
-                    <div class="todo-list-section sortable-todo-list">
-                        @foreach($todos as $key => $todo)
-                            @include('admin.projets.modals._singleTodo',['todo'=>$todo])
+                    <div class="col-md-12 todo-list-group scroll-height">
+                        @foreach($groups as $key => $group)
+                            @include('admin.projets.modals._todo_single_group',['group'=>$group])
                         @endforeach
                     </div>
-                    <div class="col-md-12 mt-4 ml-1 pl-2 mb-2">
-                        <i class="fas fa-plus add-todo-list cursor-pointer"></i>
-                        {!! Form::text('todo',null,['class'=>'todo-text','placeholder'=>'Ajouter un nouvel élément']) !!}
-                        <i class="fa fa-check save-todo-message" data-project-id="{{ $projectId }}"
-                           data-demande-id="{{ $demandeId }}"></i>
+                    <div class="col-md-12">
+                        {!! Form::text('group_name',null,['class'=>'form-control font-italic group_name_text','placeholder'=>'Nam du groupe']) !!}
+                        <a href="javascript:void(0)" class="btn btn-light mt-1 create-group" data-project-id="{{ $projectId }}"
+                           data-demande-id="{{ $demandeId }}">Ajouter une liste</a>
                     </div>
                 </div>
             </div>

@@ -9,26 +9,6 @@
   background: #fdeaea !important;
 }
 
-.remove_assignee_icon {
-  position: absolute;
-  top: -4px;
-  right: 0px;
-  background: red;
-  border-radius: 100px;
-  height: 15px;
-  line-height: 5px;
-  width: 15px;
-  padding-top: 5px;
-  padding-left: 4px;
-  font-size: 11px;
-  cursor: pointer;
-  display: none;
-}
-
-.remove_assignee:hover .remove_assignee_icon {
-  display: block;
-}
-
 .color-light-blue {
   color: #3e4676;
 }

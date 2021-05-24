@@ -328,14 +328,17 @@ __webpack_require__(/*! ./todo */ "./resources/js/todo.js");
           handle: '.sort-handle',
           stop: function stop(event, ui) {
             var sortedArray = {};
-            $('.todo-list-section .option-box-grid').each(function (i, el) {
+            var elem = $(event.target);
+            var groupID = elem.parents('.group-section').data('group-id');
+            elem.parents('.group-section').find('.todo-list-section .option-box-grid').each(function (i, el) {
               sortedArray[$(this).find('input').data('todo-id')] = i + 1;
             });
             $.ajax({
               type: 'POST',
               url: route + 'todo/update/orders',
               data: {
-                todos: sortedArray
+                todos: sortedArray,
+                group_id: groupID
               },
               success: function success(result) {}
             });
@@ -390,42 +393,46 @@ __webpack_require__(/*! ./todo */ "./resources/js/todo.js");
     });
   });
   $('body').on('keyup', '.todo-text', function (e) {
+    var elem = $(this).parents('.group-section');
     var textValue = $(this).val().trim();
 
     if (textValue != '') {
-      $('.save-todo-message').show();
+      elem.find('.save-todo-message').show();
     } else {
-      $('.save-todo-message').hide();
+      elem.find('.save-todo-message').hide();
     }
 
     if (e.keyCode == 13) {
-      $('.save-todo-message').trigger('click');
+      elem.find('.save-todo-message').trigger('click');
     }
   });
   $('body').on('click', '.add-todo-list', function () {
     $('.save-todo-message').trigger('click');
   });
   $('body').on('click', '.save-todo-message', function () {
-    var elem = $(this); //elem.prop('disabled', true).addClass('disabled');
-
-    var todoText = $('.todo-text').val();
+    var groupElem = $(this).parents('.group-section');
+    var elem = $(this);
+    var todoText = $(this).parents('.add-todo-message-section').find('.todo-text').val();
 
     if (todoText.trim() != '') {
-      $('.todo-text').prop('disabled', true);
+      elem.find('.todo-text').prop('disabled', true);
       var projetId = $(this).data('project-id');
       var demandeId = $(this).data('demande-id');
+      var groupId = $(this).data('group-id');
       $.ajax({
         type: 'POST',
         url: route + 'todo/save',
         data: {
           projet_id: projetId,
           demande_id: demandeId,
-          todo: todoText
+          todo: todoText,
+          group_id: groupId
         },
         success: function success(result) {
           //elem.prop('disabled', false).removeClass('disabled').hide();
-          $('.todo-text').val('').prop('disabled', false);
-          $('.todo-list-section').append(result.html);
+          groupElem.find('.todo-text').val('').prop('disabled', false);
+          groupElem.find('.todo-list-section').append(result.html);
+          groupElem.find('.save-todo-message').hide();
           $('.total-todos').text($('.single-todo-div').length);
 
           if (window.click_demande_child.hasClass('demande-todo')) {
@@ -553,12 +560,11 @@ __webpack_require__(/*! ./todo */ "./resources/js/todo.js");
   });
   $('body').on('blur', '.option-box-grid p', function () {
     removeTodoMessage($(this));
-  });
-  $('body').on('keypress', '.option-box-grid p', function (e) {
-    if (e.keyCode == 13) {
-      removeTodoMessage($(this));
-    }
-  });
+  }); // $('body').on('keypress', '.option-box-grid p', function (e) {
+  //     if (e.keyCode == 13) {
+  //         removeTodoMessage($(this));
+  //     }
+  // });
 
   function removeTodoMessage(elem) {
     var updatedText = elem.text().trim();
@@ -595,6 +601,98 @@ __webpack_require__(/*! ./todo */ "./resources/js/todo.js");
   });
   $('body').on("hidden.bs.modal", '#todo-list-modal', function () {
     $("#todo-list-modal").remove();
+  });
+  $('body').on('click', '.create-group', function () {
+    var groupName = $('.group_name_text').val();
+    var project_id = $(this).data('project-id');
+    var demande_id = $(this).data('demande-id');
+
+    if (groupName.trim() != '') {
+      $.ajax({
+        type: 'POST',
+        url: route + 'todo/group/create',
+        data: {
+          projet_id: project_id,
+          demande_id: demande_id,
+          group_name: groupName
+        },
+        success: function success(result) {
+          var elem = window.click_demande_child;
+          $('.todo-list-group').append(result);
+          $('.group_name_text').val('');
+          var stripTag = window.click_demande_child.parents('.todo-strip');
+          stripTag.removeClass('in-active');
+          stripTag.find('.fas').removeClass('create-todo').addClass('add-todo');
+          stripTag.find('.fas').removeClass('fa-plus').addClass('fa-check');
+          stripTag.find('label').html('<span class="demande-completed-todos">0</span> complété sur <span class="demande-total-todos">0</span>');
+        }
+      });
+    }
+  });
+  $('body').on('click', '.add-new-assignee', function () {
+    $(this).parents('.assignee').find('.add-new-assignee-wrapper').slideToggle();
+  });
+  $('body').on('change', '.assign_demande', function () {
+    var selectedAssignee = $(this).val();
+    var todoId = $(this).data('todo');
+    var elem = $(this);
+    $.ajax({
+      type: 'POST',
+      url: route + 'todo/assign/user',
+      data: {
+        user: selectedAssignee,
+        todo_id: todoId
+      },
+      success: function success(result) {
+        if (result.is_exists == false) {
+          var html = "\n                        <div class=\"avatar avatar-xs ml-1 mb-1\">\n                           <span data-id=\"3\" data-demand-id=\"8\" class=\"remove_assignee avatar-title rounded-circle bg-dark\">\n                            " + result.initials + " <i class=\"fas fa-times remove_assignee_icon small-icon\" data-id=\"" + result.user.id + "\"></i>\n                           </span>\n                        </div>\n                    ";
+          elem.parents('.assignee').find('.assigned-user-section').append(html);
+        }
+      }
+    });
+  });
+  $('body').on('click', '.remove_assignee_icon', function () {
+    var elem = $(this);
+    var assignUserId = $(this).data('id');
+
+    if (confirm('Are you sure to remove?')) {
+      $.ajax({
+        type: 'POST',
+        url: route + 'todo/remove/assignee',
+        data: {
+          id: assignUserId
+        },
+        success: function success(result) {
+          elem.parents('.avatar').remove();
+        }
+      });
+    }
+  });
+  $('body').on('dblclick', '.todo-group-title', function () {
+    window.group_text_edited = $(this).text();
+    $(this).attr('contenteditable', true);
+  });
+  $('body').on('blur', '.todo-group-title', function () {
+    var elem = $(this);
+    $(this).attr('contenteditable', false);
+    var groupName = $(this).text();
+    var groupId = $(this).data('group-id');
+    $.ajax({
+      type: 'POST',
+      url: route + 'todo/group/update',
+      data: {
+        group_name: groupName,
+        group_id: groupId
+      },
+      success: function success(result) {
+        if (result.status == 'deleted') {
+          elem.parents('.group-section').remove();
+        } else if (result.status == 'error') {
+          alert('Group is not empty!');
+          elem.text(window.group_text_edited);
+        }
+      }
+    });
   });
 })(window.jQuery);
 
