@@ -4,6 +4,11 @@
             <input id="check{{ $todo->id }}" data-todo-id="{{ $todo->id }}" {{ ($todo->status == 1)?"checked":'' }} class="todo-checkbox"  name="bigradios" type="checkbox">
             <label for="check{{ $todo->id }}"></label>
             <p class="{{ ($todo->status == 1)?"task-completed ":'' }}edit-todo" data-todo-id="{{ $todo->id }}">{{ $todo->to_do }}</p>
+            @if($todo->completed_at != null)
+                <i class="completed-at-todo">Completed At: {{ $todo->completed_at }}</i>
+            @else
+                <i class="completed-at-todo"></i>
+            @endif
         </div>
     </div>
     <div class="col-md-3 text-right">
@@ -20,8 +25,8 @@
                     @endforeach
                 </div>
                 <div class="add-new-assignee-wrapper mt-2" style="display: none">
-                    <select class="form-control assign_demande select2" data-demande-id="{{ $demandeId }}" name="assign_user" data-todo="{{ $todo->id }}">
-                        <option></option>
+                    <select class="form-control assign_demande" data-demande-id="{{ $demandeId }}" name="assign_user" data-todo="{{ $todo->id }}">
+                        <option value="">Sélectionnez un utilisateur</option>
                         @foreach(\App\Models\User::whereIn('role_lvl', [10, 5])->get() as $user)
                             <option value="{{ $user['id'] }}"> {{ $user['full_name'] }}</option>
                         @endforeach

@@ -34,6 +34,7 @@
                     backdrop: 'static',
                     keyboard: false
                 });
+                // $('.select2').select2();
 
                 $('.sortable-todo-list').sortable({
                     handle: '.sort-handle',
@@ -56,7 +57,9 @@
                         });
                     }
                 });
-                callback(result)
+                if(callback != null){
+                    callback(result);
+                }
             },
             error: function (error) {
 
@@ -158,7 +161,7 @@
                     stripTag.find('label').html('<span class="demande-completed-todos">0</span> complété sur <span class="demande-total-todos">0</span>');
                     stripTag.find('.demande-total-todos').text($('.single-todo-div').length);
                     stripTag.find('.demande-completed-todos').text($('.todo-list-section').find('.task-completed').length);
-                    $('.todo-text').focus();
+                    groupElem.find('.todo-text').focus();
                 }
             });
         }
@@ -168,8 +171,9 @@
         let todoId = $(this).data('todo-id');
         let status = 0;
         let numberOfTodos = parseInt($('.total-todos').text());
+        let elem = $(this).parent('.option-box-grid');
         if ($(this).is(':checked')) {
-            $(this).parent('.option-box-grid').find('p').addClass('task-completed');
+            elem.find('p').addClass('task-completed');
             let numberOfCompleted = parseInt($('.number-of-completed-todos').text());
             numberOfCompleted += 1;
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 $('.number-of-completed-todos').text(numberOfCompleted);
@@ -180,7 +184,7 @@
                 window.click_demande_child.parents('.todo-strip').find('.add-todo').removeClass('bg-white').addClass('bg-aqua');
             }
         } else {
-            $(this).parent('.option-box-grid').find('p').removeClass('task-completed');
+            elem.find('p').removeClass('task-completed');
             let numberOfCompleted = parseInt($('.number-of-completed-todos').text());
             numberOfCompleted -= 1;
             $('.number-of-completed-todos').text(numberOfCompleted);
@@ -198,6 +202,11 @@
                 todo_id: todoId
             },
             success: function (result) {
+                if(result.todo.completed_at != null){
+                    elem.find('.completed-at-todo').html('Completed At: '+result.todo.completed_at);
+                }else{
+                    elem.find('.completed-at-todo').html('');
+                }
                 console.log(result);
             }
         });
@@ -349,26 +358,33 @@
         let selectedAssignee = $(this).val();
         let todoId = $(this).data('todo');
         let elem = $(this);
-        $.ajax({
-            type: 'POST',
-            url: route + 'todo/assign/user',
-            data: {
-                user: selectedAssignee,
-                todo_id: todoId
-            },
-            success: function(result){
-                if(result.is_exists == false){
-                    let html = `
+        if(selectedAssignee.trim() != ''){
+            $.ajax({
+                type: 'POST',
+                url: route + 'todo/assign/user',
+                data: {
+                    user: selectedAssignee,
+                    todo_id: todoId
+                },
+                success: function(result){
+                    if(result.is_exists == false){
+                        let html = `
                         <div class="avatar avatar-xs ml-1 mb-1">
                            <span data-id="3" data-demand-id="8" class="remove_assignee avatar-title rounded-circle bg-dark">
                             `+result.initials+` <i class="fas fa-times remove_assignee_icon small-icon" data-id="`+result.user.id+`"></i>
                            </span>
                         </div>
                     `;
-                    elem.parents('.assignee').find('.assigned-user-section').append(html);
+                        elem.parents('.assignee').find('.assigned-user-section').append(html);
+                        elem.parents('.add-new-assignee-wrapper').slideUp();
+                        elem.val('');
+                    }else{
+                        elem.parents('.add-new-assignee-wrapper').slideUp();
+                        elem.val('');
+                    }
                 }
-            }
-        });
+            });
+        }
     });
 
     $('body').on('click', '.remove_assignee_icon', function(){
@@ -387,10 +403,27 @@
             });
         }
     });
+    function setCaret() {
+        var el = document.getElementById("content-editable");
+        var range = document.createRange()
+        var sel = window.getSelection();
+        range.setStart(el.childNodes[0], el.childNodes[0].length)
+        range.collapse(true)
+
+        sel.removeAllRanges()
+        sel.addRange(range)
+    }
+    $('body').on('click','.group-section .edit-group-title', function(){
+        let elem = $(this).parents('.group-section').find('.todo-group-title');
+        elem.attr('id','content-editable');
+        window.group_text_edited = elem.text();
+        elem.attr('contenteditable', true).focus();
+        setCaret();
+    });
 
     $('body').on('dblclick','.todo-group-title', function(){
         window.group_text_edited = $(this).text();
-        $(this).attr('contenteditable', true);
+        $(this).attr('contenteditable', true).focus();
     });
 
     $('body').on('blur','.todo-group-title', function(){

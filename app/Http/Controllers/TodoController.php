@@ -6,6 +6,7 @@ use App\Models\Todo;
 use App\Models\TodoAssignee;
 use App\Models\TodoGroup;
 use App\Models\TodoTemplate;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -106,9 +107,14 @@ class TodoController extends Controller
     public function updateStatus(Request $request)
     {
         $todoModel = Todo::find($request->todo_id);
+        if($request->status == 1){
+            $todoModel->completed_at = Carbon::now();
+        }else{
+            $todoModel->completed_at = null;
+        }
         $todoModel->status = $request->status;
         $todoModel->save();
-        return response()->json(['status' => true, 'message' => 'Todo status changed successfully!']);
+        return response()->json(['status' => true, 'message' => 'Todo status changed successfully!','todo'=>$todoModel]);
     }
 
     /**

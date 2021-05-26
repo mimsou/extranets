@@ -2,7 +2,7 @@
     <div class="col-md-12 mt-3">
         <h3 class="d-inline float-left todo-group-title" data-group-id="{{ $group->id }}">{{ $group->group_name }}</h3>
         <span class="d-inline btn float-left pt-1 pl-3 cursor-pointer">
-            <i class="fas fa-pencil"></i>
+            <i class="fas fa-pencil edit-group-title"></i>
         </span>
     </div>
     <div class="todo-list-section sortable-todo-list col-md-12 pl-4">

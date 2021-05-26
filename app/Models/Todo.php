@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -50,5 +51,13 @@ class Todo extends Model
 
     public function assigned_user(){
         return $this->hasMany(TodoAssignee::class,'todo_id','id');
+    }
+
+    public function getCompletedAtAttribute($value){
+        if($value != null){
+            return Carbon::parse($value)->format('d-M-Y h:i A');
+        }else{
+            return $value;
+        }
     }
 }

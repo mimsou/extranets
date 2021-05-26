@@ -314,3 +314,8 @@ td.dark-row {
   overflow-x: hidden;
 }
 
+.completed-at-todo {
+  font-size: 9px;
+  margin-left: 22px;
+}
+
