@@ -189,6 +189,7 @@ td.dark-row {
 #todo-template-modal .todo-list-section,
 #create-todo-template-modal .todo-list-section {
   width: 100%;
+  min-height: 10px;
 }
 
 #todo-list-modal .task-completed,

@@ -5,7 +5,7 @@
             <i class="fas fa-pencil edit-group-title"></i>
         </span>
     </div>
-    <div class="todo-list-section sortable-todo-list col-md-12 pl-4">
+    <div class="todo-list-section sortable-todo-list col-md-12 pl-4 connectedSortable">
         @foreach($group->todos->sortBy('order') as $key => $todo)
             @include('admin.projets.modals._singleTodo',['todo'=>$todo])
         @endforeach

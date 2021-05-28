@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\TodoAssigned;
 use App\Models\Todo;
 use App\Models\TodoAssignee;
 use App\Models\TodoGroup;
 use App\Models\TodoTemplate;
+use App\Models\User;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Mail;
 
 /**
  * Class TodoController
@@ -35,11 +37,11 @@ class TodoController extends Controller
         $todoModel->order = $maxOrder;
         $todoModel->created_by = Auth::user()->id;
         $todoModel->save();
-        $singleTodo = view('admin.projets.modals._singleTodo', ['todo' => $todoModel,'demandeId'=>$request->demande_id])->render();
-        return response()->json(['status' => true,
-            'message' => 'Todo saved successfully!',
-            'todo' => $todoModel,
-            'html' => $singleTodo]);
+        $singleTodo = view('admin.projets.modals._singleTodo', ['todo' => $todoModel, 'demandeId' => $request->demande_id])->render();
+        return response()->json(['status'  => true,
+                                 'message' => 'Todo saved successfully!',
+                                 'todo'    => $todoModel,
+                                 'html'    => $singleTodo]);
     }
 
     /**
@@ -51,7 +53,7 @@ class TodoController extends Controller
      */
     public function todoList($projectId, $demandeId)
     {
-        $groups = TodoGroup::with(['todos.assigned_user.user_details'])->where(['projet_id'=>$projectId,'demande_id'=>$demandeId])->get();
+        $groups = TodoGroup::with(['todos.assigned_user.user_details'])->where(['projet_id' => $projectId, 'demande_id' => $demandeId])->get();
         return view('admin.projets.modals._todo-list', compact('groups', 'projectId', 'demandeId'))->render();
     }
 
@@ -87,7 +89,7 @@ class TodoController extends Controller
     public function saveTemplate(Request $request)
     {
         //$todos = Todo::where(['projet_id' => $request->project_id, 'demande_id' => $request->demande_id])->orderBy('order')->pluck('to_do');
-        $todoGroup = TodoGroup::with(['todos'=>function($query){
+        $todoGroup = TodoGroup::with(['todos' => function ($query) {
             return $query->orderBy('order');
         }])->where(['projet_id' => $request->project_id, 'demande_id' => $request->demande_id])->get();
         $todoTemplate = new TodoTemplate;
@@ -107,14 +109,14 @@ class TodoController extends Controller
     public function updateStatus(Request $request)
     {
         $todoModel = Todo::find($request->todo_id);
-        if($request->status == 1){
+        if($request->status == 1) {
             $todoModel->completed_at = Carbon::now();
-        }else{
+        } else {
             $todoModel->completed_at = null;
         }
         $todoModel->status = $request->status;
         $todoModel->save();
-        return response()->json(['status' => true, 'message' => 'Todo status changed successfully!','todo'=>$todoModel]);
+        return response()->json(['status' => true, 'message' => 'Todo status changed successfully!', 'todo' => $todoModel]);
     }
 
     /**
@@ -127,7 +129,10 @@ class TodoController extends Controller
     {
         $todos = $request->todos;
         foreach ($todos as $todoId => $order) {
-            $todoModel = Todo::where(['group_id'=>$request->group_id])->find($todoId);
+            $todoModel = Todo::find($todoId);
+            if($request->oldGroupId != $request->newGroupID) {
+                $todoModel->group_id = $request->newGroupID;
+            }
             $todoModel->order = $order;
             $todoModel->save();
         }
@@ -149,16 +154,16 @@ class TodoController extends Controller
             $todoGroupModel = new TodoGroup;
             $todoGroupModel->group_name = $groupTodo['group_name'];
             $todoGroupModel->status = 1;
-            $todoGroupModel->demande_id = $groupTodo['demande_id'];
-            $todoGroupModel->projet_id = $groupTodo['projet_id'];
+            $todoGroupModel->demande_id = $request->demande_id;
+            $todoGroupModel->projet_id = $request->projet_id;
             $todoGroupModel->sort_order = $groupTodo['sort_order'];
             $todoGroupModel->save();
-            if(!empty($groupTodo['todos'])){
-                foreach($groupTodo['todos'] as $key => $todo){
+            if(!empty($groupTodo['todos'])) {
+                foreach ($groupTodo['todos'] as $key => $todo) {
                     $todoModel = new Todo;
-                    $todoModel->projet_id = $todo['projet_id'];
+                    $todoModel->projet_id = $request->projet_id;
                     $todoModel->group_id = $todoGroupModel->id;
-                    $todoModel->demande_id = $todo['demande_id'];
+                    $todoModel->demande_id = $request->demande_id;
                     $todoModel->to_do = $todo['to_do'];
                     $todoModel->created_by = Auth::user()->id;
                     $todoModel->order = $todo['order'];
@@ -178,8 +183,8 @@ class TodoController extends Controller
      */
     public function updateTodo(Request $request, $todoId)
     {
-        if ($request->todo == '') {
-            TodoAssignee::where(['todo_id'=>$todoId])->delete();
+        if($request->todo == '') {
+            TodoAssignee::where(['todo_id' => $todoId])->delete();
             Todo::find($todoId)->delete();
             return response()->json(['status' => true, 'message' => 'Todo supprimé avec succès!']);
         } else {
@@ -189,7 +194,16 @@ class TodoController extends Controller
             return response()->json(['status' => true, 'message' => 'Todo a été mis à jour avec succès!']);
         }
     }
-    public function createGroup(Request $request){
+
+
+    /**
+     * Create new group for TodO
+     *
+     * @param Request $request
+     * @return string
+     */
+    public function createGroup(Request $request)
+    {
         $todoGroup = new TodoGroup;
         $todoGroupModel = new TodoGroup;
         $todoGroup->group_name = $request->group_name;
@@ -200,41 +214,76 @@ class TodoController extends Controller
         $todoGroup->save();
         $groupModel = TodoGroup::with(['todos'])->find($todoGroup->id);
         return view('admin.projets.modals._todo_single_group',
-            ['group'=>$groupModel,'projectId'=>$request->projet_id,'demandeId'=>$request->demande_id])->render();
+            ['group' => $groupModel, 'projectId' => $request->projet_id, 'demandeId' => $request->demande_id])->render();
     }
 
-    public function assignUser(Request $request){
+    /**
+     * Assign admin user to ToDo
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function assignUser(Request $request)
+    {
         $isAlreadyExists = false;
-        $assignUser = TodoAssignee::firstOrNew(['todo_id'=>$request->todo_id,'user_id'=>$request->user]);
-        if($assignUser->exists){
+        $assignUser = TodoAssignee::firstOrNew(['todo_id' => $request->todo_id, 'user_id' => $request->user]);
+        if($assignUser->exists) {
             $isAlreadyExists = true;
         }
         $assignUser->save();
         $assignedUser = TodoAssignee::with(['user_details'])->find($assignUser->id);
-        //Send Email Functionality is pending
-        return response()->json(['status'=>true,'message'=>'User assigned to todo','user'=>$assignedUser,
-                                 'initials'=>$assignedUser->user_details->initials(),'is_exists'=>$isAlreadyExists]);
+        $this->sendEmail($request->user, $request->todo_id);
+        return response()->json(['status'   => true, 'message' => 'User assigned to todo', 'user' => $assignedUser,
+                                 'initials' => $assignedUser->user_details->initials(), 'is_exists' => $isAlreadyExists]);
     }
 
-    public function removeAssignee(Request $request){
+    /**
+     * Send email to assigned user when ToDo is assigned to him
+     *
+     * @param $userId
+     * @param $todoId
+     */
+    protected function sendEmail($userId, $todoId)
+    {
+        $user = User::find($userId);
+        $todo = Todo::find($todoId);
+        Mail::to($user->email)->queue(new TodoAssigned($user, $todo));
+    }
+
+    /**
+     * Remove admin assignee from Todo
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function removeAssignee(Request $request)
+    {
         TodoAssignee::find($request->id)->delete();
-        return response()->json(['status'=>true,'message'=>'User deleted successfully!']);
+        return response()->json(['status' => true, 'message' => 'User deleted successfully!']);
     }
 
-    public function updateTodoGroup(Request $request){
-        if($request->group_name == ''){
+    /**
+     * Update ToDo Group
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
+     */
+    public function updateTodoGroup(Request $request)
+    {
+        if($request->group_name == '') {
             $haveAnyTodo = TodoGroup::with(['todos'])->find($request->group_id);
-            if(!$haveAnyTodo->todos->isEmpty()){
-                return response()->json(['status'=>'error']);
-            }else{
+            if(!$haveAnyTodo->todos->isEmpty()) {
+                return response()->json(['status' => 'error']);
+            } else {
                 $haveAnyTodo->delete();
-                return response()->json(['status'=>'deleted']);
+                return response()->json(['status' => 'deleted']);
             }
-        }else{
+        } else {
             $groupModel = TodoGroup::find($request->group_id);
             $groupModel->group_name = $request->group_name;
             $groupModel->save();
-            return response()->json(['status'=>'updated']);
+            return response()->json(['status' => 'updated']);
         }
     }
 }
