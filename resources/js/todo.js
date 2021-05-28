@@ -38,19 +38,31 @@
 
                 $('.sortable-todo-list').sortable({
                     handle: '.sort-handle',
+                    connectWith: ".connectedSortable",
+                    containment: ".todo-list-group",
+                    dropOnEmpty: true,
                     stop: function (event, ui) {
                         let sortedArray = {};
-                        let elem = $(event.target);
-                        let groupID = elem.parents('.group-section').data('group-id');
-                        elem.parents('.group-section').find('.todo-list-section .option-box-grid').each(function (i, el) {
-                            sortedArray[$(this).find('input').data('todo-id')] = i + 1;
-                        });
+                        let oldElem = $(event.target);
+                        let newElem = $(ui.item[0]);
+                        let newGroupID = newElem.parents('.group-section').data('group-id');
+                        let oldGroupId = oldElem.parents('.group-section').data('group-id');
+                        if(newGroupID != oldGroupId){
+                            newElem.parents('.group-section').find('.todo-list-section .option-box-grid').each(function (i, el) {
+                                sortedArray[$(this).find('input').data('todo-id')] = i + 1;
+                            });
+                        }else{
+                            oldElem.parents('.group-section').find('.todo-list-section .option-box-grid').each(function (i, el) {
+                                sortedArray[$(this).find('input').data('todo-id')] = i + 1;
+                            });
+                        }
                         $.ajax({
                             type: 'POST',
                             url: route + 'todo/update/orders',
                             data: {
                                 todos: sortedArray,
-                                group_id: groupID
+                                oldGroupId: oldGroupId,
+                                newGroupID: newGroupID
                             },
                             success: function (result) {
                             }
@@ -266,7 +278,7 @@
                     showTodoList(projet_id, demande_id, function (result) {
                         let stripTag = window.click_demande_child.parents('.todo-strip');
                         stripTag.removeClass('in-active');
-                        stripTag.find('.fas').removeClass('fa-plus').addClass('fa-check');
+                        stripTag.find('.fas').removeClass('fa-plus').addClass('fa-check').removeClass('create-todo').addClass('add-todo');
                         stripTag.find('label').html('<span class="demande-completed-todos">0</span> complété sur <span class="demande-total-todos">0</span>');
                         stripTag.find('.demande-total-todos').text($('.single-todo-div').length);
                     });
@@ -350,7 +362,7 @@
         }
     });
 
-    $('body').on('click','.add-new-assignee', function(){
+    $('body').on('click','.todo-list-section .add-new-assignee', function(){
         $(this).parents('.assignee').find('.add-new-assignee-wrapper').slideToggle();
     });
 

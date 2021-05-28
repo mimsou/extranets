@@ -211,7 +211,7 @@
 
             window.targetClick = null;
             // show assign dropdown
-            $('.add-new-assignee').click(function(e) {
+            $('.edit-immigration .add-new-assignee').click(function(e) {
                 window.targetClick = $(e.target);
                 $(this).parents('.assignee').find('.add-new-assignee-wrapper').slideToggle();
                 e.stopPropagation();
@@ -220,7 +220,7 @@
             $('body').click(function(e){
                 let target = $(e.target);
                 if(e.target.className != 'select2-selection__placeholder' && !target.is('.select2-dropdown')) {
-                    $('.assignee').find('.add-new-assignee-wrapper').slideUp();
+                    $('.edit-immigration .assignee').find('.add-new-assignee-wrapper').slideUp();
                 }
 
             });
