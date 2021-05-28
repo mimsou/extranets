@@ -5,9 +5,9 @@
             <label for="check{{ $todo->id }}"></label>
             <p class="{{ ($todo->status == 1)?"task-completed ":'' }}edit-todo" data-todo-id="{{ $todo->id }}">{{ $todo->to_do }}</p>
             @if($todo->completed_at != null)
-                <i class="completed-at-todo">Completed At: {{ $todo->completed_at }}</i>
+                <small class="text-muted completed-at-todo">Completed At: {{ $todo->completed_at }}</small>
             @else
-                <i class="completed-at-todo"></i>
+                <small class="text-muted completed-at-todo"></small>
             @endif
         </div>
     </div>

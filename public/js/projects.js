@@ -127,7 +127,7 @@ $(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\MAMP\htdocs\immigremploi\resources\js\projects.js */"./resources/js/projects.js");
+module.exports = __webpack_require__(/*! /Applications/MAMP/htdocs/mediasimple/immigremploi/resources/js/projects.js */"./resources/js/projects.js");
 
 
 /***/ })
