@@ -654,7 +654,7 @@ __webpack_require__(/*! ./todo */ "./resources/js/todo.js");
       });
     }
   });
-  $('body').on('click', '.add-new-assignee', function () {
+  $('body').on('click', '.todo-list-section .add-new-assignee', function () {
     $(this).parents('.assignee').find('.add-new-assignee-wrapper').slideToggle();
   });
   $('body').on('change', '.assign_demande', function () {
