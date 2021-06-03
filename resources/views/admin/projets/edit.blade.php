@@ -45,9 +45,9 @@
                 </div>
 
                 <div class="col-lg-8 mt-2">
-                    @if (Auth::user()->role_lvl != 3) {{-- Dont't show this if logged in user is employer --}}
-                        <div class="row  mb-5">
-                            <div class="col-12">
+                    <div class="row  mb-5">
+                        <div class="col-12 height-35">
+                            @if (Auth::user()->role_lvl != 3) {{-- Dont't show this if logged in user is employer --}}
                                 @if (Str::contains($projet->statut, 'imm') || Str::contains($projet->statut, 'new'))
                                     <button class="btn btn-danger mr-2" data-toggle="modal" data-target="#addDemande"><i
                                             class="fas fa-plus-circle pr-2"></i> DEMANDE D'IMMIGRATION</button>
@@ -57,10 +57,11 @@
                                         data-target="#addDemandeRec"><i class="fas fa-plus-circle pr-2"></i> DEMANDE DE
                                         RECRUTEMENT</button>
                                 @endif
-                            </div>
-                            {{-- <div class="col-4 text-right text-white"><strong style="font-size: 18px"></strong></div> --}}
+                            @endif
                         </div>
-                    @endif
+                        {{-- <div class="col-4 text-right text-white"><strong style="font-size: 18px"></strong></div> --}}
+                    </div>
+
                     @foreach ($projet->demandes as $d)
                         @if (Auth::user()->role_lvl > 3 || ($projet->employeur_id == Auth::user()->employeur_id || $d->employeur_id == Auth::user()->employeur_id))
                             @include('admin.projets.partials._demande-'.$d->type, ['p'=>$d])

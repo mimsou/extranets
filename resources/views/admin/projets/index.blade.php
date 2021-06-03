@@ -40,12 +40,14 @@
             <div class="col-12">
                 <div class="card m-b-10 m-t-30 bg-dots p-4 projets_filters" id="projets_filters">
                     <div class="filters d-flex flex-md-row flex-column align-items-center justify-content-between">
-                        <div class="filter_per_personne">
-                            <div class="form-group">
-                                <label for="auditor">Filtrer par personne</label>
-                                {!! Form::select('personne',$personne,null,['class'=>'form-control form-control-sm height-35']) !!}
+                        @if(auth()->user()->role_lvl > 3)
+                            <div class="filter_per_personne">
+                                <div class="form-group">
+                                    <label for="auditor">Filtrer par personne</label>
+                                    {!! Form::select('personne',$personne,null,['class'=>'form-control form-control-sm height-35']) !!}
+                                </div>
                             </div>
-                        </div>
+                        @endif
                         <div class="filter_per_type">
                             <div class="form-group">
                                 <label for="type_de_projet" class="">Type de projet</label>
@@ -65,12 +67,14 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="filter_per_employer">
-                            <div class="form-group">
-                                <label for="employeur">Employeur</label><br>
-                                {!! Form::select('employeur',\App\Models\Employeur::orderBy('nom', 'ASC')->pluck('nom', 'id')->prepend('TOUS',''),null,['class'=>'form-control form-control-sm select2','style'=>'width: 184px !important; height: 25px !important;']) !!}
+                        @if(auth()->user()->role_lvl > 3)
+                            <div class="filter_per_employer">
+                                <div class="form-group">
+                                    <label for="employeur">Employeur</label><br>
+                                    {!! Form::select('employeur',\App\Models\Employeur::orderBy('nom', 'ASC')->pluck('nom', 'id')->prepend('TOUS',''),null,['class'=>'form-control form-control-sm select2','style'=>'width: 184px !important; height: 25px !important;']) !!}
+                                </div>
                             </div>
-                        </div>
+                        @endif
                         <div class="filter_per_status">
                             <div class="form-group">
                                 @php

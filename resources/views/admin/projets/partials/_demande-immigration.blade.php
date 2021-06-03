@@ -89,12 +89,13 @@
                             </button>
                         @endif
                     </div>
-
-                    <div class="todo-strip {{ ($totalTodos == 0)?'in-active':'' }} ml-3 mt-5">
-                        <i class="fas {{ ($totalTodos == 0)?'fa-plus create-todo':'fa-check add-todo' }} bg-white" data-project-id="{{ $p->projet_id }}" data-demande-id="{{ $p->id }}"></i>
-                        <label><span class="demande-completed-todos">{{ $completedTodos }}</span>
-                            complété sur <span class="demande-total-todos">{{ $totalTodos }}</span></label>
-                    </div>
+                    @if(auth()->user()->role_lvl > 3)
+                        <div class="todo-strip {{ ($totalTodos == 0)?'in-active':'' }} ml-3 mt-5">
+                            <i class="fas {{ ($totalTodos == 0)?'fa-plus create-todo':'fa-check add-todo' }} bg-white" data-project-id="{{ $p->projet_id }}" data-demande-id="{{ $p->id }}"></i>
+                            <label><span class="demande-completed-todos">{{ $completedTodos }}</span>
+                                complété sur <span class="demande-total-todos">{{ $totalTodos }}</span></label>
+                        </div>
+                    @endif
                 </div>
             </div>
 

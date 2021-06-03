@@ -22,7 +22,7 @@
 
             <div class="row justify-content-end p-b-45">
                 <div class="col-lg-4 text-right">
-                    <a href="{{ action('EmployeurController@userManagement', $employeur->id) }}" class="btn btn-primary">User Management</a>
+{{--                    <a href="{{ action('EmployeurController@userManagement', $employeur->id) }}" class="btn btn-primary">User Management</a>--}}
                 </div>
             </div>
         </div>
