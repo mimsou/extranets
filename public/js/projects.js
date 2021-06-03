@@ -1,1 +1,162 @@
-!function(e){var t={};function r(n){if(t[n])return t[n].exports;var a=t[n]={i:n,l:!1,exports:{}};return e[n].call(a.exports,a,a.exports,r),a.l=!0,a.exports}r.m=e,r.c=t,r.d=function(e,t,n){r.o(e,t)||Object.defineProperty(e,t,{enumerable:!0,get:n})},r.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},r.t=function(e,t){if(1&t&&(e=r(e)),8&t)return e;if(4&t&&"object"==typeof e&&e&&e.__esModule)return e;var n=Object.create(null);if(r.r(n),Object.defineProperty(n,"default",{enumerable:!0,value:e}),2&t&&"string"!=typeof e)for(var a in e)r.d(n,a,function(t){return e[t]}.bind(null,a));return n},r.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return r.d(t,"a",t),t},r.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},r.p="/",r(r.s=2)}({2:function(e,t,r){e.exports=r("C5Pu")},C5Pu:function(e,t){$((function(){$("body").on("click",".remove_assignee",(function(){if(confirm("Êtes-vous certain de vouloir retirer cet utilisateur?")){var e=$(this),t=$(this).data("id"),r=$(this).data("demand-id");$.ajax({type:"POST",url:route+"remove/assignee",data:{assignee_id:t,demand_id:r},success:function(t){console.log(t),1==t.status&&$(e).parent(".avatar").remove()}})}})),$(".select2").select2(),$(".complete_demande").click((function(e){$(this).attr("href");var t=$(this);e.preventDefault(),$(this).hide(),$(".loader").show(),$.ajax({type:"GET",url:$(this).attr("href"),data:{},success:function(e){$(".complete_demande").show(),$(".loader").hide(),0==e.status?(t.find(".avatar-title").addClass("bg-transparent border mt-1").removeClass("bg-success"),t.find(".avatar-title i").addClass("hide-demande-tick-icon")):(t.find(".avatar-title").addClass("bg-success").removeClass("bg-transparent border mt-1"),t.find(".avatar-title i").removeClass("hide-demande-tick-icon")),console.log(e)}})}))}))}});
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "/";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ "./resources/js/projects.js":
+/*!**********************************!*\
+  !*** ./resources/js/projects.js ***!
+  \**********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$(function () {
+  $('body').on('click', '.edit-immigration .remove_assignee', function () {
+    if (confirm('Êtes-vous certain de vouloir retirer cet utilisateur?')) {
+      var elem = $(this);
+      var assigneeId = $(this).data('id');
+      var demand_id = $(this).data('demand-id');
+      $.ajax({
+        type: 'POST',
+        url: route + 'remove/assignee',
+        data: {
+          assignee_id: assigneeId,
+          demand_id: demand_id
+        },
+        success: function success(result) {
+          console.log(result);
+
+          if (result.status == true) {
+            $(elem).parent('.avatar').remove();
+          }
+        }
+      });
+    }
+  });
+  $('.select2').select2();
+  $('.complete_demande').click(function (e) {
+    var url = $(this).attr('href');
+    var elem = $(this);
+    e.preventDefault();
+    $(this).hide();
+    $('.loader').show();
+    $.ajax({
+      type: 'GET',
+      url: $(this).attr('href'),
+      data: {},
+      success: function success(result) {
+        $('.complete_demande').show();
+        $('.loader').hide();
+
+        if (result.status == 0) {
+          elem.find('.avatar-title').addClass('bg-transparent border mt-1').removeClass('bg-success');
+          elem.find('.avatar-title i').addClass('hide-demande-tick-icon');
+        } else {
+          elem.find('.avatar-title').addClass('bg-success').removeClass('bg-transparent border mt-1');
+          elem.find('.avatar-title i').removeClass('hide-demande-tick-icon');
+        }
+
+        console.log(result);
+      }
+    });
+  });
+});
+
+/***/ }),
+
+/***/ 2:
+/*!****************************************!*\
+  !*** multi ./resources/js/projects.js ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(/*! D:\MAMP\htdocs\immigremploi\resources\js\projects.js */"./resources/js/projects.js");
+
+
+/***/ })
+
+/******/ });

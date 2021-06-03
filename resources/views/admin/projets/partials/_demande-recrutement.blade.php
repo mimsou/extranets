@@ -1,6 +1,6 @@
 <div class="card mb-5 col-12">
     <div class="card-body px-1 py-3">
-        <div class="d-flex justify-content-between">
+        <div class="d-flex justify-content-between edit-immigration">
             <div>
                 <div class="badge-icon"><small class="badge badge-secondary mr-1 mb-3"><strong>RECRUTEMENT</strong></small>
                     @if ($p->facturation_horaire == 'on')
@@ -26,6 +26,7 @@
                     <a href="{{ action('EmployeurController@edit', $p->employeur_id) }}"
                        target="_blank">{{ $p->employeur->nom }}</a>
                 </h3>
+
                 @if(Auth::user()->role_lvl > 3)
                     <div class="assignee mb-3">
                         <div class="assigned-users d-flex">
@@ -41,7 +42,7 @@
                             @endforeach
                         </div>
                         <div class="add-new-assignee-wrapper mt-2" style="display: none">
-                            <select class="form-control assign_demande select2" data-demande-id="{{ $p->id }}" name="assign_user">
+                            <select class="form-control assign_demande select2" data-demande-id="{{ $p->id }}" name="assign_user" style="width: 100%;">
                                 <option></option>
                                 @foreach(\App\Models\User::whereIn('role_lvl', [10, 5])->get() as $user)
                                     <option value="{{ $user['id'] }}"> {{ $user['full_name'] }}</option>
@@ -50,7 +51,7 @@
                         </div>
                     </div>
                 @endif
-               
+
             </div>
 
             <div class="text-muted text-center m-b-10 d-flex">

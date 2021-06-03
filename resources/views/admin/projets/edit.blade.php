@@ -6,7 +6,6 @@
 @endsection
 
 @section('content')
-
     @include('admin.partials._notes', ['model'=>$projet])
     @include('admin.projets.modals.addCandidat')
     @include('admin.projets.modals.addDemande')
@@ -75,7 +74,10 @@
 
     @section('footer')
         <script>
-            $('.select2').select2();
+            // $('.select2').select2({
+            //     'placeholder': "Sélectionnez un utilisateur", //Should be text not placeholder
+            //     allowClear: true
+            // });
 
             $(".assign_demande").select2({
                 'placeholder': "Sélectionnez un utilisateur", //Should be text not placeholder
@@ -97,7 +99,7 @@
                 $('#modal_demande_id').val(demande_id);
                 $('#addCandidat').modal('toggle');
             });
-            
+
             $(document).on('click', '.editdemande', function() {
 
                 $('#editDemande .modal_loading').show();
@@ -210,7 +212,7 @@
 
             window.targetClick = null;
             // show assign dropdown
-            $('.add-new-assignee').click(function(e) {
+            $('.edit-immigration .add-new-assignee').click(function(e) {
                 window.targetClick = $(e.target);
                 $(this).parents('.assignee').find('.add-new-assignee-wrapper').slideToggle();
                 e.stopPropagation();
@@ -218,8 +220,12 @@
             });
             $('body').click(function(e){
                 let target = $(e.target);
-                if(e.target.className != 'select2-selection__placeholder' && !target.is('.select2-dropdown')) {
-                    $('.assignee').find('.add-new-assignee-wrapper').slideUp();
+                console.log(e.target.className);
+                if(e.target.className != 'select2-selection__placeholder' &&
+                    e.target.className != 'select2-selection__rendered' &&
+                    e.target.className != 'select2-selection select2-selection--single'
+                    && !target.is('.select2-dropdown')) {
+                    $('.edit-immigration .assignee').find('.add-new-assignee-wrapper').slideUp();
                 }
 
             });

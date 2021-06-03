@@ -173,6 +173,7 @@ td.dark-row {
 
     .todo-list-section {
         width: 100%;
+        min-height: 10px;
     }
 
     .task-completed {
@@ -181,7 +182,7 @@ td.dark-row {
 
     .todo-list-div {
         height: auto;
-        overflow: scroll;
+        //overflow: scroll;
         overflow-x: hidden;
         // max-height: 600px;
         padding-left: 7px;
@@ -258,6 +259,7 @@ td.dark-row {
     background-color: #f0eff0;
 }
 
+
 .hide-demande-tick-icon{
     display: none;
 }
@@ -281,5 +283,55 @@ td.dark-row {
         div {
             max-width: 250px;
         }
+    }
+}
+
+.remove_assignee_icon{
+    position: absolute;
+    top: -4px;
+    right: 0px;
+    background: red;
+    border-radius: 100px;
+    height: 15px;
+    line-height: 5px;
+    width: 15px;
+    padding-top: 5px;
+    padding-left: 4px;
+    font-size: 11px;
+    cursor: pointer;
+    display: none;
+}
+
+.remove_assignee_icon.small-icon{
+    font-size: 8px;
+    width: 13px;
+    height: 13px;
+    line-height: 3px;
+    text-align: left;
+}
+
+.remove_assignee:hover{
+    .remove_assignee_icon{
+        display: block;
+    }
+}
+
+.scroll-height{
+    //height: 280px;
+    //overflow: scroll;
+    overflow-x: hidden;
+}
+
+.completed-at-todo{
+    font-size: 9px;
+    margin-left: 22px;
+}
+
+.edit-immigration{
+    .select2-selection{
+        height: 30px !important;
+    }
+    .select2-container{
+        width: 100% !important;
     }
 }

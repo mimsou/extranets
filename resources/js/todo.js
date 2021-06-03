@@ -34,25 +34,44 @@
                     backdrop: 'static',
                     keyboard: false
                 });
+                // $('.select2').select2();
+
                 $('.sortable-todo-list').sortable({
                     handle: '.sort-handle',
+                    connectWith: ".connectedSortable",
+                    containment: ".todo-list-group",
+                    dropOnEmpty: true,
                     stop: function (event, ui) {
                         let sortedArray = {};
-                        $('.todo-list-section .option-box-grid').each(function (i, el) {
-                            sortedArray[$(this).find('input').data('todo-id')] = i + 1;
-                        });
+                        let oldElem = $(event.target);
+                        let newElem = $(ui.item[0]);
+                        let newGroupID = newElem.parents('.group-section').data('group-id');
+                        let oldGroupId = oldElem.parents('.group-section').data('group-id');
+                        if(newGroupID != oldGroupId){
+                            newElem.parents('.group-section').find('.todo-list-section .option-box-grid').each(function (i, el) {
+                                sortedArray[$(this).find('input').data('todo-id')] = i + 1;
+                            });
+                        }else{
+                            oldElem.parents('.group-section').find('.todo-list-section .option-box-grid').each(function (i, el) {
+                                sortedArray[$(this).find('input').data('todo-id')] = i + 1;
+                            });
+                        }
                         $.ajax({
                             type: 'POST',
                             url: route + 'todo/update/orders',
                             data: {
-                                todos: sortedArray
+                                todos: sortedArray,
+                                oldGroupId: oldGroupId,
+                                newGroupID: newGroupID
                             },
                             success: function (result) {
                             }
                         });
                     }
                 });
-                callback(result)
+                if(callback != null){
+                    callback(result);
+                }
             },
             error: function (error) {
 
@@ -106,39 +125,43 @@
     });
 
     $('body').on('keyup', '.todo-text', function (e) {
+        let elem = $(this).parents('.group-section');
         let textValue = $(this).val().trim();
         if (textValue != '') {
-            $('.save-todo-message').show();
+            elem.find('.save-todo-message').show();
         } else {
-            $('.save-todo-message').hide();
+            elem.find('.save-todo-message').hide();
         }
         if (e.keyCode == 13) {
-            $('.save-todo-message').trigger('click');
+            elem.find('.save-todo-message').trigger('click');
         }
     });
     $('body').on('click','.add-todo-list', function(){
         $('.save-todo-message').trigger('click');
     });
     $('body').on('click', '.save-todo-message', function () {
-        let elem = $(this);
-        //elem.prop('disabled', true).addClass('disabled');
-        let todoText = $('.todo-text').val();
+        let groupElem = $(this).parents('.group-section');
+        let elem = $(this)
+        let todoText = $(this).parents('.add-todo-message-section').find('.todo-text').val();
         if(todoText.trim() != ''){
-            $('.todo-text').prop('disabled', true);
+            elem.find('.todo-text').prop('disabled', true);
             let projetId = $(this).data('project-id');
             let demandeId = $(this).data('demande-id');
+            let groupId = $(this).data('group-id');
             $.ajax({
                 type: 'POST',
                 url: route + 'todo/save',
                 data: {
                     projet_id: projetId,
                     demande_id: demandeId,
-                    todo: todoText
+                    todo: todoText,
+                    group_id: groupId
                 },
                 success: function (result) {
                     //elem.prop('disabled', false).removeClass('disabled').hide();
-                    $('.todo-text').val('').prop('disabled', false);
-                    $('.todo-list-section').append(result.html);
+                    groupElem.find('.todo-text').val('').prop('disabled', false);
+                    groupElem.find('.todo-list-section').append(result.html);
+                    groupElem.find('.save-todo-message').hide();
                     $('.total-todos').text($('.single-todo-div').length);
                     if(window.click_demande_child.hasClass('demande-todo')){
                         window.click_demande_child.removeClass('text-gray-400').removeClass('new-demande-from-template').addClass('create-demande-todo');
@@ -150,7 +173,7 @@
                     stripTag.find('label').html('<span class="demande-completed-todos">0</span> complété sur <span class="demande-total-todos">0</span>');
                     stripTag.find('.demande-total-todos').text($('.single-todo-div').length);
                     stripTag.find('.demande-completed-todos').text($('.todo-list-section').find('.task-completed').length);
-                    $('.todo-text').focus();
+                    groupElem.find('.todo-text').focus();
                 }
             });
         }
@@ -160,11 +183,12 @@
         let todoId = $(this).data('todo-id');
         let status = 0;
         let numberOfTodos = parseInt($('.total-todos').text());
+        let elem = $(this).parent('.option-box-grid');
         if ($(this).is(':checked')) {
-            $(this).parent('.option-box-grid').find('p').addClass('task-completed');
+            elem.find('p').addClass('task-completed');
             let numberOfCompleted = parseInt($('.number-of-completed-todos').text());
             numberOfCompleted += 1;
-            $('.number-of-completed-todos').text(numberOfCompleted);
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                $('.number-of-completed-todos').text(numberOfCompleted);
             $('.todo-progress').css('width', ((numberOfCompleted * 100) / numberOfTodos) + '%');
             window.click_demande_child.parents('.todo-strip').find('.demande-completed-todos').text(numberOfCompleted);
             status = 1;
@@ -172,7 +196,7 @@
                 window.click_demande_child.parents('.todo-strip').find('.add-todo').removeClass('bg-white').addClass('bg-aqua');
             }
         } else {
-            $(this).parent('.option-box-grid').find('p').removeClass('task-completed');
+            elem.find('p').removeClass('task-completed');
             let numberOfCompleted = parseInt($('.number-of-completed-todos').text());
             numberOfCompleted -= 1;
             $('.number-of-completed-todos').text(numberOfCompleted);
@@ -190,6 +214,11 @@
                 todo_id: todoId
             },
             success: function (result) {
+                if(result.todo.completed_at != null){
+                    elem.find('.completed-at-todo').html('Completed At: '+result.todo.completed_at);
+                }else{
+                    elem.find('.completed-at-todo').html('');
+                }
                 console.log(result);
             }
         });
@@ -249,7 +278,7 @@
                     showTodoList(projet_id, demande_id, function (result) {
                         let stripTag = window.click_demande_child.parents('.todo-strip');
                         stripTag.removeClass('in-active');
-                        stripTag.find('.fas').removeClass('fa-plus').addClass('fa-check');
+                        stripTag.find('.fas').removeClass('fa-plus').addClass('fa-check').removeClass('create-todo').addClass('add-todo');
                         stripTag.find('label').html('<span class="demande-completed-todos">0</span> complété sur <span class="demande-total-todos">0</span>');
                         stripTag.find('.demande-total-todos').text($('.single-todo-div').length);
                     });
@@ -266,11 +295,11 @@
         removeTodoMessage($(this));
     });
 
-    $('body').on('keypress', '.option-box-grid p', function (e) {
-        if (e.keyCode == 13) {
-            removeTodoMessage($(this));
-        }
-    });
+    // $('body').on('keypress', '.option-box-grid p', function (e) {
+    //     if (e.keyCode == 13) {
+    //         removeTodoMessage($(this));
+    //     }
+    // });
 
     function removeTodoMessage(elem){
         let updatedText = elem.text().trim();
@@ -304,6 +333,132 @@
 
     $('body').on("hidden.bs.modal", '#todo-list-modal', function () {
         $("#todo-list-modal").remove()
+    });
+
+    $('body').on('click','.create-group',function(){
+        let groupName = $('.group_name_text').val();
+        let project_id = $(this).data('project-id');
+        let demande_id = $(this).data('demande-id');
+        if(groupName.trim() != ''){
+            $.ajax({
+                type: 'POST',
+                url: route + 'todo/group/create',
+                data: {
+                    projet_id: project_id,
+                    demande_id: demande_id,
+                    group_name: groupName
+                },
+                success: function(result){
+                    let elem = window.click_demande_child;
+                    $('.todo-list-group').append(result);
+                    $('.group_name_text').val('');
+                    let stripTag = window.click_demande_child.parents('.todo-strip');
+                    stripTag.removeClass('in-active');
+                    stripTag.find('.fas').removeClass('create-todo').addClass('add-todo');
+                    stripTag.find('.fas').removeClass('fa-plus').addClass('fa-check');
+                    stripTag.find('label').html('<span class="demande-completed-todos">0</span> complété sur <span class="demande-total-todos">0</span>');
+                }
+            });
+        }
+    });
+
+    $('body').on('click','.todo-list-section .add-new-assignee', function(){
+        $(this).parents('.assignee').find('.add-new-assignee-wrapper').slideToggle();
+    });
+
+    $('body').on('change','.assign_demande', function(){
+        let selectedAssignee = $(this).val();
+        let todoId = $(this).data('todo');
+        let elem = $(this);
+        if(selectedAssignee.trim() != ''){
+            $.ajax({
+                type: 'POST',
+                url: route + 'todo/assign/user',
+                data: {
+                    user: selectedAssignee,
+                    todo_id: todoId
+                },
+                success: function(result){
+                    if(result.is_exists == false){
+                        let html = `
+                        <div class="avatar avatar-xs ml-1 mb-1">
+                           <span data-id="3" data-demand-id="8" class="remove_assignee avatar-title rounded-circle bg-dark">
+                            `+result.initials+` <i class="fas fa-times remove_assignee_icon small-icon" data-id="`+result.user.id+`"></i>
+                           </span>
+                        </div>
+                    `;
+                        elem.parents('.assignee').find('.assigned-user-section').append(html);
+                        elem.parents('.add-new-assignee-wrapper').slideUp();
+                        elem.val('');
+                    }else{
+                        elem.parents('.add-new-assignee-wrapper').slideUp();
+                        elem.val('');
+                    }
+                }
+            });
+        }
+    });
+
+    $('body').on('click', '.todo-list-sec .remove_assignee_icon', function(){
+        let elem = $(this);
+        let assignUserId = $(this).data('id');
+        if(confirm('Are you sure to remove?')){
+            $.ajax({
+                type: 'POST',
+                url: route + 'todo/remove/assignee',
+                data: {
+                    id: assignUserId
+                },
+                success: function(result){
+                    elem.parents('.avatar').remove();
+                }
+            });
+        }
+    });
+    function setCaret() {
+        var el = document.getElementById("content-editable");
+        var range = document.createRange()
+        var sel = window.getSelection();
+        range.setStart(el.childNodes[0], el.childNodes[0].length)
+        range.collapse(true)
+
+        sel.removeAllRanges()
+        sel.addRange(range)
+    }
+    $('body').on('click','.group-section .edit-group-title', function(){
+        let elem = $(this).parents('.group-section').find('.todo-group-title');
+        elem.attr('id','content-editable');
+        window.group_text_edited = elem.text();
+        elem.attr('contenteditable', true).focus();
+        setCaret();
+    });
+
+    $('body').on('dblclick','.todo-group-title', function(){
+        window.group_text_edited = $(this).text();
+        $(this).attr('contenteditable', true).focus();
+    });
+
+    $('body').on('blur','.todo-group-title', function(){
+        let elem = $(this);
+        $(this).attr('contenteditable', false);
+        let groupName = $(this).text();
+        let groupId = $(this).data('group-id');
+        $.ajax({
+            type: 'POST',
+            url: route + 'todo/group/update',
+            data: {
+                group_name: groupName,
+                group_id: groupId
+            },
+            success: function(result){
+                if(result.status == 'deleted'){
+                    elem.parents('.group-section').remove();
+                }else if(result.status == 'error'){
+                    alert('Group is not empty!');
+                    elem.text(window.group_text_edited);
+                }
+            }
+        });
     });
 
 })(window.jQuery);

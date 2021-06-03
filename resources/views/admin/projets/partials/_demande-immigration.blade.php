@@ -1,6 +1,6 @@
 <div class="card mb-5 col-12">
     <div class="card-body px-1 py-3">
-        <div class="d-flex justify-content-between">
+        <div class="d-flex justify-content-between edit-immigration">
             <div>
                 <div class="badge-icon">
                     <small class="badge badge-danger mr-1 mb-3"><strong>IMMIGRATION</strong></small>

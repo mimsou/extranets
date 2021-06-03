@@ -1,5 +1,5 @@
 $(function(){
-    $('body').on('click','.remove_assignee',function(){
+    $('body').on('click','.edit-immigration .remove_assignee',function(){
         if(confirm('Êtes-vous certain de vouloir retirer cet utilisateur?')){
             let elem = $(this);
             let assigneeId = $(this).data('id');

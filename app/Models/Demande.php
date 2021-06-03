@@ -159,4 +159,13 @@ class Demande extends Model
         return $this->todos()->get();
     }
 
+    /**
+     * To get the list og todo groups
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function todo_groups(){
+        return $this->hasMany(TodoGroup::class,'demande_id','id');
+    }
+
 }
