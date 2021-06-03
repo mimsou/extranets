@@ -139,10 +139,12 @@ class DatatablesController extends Controller
                      ->join('employeurs', 'employeurs.id', '=', 'projets.employeur_id')
                      ->whereIn('projets.id', $project_demande);
 
-
-            $projets = $projets->unionAll($db_pd)->get();
+            if($db_pd->first() != null){
+                $projets = $projets->unionAll($db_pd)->get();
+            }
         }
         if($isCompletedChecked == false || $isCompletedChecked == 'false'){
+
             $projectCloned = clone $projets;
             $projectIdsToRemove = [];
             $projectCloned->get()->groupBy('id')->map(function($item) use(&$projectIdsToRemove){
