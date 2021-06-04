@@ -15,17 +15,19 @@
                 </div>
 
                 <h3 class="searchBy-name align-items-center d-flex">
-                    <a href="{{ action('DemandeController@markAsCompletedOrIncomeplete', $p->id) }}" class="complete_demande" data-toggle="tooltip" data-placement="top" title="Marquer cette demande comme terminée">
-                        <div class="avatar avatar-xs mr-2">
-                                <span class="avatar-title rounded-circle {{ (!$p->completed)?'bg-transparent border mt-1':'bg-success' }}">
-                                    <i class="fas fa-check text-white font-weight-bold {{ (!$p->completed)?'hide-demande-tick-icon':'' }}"></i>
-                                </span>
-                        </div>
-                    </a>
+                    @if(Auth::user()->role_lvl > 3)
+                        <a href="{{ action('DemandeController@markAsCompletedOrIncomeplete', $p->id) }}" class="complete_demande" data-toggle="tooltip" data-placement="top" title="Marquer cette demande comme terminée">
+                            <div class="avatar avatar-xs mr-2">
+                                    <span class="avatar-title rounded-circle {{ (!$p->completed)?'bg-transparent border mt-1':'bg-success' }}">
+                                        <i class="fas fa-check text-white font-weight-bold {{ (!$p->completed)?'hide-demande-tick-icon':'' }}"></i>
+                                    </span>
+                            </div>
+                        </a>
 
-                    <div class="spinner-grow spinner-grow loader" role="status" style="display: none">
-                        <span class="sr-only">Loading...</span>
-                    </div>
+                        <div class="spinner-grow spinner-grow loader" role="status" style="display: none">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    @endif
 
                     <a href="{{ action('EmployeurController@edit', $p->employeur_id) }}"
                        target="_blank">{{ $p->employeur->nom }}</a>

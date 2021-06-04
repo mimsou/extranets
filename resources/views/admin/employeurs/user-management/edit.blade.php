@@ -31,7 +31,7 @@
         <section class="pull-up">
             <div class="container">
                 <div class="row ">
-                    <div class="col-lg-8 mx-auto  mt-2">
+                    <div class="col-lg-8 mx-auto  mt-4">
                        <div class="card py-3 m-b-30">
                            <div class="card-body">
                                 <h3 class="">{{ __("Information") }}</h3>

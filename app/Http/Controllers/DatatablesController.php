@@ -78,19 +78,23 @@ class DatatablesController extends Controller
         if($type_de_projet != 'ALL' && $type_de_projet != null){
             if(in_array($type_de_projet,['Immigration','new_projet','Recrutement'])){
                 $statut = \App\Models\Projet::getProjetDeType();
-                $projets->whereIn('projets.statut',array_keys($statut[$type_de_projet]));
+                if(is_array($statut[$type_de_projet])){
+                    $projets->whereIn('projets.statut',array_keys($statut[$type_de_projet]));
+                }else{
+                    $projets->whereIn('projets.statut',[$statut[$type_de_projet]]);
+                }
             }else{
                 $projets->where('projets.statut',$type_de_projet);
             }
         }
 
-        if($employeur != 'ALL' && $employeur != null){
+        if($employeur != 'ALL' && $employeur != null && $employeur != 'undefined'){
             $projets->where(function($query) use ($employeur){
                 $query->where('projets.employeur_id',$employeur)->orWhere('demandes.employeur_id',$employeur);
             });
         }
 
-        if($personne != 'ALL' && $personne != null){
+        if($personne != 'ALL' && $personne != null && $personne != 'undefined'){
             $projets->join('demande_users','demandes.id','=','demande_users.demande_id')
                 ->select(['projets.*', 'employeurs.nom','demandes.projet_id','demandes.id as projet_demande_id',
                           'demande_users.user_id as demande_user_id'])
@@ -98,12 +102,14 @@ class DatatablesController extends Controller
         }
 
         if($statut_du_dossier != 'ALL' && $statut_du_dossier != null){
+            $columnsArray = ['projets.*', 'employeurs.nom','demandes.projet_id',
+                             'demandes.id as projet_demande_id',
+                             'demandes.statut as demandes_statut'];
             if($personne == null || $personne == 'ALL'){
                 $projets->leftJoin('demande_users','demandes.id','=','demande_users.demande_id');
+                $columnsArray[] = 'demande_users.user_id as demande_user_id';
             }
-            $projets->select(['projets.*', 'employeurs.nom','demandes.projet_id',
-                              'demandes.id as projet_demande_id','demande_users.user_id as demande_user_id',
-                              'demandes.statut as demandes_statut']);
+            $projets->select($columnsArray);
             if(in_array($statut_du_dossier,['IMMIGRATION','RECRUTEMENT'])){
                 $demandeStatuArray = [];
                 $demandeStatuArray['IMMIGRATION'] = demandeStatuts();
@@ -156,7 +162,6 @@ class DatatablesController extends Controller
         }else{
             $projets = $projets->get()->unique('id');
         }
-
 //        $projets->distinct('projets.id');
 
 
