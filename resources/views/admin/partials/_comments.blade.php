@@ -2,8 +2,7 @@
     <div class="col-md-12 mt-4">
         <h3 class="color-light-blue">Commentaires</h3>
         <p class="font-weight-bold ml-1 color-light-blue see-all-comments"
-           data-demande-id="{{ $p->id }}"><span class="show-comment-text">Voir tous
-                                les commenataires</span> ( <span
+           data-demande-id="{{ $p->id }}"><span class="show-comment-text">Voir tous les commentaires</span> ( <span
                 class="comment-counts">{{ $notes->count()}}</span> )</p>
     </div>
     <div class="col-md-12">
