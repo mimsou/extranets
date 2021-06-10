@@ -216,7 +216,7 @@
             },
             success: function (result) {
                 if(result.todo.completed_at != null){
-                    elem.find('.completed-at-todo').html('"Terminé le: '+result.todo.completed_at);
+                    elem.find('.completed-at-todo').html('Terminé le: '+result.todo.completed_at);
                 }else{
                     elem.find('.completed-at-todo').html('');
                 }

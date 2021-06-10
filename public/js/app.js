@@ -573,7 +573,7 @@ $(function () {
       },
       success: function success(result) {
         if (result.todo.completed_at != null) {
-          elem.find('.completed-at-todo').html('"Terminé le: ' + result.todo.completed_at);
+          elem.find('.completed-at-todo').html('Terminé le: ' + result.todo.completed_at);
         } else {
           elem.find('.completed-at-todo').html('');
         }
@@ -907,13 +907,13 @@ $(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\MAMP\htdocs\immigremploi\resources\js\app.js */"./resources/js/app.js");
-__webpack_require__(/*! D:\MAMP\htdocs\immigremploi\resources\sass\candidat.scss */"./resources/sass/candidat.scss");
-__webpack_require__(/*! D:\MAMP\htdocs\immigremploi\resources\sass\projet.scss */"./resources/sass/projet.scss");
-__webpack_require__(/*! D:\MAMP\htdocs\immigremploi\resources\sass\general.scss */"./resources/sass/general.scss");
-__webpack_require__(/*! D:\MAMP\htdocs\immigremploi\resources\sass\chat.scss */"./resources/sass/chat.scss");
-__webpack_require__(/*! D:\MAMP\htdocs\immigremploi\resources\sass\comments.scss */"./resources/sass/comments.scss");
-module.exports = __webpack_require__(/*! D:\MAMP\htdocs\immigremploi\resources\css\app.css */"./resources/css/app.css");
+__webpack_require__(/*! /Applications/MAMP/htdocs/mediasimple/immigremploi/resources/js/app.js */"./resources/js/app.js");
+__webpack_require__(/*! /Applications/MAMP/htdocs/mediasimple/immigremploi/resources/sass/candidat.scss */"./resources/sass/candidat.scss");
+__webpack_require__(/*! /Applications/MAMP/htdocs/mediasimple/immigremploi/resources/sass/projet.scss */"./resources/sass/projet.scss");
+__webpack_require__(/*! /Applications/MAMP/htdocs/mediasimple/immigremploi/resources/sass/general.scss */"./resources/sass/general.scss");
+__webpack_require__(/*! /Applications/MAMP/htdocs/mediasimple/immigremploi/resources/sass/chat.scss */"./resources/sass/chat.scss");
+__webpack_require__(/*! /Applications/MAMP/htdocs/mediasimple/immigremploi/resources/sass/comments.scss */"./resources/sass/comments.scss");
+module.exports = __webpack_require__(/*! /Applications/MAMP/htdocs/mediasimple/immigremploi/resources/css/app.css */"./resources/css/app.css");
 
 
 /***/ })

@@ -18,7 +18,7 @@
         </div>
     </div>
 
-    <div class="container-fluid  pull-up">
+    <div class="container  pull-up">
         <div class="row">
             <div class="col-12">
                 <div class="card">
