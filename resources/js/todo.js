@@ -6,6 +6,7 @@
     }
 
     window.click_demande_child = null;
+    window.todoStrip = null;
     $('body').on('click', '.todo-strip label',function(){
         let elem = $(this).parents('.todo-strip');
         if(elem.hasClass('in-active')){
@@ -228,6 +229,7 @@
         let project_id = $(this).data('project-id');
         let demande_id = $(this).data('demande-id');
         window.click_demande_child = $(this);
+        window.todoStrip = $(this).parents('.todo-strip');
         $('.f-loader').show();
         $.ajax({
             type: 'GET',
@@ -333,6 +335,10 @@
 
     $('body').on("hidden.bs.modal", '#todo-list-modal', function () {
         $("#todo-list-modal").remove()
+    });
+
+    $('body').on("hidden.bs.modal", '#todo-template-modal', function () {
+        $("#todo-template-modal").remove()
     });
 
     $('body').on('click','.create-group',function(){
@@ -457,6 +463,36 @@
                     alert('Group is not empty!');
                     elem.text(window.group_text_edited);
                 }
+            }
+        });
+    });
+
+    $('body').on('click','.view-template', function(){
+        let templateId = $(this).data('id');
+        $.ajax({
+            type: 'GET',
+            url: route + 'todo/template/view/'+templateId,
+            success: function(result){
+                $('body').append(result);
+                $('#todo-list-modal').modal('show');
+            }
+        });
+    });
+
+    $('body').on('click','.delete-template-content', function(){
+        let demande_id = $(this).data('demande-id');
+        let projet_id = $(this).data('projet-id');
+        $.ajax({
+            type: 'POST',
+            url: route + 'todo/template/content/delete',
+            data: {
+                demande_id: demande_id,
+                projet_id: projet_id
+            },
+            success: function(result){
+                window.todoStrip.find('.demande-completed-todos').html(result.completed);
+                window.todoStrip.find('.demande-total-todos').html(result.total);
+                $('#todo-list-modal').modal('hide');
             }
         });
     });

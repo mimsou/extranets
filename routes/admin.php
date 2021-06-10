@@ -55,6 +55,10 @@ Route::post('todo/group/create','TodoController@createGroup');
 Route::post('todo/assign/user','TodoController@assignUser');
 Route::post('todo/remove/assignee','TodoController@removeAssignee');
 Route::post('todo/group/update','TodoController@updateTodoGroup');
+Route::get('todo/templates','TodoController@manageTemplates');
+Route::get('todo/templates/delete/{id}','TodoController@deleteTemplate')->name('delete.template');
+Route::get('todo/template/view/{id}','TodoController@viewTemplateContent');
+Route::post('todo/template/content/delete','TodoController@deleteTemplateContent');
 
 Route::resource('/candidats', 'CandidatController');
 Route::post('/candidats/{candidat_id}/upload-addtional-reources', 'CandidatController@uploadAddtionalResources');

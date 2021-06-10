@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class TodoGroup extends Model
 {
     use HasFactory;
-    protected $fillable = ['group_name','status','demande_id','projet_id','sort_order'];
+    protected $fillable = ['group_name','status','demande_id','projet_id','sort_order','todo_title'];
 
     public function todos(){
         return $this->hasMany(Todo::class,'group_id','id');

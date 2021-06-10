@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\TodoTemplatesDataTable;
 use App\Mail\TodoAssigned;
 use App\Models\Todo;
 use App\Models\TodoAssignee;
@@ -9,6 +10,7 @@ use App\Models\TodoGroup;
 use App\Models\TodoTemplate;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Mail;
@@ -38,10 +40,11 @@ class TodoController extends Controller
         $todoModel->created_by = Auth::user()->id;
         $todoModel->save();
         $singleTodo = view('admin.projets.modals._singleTodo', ['todo' => $todoModel, 'demandeId' => $request->demande_id])->render();
-        return response()->json(['status'  => true,
-                                 'message' => 'Todo saved successfully!',
-                                 'todo'    => $todoModel,
-                                 'html'    => $singleTodo]);
+        return response()->json(
+            ['status' => true,
+             'message' => 'Todo saved successfully!',
+             'todo' => $todoModel,
+             'html' => $singleTodo]);
     }
 
     /**
@@ -89,9 +92,10 @@ class TodoController extends Controller
     public function saveTemplate(Request $request)
     {
         //$todos = Todo::where(['projet_id' => $request->project_id, 'demande_id' => $request->demande_id])->orderBy('order')->pluck('to_do');
-        $todoGroup = TodoGroup::with(['todos' => function ($query) {
-            return $query->orderBy('order');
-        }])->where(['projet_id' => $request->project_id, 'demande_id' => $request->demande_id])->get();
+        $todoGroup = TodoGroup::with(
+            ['todos' => function($query) {
+                return $query->orderBy('order');
+            }])->where(['projet_id' => $request->project_id, 'demande_id' => $request->demande_id])->get();
         $todoTemplate = new TodoTemplate;
         $todoTemplate->template_name = $request->template_name;
         $todoTemplate->todos = $todoGroup->toJson();
@@ -128,7 +132,7 @@ class TodoController extends Controller
     public function updateTodoOrder(Request $request)
     {
         $todos = $request->todos;
-        foreach ($todos as $todoId => $order) {
+        foreach($todos as $todoId => $order) {
             $todoModel = Todo::find($todoId);
             if($request->oldGroupId != $request->newGroupID) {
                 $todoModel->group_id = $request->newGroupID;
@@ -147,9 +151,10 @@ class TodoController extends Controller
      */
     public function createTodoFromTemplate(Request $request)
     {
-        $templateTodos = TodoTemplate::find($request->template_id)->todos;
+        $template = TodoTemplate::find($request->template_id);
+        $templateTodos = $template->todos;
         $OrderIndex = 1;
-        foreach (json_decode($templateTodos, true) as $key => $groupTodo) {
+        foreach(json_decode($templateTodos, true) as $key => $groupTodo) {
 
             $todoGroupModel = new TodoGroup;
             $todoGroupModel->group_name = $groupTodo['group_name'];
@@ -157,9 +162,10 @@ class TodoController extends Controller
             $todoGroupModel->demande_id = $request->demande_id;
             $todoGroupModel->projet_id = $request->projet_id;
             $todoGroupModel->sort_order = $groupTodo['sort_order'];
+            $todoGroupModel->todo_title = $template->template_name;
             $todoGroupModel->save();
             if(!empty($groupTodo['todos'])) {
-                foreach ($groupTodo['todos'] as $key => $todo) {
+                foreach($groupTodo['todos'] as $key => $todo) {
                     $todoModel = new Todo;
                     $todoModel->projet_id = $request->projet_id;
                     $todoModel->group_id = $todoGroupModel->id;
@@ -213,7 +219,8 @@ class TodoController extends Controller
         $todoGroup->sort_order = $todoGroupModel->newQuery()->max('sort_order') + 1;
         $todoGroup->save();
         $groupModel = TodoGroup::with(['todos'])->find($todoGroup->id);
-        return view('admin.projets.modals._todo_single_group',
+        return view(
+            'admin.projets.modals._todo_single_group',
             ['group' => $groupModel, 'projectId' => $request->projet_id, 'demandeId' => $request->demande_id])->render();
     }
 
@@ -233,8 +240,9 @@ class TodoController extends Controller
         $assignUser->save();
         $assignedUser = TodoAssignee::with(['user_details'])->find($assignUser->id);
         $this->sendEmail($request->user, $request->todo_id);
-        return response()->json(['status'   => true, 'message' => 'User assigned to todo', 'user' => $assignedUser,
-                                 'initials' => $assignedUser->user_details->initials(), 'is_exists' => $isAlreadyExists]);
+        return response()->json(
+            ['status' => true, 'message' => 'User assigned to todo', 'user' => $assignedUser,
+             'initials' => $assignedUser->user_details->initials(), 'is_exists' => $isAlreadyExists]);
     }
 
     /**
@@ -285,5 +293,46 @@ class TodoController extends Controller
             $groupModel->save();
             return response()->json(['status' => 'updated']);
         }
+    }
+
+    public function manageTemplates(TodoTemplatesDataTable $dataTable)
+    {
+        return $dataTable->render('admin.todo.templates');
+    }
+
+    public function deleteTemplate($id)
+    {
+        TodoTemplate::find($id)->delete();
+        return redirect()->back();
+    }
+
+    public function viewTemplateContent($id)
+    {
+        $template = TodoTemplate::find($id);
+        $todosList = collect(json_decode($template->todos, true));
+        return view('admin.projets.modals._todo-list-only', ['groups' => $todosList, 'template' => $template]);
+    }
+
+    public function deleteTemplateContent(Request $request)
+    {
+        $todoGroups = TodoGroup::with(['todos'])
+            ->where(['demande_id' => $request->demande_id, 'projet_id' => $request->projet_id])->get();
+        foreach($todoGroups as $key => $todoGroup) {
+            if($todoGroup->todo_title != '' && $todoGroup->todo_title != null) {
+                $todos = $todoGroup->todos;
+                foreach($todos as $key => $todo) {
+                    $todo->delete();
+                }
+                $todoGroup->delete();
+            }
+        }
+        $remainTodos = Todo::where(['demande_id' => $request->demande_id, 'projet_id' => $request->projet_id])->get();
+        $completedTodos = 0;
+        $totalTodos = 0;
+        if(!$remainTodos->isEmpty()) {
+            $completedTodos = $remainTodos->where('status', 1)->count();
+            $totalTodos = $remainTodos->count();
+        }
+        return response()->json(['status' => true, 'message' => 'Template deleted', 'completed' => $completedTodos, 'total' => $totalTodos]);
     }
 }

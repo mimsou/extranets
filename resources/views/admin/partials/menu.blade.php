@@ -103,6 +103,14 @@
                         <i class="icon-placeholder fas fa-user-lock"></i>
                     </span>
                 </a>
+                <a href="{{ action('TodoController@manageTemplates') }}" class="{{ classActiveSegment(3,'templates') }} menu-link">
+                    <span class="menu-label">
+                        <span class="menu-name">{{ __('Todo Templates') }}</span>
+                    </span>
+                    <span class="menu-icon">
+                        <i class="icon-placeholder fas fa-file-excel-o"></i>
+                    </span>
+                </a>
             </li>
         </ul>
     </li>

@@ -357,6 +357,7 @@ $(function () {
   }
 
   window.click_demande_child = null;
+  window.todoStrip = null;
   $('body').on('click', '.todo-strip label', function () {
     var elem = $(this).parents('.todo-strip');
 
@@ -572,7 +573,7 @@ $(function () {
       },
       success: function success(result) {
         if (result.todo.completed_at != null) {
-          elem.find('.completed-at-todo').html('Completed At: ' + result.todo.completed_at);
+          elem.find('.completed-at-todo').html('"Terminé le: ' + result.todo.completed_at);
         } else {
           elem.find('.completed-at-todo').html('');
         }
@@ -585,6 +586,7 @@ $(function () {
     var project_id = $(this).data('project-id');
     var demande_id = $(this).data('demande-id');
     window.click_demande_child = $(this);
+    window.todoStrip = $(this).parents('.todo-strip');
     $('.f-loader').show();
     $.ajax({
       type: 'GET',
@@ -689,6 +691,9 @@ $(function () {
   });
   $('body').on("hidden.bs.modal", '#todo-list-modal', function () {
     $("#todo-list-modal").remove();
+  });
+  $('body').on("hidden.bs.modal", '#todo-template-modal', function () {
+    $("#todo-template-modal").remove();
   });
   $('body').on('click', '.create-group', function () {
     var groupName = $('.group_name_text').val();
@@ -805,6 +810,34 @@ $(function () {
           alert('Group is not empty!');
           elem.text(window.group_text_edited);
         }
+      }
+    });
+  });
+  $('body').on('click', '.view-template', function () {
+    var templateId = $(this).data('id');
+    $.ajax({
+      type: 'GET',
+      url: route + 'todo/template/view/' + templateId,
+      success: function success(result) {
+        $('body').append(result);
+        $('#todo-list-modal').modal('show');
+      }
+    });
+  });
+  $('body').on('click', '.delete-template-content', function () {
+    var demande_id = $(this).data('demande-id');
+    var projet_id = $(this).data('projet-id');
+    $.ajax({
+      type: 'POST',
+      url: route + 'todo/template/content/delete',
+      data: {
+        demande_id: demande_id,
+        projet_id: projet_id
+      },
+      success: function success(result) {
+        window.todoStrip.find('.demande-completed-todos').html(result.completed);
+        window.todoStrip.find('.demande-total-todos').html(result.total);
+        $('#todo-list-modal').modal('hide');
       }
     });
   });

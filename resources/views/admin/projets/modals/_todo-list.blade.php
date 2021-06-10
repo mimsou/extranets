@@ -13,7 +13,14 @@
                             <i class="fas fa-check text-white" style="font-size: 40px"></i>
                         </div>
                     </div>
-                    <h3 class="pt-3">Liste de contrôle</h3>
+                    <h3 class="pt-3">
+                        @if(!$groups->isEmpty() && $groups[0]->todo_title != null)
+                            {{ $groups[0]->todo_title }}
+                            <i class="fas fa-trash text-danger text-sm cursor-pointer delete-template-content" data-demande-id="{{ $groups[0]->demande_id }}" data-projet-id="{{ $groups[0]->projet_id }}"></i>
+                        @else
+                            Liste de contrôle
+                        @endif
+                    </h3>
                 </div>
                 <hr/>
                 <div class="row">
