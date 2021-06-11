@@ -10,7 +10,12 @@ use App\Models\TodoGroup;
 use App\Models\TodoTemplate;
 use App\Models\User;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Model;
+use Exception;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Mail;
@@ -25,7 +30,7 @@ class TodoController extends Controller
      * Save ToDo
      *
      * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function save(Request $request)
     {
@@ -41,10 +46,10 @@ class TodoController extends Controller
         $todoModel->save();
         $singleTodo = view('admin.projets.modals._singleTodo', ['todo' => $todoModel, 'demandeId' => $request->demande_id])->render();
         return response()->json(
-            ['status' => true,
+            ['status'  => true,
              'message' => 'Todo saved successfully!',
-             'todo' => $todoModel,
-             'html' => $singleTodo]);
+             'todo'    => $todoModel,
+             'html'    => $singleTodo]);
     }
 
     /**
@@ -87,13 +92,13 @@ class TodoController extends Controller
      * Save Template
      *
      * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function saveTemplate(Request $request)
     {
         //$todos = Todo::where(['projet_id' => $request->project_id, 'demande_id' => $request->demande_id])->orderBy('order')->pluck('to_do');
         $todoGroup = TodoGroup::with(
-            ['todos' => function($query) {
+            ['todos' => function ($query) {
                 return $query->orderBy('order');
             }])->where(['projet_id' => $request->project_id, 'demande_id' => $request->demande_id])->get();
         $todoTemplate = new TodoTemplate;
@@ -108,7 +113,7 @@ class TodoController extends Controller
      * Mark todo task as completed or imcompleted
      *
      * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function updateStatus(Request $request)
     {
@@ -127,12 +132,12 @@ class TodoController extends Controller
      * Change order of todo by drag and down
      *
      * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function updateTodoOrder(Request $request)
     {
         $todos = $request->todos;
-        foreach($todos as $todoId => $order) {
+        foreach ($todos as $todoId => $order) {
             $todoModel = Todo::find($todoId);
             if($request->oldGroupId != $request->newGroupID) {
                 $todoModel->group_id = $request->newGroupID;
@@ -147,14 +152,14 @@ class TodoController extends Controller
      * Create todos from template
      *
      * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function createTodoFromTemplate(Request $request)
     {
         $template = TodoTemplate::find($request->template_id);
         $templateTodos = $template->todos;
         $OrderIndex = 1;
-        foreach(json_decode($templateTodos, true) as $key => $groupTodo) {
+        foreach (json_decode($templateTodos, true) as $key => $groupTodo) {
 
             $todoGroupModel = new TodoGroup;
             $todoGroupModel->group_name = $groupTodo['group_name'];
@@ -165,7 +170,7 @@ class TodoController extends Controller
             $todoGroupModel->todo_title = $template->template_name;
             $todoGroupModel->save();
             if(!empty($groupTodo['todos'])) {
-                foreach($groupTodo['todos'] as $key => $todo) {
+                foreach ($groupTodo['todos'] as $key => $todo) {
                     $todoModel = new Todo;
                     $todoModel->projet_id = $request->projet_id;
                     $todoModel->group_id = $todoGroupModel->id;
@@ -185,7 +190,7 @@ class TodoController extends Controller
      *
      * @param Request $request
      * @param $todoId
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function updateTodo(Request $request, $todoId)
     {
@@ -228,7 +233,7 @@ class TodoController extends Controller
      * Assign admin user to ToDo
      *
      * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function assignUser(Request $request)
     {
@@ -241,7 +246,7 @@ class TodoController extends Controller
         $assignedUser = TodoAssignee::with(['user_details'])->find($assignUser->id);
         $this->sendEmail($request->user, $request->todo_id);
         return response()->json(
-            ['status' => true, 'message' => 'User assigned to todo', 'user' => $assignedUser,
+            ['status'   => true, 'message' => 'User assigned to todo', 'user' => $assignedUser,
              'initials' => $assignedUser->user_details->initials(), 'is_exists' => $isAlreadyExists]);
     }
 
@@ -262,7 +267,7 @@ class TodoController extends Controller
      * Remove admin assignee from Todo
      *
      * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function removeAssignee(Request $request)
     {
@@ -274,8 +279,8 @@ class TodoController extends Controller
      * Update ToDo Group
      *
      * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     * @throws \Exception
+     * @return JsonResponse
+     * @throws Exception
      */
     public function updateTodoGroup(Request $request)
     {
@@ -295,17 +300,34 @@ class TodoController extends Controller
         }
     }
 
+    /**
+     * @param TodoTemplatesDataTable $dataTable
+     * @return mixed
+     */
     public function manageTemplates(TodoTemplatesDataTable $dataTable)
     {
         return $dataTable->render('admin.todo.templates');
     }
 
+    /**
+     * Delete Todo Template
+     *
+     * @param $id
+     * @return RedirectResponse
+     */
     public function deleteTemplate($id)
     {
         TodoTemplate::find($id)->delete();
+        flash('Template has been deleted successfully')->success();
         return redirect()->back();
     }
 
+    /**
+     * View list of todos in template
+     *
+     * @param $id
+     * @return Application|Factory|View
+     */
     public function viewTemplateContent($id)
     {
         $template = TodoTemplate::find($id);
@@ -313,6 +335,12 @@ class TodoController extends Controller
         return view('admin.projets.modals._todo-list-only', ['groups' => $todosList, 'template' => $template]);
     }
 
+    /**
+     * Remove template todos from demande
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function deleteTemplateContent(Request $request)
     {
         $todoGroups = TodoGroup::with(['todos'])
@@ -332,5 +360,6 @@ class TodoController extends Controller
             $totalTodos = $remainTodos->count();
         }
         return response()->json(['status' => true, 'message' => 'Template deleted', 'completed' => $completedTodos, 'total' => $totalTodos]);
+
     }
 }

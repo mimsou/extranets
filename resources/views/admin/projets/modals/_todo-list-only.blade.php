@@ -18,32 +18,29 @@
                     </h3>
                 </div>
                 <hr/>
-                <div class="row">
-                    <div class="col-md-7">
-                        <small><span class="number-of-completed-todos">0</span> complété sur
-                            <span class="total-todos">0</span></small>
-                        <div class="time-progresssion mb-2">
-                            <div class="progression todo-progress text-right" id="part_prog_"
-                                 style="transition: all 0.5s ease; background-color: aquamarine; height:7px; border-radius: 13px;"></div>
-                        </div>
-                    </div>
-                </div>
+                {{--                <div class="row">--}}
+                {{--                    <div class="col-md-7">--}}
+                {{--                        <small><span class="number-of-completed-todos">0</span> complété sur--}}
+                {{--                            <span class="total-todos">0</span></small>--}}
+                {{--                        <div class="time-progresssion mb-2">--}}
+                {{--                            <div class="progression todo-progress text-right" id="part_prog_"--}}
+                {{--                                 style="transition: all 0.5s ease; background-color: aquamarine; height:7px; border-radius: 13px;"></div>--}}
+                {{--                        </div>--}}
+                {{--                    </div>--}}
+                {{--                </div>--}}
                 <div class="row todo-list-div">
                     <div class="col-md-12 todo-list-group scroll-height">
                         @foreach($groups as $key => $group)
-                            <div class="row group-section" >
+                            <div class="row group-section">
                                 <div class="col-md-12 mt-3">
                                     <h3 class="d-inline float-left todo-group-title">{{ $group['group_name'] }}</h3>
-                                    <span class="d-inline btn float-left pt-1 pl-3 cursor-pointer">
-                                        <i class="fas fa-pencil edit-group-title"></i>
-                                    </span>
                                 </div>
                                 <div class="todo-list-section col-md-12 pl-4 connectedSortable">
                                     @foreach(collect($group['todos'])->sortBy('order') as $key => $todo)
                                         <div class="row single-todo-div">
                                             <div class="col-md-9">
                                                 <div class="option-box-grid">
-                                                    <input class="todo-checkbox"  name="bigradios" type="checkbox">
+                                                    <input class="todo-checkbox" name="bigradios" type="checkbox">
                                                     <label for="check"></label>
                                                     <p class="edit-todo">{{ $todo['to_do'] }}</p>
                                                 </div>
@@ -63,4 +60,3 @@
         </div>
     </div>
 </div>
-
