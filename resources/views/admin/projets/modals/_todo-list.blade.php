@@ -19,6 +19,7 @@
                             <i class="fas fa-trash text-danger text-sm cursor-pointer delete-template-content" data-demande-id="{{ $groups[0]->demande_id }}" data-projet-id="{{ $groups[0]->projet_id }}"></i>
                         @else
                             Liste de contrôle
+                            <i style="display: {{ ($groups->isEmpty())?'none':'initial' }}" class="fas fa-trash text-danger text-sm cursor-pointer delete-template-content" data-demande-id="{{ $demandeId }}" data-projet-id="{{ $projectId }}"></i>
                         @endif
                     </h3>
                 </div>

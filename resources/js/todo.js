@@ -20,6 +20,7 @@
         let demande_id = $(this).data('demande-id');
         $('.f-loader').show();
         window.click_demande_child = $(this);
+        window.todoStrip = null;
         showTodoList(project_id, demande_id);
     });
 
@@ -163,6 +164,7 @@
                     groupElem.find('.todo-text').val('').prop('disabled', false);
                     groupElem.find('.todo-list-section').append(result.html);
                     groupElem.find('.save-todo-message').hide();
+                    $('.delete-template-content').show();
                     $('.total-todos').text($('.single-todo-div').length);
                     if(window.click_demande_child.hasClass('demande-todo')){
                         window.click_demande_child.removeClass('text-gray-400').removeClass('new-demande-from-template').addClass('create-demande-todo');
@@ -355,6 +357,7 @@
                     group_name: groupName
                 },
                 success: function(result){
+                    $('.delete-template-content').show();
                     let elem = window.click_demande_child;
                     $('.todo-list-group').append(result);
                     $('.group_name_text').val('');
@@ -480,21 +483,39 @@
     });
 
     $('body').on('click','.delete-template-content', function(){
-        let demande_id = $(this).data('demande-id');
-        let projet_id = $(this).data('projet-id');
-        $.ajax({
-            type: 'POST',
-            url: route + 'todo/template/content/delete',
-            data: {
-                demande_id: demande_id,
-                projet_id: projet_id
-            },
-            success: function(result){
-                window.todoStrip.find('.demande-completed-todos').html(result.completed);
-                window.todoStrip.find('.demande-total-todos').html(result.total);
-                $('#todo-list-modal').modal('hide');
-            }
-        });
+        if(confirm('Are you sure to delete all?')){
+            let demande_id = $(this).data('demande-id');
+            let projet_id = $(this).data('projet-id');
+            $.ajax({
+                type: 'POST',
+                url: route + 'todo/template/content/delete',
+                data: {
+                    demande_id: demande_id,
+                    projet_id: projet_id
+                },
+                success: function(result){
+                    if(window.todoStrip != null && window.todoStrip != undefined){
+                        window.todoStrip.find('.demande-completed-todos').html(result.completed);
+                        window.todoStrip.find('.demande-total-todos').html(result.total);
+                        let stripTag = window.todoStrip;
+                        stripTag.addClass('in-active');
+                        stripTag.find('.fas').removeClass('add-todo').addClass('create-todo');
+                        stripTag.find('.fas').removeClass('fa-check').addClass('fa-plus');
+                        stripTag.find('label').html('liste de contrôle');
+                    }else{
+                        window.click_demande_child.parents('.todo-strip').find('.demande-completed-todos').html(result.completed);
+                        window.click_demande_child.parents('.todo-strip').find('.demande-total-todos').html(result.total);
+
+                        let stripTag = window.click_demande_child.parents('.todo-strip');
+                        stripTag.addClass('in-active');
+                        stripTag.find('.fas').removeClass('add-todo').addClass('create-todo');
+                        stripTag.find('.fas').removeClass('fa-check').addClass('fa-plus');
+                        stripTag.find('label').html('liste de contrôle');
+                    }
+                    $('#todo-list-modal').modal('hide');
+                }
+            });
+        }
     });
 
 })(window.jQuery);

@@ -105,10 +105,10 @@
                 </a>
                 <a href="{{ action('TodoController@manageTemplates') }}" class="{{ classActiveSegment(3,'templates') }} menu-link">
                     <span class="menu-label">
-                        <span class="menu-name">{{ __('Todo Templates') }}</span>
+                        <span class="menu-name">{{ __('Liste de contrôle') }}</span>
                     </span>
                     <span class="menu-icon">
-                        <i class="icon-placeholder fas fa-file-excel-o"></i>
+                        <i class="icon-placeholder fas fa-clipboard-list"></i>
                     </span>
                 </a>
             </li>

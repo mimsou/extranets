@@ -63,8 +63,8 @@ class TodoTemplatesDataTable extends DataTable
     {
         return [
             Column::make('id'),
-            Column::make('template_name'),
-            Column::make('created_at'),
+            Column::make('template_name')->title('Gabarit'),
+            Column::make('created_at')->title('Créé le'),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)

@@ -318,13 +318,11 @@ class TodoController extends Controller
         $todoGroups = TodoGroup::with(['todos'])
             ->where(['demande_id' => $request->demande_id, 'projet_id' => $request->projet_id])->get();
         foreach($todoGroups as $key => $todoGroup) {
-            if($todoGroup->todo_title != '' && $todoGroup->todo_title != null) {
-                $todos = $todoGroup->todos;
-                foreach($todos as $key => $todo) {
-                    $todo->delete();
-                }
-                $todoGroup->delete();
+            $todos = $todoGroup->todos;
+            foreach($todos as $key => $todo) {
+                $todo->delete();
             }
+            $todoGroup->delete();
         }
         $remainTodos = Todo::where(['demande_id' => $request->demande_id, 'projet_id' => $request->projet_id])->get();
         $completedTodos = 0;

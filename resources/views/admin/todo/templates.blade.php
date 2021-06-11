@@ -12,7 +12,7 @@
         <div class="container">
             <div class="row p-b-60 p-t-60">
                 <div class="col-md-6 text-white p-b-30">
-                    <h1>Liste des templates</h1>
+                    <h1>Liste de contrôle</h1>
                 </div>
             </div>
         </div>

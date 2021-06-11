@@ -372,6 +372,7 @@ $(function () {
     var demande_id = $(this).data('demande-id');
     $('.f-loader').show();
     window.click_demande_child = $(this);
+    window.todoStrip = null;
     showTodoList(project_id, demande_id);
   });
 
@@ -515,6 +516,7 @@ $(function () {
           groupElem.find('.todo-text').val('').prop('disabled', false);
           groupElem.find('.todo-list-section').append(result.html);
           groupElem.find('.save-todo-message').hide();
+          $('.delete-template-content').show();
           $('.total-todos').text($('.single-todo-div').length);
 
           if (window.click_demande_child.hasClass('demande-todo')) {
@@ -710,6 +712,7 @@ $(function () {
           group_name: groupName
         },
         success: function success(result) {
+          $('.delete-template-content').show();
           var elem = window.click_demande_child;
           $('.todo-list-group').append(result);
           $('.group_name_text').val('');
@@ -825,21 +828,44 @@ $(function () {
     });
   });
   $('body').on('click', '.delete-template-content', function () {
-    var demande_id = $(this).data('demande-id');
-    var projet_id = $(this).data('projet-id');
-    $.ajax({
-      type: 'POST',
-      url: route + 'todo/template/content/delete',
-      data: {
-        demande_id: demande_id,
-        projet_id: projet_id
-      },
-      success: function success(result) {
-        window.todoStrip.find('.demande-completed-todos').html(result.completed);
-        window.todoStrip.find('.demande-total-todos').html(result.total);
-        $('#todo-list-modal').modal('hide');
-      }
-    });
+    if (confirm('Are you sure to delete all?')) {
+      var demande_id = $(this).data('demande-id');
+      var projet_id = $(this).data('projet-id');
+      $.ajax({
+        type: 'POST',
+        url: route + 'todo/template/content/delete',
+        data: {
+          demande_id: demande_id,
+          projet_id: projet_id
+        },
+        success: function success(result) {
+          if (window.todoStrip != null && window.todoStrip != undefined) {
+            window.todoStrip.find('.demande-completed-todos').html(result.completed);
+            window.todoStrip.find('.demande-total-todos').html(result.total);
+            var stripTag = window.todoStrip;
+            stripTag.addClass('in-active');
+            stripTag.find('.fas').removeClass('add-todo').addClass('create-todo');
+            stripTag.find('.fas').removeClass('fa-check').addClass('fa-plus');
+            stripTag.find('label').html('liste de contrôle');
+          } else {
+            window.click_demande_child.parents('.todo-strip').find('.demande-completed-todos').html(result.completed);
+            window.click_demande_child.parents('.todo-strip').find('.demande-total-todos').html(result.total);
+
+            var _stripTag = window.click_demande_child.parents('.todo-strip');
+
+            _stripTag.addClass('in-active');
+
+            _stripTag.find('.fas').removeClass('add-todo').addClass('create-todo');
+
+            _stripTag.find('.fas').removeClass('fa-check').addClass('fa-plus');
+
+            _stripTag.find('label').html('liste de contrôle');
+          }
+
+          $('#todo-list-modal').modal('hide');
+        }
+      });
+    }
   });
 })(window.jQuery);
 
