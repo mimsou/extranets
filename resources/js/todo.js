@@ -322,8 +322,14 @@
                     }, {type: 'success'});
                     if (updatedText == '') {
                         elem.parents('.single-todo-div').remove();
+                        $('.number-of-completed-todos').html($('.todo-checkbox:checked').length);
+                        $('.demande-completed-todos').html($('.todo-checkbox:checked').length);
                         window.click_demande_child.parents('.todo-strip').find('.demande-total-todos').text($('.single-todo-div').length);
                         $('.total-todos').text($('.single-todo-div').length);
+
+                        let numberOfCompleted = parseInt($('.todo-checkbox:checked').length);
+                        let numberOfTodos = $('.single-todo-div').length;
+                        $('.todo-progress').css('width', ((numberOfCompleted * 100) / numberOfTodos) + '%');
                     }
                 }
                 elem.attr('contenteditable', false);
