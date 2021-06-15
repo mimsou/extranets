@@ -489,7 +489,7 @@
     });
 
     $('body').on('click','.delete-template-content', function(){
-        if(confirm('Are you sure to delete all?')){
+        if(confirm('Êtes-vous certain de vouloir supprimer cette liste?')){
             let demande_id = $(this).data('demande-id');
             let projet_id = $(this).data('projet-id');
             $.ajax({
