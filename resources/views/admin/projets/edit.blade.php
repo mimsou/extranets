@@ -85,8 +85,8 @@
             });
 
             $('.select2_candidats').select2();
-            $('.select2_employeurs').select2();c
-            $('.select2_employeurs_rec').select2();
+            // $('.select2_employeurs').select2();
+            // $('.select2_employeurs_rec').select2();
 
             var user_role = '{{ Auth::user()->role_lvl }}';
 

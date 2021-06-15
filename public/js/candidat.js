@@ -149,7 +149,7 @@
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Applications/MAMP/htdocs/mediasimple/immigremploi/resources/js/candidat.js */"./resources/js/candidat.js");
+module.exports = __webpack_require__(/*! /Users/jcgaudette/Sites/immigremploi/resources/js/candidat.js */"./resources/js/candidat.js");
 
 
 /***/ })
