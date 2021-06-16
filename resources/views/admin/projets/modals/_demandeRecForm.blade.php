@@ -34,7 +34,7 @@
         <div class="col-md-6">
             <div class="form-group">
                 <label for="employeur_id">{{ __('Employeur') }}*</label>
-                {{ Form::select('employeur_id', \App\Models\Employeur::orderBy('nom', 'asc')->pluck('nom', 'id'), null, ['class'=>'form-control text-center select2_employeurs_rec', 'id'=>'employeur_id', "style"=>"width:100%", 'placeholder'=>'Choisir un employeur', 'required']) }}
+                {{ Form::select('employeur_id', \App\Models\Employeur::orderBy('nom', 'asc')->pluck('nom', 'id'), null, ['class'=>'form-control text-center select2_employeurs_rec', 'id'=>'employeur_id_rec', "style"=>"width:100%", 'placeholder'=>'Choisir un employeur', 'required']) }}
             </div>
         </div>
 
