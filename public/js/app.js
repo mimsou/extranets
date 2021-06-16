@@ -307,7 +307,7 @@ $(function () {
       });
     }
   });
-  $('.select2').select2();
+  $('select.select2').select2();
   $('.complete_demande').click(function (e) {
     var url = $(this).attr('href');
     var elem = $(this);
@@ -938,13 +938,13 @@ $(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/jcgaudette/Sites/immigremploi/resources/js/app.js */"./resources/js/app.js");
-__webpack_require__(/*! /Users/jcgaudette/Sites/immigremploi/resources/sass/candidat.scss */"./resources/sass/candidat.scss");
-__webpack_require__(/*! /Users/jcgaudette/Sites/immigremploi/resources/sass/projet.scss */"./resources/sass/projet.scss");
-__webpack_require__(/*! /Users/jcgaudette/Sites/immigremploi/resources/sass/general.scss */"./resources/sass/general.scss");
-__webpack_require__(/*! /Users/jcgaudette/Sites/immigremploi/resources/sass/chat.scss */"./resources/sass/chat.scss");
-__webpack_require__(/*! /Users/jcgaudette/Sites/immigremploi/resources/sass/comments.scss */"./resources/sass/comments.scss");
-module.exports = __webpack_require__(/*! /Users/jcgaudette/Sites/immigremploi/resources/css/app.css */"./resources/css/app.css");
+__webpack_require__(/*! D:\MAMP\htdocs\immigremploi\resources\js\app.js */"./resources/js/app.js");
+__webpack_require__(/*! D:\MAMP\htdocs\immigremploi\resources\sass\candidat.scss */"./resources/sass/candidat.scss");
+__webpack_require__(/*! D:\MAMP\htdocs\immigremploi\resources\sass\projet.scss */"./resources/sass/projet.scss");
+__webpack_require__(/*! D:\MAMP\htdocs\immigremploi\resources\sass\general.scss */"./resources/sass/general.scss");
+__webpack_require__(/*! D:\MAMP\htdocs\immigremploi\resources\sass\chat.scss */"./resources/sass/chat.scss");
+__webpack_require__(/*! D:\MAMP\htdocs\immigremploi\resources\sass\comments.scss */"./resources/sass/comments.scss");
+module.exports = __webpack_require__(/*! D:\MAMP\htdocs\immigremploi\resources\css\app.css */"./resources/css/app.css");
 
 
 /***/ })

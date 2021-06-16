@@ -116,7 +116,7 @@ $(function () {
       });
     }
   });
-  $('.select2').select2();
+  $('select.select2').select2();
   $('.complete_demande').click(function (e) {
     var url = $(this).attr('href');
     var elem = $(this);
@@ -154,7 +154,7 @@ $(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/jcgaudette/Sites/immigremploi/resources/js/projects.js */"./resources/js/projects.js");
+module.exports = __webpack_require__(/*! D:\MAMP\htdocs\immigremploi\resources\js\projects.js */"./resources/js/projects.js");
 
 
 /***/ })

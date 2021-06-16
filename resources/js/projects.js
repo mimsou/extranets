@@ -20,7 +20,7 @@ $(function(){
             });
         }
     });
-    $('.select2').select2();
+    $('select.select2').select2();
 
     $('.complete_demande').click(function(e){
         let url = $(this).attr('href');
