@@ -12,7 +12,9 @@
     @include('admin.projets.modals.addDemandeRec')
     @include('admin.projets.modals.editDemande')
 
-
+    @if(request()->has('demande'))
+        {!! Form::hidden('open_modal',request()->demande) !!}
+    @endif
     <div class="bg-dark bg-dots m-b-30">
         <div class="container">
             <div class="row p-b-60 p-t-60">
@@ -267,7 +269,12 @@
                         }
                     });
                 }
-            })
+            });
+
+            $(document).ready(function(){
+                let modalDemande = $('input[name=open_modal]').val();
+                $('i[data-demande-id='+modalDemande+']').click();
+            });
 
         </script>
 

@@ -8,6 +8,7 @@ Route::get('/', function () {
     }
     return view('dashboard');
 })->name('dashboard');
+Route::get('verify/token/{token}', 'TodoController@verifyToken')->name('verify.token');
 
 Route::resource('/projets', 'ProjetController');
 Route::resource('/employeurs', 'EmployeurController');

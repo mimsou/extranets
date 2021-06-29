@@ -362,4 +362,9 @@ class TodoController extends Controller
         return response()->json(['status' => true, 'message' => 'Template deleted', 'completed' => $completedTodos, 'total' => $totalTodos]);
 
     }
+
+    public function verifyToken($token){
+        $token = explode('-',base64_decode($token));
+        return redirect()->route('projets.edit',['projet'=>$token[0],'demande' => $token[1]]);
+    }
 }

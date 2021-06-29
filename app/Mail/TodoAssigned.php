@@ -33,6 +33,6 @@ class TodoAssigned extends Mailable
      */
     public function build()
     {
-        return $this->markdown('email.todo.assigned',['user'=>$this->user,'projetId'=>$this->todo->projet_id])->subject("Tout #".$this->todo->to_do." - qui vous a été attribué");
+        return $this->markdown('email.todo.assigned',['user'=>$this->user,'projetId'=>$this->todo->projet_id,'todo'=>$this->todo])->subject("Tout #".$this->todo->to_do." - qui vous a été attribué");
     }
 }
