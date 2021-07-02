@@ -18,7 +18,7 @@ class Todo extends Model
     /**
      * @var string[]
      */
-    protected $fillable = ['projet_id', 'group_id', 'demande_id', 'to_do', 'status', 'created_by'];
+    protected $fillable = ['projet_id', 'group_id', 'demande_id', 'to_do', 'status', 'created_by','completed_at','completed_by'];
 
     /**
      * Get todos

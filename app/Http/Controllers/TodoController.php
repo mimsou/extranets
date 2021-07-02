@@ -120,8 +120,10 @@ class TodoController extends Controller
         $todoModel = Todo::find($request->todo_id);
         if($request->status == 1) {
             $todoModel->completed_at = Carbon::now();
+            $todoModel->completed_by = Auth::user()->id;
         } else {
             $todoModel->completed_at = null;
+            $todoModel->completed_by = null;
         }
         $todoModel->status = $request->status;
         $todoModel->save();
