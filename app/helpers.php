@@ -481,3 +481,22 @@ if(!function_exists('it_has_project')){
         }
     }
 }
+
+
+if(!function_exists('it_has_demande')){
+    function it_has_demande($demandeId){
+        $userId = \Auth::user()->id;
+        $assocUser = \App\Models\AssocUserMap::where(['user_id'=>$userId])->first();
+        if($assocUser == null){
+            return false;
+        }
+
+        $demandeDetails = \App\Models\Demande::find($demandeId);
+        $employerDetails = \App\Models\Employeur::where(['regroupement_id'=>$assocUser->group_id])->pluck('id')->toArray();
+        if(in_array($demandeDetails->employeur_id,$employerDetails)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+}

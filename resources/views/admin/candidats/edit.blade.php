@@ -294,7 +294,11 @@
                 $('.candidat-frm :input').prop("disabled", true);
                 $(".dz-hidden-input").prop("disabled",true);
             }
+            let isAssociateUser = {{ is_associate_user() }};
 
+            if(isAssociateUser){
+                $('select,input,textarea,button').prop('disabled',true).addClass('disabled');
+            }
         })
     </script>
 
