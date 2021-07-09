@@ -22,6 +22,9 @@ class ProjetController extends Controller
      */
     public function index()
     {
+        if(is_associate_user()){
+            return redirect()->back();
+        }
         $demandeAdminUsers = DemandeUser::with(['user'])->get()->unique('user_id')
             ->pluck('user.firstname','user_id')->prepend('TOUS','');
         return view('admin.projets.index',['personne'=>array_filter($demandeAdminUsers->toArray())]);
@@ -34,6 +37,9 @@ class ProjetController extends Controller
      */
     public function create()
     {
+        if(is_associate_user()){
+            return redirect()->back();
+        }
         return view('admin.projets.create');
     }
 
@@ -45,6 +51,9 @@ class ProjetController extends Controller
      */
     public function store(Request $request)
     {
+        if(is_associate_user()){
+            return redirect()->back();
+        }
         $validator = Validator::make($request->all(), [
             'titre' => 'required',
             'numero' => 'required',
@@ -84,6 +93,11 @@ class ProjetController extends Controller
      */
     public function edit($id)
     {
+        if(is_associate_user()){
+            if(!it_has_project($id)){
+                return redirect()->back();
+            }
+        }
         if(Auth::user()->role_lvl == 3 && !in_array($id, Auth::user()->employerProjects()->get()->pluck('id')->toArray())) { // user with employer role
             return abort('403');
         }

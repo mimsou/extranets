@@ -28,25 +28,22 @@
     </div>
 
     <div class="container-fluid pull-up">
-
-        <div class="row">
-            <div class="col-md-6 col-lg-4 m-b-30">
-                @include('admin.dashboard.modules.rec_projetencours')
-                @include('admin.dashboard.modules.latestfiles')
+        @if(!is_associate_user())
+            <div class="row">
+                <div class="col-md-6 col-lg-4 m-b-30">
+                    @include('admin.dashboard.modules.rec_projetencours')
+                    @include('admin.dashboard.modules.latestfiles')
+                </div>
+                <div class="col-md-6 col-lg-4 m-b-30">
+                    @include('admin.dashboard.modules.imm_demandeseimt')
+                    @include('admin.dashboard.modules.imm_demandeseimt_enattente')
+                </div>
+                <div class="col-md-6 col-lg-4 m-b-30">
+                    @include('admin.dashboard.modules.imm_demandespermis')
+                    @include('admin.dashboard.modules.imm_demandespermis_enattente')
+                </div>
             </div>
-            <div class="col-md-6 col-lg-4 m-b-30">
-                @include('admin.dashboard.modules.imm_demandeseimt')
-                @include('admin.dashboard.modules.imm_demandeseimt_enattente')
-            </div>
-            <div class="col-md-6 col-lg-4 m-b-30">
-                @include('admin.dashboard.modules.imm_demandespermis')
-                @include('admin.dashboard.modules.imm_demandespermis_enattente')
-            </div>
-        </div>
-
-
-
-
+        @endif
     </div>
 
 @endsection

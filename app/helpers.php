@@ -429,3 +429,55 @@ if(!function_exists('isMineMessage')){
         return ($userId == Auth::user()->id);
     }
 }
+
+
+if(!function_exists('is_associate_user')){
+    function is_associate_user(){
+        $userRole = \Auth::user()->role_lvl;
+        if($userRole > 1 && $userRole < 3){
+            return true;
+        }else{
+            return false;
+        }
+    }
+}
+
+
+if(!function_exists('is_employeur_user')){
+    function is_employeur_user(){
+        $userRole = \Auth::user()->role_lvl;
+        if($userRole == 3){
+            return true;
+        }else{
+            return false;
+        }
+    }
+}
+
+if(!function_exists('is_admin_user')){
+    function is_admin_user(){
+        $userRole = \Auth::user()->role_lvl;
+        if($userRole == 10){
+            return true;
+        }else{
+            return false;
+        }
+    }
+}
+
+if(!function_exists('it_has_project')){
+    function it_has_project($projectId){
+        $userId = \Auth::user()->id;
+        $assocUser = \App\Models\AssocUserMap::where(['user_id'=>$userId])->first();
+        if($assocUser == null){
+            return false;
+        }
+        $projectDetails = \App\Models\Projet::find($projectId);
+        $employerDetails = \App\Models\Employeur::where(['regroupement_id'=>$assocUser->group_id])->pluck('id')->toArray();
+        if(in_array($projectDetails->employeur_id,$employerDetails)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+}

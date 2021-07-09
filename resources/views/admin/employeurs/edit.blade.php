@@ -267,7 +267,8 @@
 
     <script>
 
-        var user_role = '{{ Auth::user()->role_lvl }}';
+        var isEmployee = '{{ is_employeur_user() }}';
+        var isAssociate = '{{ is_associate_user() }}'
 
         $(document).on('change', '#has_secondary_contact_switch', function (e) {
             toggleSecondary();
@@ -296,7 +297,7 @@
         toggleSecondary();
         toggleThird();
 
-        if (user_role == 3) {
+        if (isEmployee || isAssociate ) {
             $('.employer-frm :input').prop('disabled', true)
         }
     </script>

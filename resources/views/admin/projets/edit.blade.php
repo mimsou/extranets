@@ -267,7 +267,11 @@
                         }
                     });
                 }
-            })
+            });
+
+            @if(auth()->user()->role_lvl == 2)
+                $('input,select,button').prop('disabled',true).addClass('disabled');
+            @endif
 
         </script>
 

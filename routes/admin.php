@@ -68,6 +68,14 @@ Route::post('/candidats/media-categories', 'CandidatController@getMediaCategorie
 Route::post('/candidats/media-remove', 'CandidatController@removeMedia');
 Route::post('/candidat/remove', 'CandidatController@remove');
 
+//Association user
+Route::get('association/users/{assoc_group_id}','AssociationUsersController@index')->name('association.users');
+Route::get('association/users/create/{assoc_group_id}','AssociationUsersController@create')->name('association.users.create');
+Route::post('association/users/save/{assoc_group_id}','AssociationUsersController@store')->name('association.users.save');
+Route::get('association/users/edit/{assoc_group_id}/{user_id}','AssociationUsersController@edit')->name('association.users.edit');
+Route::patch('association/users/edit/{assoc_group_id}/{user_id}','AssociationUsersController@update')->name('association.users.update');
+Route::post('association/users/remove','AssociationUsersController@remove');
+
 //Ajax Route
 Route::post('remove/assignee','DemandeController@removeAssignee');
 
