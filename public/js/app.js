@@ -110,6 +110,8 @@ __webpack_require__(/*! ./todo */ "./resources/js/todo.js");
 
 __webpack_require__(/*! ./projects */ "./resources/js/projects.js");
 
+__webpack_require__(/*! ./dashboard */ "./resources/js/dashboard.js");
+
 /***/ }),
 
 /***/ "./resources/js/comments.js":
@@ -274,6 +276,45 @@ __webpack_require__(/*! ./projects */ "./resources/js/projects.js");
   init_popover();
   init_comments();
 })(window.jQuery);
+
+/***/ }),
+
+/***/ "./resources/js/dashboard.js":
+/*!***********************************!*\
+  !*** ./resources/js/dashboard.js ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+(function ($) {
+  var startDate = '';
+  var endDate = '';
+  $('.input-daterange').daterangepicker({
+    timePicker: false,
+    singleDatePicker: false,
+    autoApply: false,
+    minDate: '2021-01-01',
+    locale: {
+      format: 'YYYY-MM-DD'
+    }
+  }, function (start, end) {
+    startDate = start;
+    endDate = end;
+  });
+  $('body').on('click', '.applyBtn', function () {
+    $.ajax({
+      type: 'GET',
+      url: route + 'get-dashboard-counts',
+      data: {
+        start_date: startDate.format('YYYY-MM-DD'),
+        end_date: endDate.format('YYYY-MM-DD')
+      },
+      success: function success(result) {
+        $('.widget-content').html(result);
+      }
+    });
+  });
+})(jQuery);
 
 /***/ }),
 

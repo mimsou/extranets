@@ -1,13 +1,7 @@
 <?php
 
 
-Route::get('/', function () {
-    if(Auth::user() && Auth::user()->role_lvl == 3) { //user is employer
-        $employeur = \App\Models\Employeur::find(Auth::user()->employeur_id);
-        return view('admin.employeurs.edit', compact('employeur'));
-    }
-    return view('dashboard');
-})->name('dashboard');
+Route::get('/','DashboardController@index')->name('dashboard');
 
 Route::resource('/projets', 'ProjetController');
 Route::resource('/employeurs', 'EmployeurController');
@@ -90,6 +84,8 @@ Route::prefix('api/datatables')->group(function () {
 	Route::get('/get-pays', 'DatatablesController@getPays');
 });
 
+
+Route::get('/get-dashboard-counts','DashboardController@getCountsByFilter');
 
 
 
