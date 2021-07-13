@@ -76,6 +76,7 @@
 	<script src="{{ asset('atmos-assets/vendor/daterangepicker/daterangepicker.js') }}"></script>
 	<script src="{{ asset('atmos-assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
 	<script src="{{ asset('atmos-assets/vendor/bootstrap-notify/bootstrap-notify.min.js') }}"></script>
+    <script src="{{ asset('atmos-assets/vendor/apexchart/apexcharts.min.js') }}"></script>
     <script src="{{ asset('atmos-assets/js/atmos.min.js') }}"></script>
     <script src="{{ mix('js/app.js') }}"></script>
     <script>

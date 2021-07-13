@@ -16,50 +16,185 @@ class DashboardController extends Controller
             $employeur = \App\Models\Employeur::find(Auth::user()->employeur_id);
             return view('admin.employeurs.edit', compact('employeur'));
         }
+        $chartData = $this->getChartData($request);
         $counts = $this->dashboardRecords($request);
-        return view('dashboard',compact('counts'));
+        return view('dashboard',compact('counts','chartData'));
     }
 
     public function dashboardRecords(Request $request){
         if($request->has('start_date') && $request->has('end_date')){
-            $startDate = $request->start_date;
+            $startDate = Carbon::parse($request->start_date);
+            $endDate = Carbon::parse($request->end_date);
+            $dateSevendDaysBefore = $startDate->format('Y-m-d');
+            $fourteenDaysBefore = $startDate->subDays($startDate->diffInDays($endDate))->format('Y-m-d');
             $endDate = $request->end_date;
         }else{
             $dateSevendDaysBefore = Carbon::now()->subDays(7);
+            $fourteenDaysBefore = Carbon::now()->subDays(14)->format('Y-m-d');
             $dateSevendDaysBefore = $dateSevendDaysBefore->format('Y-m-d');
-            $startDate = $dateSevendDaysBefore;
             $endDate = Carbon::now()->format('Y-m-d');
         }
 
         //Emit
-        $demandesModel = Demande::whereBetween('eimt_date_envoi',[$startDate,$endDate])->get();
-        $emitCount = $demandesModel->count();
-        $demandesModel = Demande::whereBetween('eimt_date_reception',[$startDate,$endDate])->get();
-        $emitApprovedCount = $demandesModel->count();
+        $demandesModel = Demande::whereBetween('eimt_date_envoi',[$fourteenDaysBefore,$endDate])->get();
+        $demandesCount = $demandesModel->whereBetween('eimt_date_envoi',[$dateSevendDaysBefore,$endDate]);
+        $emitCount = $demandesCount->count();
+        $avgCount = $demandesModel->whereBetween('eimt_date_envoi',[$fourteenDaysBefore,$dateSevendDaysBefore]);
+        $lastWeekCount = $avgCount->count();
+        $emitPercentage = $this->getPercentage($lastWeekCount,$emitCount);
+
+        $demandesModel = Demande::whereBetween('eimt_date_reception',[$fourteenDaysBefore,$endDate])->get();
+        $emitApprovedCount = $demandesModel->whereBetween('eimt_date_reception',[$dateSevendDaysBefore,$endDate])->count();
+        $lastWeekCount = $demandesModel->whereBetween('eimt_date_reception',[$fourteenDaysBefore,$dateSevendDaysBefore])->count();
+        $emitApprovePercent = $this->getPercentage($lastWeekCount,$emitApprovedCount);
 
         //DST Count
-        $demandeModel = Demande::whereBetween('dst_date_envoi',[$startDate,$endDate])->get();
-        $dstCount = $demandeModel->count();
-        $demandesModel = Demande::whereBetween('dst_date_reception',[$startDate,$endDate])->get();
-        $dstApprovedCunt = $demandesModel->count();
+        $demandeModel = Demande::whereBetween('dst_date_envoi',[$fourteenDaysBefore,$endDate])->get();
+        $dstCount = $demandeModel->whereBetween('dst_date_envoi',[$dateSevendDaysBefore,$endDate])->count();
+        $lastWeekCount = $demandeModel->whereBetween('dst_date_envoi',[$fourteenDaysBefore,$dateSevendDaysBefore])->count();
+        $dstPercent = $this->getPercentage($lastWeekCount,$dstCount);
 
+        $demandesModel = Demande::whereBetween('dst_date_reception',[$fourteenDaysBefore,$endDate])->get();
+        $dstApprovedCunt = $demandesModel->whereBetween('dst_date_reception',[$dateSevendDaysBefore,$endDate])->count();
+        $lastWeekCount = $demandesModel->whereBetween('dst_date_reception',[$fourteenDaysBefore,$dateSevendDaysBefore])->count();
+        $dstApprovedPercent = $this->getPercentage($lastWeekCount,$dstApprovedCunt);
 
         //project completed
-        $projetModel = Projet::whereBetween('date_selection',[$startDate,$endDate])->get();
-        $completedCount = $projetModel->count();
+        $projetModel = Projet::whereBetween('date_selection',[$fourteenDaysBefore,$endDate])->get();
+        $completedCount = $projetModel->whereBetween('date_selection',[$dateSevendDaysBefore,$endDate])->count();
+        $lastWeekCount = $projetModel->whereBetween('date_selection',[$fourteenDaysBefore,$dateSevendDaysBefore])->count();
+        $projetPercent = $this->getPercentage($lastWeekCount,$completedCount);
 
         //PT sent
-        $candidateModel = Candidat::whereBetween('permis_date_envoi',[$startDate,$endDate])->get();
-        $permisDateEnvoiCount = $candidateModel->count();
+        $candidateModel = Candidat::whereBetween('permis_date_envoi',[$fourteenDaysBefore,$endDate])->get();
+        $permisDateEnvoiCount = $candidateModel->whereBetween('permis_date_envoi',[$dateSevendDaysBefore,$endDate])->count();
+        $lastWeekCount = $candidateModel->whereBetween('permis_date_envoi',[$fourteenDaysBefore,$dateSevendDaysBefore])->count();
+        $candidatePercent = $this->getPercentage($lastWeekCount,$permisDateEnvoiCount);
 
         //PT received
-        $candidateModel = Candidat::whereBetween('permis_date_reception',[$startDate,$endDate])->get();
-        $permisDateApprovedCount = $candidateModel->count();
+        $candidateModel = Candidat::whereBetween('permis_date_reception',[$fourteenDaysBefore,$endDate])->get();
+        $permisDateApprovedCount = $candidateModel->whereBetween('permis_date_reception',[$dateSevendDaysBefore,$endDate])->count();
+        $lastWeekCount = $candidateModel->whereBetween('permis_date_reception',[$fourteenDaysBefore,$dateSevendDaysBefore])->count();
+        $permisDateApprovedPercent = $this->getPercentage($lastWeekCount,$permisDateApprovedCount);
 
-        return ['emit'=>$emitCount,'emit_approved'=>$emitApprovedCount,'dst_count'=>$dstCount,
+        return [
+                'emit'=>$emitCount,
+                'emit_percent' => $emitPercentage,
+                'emit_approved'=>$emitApprovedCount,
+                'emit_approved_percent'=>$emitApprovePercent,
+                'dst_count'=>$dstCount,
+                'dst_percent' => $dstPercent,
                 'dst_approved_cont'=>$dstApprovedCunt,
-                'project_complete'=>$completedCount,'pt_sent'=>$permisDateEnvoiCount,
-                'pt_received'=>$permisDateApprovedCount];
+                'dst_approved_percent' => $dstApprovedPercent,
+                'project_complete'=>$completedCount,
+                'project_complete_percent' => $projetPercent,
+                'pt_sent'=>$permisDateEnvoiCount,
+                'pt_sent_percent' => $candidatePercent,
+                'pt_received'=>$permisDateApprovedCount,
+                'pt_received_percent'=>$permisDateApprovedPercent
+        ];
+    }
+
+    public function getChartData(Request $request){
+        $lastMonthsDate = Carbon::now()->subMonths(12)->format('Y-m-d');
+        $now = Carbon::now()->format('Y-m-d');
+
+
+        $demandesModel = Demande::whereBetween('eimt_date_envoi',[$lastMonthsDate,$now])->get();
+        $demandeEmit = $demandesModel->groupBy(function($item){
+            return Carbon::parse($item->eimt_date_envoi)->format('m');
+        })->sortBy(function($value,$key){
+            return $key;
+        })->mapWithKeys(function($item,$key){
+            return [Carbon::createFromFormat('m',$key)->format('M') => $item->count()];
+        });
+
+
+        $demandesModel = Demande::whereBetween('eimt_date_reception',[$lastMonthsDate,$now])->get();
+        $demandeEmitApproved = $demandesModel->groupBy(function($item){
+            return Carbon::parse($item->eimt_date_reception)->format('m');
+        })->sortBy(function($value,$key){
+            return $key;
+        })->mapWithKeys(function($item,$key){
+            return [Carbon::createFromFormat('m',$key)->format('M') => $item->count()];
+        });
+
+
+        //DST Count
+        $demandeModel = Demande::whereBetween('dst_date_envoi',[$lastMonthsDate,$now])->get();
+        $demandeDist = $demandeModel->groupBy(function($item){
+            return Carbon::parse($item->dst_date_envoi)->format('m');
+        })->sortBy(function($value,$key){
+            return $key;
+        })->mapWithKeys(function($item,$key){
+            return [Carbon::createFromFormat('m',$key)->format('M') => $item->count()];
+        });
+
+        //DST Approved
+        $demandesModel = Demande::whereBetween('dst_date_reception',[$lastMonthsDate,$now])->get();
+        $demandeDistApproved = $demandesModel->groupBy(function($item){
+            return Carbon::parse($item->dst_date_reception)->format('m');
+        })->sortBy(function($value,$key){
+            return $key;
+        })->mapWithKeys(function($item,$key){
+            return [Carbon::createFromFormat('m',$key)->format('M') => $item->count()];
+        });
+
+        //project completed
+        $projetModel = Projet::whereBetween('date_selection',[$lastMonthsDate,$now])->get();
+        $projectComplete = $projetModel->groupBy(function($item){
+            return Carbon::parse($item->date_selection)->format('m');
+        })->sortBy(function($value,$key){
+            return $key;
+        })->mapWithKeys(function($item,$key){
+            return [Carbon::createFromFormat('m',$key)->format('M') => $item->count()];
+        });
+
+        //PT sent
+        $candidateModel = Candidat::whereBetween('permis_date_envoi',[$lastMonthsDate,$now])->get();
+        $candidatePtSent = $candidateModel->groupBy(function($item){
+            return Carbon::parse($item->permis_date_envoi)->format('m');
+        })->sortBy(function($value,$key){
+            return $key;
+        })->mapWithKeys(function($item,$key){
+            return [Carbon::createFromFormat('m',$key)->format('M') => $item->count()];
+        });
+
+        //PT received
+        $candidateModel = Candidat::whereBetween('permis_date_reception',[$lastMonthsDate,$now])->get();
+        $candidatePtRecv = $candidateModel->groupBy(function($item){
+            return Carbon::parse($item->permis_date_reception)->format('m');
+        })->sortBy(function($value,$key){
+            return $key;
+        })->mapWithKeys(function($item,$key){
+            return [Carbon::createFromFormat('m',$key)->format('M') => $item->count()];
+        });
+
+        return [
+            'emit' => $demandeEmit->toArray(),
+            'emit_approved' => $demandeEmitApproved->toArray(),
+            'demande_dist' => $demandeDist->toArray(),
+            'dist_approved' => $demandeDistApproved->toArray(),
+            'project_complete' => $projectComplete->toArray(),
+            'pt_sent' => $candidatePtSent->toArray(),
+            'pt_received' => $candidatePtRecv->toArray()
+        ];
+    }
+
+
+
+    /**
+     * @param $firstCount // last week count
+     * @param $secondCount // this week count
+     */
+    public function getPercentage($firstCount, $secondCount){
+        if($firstCount > $secondCount){
+            $percentage = ($secondCount / $firstCount)*100;
+            return -$percentage;
+        }else{
+            $percentage = ($firstCount / $secondCount) * 100;
+            return "+".$percentage;
+        }
     }
 
     public function getCountsByFilter(Request $request){

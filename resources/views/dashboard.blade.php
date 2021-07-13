@@ -36,6 +36,42 @@
     <div class="widget-content">
         @include('admin.dashboard.widgets')
     </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12  m-b-30">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Quarterly User Growth</div>
+                        <div class="card-controls">
+                            <a href="#" class="js-card-refresh icon"> </a>
+                            <div class="dropdown">
+                                <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i
+                                        class="icon mdi  mdi-dots-vertical"></i> </a>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <button class="dropdown-item" type="button">Action</button>
+                                    <button class="dropdown-item" type="button">Another action</button>
+                                    <button class="dropdown-item" type="button">Something else here</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <textarea class="d-none chartdata">{{ json_encode($chartData) }}</textarea>
+                        <div id="chart-01"></div>
+                    </div>
+                    <div class="">
+                    </div>
+                    <div class="card-footer">
+                        <div class="d-flex  justify-content-between">
+                            <h6 class="m-b-0 my-auto"><span class="opacity-75"> <i class="mdi mdi-information"></i> Restart your Re-targeting Campaigns</span>
+                            </h6>
+                            <a href="#!" class="btn btn-white shadow-none">See Campaigns</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     {{--    <div class="container-fluid pull-up">--}}
     {{--        @if(!is_associate_user())--}}

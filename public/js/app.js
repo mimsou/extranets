@@ -314,6 +314,74 @@ __webpack_require__(/*! ./dashboard */ "./resources/js/dashboard.js");
       }
     });
   });
+
+  if ($("#chart-01").length) {
+    var ChartData = JSON.parse($('.chartdata').text());
+    console.log(ChartData);
+    var options = {
+      colors: colors,
+      chart: {
+        type: 'bar'
+      },
+      plotOptions: {
+        bar: {
+          horizontal: false,
+          endingShape: 'rounded',
+          columnWidth: '55%'
+        }
+      },
+      dataLabels: {
+        enabled: false
+      },
+      stroke: {
+        show: true,
+        width: 2,
+        colors: ['transparent']
+      },
+      series: [{
+        name: 'EIMT',
+        data: Object.values(ChartData['emit'])
+      }, {
+        name: 'Approved EIMT',
+        data: Object.values(ChartData['emit_approved'])
+      }, {
+        name: 'DST Sent',
+        data: Object.values(ChartData['demande_dist'])
+      }, {
+        name: 'Approved DST',
+        data: Object.values(ChartData['dist_approved'])
+      }, {
+        name: 'PT Sent',
+        data: Object.values(ChartData['pt_sent'])
+      }, {
+        name: 'PT Received',
+        data: Object.values(ChartData['pt_received'])
+      }, {
+        name: 'Project Complete',
+        data: Object.values(ChartData['project_complete'])
+      }],
+      xaxis: {
+        categories: Object.keys(ChartData['project_complete'])
+      },
+      yaxis: {
+        title: {
+          text: 'Count'
+        }
+      },
+      fill: {
+        opacity: 1
+      },
+      tooltip: {
+        y: {
+          formatter: function formatter(val) {
+            return "" + val + "";
+          }
+        }
+      }
+    };
+    var chart = new ApexCharts(document.querySelector("#chart-01"), options);
+    chart.render();
+  }
 })(jQuery);
 
 /***/ }),
