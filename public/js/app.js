@@ -289,7 +289,7 @@ __webpack_require__(/*! ./dashboard */ "./resources/js/dashboard.js");
 (function ($) {
   var startDate = '';
   var endDate = '';
-  $('.input-daterange').daterangepicker({
+  $('.input-daterange-picker').daterangepicker({
     timePicker: false,
     singleDatePicker: false,
     autoApply: false,

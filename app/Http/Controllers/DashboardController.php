@@ -192,8 +192,12 @@ class DashboardController extends Controller
             $percentage = ($secondCount / $firstCount)*100;
             return -$percentage;
         }else{
-            $percentage = ($firstCount / $secondCount) * 100;
-            return "+".$percentage;
+            if($secondCount != 0 && $firstCount != 0){
+                $percentage = ($firstCount / $secondCount) * 100;
+                return "+".$percentage;
+            }else{
+                return 0;
+            }
         }
     }
 

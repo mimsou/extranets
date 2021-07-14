@@ -1,7 +1,7 @@
 (function($){
     let startDate = '';
     let endDate = '';
-    $('.input-daterange').daterangepicker({
+    $('.input-daterange-picker').daterangepicker({
         timePicker:false,
         singleDatePicker: false,
         autoApply: false,
