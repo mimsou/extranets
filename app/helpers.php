@@ -482,6 +482,14 @@ if(!function_exists('it_has_project')){
     }
 }
 
+if(!function_exists('get_group_employees')){
+    function get_group_employees(){
+        $userId = \Auth::user()->id;
+        $assocUser = \App\Models\AssocUserMap::where(['user_id'=>$userId])->first();
+        return \App\Models\Employeur::where(['regroupement_id'=>$assocUser->group_id])->pluck('id')->toArray();
+    }
+}
+
 
 if(!function_exists('it_has_demande')){
     function it_has_demande($demandeId){

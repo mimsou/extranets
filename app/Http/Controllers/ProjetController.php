@@ -22,9 +22,9 @@ class ProjetController extends Controller
      */
     public function index()
     {
-        if(is_associate_user()){
-            return redirect()->back();
-        }
+//        if(is_associate_user()){
+//            return redirect()->back();
+//        }
         $demandeAdminUsers = DemandeUser::with(['user'])->get()->unique('user_id')
             ->pluck('user.firstname','user_id')->prepend('TOUS','');
         return view('admin.projets.index',['personne'=>array_filter($demandeAdminUsers->toArray())]);

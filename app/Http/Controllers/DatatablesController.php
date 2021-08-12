@@ -178,7 +178,14 @@ class DatatablesController extends Controller
             $projets = $projets->get()->unique('id');
         }
 //        $projets->distinct('projets.id');
-
+        $isAssocUser = false;
+        if(is_associate_user()){
+            $isAssocUser = true;
+            $employeeIDs = get_group_employees();
+            $projets = $projets->filter(function($item) use ($employeeIDs){
+                return in_array($item->employeur_id,$employeeIDs);
+            });
+        }
 
         return Datatables::of($projets)
             ->addColumn(
@@ -200,9 +207,13 @@ class DatatablesController extends Controller
                 return $date->diffForHumans() . '<br><small>' . $m->updated_at . '</small>';
             })
             ->addColumn(
-                'action', function($m) {
-                $delete = '<button class="btn btn-sm btn-danger delete_projet" data-projetid="' . $m->id . '" data-num="' . $m->numero . '"><i class="fas fa-trash"></i></button>';
-                return '<a href="' . action('ProjetController@edit', $m->id) . '" class="btn btn-sm btn-primary mr-1"><i class="fas fa-user-edit"></i></a>' . $delete;
+                'action', function($m) use ($isAssocUser) {
+                if($isAssocUser){
+                    return "<i class='text-gray-400'>Ne pas avoir l'autorisation</i>";
+                }else{
+                    $delete = '<button class="btn btn-sm btn-danger delete_projet" data-projetid="' . $m->id . '" data-num="' . $m->numero . '"><i class="fas fa-trash"></i></button>';
+                    return '<a href="' . action('ProjetController@edit', $m->id) . '" class="btn btn-sm btn-primary mr-1"><i class="fas fa-user-edit"></i></a>' . $delete;
+                }
             })
             ->addColumn(
                 'facturation_horaire', function($m) {

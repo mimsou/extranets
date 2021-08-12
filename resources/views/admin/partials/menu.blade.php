@@ -26,7 +26,7 @@
     </li>
 @endif
 
-@if(Auth::user()->role_lvl >= 3)
+@if(Auth::user()->role_lvl >= 2)
     <li class="menu-item {{ classActiveSegment(2,'projets') }}">
         <a href="{{ action('ProjetController@index') }}" class="menu-link">
             <span class="menu-label">

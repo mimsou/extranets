@@ -177,7 +177,9 @@ class DashboardController extends Controller
             'dist_approved' => $demandeDistApproved->toArray(),
             'project_complete' => $projectComplete->toArray(),
             'pt_sent' => $candidatePtSent->toArray(),
-            'pt_received' => $candidatePtRecv->toArray()
+            'pt_received' => $candidatePtRecv->toArray(),
+            'from_date' => $lastMonthsDate,
+            'to_date' => $now
         ];
     }
 

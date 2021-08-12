@@ -321,7 +321,8 @@ __webpack_require__(/*! ./dashboard */ "./resources/js/dashboard.js");
     var options = {
       colors: colors,
       chart: {
-        type: 'bar'
+        type: 'bar',
+        height: '350'
       },
       plotOptions: {
         bar: {
@@ -342,22 +343,22 @@ __webpack_require__(/*! ./dashboard */ "./resources/js/dashboard.js");
         name: 'EIMT',
         data: Object.values(ChartData['emit'])
       }, {
-        name: 'Approved EIMT',
+        name: 'EIMT Approuvées',
         data: Object.values(ChartData['emit_approved'])
       }, {
-        name: 'DST Sent',
+        name: 'DST Envoyées',
         data: Object.values(ChartData['demande_dist'])
       }, {
-        name: 'Approved DST',
+        name: 'DST Approuvées',
         data: Object.values(ChartData['dist_approved'])
       }, {
-        name: 'PT Sent',
+        name: 'PT Envoyées',
         data: Object.values(ChartData['pt_sent'])
       }, {
-        name: 'PT Received',
+        name: 'PT Reçues',
         data: Object.values(ChartData['pt_received'])
       }, {
-        name: 'Project Complete',
+        name: 'Projets terminés',
         data: Object.values(ChartData['project_complete'])
       }],
       xaxis: {

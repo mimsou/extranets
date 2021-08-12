@@ -34,10 +34,11 @@
         <div class="h6">
             @if($percent < 0)
                 <span class="text-danger"> <i class="mdi mdi-arrow-bottom-right"></i> {{ number_format(abs($percent),2) }}% </span>
-            @else
+                Moins que sur la période passée
+            @elseif($percent > 0)
                 <span class="text-success"> <i class="mdi mdi-arrow-top-right"></i> {{ number_format(abs($percent),2) }}% </span>
+                More activity than usual.
             @endif
-            Less activity than usual.
         </div>
     </div>
 </div>

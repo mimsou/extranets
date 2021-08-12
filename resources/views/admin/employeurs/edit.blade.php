@@ -48,7 +48,7 @@
                     <div class="row  mb-5">
                         <div class="col-12">
                             <a href="{{ action('EmployeurController@userManagement', $employeur->id) }}"
-                               class="btn btn-warning"><i class="fas fa-plus-circle pr-2"></i> Gestion des utilisateurs</a>
+                               class="btn btn-warning user-management-button"><i class="fas fa-plus-circle pr-2"></i> Gestion des utilisateurs</a>
                         </div>
                     </div>
                     @endif
@@ -298,7 +298,8 @@
         toggleThird();
 
         if (isEmployee || isAssociate ) {
-            $('.employer-frm :input').prop('disabled', true)
+            $('.employer-frm :input').prop('disabled', true);
+            $('.user-management-button').addClass('disabled');
         }
     </script>
 
