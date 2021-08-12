@@ -2,6 +2,7 @@
 
 
 Route::get('/','DashboardController@index')->name('dashboard');
+Route::get('/nos_bons_coups','DashboardController@nosBonsCoups')->name('dashboard.details');
 
 Route::resource('/projets', 'ProjetController');
 Route::resource('/employeurs', 'EmployeurController');
