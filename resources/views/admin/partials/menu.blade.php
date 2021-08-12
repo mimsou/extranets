@@ -1,15 +1,17 @@
-<li class="menu-item {{ classActivePath(route('dashboard')) }}">
-    <a href="{{ route('dashboard') }}" class="menu-link">
-        <span class="menu-label">
-            <span class="menu-name">{{ __('Tableau de bord') }}</span>
-        </span>
+@if(Auth::user()->role_lvl > 2)
+    <li class="menu-item {{ classActivePath(route('dashboard')) }}">
+        <a href="{{ route('dashboard') }}" class="menu-link">
+            <span class="menu-label">
+                <span class="menu-name">{{ __('Tableau de bord') }}</span>
+            </span>
 
-        <span class="menu-icon">
-            {{-- <span class="icon-badge badge-success badge badge-pill">NEW</span> --}}
-            <i class="icon-placeholder mdi mdi-desktop-mac-dashboard"></i>
-        </span>
-	</a>
-</li>
+            <span class="menu-icon">
+                {{-- <span class="icon-badge badge-success badge badge-pill">NEW</span> --}}
+                <i class="icon-placeholder mdi mdi-desktop-mac-dashboard"></i>
+            </span>
+        </a>
+    </li>
+@endif
 
 @if(Auth::user()->role_lvl >= 2)
     <li class="menu-item {{ classActiveSegment(2,'employeurs') }}">

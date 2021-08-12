@@ -12,6 +12,9 @@ use Auth;
 class DashboardController extends Controller
 {
     public function index(Request $request){
+        if(is_associate_user()){
+            return redirect()->route('employeurs.index');
+        }
         if(Auth::user() && Auth::user()->role_lvl == 3) { //user is employer
             $employeur = \App\Models\Employeur::find(Auth::user()->employeur_id);
             return view('admin.employeurs.edit', compact('employeur'));
