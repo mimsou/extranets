@@ -12,6 +12,20 @@
         </a>
     </li>
 @endif
+@if(Auth::user()->role_lvl > 2)
+    <li class="menu-item {{ classActivePath(route('dashboard.details')) }}">
+        <a href="{{ route('dashboard.details') }}" class="menu-link">
+            <span class="menu-label">
+                <span class="menu-name">{{ __('Nos bons coups') }}</span>
+            </span>
+
+            <span class="menu-icon">
+                {{-- <span class="icon-badge badge-success badge badge-pill">NEW</span> --}}
+                <i class="icon-placeholder mdi mdi-airplay"></i>
+            </span>
+        </a>
+    </li>
+@endif
 
 @if(Auth::user()->role_lvl >= 2)
     <li class="menu-item {{ classActiveSegment(2,'employeurs') }}">

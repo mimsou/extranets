@@ -24,6 +24,10 @@ class DashboardController extends Controller
         return view('dashboard',compact('counts','chartData'));
     }
 
+    public function nosBonsCoups(){
+        return view('dashboard-details');
+    }
+
     public function dashboardRecords(Request $request){
         if($request->has('start_date') && $request->has('end_date')){
             $startDate = Carbon::parse($request->start_date);
