@@ -38,11 +38,11 @@
                     Légèrement moins que la période précédente
                 @elseif($percent < -25)
                     <span class="text-danger"> <i class="mdi mdi-arrow-bottom-right"></i> {{ number_format(abs($percent),2) }}% </span>
-                    Attention! Vous avez effectuez -{{ $percent }}% que la période précédente
+                    Attention! Vous avez effectuez -{{ number_format($percent,2) }}% que la période précédente
                 @endif
             @elseif($percent > 0)
                 <span class="text-success"> <i class="mdi mdi-arrow-top-right"></i> {{ number_format(abs($percent),2) }}% </span>
-                Bravo! Vous avez effectuez {{ $percent  }}% de plus que la période précédente
+                Bravo! Vous avez effectuez {{ number_format($percent,2) }}% de plus que la période précédente
             @else
                 <span class="text-gray-400"> {{ number_format(abs($percent),2) }}% </span>
                 Vous gardez le rythme! Même chiffre que pour la période précédente
