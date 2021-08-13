@@ -7,7 +7,7 @@ Route::get('/', function () {
         return view('admin.employeurs.edit', compact('employeur'));
     }
     return view('dashboard-details');
-})->name('dashboard');
+})->name('dashboard.details');
 Route::get('verify/token/{token}', 'TodoController@verifyToken')->name('verify.token');
 Route::get('/dashboard','DashboardController@index')->name('dashboard');
 //Route::get('/','DashboardController@nosBonsCoups')->name('dashboard.details');
