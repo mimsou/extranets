@@ -195,18 +195,26 @@ class DashboardController extends Controller
     /**
      * @param $firstCount // last week count
      * @param $secondCount // this week count
+     *
+     * Formula
+     * Current Period Sales - Prior Period Sales
+     * ------------------------------------------   = Growth Rate
+     *      Prior Period Sales * 100
+     *
+     * (($secondCount - $firstCount)/$firstCount)*100
      */
     public function getPercentage($firstCount, $secondCount){
-        if($firstCount > $secondCount){
-            $percentage = ($secondCount / $firstCount)*100;
-            return -$percentage;
-        }else{
-            if($secondCount != 0 && $firstCount != 0){
-                $percentage = ($firstCount / $secondCount) * 100;
-                return "+".$percentage;
+        if($firstCount != 0){
+            $result = (($secondCount - $firstCount)/$firstCount) * 100;
+            if($result > 0){
+                return $result;
             }else{
-                return 0;
+                return $result;
             }
+        }elseif($secondCount != 0){
+            return 100;
+        }else{
+            return 0;
         }
     }
 

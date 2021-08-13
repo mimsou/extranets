@@ -33,11 +33,19 @@
         <h1 class="display-4 fw-600">{{ $count }}</h1>
         <div class="h6">
             @if($percent < 0)
-                <span class="text-danger"> <i class="mdi mdi-arrow-bottom-right"></i> {{ number_format(abs($percent),2) }}% </span>
-                Moins que sur la période passée
+                @if($percent > -25)
+                    <span class="text-orange"> <i class="mdi mdi-arrow-bottom-right"></i> {{ number_format(abs($percent),2) }}% </span>
+                    Légèrement moins que la période précédente
+                @elseif($percent < -25)
+                    <span class="text-danger"> <i class="mdi mdi-arrow-bottom-right"></i> {{ number_format(abs($percent),2) }}% </span>
+                    Attention! Vous avez effectuez -{{ $percent }}% que la période précédente
+                @endif
             @elseif($percent > 0)
                 <span class="text-success"> <i class="mdi mdi-arrow-top-right"></i> {{ number_format(abs($percent),2) }}% </span>
-                More activity than usual.
+                Bravo! Vous avez effectuez {{ $percent  }}% de plus que la période précédente
+            @else
+                <span class="text-gray-400"> {{ number_format(abs($percent),2) }}% </span>
+                Vous gardez le rythme! Même chiffre que pour la période précédente
             @endif
         </div>
     </div>

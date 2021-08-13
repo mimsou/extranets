@@ -14,7 +14,7 @@
                 <div class="col-md-7 m-auto text-white p-b-30">
                     <h1 class="">Bonjour, {{Auth::user()->firstname}}!</h1>
                     <p class="opacity-75">
-                        Tableau de bord
+                        Voici un récapitulatif des avancements de l'équipe, nos bons coups!
                     </p>
                 </div>
 
