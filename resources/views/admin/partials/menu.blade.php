@@ -1,6 +1,6 @@
 @if(Auth::user()->role_lvl > 3)
-    <li class="menu-item {{ classActivePath(route('dashboard')) }}">
-        <a href="{{ route('dashboard') }}" class="menu-link">
+    <li class="menu-item {{ classActivePath(route('dashboard.details')) }}">
+        <a href="{{ route('dashboard.details') }}" class="menu-link">
             <span class="menu-label">
                 <span class="menu-name">{{ __('Tableau de bord') }}</span>
             </span>
@@ -13,8 +13,8 @@
     </li>
 @endif
 @if(Auth::user()->role_lvl > 3)
-    <li class="menu-item {{ classActivePath(route('dashboard.details')) }}">
-        <a href="{{ route('dashboard.details') }}" class="menu-link">
+    <li class="menu-item {{ classActivePath(route('dashboard')) }}">
+        <a href="{{ route('dashboard') }}" class="menu-link">
             <span class="menu-label">
                 <span class="menu-name">{{ __('Nos bons coups') }}</span>
             </span>
