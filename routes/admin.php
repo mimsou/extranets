@@ -6,6 +6,9 @@ Route::get('/', function () {
         $employeur = \App\Models\Employeur::find(Auth::user()->employeur_id);
         return view('admin.employeurs.edit', compact('employeur'));
     }
+    if(Auth::user() && is_associate_user()){
+        return redirect()->route('employeurs.index');
+    }
     return view('dashboard-details');
 })->name('dashboard.details');
 Route::get('verify/token/{token}', 'TodoController@verifyToken')->name('verify.token');
