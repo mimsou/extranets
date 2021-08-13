@@ -14,7 +14,7 @@
                                 <div class="avatar-title bg-info rounded-circle mdi mdi-plus "></div>
                             </div>
                         </div>
-                        <h3>{{ __("Création d'un regroupement") }}</h3>
+                        <h3>{{ __("Création d'un utilisateur") }}</h3>
                     </div>
 
 
@@ -27,13 +27,14 @@
                     <div class="col-lg-8 mx-auto  mt-2">
                        <div class="card py-3 m-b-30">
                            <div class="card-body">
-                                   	<h3 class="">{{ __("Information") }}</h3>
+
+                                   	<h3 class="">{{ __("Information personnel") }}</h3>
                                    	<p class="text-muted">
-                                       Utiliser cette page pour créer un regroupement
+                                       Utiliser cette page pour créer un nouvel utilisateur
                                    	</p>
 
-                                    {!! Form::open(['action' => ['RegroupementController@store'] ]) !!}
-										@include('admin.regroupements._form')
+                                   	{!! Form::open(['route' => ['association.users.save',request()->assoc_group_id] ]) !!}
+                                        @include('admin.association-users._form')
                                     {!! Form::close() !!}
 
                            </div>

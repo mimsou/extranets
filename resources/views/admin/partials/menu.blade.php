@@ -1,17 +1,33 @@
-<li class="menu-item {{ classActivePath(route('dashboard')) }}">
-    <a href="{{ route('dashboard') }}" class="menu-link">
-        <span class="menu-label">
-            <span class="menu-name">{{ __('Tableau de bord') }}</span>
-        </span>
-
-        <span class="menu-icon">
-            {{-- <span class="icon-badge badge-success badge badge-pill">NEW</span> --}}
-            <i class="icon-placeholder mdi mdi-desktop-mac-dashboard"></i>
-        </span>
-	</a>
-</li>
-
 @if(Auth::user()->role_lvl > 3)
+    <li class="menu-item {{ classActivePath(route('dashboard')) }}">
+        <a href="{{ route('dashboard') }}" class="menu-link">
+            <span class="menu-label">
+                <span class="menu-name">{{ __('Tableau de bord') }}</span>
+            </span>
+
+            <span class="menu-icon">
+                {{-- <span class="icon-badge badge-success badge badge-pill">NEW</span> --}}
+                <i class="icon-placeholder mdi mdi-desktop-mac-dashboard"></i>
+            </span>
+        </a>
+    </li>
+@endif
+@if(Auth::user()->role_lvl > 3)
+    <li class="menu-item {{ classActivePath(route('dashboard.details')) }}">
+        <a href="{{ route('dashboard.details') }}" class="menu-link">
+            <span class="menu-label">
+                <span class="menu-name">{{ __('Nos bons coups') }}</span>
+            </span>
+
+            <span class="menu-icon">
+                {{-- <span class="icon-badge badge-success badge badge-pill">NEW</span> --}}
+                <i class="icon-placeholder mdi mdi-airplay"></i>
+            </span>
+        </a>
+    </li>
+@endif
+
+@if(Auth::user()->role_lvl > 3 || Auth::user()->role_lvl == 2)
     <li class="menu-item {{ classActiveSegment(2,'employeurs') }}">
         <a href="{{ action('EmployeurController@index') }}" class="menu-link">
             <span class="menu-label">
@@ -26,18 +42,20 @@
     </li>
 @endif
 
-<li class="menu-item {{ classActiveSegment(2,'projets') }}">
-    <a href="{{ action('ProjetController@index') }}" class="menu-link">
-        <span class="menu-label">
-            <span class="menu-name">{{ __('Projets') }}</span>
-        </span>
+@if(Auth::user()->role_lvl >= 2)
+    <li class="menu-item {{ classActiveSegment(2,'projets') }}">
+        <a href="{{ action('ProjetController@index') }}" class="menu-link">
+            <span class="menu-label">
+                <span class="menu-name">{{ __('Projets') }}</span>
+            </span>
 
-        <span class="menu-icon">
-            {{-- <span class="icon-badge badge-success badge badge-pill">NEW</span> --}}
-            <i class="icon-placeholder far fa-search-location"></i>
-        </span>
-    </a>
-</li>
+            <span class="menu-icon">
+                {{-- <span class="icon-badge badge-success badge badge-pill">NEW</span> --}}
+                <i class="icon-placeholder far fa-search-location"></i>
+            </span>
+        </a>
+    </li>
+@endif
 
 @if(Auth::user()->role_lvl > 3)
     <li class="menu-item {{ classActiveSegment(2,'candidats') }}">

@@ -15,6 +15,9 @@
                             </div>
                         </div>
                         <h3>{{ $regroupement->title }}</h3>
+                        @if(auth()->user()->role_lvl == 10)
+                            <a href="{{ route('association.users',$regroupement->id) }}" class="btn btn-warning"><i class="fas fa-plus-circle pr-2"></i> Gestion des utilisateurs</a>
+                        @endif
                     </div>
 
 
@@ -28,15 +31,13 @@
                        <div class="card py-3 m-b-30">
                            <div class="card-body">
 
-                                   	<h3 class="">{{ __("Information") }}</h3>
-                                   	<p class="text-muted">
-                                       Utiliser cette page pour modifier les informations d'un regroupement
-                                   	</p>
-
-                                    {!! Form::model($regroupement, ['method' => 'PATCH', 'action' => ['RegroupementController@update', $regroupement] ]) !!}
-										@include('admin.regroupements._form')
-                                    {!! Form::close() !!}
-
+                                <h3 class="">{{ __("Information") }}</h3>
+                                <p class="text-muted">
+                                    Utiliser cette page pour modifier les informations d'un regroupement
+                                </p>
+                                {!! Form::model($regroupement, ['method' => 'PATCH', 'action' => ['RegroupementController@update', $regroupement] ]) !!}
+                                    @include('admin.regroupements._form')
+                                {!! Form::close() !!}
                            </div>
                        </div>
 

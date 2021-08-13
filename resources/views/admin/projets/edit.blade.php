@@ -67,6 +67,10 @@
                     @foreach ($projet->demandes as $d)
                         @if (Auth::user()->role_lvl > 3 || ($projet->employeur_id == Auth::user()->employeur_id || $d->employeur_id == Auth::user()->employeur_id))
                             @include('admin.projets.partials._demande-'.$d->type, ['p'=>$d])
+                        @elseif(is_associate_user())
+                            @if(it_has_demande($d->id))
+                                @include('admin.projets.partials._demande-'.$d->type, ['p'=>$d])
+                            @endif
                         @endif
                     @endforeach
                 </div>
@@ -275,6 +279,10 @@
                 let modalDemande = $('input[name=open_modal]').val();
                 $('i[data-demande-id='+modalDemande+']').click();
             });
+
+            @if(auth()->user()->role_lvl == 2)
+                $('input,select,button').prop('disabled',true).addClass('disabled');
+            @endif
 
         </script>
 

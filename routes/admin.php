@@ -6,9 +6,11 @@ Route::get('/', function () {
         $employeur = \App\Models\Employeur::find(Auth::user()->employeur_id);
         return view('admin.employeurs.edit', compact('employeur'));
     }
-    return view('dashboard');
+    return view('dashboard-details');
 })->name('dashboard');
 Route::get('verify/token/{token}', 'TodoController@verifyToken')->name('verify.token');
+Route::get('/dashboard','DashboardController@index')->name('dashboard');
+//Route::get('/','DashboardController@nosBonsCoups')->name('dashboard.details');
 
 Route::resource('/projets', 'ProjetController');
 Route::resource('/employeurs', 'EmployeurController');
@@ -69,6 +71,14 @@ Route::post('/candidats/media-categories', 'CandidatController@getMediaCategorie
 Route::post('/candidats/media-remove', 'CandidatController@removeMedia');
 Route::post('/candidat/remove', 'CandidatController@remove');
 
+//Association user
+Route::get('association/users/{assoc_group_id}','AssociationUsersController@index')->name('association.users');
+Route::get('association/users/create/{assoc_group_id}','AssociationUsersController@create')->name('association.users.create');
+Route::post('association/users/save/{assoc_group_id}','AssociationUsersController@store')->name('association.users.save');
+Route::get('association/users/edit/{assoc_group_id}/{user_id}','AssociationUsersController@edit')->name('association.users.edit');
+Route::patch('association/users/edit/{assoc_group_id}/{user_id}','AssociationUsersController@update')->name('association.users.update');
+Route::post('association/users/remove','AssociationUsersController@remove');
+
 //Ajax Route
 Route::post('remove/assignee','DemandeController@removeAssignee');
 
@@ -83,6 +93,8 @@ Route::prefix('api/datatables')->group(function () {
 	Route::get('/get-pays', 'DatatablesController@getPays');
 });
 
+
+Route::get('/get-dashboard-counts','DashboardController@getCountsByFilter');
 
 
 

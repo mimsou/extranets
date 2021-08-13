@@ -48,7 +48,7 @@
                     <div class="row  mb-5">
                         <div class="col-12">
                             <a href="{{ action('EmployeurController@userManagement', $employeur->id) }}"
-                               class="btn btn-warning"><i class="fas fa-plus-circle pr-2"></i> Gestion des utilisateurs</a>
+                               class="btn btn-warning user-management-button"><i class="fas fa-plus-circle pr-2"></i> Gestion des utilisateurs</a>
                         </div>
                     </div>
                     @endif
@@ -267,7 +267,8 @@
 
     <script>
 
-        var user_role = '{{ Auth::user()->role_lvl }}';
+        var isEmployee = '{{ is_employeur_user() }}';
+        var isAssociate = '{{ is_associate_user() }}'
 
         $(document).on('change', '#has_secondary_contact_switch', function (e) {
             toggleSecondary();
@@ -296,8 +297,9 @@
         toggleSecondary();
         toggleThird();
 
-        if (user_role == 3) {
-            $('.employer-frm :input').prop('disabled', true)
+        if (isEmployee || isAssociate ) {
+            $('.employer-frm :input').prop('disabled', true);
+            $('.user-management-button').addClass('disabled');
         }
     </script>
 

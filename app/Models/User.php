@@ -97,4 +97,8 @@ class User extends Authenticatable
     public function assignedUsers(){
         return $this->belongsToMany('App\Models\Demande', 'demande_users');
     }
+
+    public function group_assoc(){
+        return $this->belongsTo(AssocUserMap::class,'id','user_id');
+    }
 }

@@ -23,9 +23,11 @@
                 <div class="col-md-6 text-white p-b-30">
                     <h1>Liste des employeurs</h1>
                 </div>
-                <div class="col-md-6 text-white my-auto text-md-right p-b-30">
-                    <a href="{{ action('EmployeurController@create') }}" class="btn btn-success"><i class="mdi mdi-plus"></i> {{ __('Ajouter un employeur') }}</a>
-                </div>
+                @if(is_admin_user())
+                    <div class="col-md-6 text-white my-auto text-md-right p-b-30">
+                        <a href="{{ action('EmployeurController@create') }}" class="btn btn-success"><i class="mdi mdi-plus"></i> {{ __('Ajouter un employeur') }}</a>
+                    </div>
+                @endif
             </div>
         </div>
     </div>
