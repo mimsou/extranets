@@ -46,7 +46,23 @@ class Candidat extends Model implements HasMedia
                             'permis_date_delivrance',
                             // 'date_mandat_immigration',
                             // 'immigration_user_id',
-                            'recruteur_id'
+                            'recruteur_id',
+                            'address_1',
+                            'address_2',
+                            'city',
+                            'province',
+                            'country',
+                            'postal_code',
+                            'date_d_arrivee',
+                            'nom_de_l_accompagnateur',
+                            'la_region_de_lemploi',
+                            'contact_telephonique',
+                            'lien_facebook',
+                            'whatsapp',
+                            'commentaires_generaux',
+                            'nombre_d_enfants',
+                            'etat_civil',
+                            'age_d_enfants'
                         ];
 
 
@@ -89,6 +105,22 @@ class Candidat extends Model implements HasMedia
         // return $d_arr;
 
         return $this->belongsToMany('App\Models\Demande', 'demande_candidat', 'candidat_id', 'demande_id', 'id', 'id')->where('type','LIKE','immigration')->withPivot('statut');
+    }
+
+    /**
+     * The news that belong to many demandes.
+     */
+    public function demandesAccueil()
+    {
+        // $d_arr = [];
+
+        // foreach ($this->demandes as $key => $d) {
+        //     if(Str::contains($d->projet->statut, 'imm_')) array_push($d_arr, $d);
+        // }
+
+        // return $d_arr;
+
+        return $this->belongsToMany('App\Models\Demande', 'demande_candidat', 'candidat_id', 'demande_id', 'id', 'id')->where('type','LIKE','accueil')->withPivot('statut');
     }
 
 

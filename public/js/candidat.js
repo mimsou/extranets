@@ -138,6 +138,31 @@
   }
 
   updatePages();
+  var htmlAge = "\n        <div class=\"form-group col-md-3\">\n            <div class=\"age_field\">\n                <label>\xC2ge des enfants</label>\n                <input type=\"number\" name=\"age_d_enfants[]\" value=\"\" class=\"form-control\" placeholder=\"Age\" />\n            </div>\n        </div>\n    ";
+  $('input[name=nombre_d_enfants]').change(function () {
+    var number = $(this).val();
+    $('.rep_age').html('');
+
+    for (var i = 1; i <= number; i++) {
+      $('.rep_age').append(htmlAge);
+
+      if (i > 5) {
+        break;
+      }
+    }
+  });
+  $('input[name=nombre_d_enfants]').keyup(function () {
+    var number = $(this).val();
+    $('.rep_age').html('');
+
+    for (var i = 1; i <= number; i++) {
+      $('.rep_age').append(htmlAge);
+
+      if (i > 5) {
+        break;
+      }
+    }
+  });
 })(window.jQuery);
 
 /***/ }),

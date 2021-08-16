@@ -228,6 +228,45 @@ if (!function_exists('demandeStatuts')) {
     ['progression' => '0%', 'val' => 'pt_refuse', 'title' => 'Permis de travail refusé'],
 ]);
 
+!defined('STATUTS_DEMANDE_ACCUEIL') && define('STATUTS_DEMANDE_ACCUEIL', [
+    ['progression' => '5%', 'val' => 'offre_de_service_signée', 'title' => 'Offre de service signée'],
+    ['progression' => '10%', 'val' => 'création_du_projet', 'title' => 'Création du projet'],
+    ['progression' => '20%', 'val' => 'définition_du_besoin_avec_le_client', 'title' => 'Définition du besoin avec le client'],
+    ['progression' => '25%', 'val' => 'attribution_d\'un_accompagnateur_au_projet', 'title' => 'Attribution d’un accompagnateur au projet'],
+    ['progression' => '40%', 'val' => 'rencontre_démarrage_de_projet', 'title' => 'Rencontre démarrage de projet'],
+    ['progression' => '50%', 'val' => 'préparation_du_travailleur_avant_son_départ', 'title' => 'Préparation du travailleur avant son départ'],
+    ['progression' => '60%', 'val' => 'achat_du_billet_d\'avion', 'title' => 'Achat du billet d’avion'],
+    ['progression' => '75%', 'val' => 'arrivée_du_travailleur', 'title' => 'Arrivée du travailleur'],
+    ['progression' => '90%', 'val' => 'installation_NAS_RAMQ', 'title' => 'Installation, NAS, RAMQ'],
+    ['progression' => '100%', 'val' => 'le_travailleur_a_débuté_son_emploi', 'title' => 'Le travailleur a débuté son emploi'],
+    ['progression' => '0%', 'val' => 'dossier_suspendu_ou_annulé', 'title' => 'Dossier suspendu ou annulé']
+]);
+
+
+if(!function_exists('AccueilDemandeStatus')){
+    function AccueilDemandeStatus($key = null, $target=null){
+        if(is_null($target)) $target = STATUTS_DEMANDE_ACCUEIL;
+
+        $select_array = [];
+        foreach ($target as $value) {
+            if(!is_null($key) && $value['val'] == $key) return $value['title'];
+
+            $select_array[$value['val']] = $value['title'];
+        }
+        return (!is_null($key))? 'NA' : $select_array;
+    }
+
+    function demandeAccueilProgression($val, $target=null){
+        if(is_null($target)) $target = STATUTS_DEMANDE_ACCUEIL;
+
+        foreach ($target as $value) {
+            if($val == $value['val']) return $value['progression'];
+        }
+
+        return 0;
+    }
+}
+
 
 /**
  * Manage the DEMANDE status globally

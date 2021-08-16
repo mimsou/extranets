@@ -77,6 +77,7 @@
                             @include('admin.candidats.partials._recrutement')
                             {{-- @include('admin.candidats.partials._administration') --}}
                             @include('admin.candidats.partials._immigration')
+                            @include('admin.candidats.partials._accueil')
                             @include('admin.candidats.partials._commentaires')
                             @include('admin.candidats.partials._historique')
 
