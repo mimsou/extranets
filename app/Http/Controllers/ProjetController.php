@@ -6,6 +6,7 @@ use App\Models\Candidat;
 use App\Models\Demande;
 use App\Models\Employeur;
 use App\Models\Projet;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redirect;
@@ -102,8 +103,9 @@ class ProjetController extends Controller
             return abort('403');
         }
         $projet = Projet::find($id);
+        $users = User::all()->pluck('fullname', 'id')->toArray();
 
-        return view('admin.projets.edit', compact('projet','id'));
+        return view('admin.projets.edit', compact('projet','users','id'));
     }
 
     /**

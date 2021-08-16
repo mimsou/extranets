@@ -129,6 +129,14 @@
                         <i class="icon-placeholder fas fa-clipboard-list"></i>
                     </span>
                 </a>
+                <a href="{{ route('time_tracking_index') }}" class="{{ classActiveSegment(3,'time-tracking') }} menu-link">
+                    <span class="menu-label">
+                        <span class="menu-name">{{ __('Rapport de temps') }}</span>
+                    </span>
+                    <span class="menu-icon">
+                        <i class="icon-placeholder fas fa-business-time"></i>
+                    </span>
+                </a>
             </li>
         </ul>
     </li>

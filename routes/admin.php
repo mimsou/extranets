@@ -1,6 +1,8 @@
 <?php
 
 
+use Illuminate\Support\Facades\Route;
+
 Route::get('/', function () {
     if(Auth::user() && Auth::user()->role_lvl == 3) { //user is employer
         $employeur = \App\Models\Employeur::find(Auth::user()->employeur_id);
@@ -99,7 +101,10 @@ Route::prefix('api/datatables')->group(function () {
 
 Route::get('/get-dashboard-counts','DashboardController@getCountsByFilter');
 
-
+// TIME TRACKING
+Route::post('projets/{id}/time-tracking', 'TimeTrackingController@store')->name('time_tracking_store');
+Route::get('projets/{id}/time-tracking', 'TimeTrackingController@show')->name('time_tracking_show');
+Route::get('time-tracking', 'TimeTrackingController@index')->name('time_tracking_index');
 
 // Route::get('/users', function () {
 //     return view('users');

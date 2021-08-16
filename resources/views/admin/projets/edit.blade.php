@@ -11,6 +11,7 @@
     @include('admin.projets.modals.addDemande')
     @include('admin.projets.modals.addDemandeRec')
     @include('admin.projets.modals.editDemande')
+    @include('admin.projets.modals.timeTracking')
 
     @if(request()->has('demande'))
         {!! Form::hidden('open_modal',request()->demande) !!}
@@ -20,10 +21,15 @@
             <div class="row p-b-60 p-t-60">
 
                 <div class="col-lg-8 text-white p-b-30">
-                    <h1>{{ $projet->titre }}</h1>
+                    <h1>{{ $projet->titre }} NINJA</h1>
                     <h3 class="opacity-50">{{ $projet->numero }}</h3>
                 </div>
 
+                <div class="col-lg-4 text-right text-white p-b-30">
+                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#timeTracking">
+                        <i class="fas fa-business-time fa-2x"></i>
+                    </button>
+                </div>
 
             </div>
         </div>
@@ -108,6 +114,55 @@
                 $('#addCandidat').modal('toggle');
             });
 
+            //
+            //----o Time Tracking code
+            //
+            $('#timeTracking').on('show.bs.modal', function (e) {
+                $('#timeTracking .modal_loading').show();
+                $('#timeTracking .modal_edit_content').hide();
+                $.ajax({
+                    type: "GET",
+                    url: "{!! route('time_tracking_show',['id'=> $projet->id]) !!}",
+                    success: function(data)
+                    {
+                        console.log(data.total_duration);
+                        setTimeout(function(){
+                            $('#timeTracking .modal_loading').hide();
+                            $('#timeTracking .modal_edit_content').html(data).show();
+                        }, 1000);
+                    },
+                    error: function(jqXHR, status, error) {
+                        console.log(jqXHR, status, error);
+                        alert(error);
+                    }
+                });
+            })
+
+            $("#time_tracking_form").submit(function(e) {
+
+                e.preventDefault(); // avoid to execute the actual submit of the form.
+
+                var form = $(this);
+                var url = form.attr('action');
+
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: form.serialize(), // serializes the form's elements.
+                    success: function(data)
+                    {
+                        console.log(data);
+                        alert(data); // show response from the php script.
+                    },
+                    error: function(jqXHR, status, error) {
+                        console.log(jqXHR, status, error);
+                        alert(error);
+                    }
+                });
+
+
+            });
+
             $(document).on('click', '.editdemande', function() {
 
                 $('#editDemande .modal_loading').show();
@@ -144,7 +199,6 @@
 
 
             });
-
 
             $(document).on('change', "#addDemande #employeur_id", function() {
                 var employeur_id = $(this).val();
