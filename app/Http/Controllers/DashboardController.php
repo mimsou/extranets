@@ -31,6 +31,9 @@ class DashboardController extends Controller
     public function dashboardRecords(Request $request){
         if($request->has('start_date') && $request->has('end_date')){
             $startDate = Carbon::parse($request->start_date);
+            if($request->has('compareCondition') && $request->compareCondition == "true"){
+                $startDate = $startDate->subYears(1);
+            }
             $endDate = Carbon::parse($request->end_date);
             $dateSevendDaysBefore = $startDate->format('Y-m-d');
             $fourteenDaysBefore = $startDate->subDays($startDate->diffInDays($endDate))->format('Y-m-d');

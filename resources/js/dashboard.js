@@ -12,12 +12,14 @@
         endDate = end;
     });
     $('body').on('click','.applyBtn',function(){
+        let compareCondition = $('input[name=compare_condition]').is(':checked');
         $.ajax({
             type: 'GET',
             url: route+'get-dashboard-counts',
             data: {
                 start_date: startDate.format('YYYY-MM-DD'),
-                end_date: endDate.format('YYYY-MM-DD')
+                end_date: endDate.format('YYYY-MM-DD'),
+                compareCondition: compareCondition
             },
             success: function(result){
                 $('.widget-content').html(result);
@@ -50,7 +52,7 @@
                 colors: ['transparent']
             },
             series: [{
-                name: 'EIMT',
+                name: 'EIMT Envoyées',
                 data: Object.values(ChartData['emit'])
             }, {
                 name: 'EIMT Approuvées',
