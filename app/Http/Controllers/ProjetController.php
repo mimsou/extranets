@@ -103,6 +103,8 @@ class ProjetController extends Controller
             return abort('403');
         }
         $projet = Projet::find($id);
+
+        // for time tracking right panel
         $users = User::all()->pluck('fullname', 'id')->toArray();
 
         return view('admin.projets.edit', compact('projet','users','id'));

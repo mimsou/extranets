@@ -15,47 +15,58 @@
                     <div class="card-body">
                         <h4 class="mb-3">Nouveau</h4>
                         {!! Form::open(['route' => ['time_tracking_store', 'id' => 4 ], 'id' => 'time_tracking_form']) !!}
-                        @csrf
+                        {!! Form::hidden('tt_projet_id', $projet->id) !!}
+                        <!-- TASK TYPE -->
                         <div class="form-row">
                             <div class="form-group col-md-12">
-                                <label for="statut">Type de tâche</label>
-{{--                                {!! Form::select('statut', $statuts, null, ['class'=>'form-control', 'required']) !!}--}}
-                                <select class="form-control" required="" name="statut">
-                                    <option value="new_projet" selected="selected">Type de tâche</option>
-                                    <optgroup label="Immigration">
-                                        <option value="imm_eimt_dst_pt">Imm - EIMT-DST-PT</option>
-                                        <option value="imm_eimt_dst_pt_ave">Imm - EIMT-DST-PT-AVE</option>
-                                    </optgroup>
-                                    <optgroup label="Recrutement">
-                                        <option value="rec_mission_dedie">Rec - Mission dédiée</option>
-                                        <option value="rec_mission_partagee">Rec - Mission partagée</option>
-                                    </optgroup>
-                                    <option value="acc_accueil">Acc - Accueil</option>
+                                <label for="statut">Type de tâche *</label>
+                                <select class="form-control" required="" name="tt_task_type">
+                                    <option value="" disabled selected>Choisir</option>
+                                    @foreach(\App\Models\Enum\TaskType::all() as $task)
+                                    <option value="{!! $task !!}" >{!! $task !!}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
-
+                        <!-- User Selection (if Super-Admin) -->
+                        @if(is_super_admin_user())
                         <div class="form-row">
                             <div class="form-group col-md-12">
                                 <label for="statut">Utilisateur</label>
-                                {!! Form::select('user', $users, null, ['class'=>'form-control', 'required']) !!}
+                                {!! Form::select('tt_user_id', $users, null, ['class'=>'form-control', 'required']) !!}
                             </div>
                         </div>
-
+                        @else
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label for="statut">Utilisateur: {!! Auth::user()->fullname !!}</label>
+                                    {!! Form::hidden('tt_user_id', Auth::user()->id) !!}
+                                </div>
+                            </div>
+                        @endif
+                        <!-- Duration -->
                         <div class="form-group">
                             <label class="form-label">Durée *</label>
-                            <input type="text" name="field-name" required class="form-control"
+                            <input type="text" id="tt_duration" name="tt_duration" required class="form-control"
                                    data-mask="00:00"
                                    data-mask-clearifnotmatch="true"
                                    placeholder="01:30"
                                    autocomplete="off"
-                                   maxlength="8">
+                                   maxlength="5">
                         </div>
-
+                        <!-- Description -->
                         <div class="form-row">
                             <div class="form-group col-md-12">
                                 <label for="statut">Description</label>
-                                {!! Form::textarea('notes',null,['class'=>'form-control','placeholder'=>'Entrez la note','rows'=>4]) !!}
+                                {!! Form::textarea('tt_description',null,[
+                                    'class' => 'form-control',
+                                    'placeholder' => 'Entrez la description',
+                                    'rows' => 4,
+                                    'id' => 'tt_description',
+                                    'maxlength' => 200,
+                                    'style' => 'resize: none'
+                                ]) !!}
+                                <span class="pull-right label label-default" id="count_message"></span>
                             </div>
                         </div>
 

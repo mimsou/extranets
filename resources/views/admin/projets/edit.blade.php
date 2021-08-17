@@ -24,13 +24,13 @@
                     <h1>{{ $projet->titre }} NINJA</h1>
                     <h3 class="opacity-50">{{ $projet->numero }}</h3>
                 </div>
-
+                @if(is_admin_user())
                 <div class="col-lg-4 text-right text-white p-b-30">
                     <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#timeTracking">
                         <i class="fas fa-business-time fa-2x"></i>
                     </button>
                 </div>
-
+                @endif
             </div>
         </div>
     </div>
@@ -118,6 +118,10 @@
             //----o Time Tracking code
             //
             $('#timeTracking').on('show.bs.modal', function (e) {
+                loadTimeTrackingContent();
+            })
+
+            function loadTimeTrackingContent(){
                 $('#timeTracking .modal_loading').show();
                 $('#timeTracking .modal_edit_content').hide();
                 $.ajax({
@@ -125,7 +129,6 @@
                     url: "{!! route('time_tracking_show',['id'=> $projet->id]) !!}",
                     success: function(data)
                     {
-                        console.log(data.total_duration);
                         setTimeout(function(){
                             $('#timeTracking .modal_loading').hide();
                             $('#timeTracking .modal_edit_content').html(data).show();
@@ -136,15 +139,12 @@
                         alert(error);
                     }
                 });
-            })
+            }
 
             $("#time_tracking_form").submit(function(e) {
-
                 e.preventDefault(); // avoid to execute the actual submit of the form.
-
                 var form = $(this);
                 var url = form.attr('action');
-
                 $.ajax({
                     type: "POST",
                     url: url,
@@ -152,17 +152,49 @@
                     success: function(data)
                     {
                         console.log(data);
-                        alert(data); // show response from the php script.
+                        loadTimeTrackingContent();
                     },
                     error: function(jqXHR, status, error) {
                         console.log(jqXHR, status, error);
                         alert(error);
                     }
                 });
-
-
             });
 
+            //
+            //---o Time Tracking - Initiate TextArea counter and duration mask
+            //
+            $(document).ready(function(){
+                tt_description_text_max = 200;
+                $('#count_message').html('0 / ' + tt_description_text_max );
+
+                var SPMaskBehavior = function (val) {
+                        return val.replace(/\D/g, '')[0] === '2' ? 'AE:CD' : 'AB:CD';
+                    },
+                    spOptions = {
+                        onKeyPress: function(val, e, field, options) {
+                            field.mask(SPMaskBehavior.apply({}, arguments), options);
+                        },
+                        translation: {
+                            "A": { pattern: /[0-9]/, optional: false},
+                            "B": { pattern: /[0-9]/, optional: false},
+                            "C": { pattern: /[0-5]/, optional: false},
+                            "D": { pattern: /[0-9]/, optional: false},
+                            "E": { pattern: /[0-9]/, optional: false}
+                        }
+                    };
+                $('#tt_duration').mask(SPMaskBehavior, spOptions);
+            });
+
+            $('#tt_description').keyup(function() {
+                var text_length = $('#tt_description').val().length;
+                var text_remaining = tt_description_text_max - text_length;
+                $('#count_message').html(text_length + ' / ' + tt_description_text_max);
+            });
+
+            //
+            //---o Click event
+            //
             $(document).on('click', '.editdemande', function() {
 
                 $('#editDemande .modal_loading').show();

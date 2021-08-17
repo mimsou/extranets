@@ -12,7 +12,7 @@
             </thead>
             <tbody>
             @foreach($time_record_datas as $time_record_data)
-                <tr>
+                <tr title="{!! $time_record_data['description'] !!}">
                     <td>{!! $time_record_data['name'] !!}</td>
                     <td>{!! $time_record_data['date'] !!}</td>
                     <td>{!! $time_record_data['duration'] !!}</td>

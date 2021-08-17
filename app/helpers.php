@@ -457,7 +457,18 @@ if(!function_exists('is_employeur_user')){
 if(!function_exists('is_admin_user')){
     function is_admin_user(){
         $userRole = \Auth::user()->role_lvl;
-        if($userRole == 10){
+        if($userRole >= 5){
+            return true;
+        }else{
+            return false;
+        }
+    }
+}
+
+if(!function_exists('is_super_admin_user')){
+    function is_super_admin_user(){
+        $userRole = \Auth::user()->role_lvl;
+        if($userRole > 5){
             return true;
         }else{
             return false;

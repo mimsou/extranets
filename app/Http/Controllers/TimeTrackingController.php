@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Classes\Utils\Tools\TimeTools;
+use App\Models\TimeRecord;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TimeTrackingController extends Controller
 {
@@ -34,9 +37,20 @@ class TimeTrackingController extends Controller
      */
     public function store(Request $request)
     {
+        $tr = new TimeRecord();
+        $tr->user_id = $request->tt_user_id;
+        $tr->by_user_id = Auth::user()->id;
+        $tr->projet_id = $request->tt_projet_id;
+        $tr->task_type = $request->tt_task_type;
+        $tr->description = $request->tt_description??'';
+        $tr->duration = TimeTools::hoursToFloat($request->tt_duration);
+        $tr->date_from = now();
+        $tr->save();
+
         return [
             'success' => true,
-            'action' => 'TimeTrackingController@store'
+            'action' => 'TimeTrackingController@store',
+            'time' => TimeTools::floatToHours($tr->duration)
         ];
     }
 
@@ -48,14 +62,18 @@ class TimeTrackingController extends Controller
      */
     public function show($id)
     {
-        $time_record_datas = [
-            [
-                'name' => "Martin Arvisais",
-                'date' => "2021/08/16",
-                'duration' => "01h30",
-                'type' => "EIMT"
-            ]
-        ];
+        $time_records = TimeRecord::all();
+        $time_record_datas = [];
+        foreach ($time_records as $time_record){
+            $time_record_datas[] = [
+                'name' => $time_record->user->fullname,
+                'date' => $time_record->date_from,
+                'duration' => TimeTools::floatToHours($time_record->duration),
+                'type' => $time_record->task_type,
+                'description' => $time_record->description
+            ];
+        }
+
         $total = '24h34';
         return view('admin.time-trackings.partials.record_per_project',
                     compact('time_record_datas', 'total'));
