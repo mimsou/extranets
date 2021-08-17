@@ -10,6 +10,17 @@ use Illuminate\Support\Facades\Auth;
 class TimeTrackingController extends Controller
 {
     /**
+     * Display a flash!
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function flash()
+    {
+        //https://github.com/laracasts/flash/issues/111
+        return view('admin.time-trackings.partials.message');
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -44,13 +55,14 @@ class TimeTrackingController extends Controller
         $tr->task_type = $request->tt_task_type;
         $tr->description = $request->tt_description??'';
         $tr->duration = TimeTools::hoursToFloat($request->tt_duration);
-        $tr->date_from = now();
+        $tr->date_from = $request->tt_date_from??now();
         $tr->save();
+
+//        flash()->overlay("Association user created successfully!");
 
         return [
             'success' => true,
-            'action' => 'TimeTrackingController@store',
-            'time' => TimeTools::floatToHours($tr->duration)
+            'action' => 'TimeTrackingController@store'
         ];
     }
 
@@ -82,6 +94,7 @@ class TimeTrackingController extends Controller
             $total_duration += $time_record->duration;
         }
         $total = TimeTools::floatToHours($total_duration);
+
         return view('admin.time-trackings.partials.record_per_project',
                     compact('time_record_datas', 'total'));
     }

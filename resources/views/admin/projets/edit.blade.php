@@ -160,6 +160,7 @@
                     success: function(data)
                     {
                         console.log(data);
+                        fetchNotifications();
                         emptyTimeTrackingFormInput();
                         loadTimeTrackingContent();
                     },
@@ -202,6 +203,47 @@
                 var text_remaining = tt_description_text_max - text_length;
                 $('#count_message').html(text_length + ' / ' + tt_description_text_max);
             });
+
+            //
+            //---o Flash for Ajax
+            //
+            function fetchNotifications() {
+                console.log('fetchNotifications');
+                $.ajax({
+                    url: '{{ route('flash.notifications') }}',
+                    type: 'GET',
+                    success: function (result) {
+                        // Fetch any notifications if we have any
+                        //http://bootstrap-notify.remabledesigns.com/
+                        notification_template_ajax = result;
+                        jQuery.notify({
+                            // options
+                            icon: 'mdi mdi-check',
+                            title: "Succès",
+                            message: "Enregistrement a été créé avec succès."
+                        }, {
+                            placement: {
+                                align: "right",
+                                from: "top"
+                            },
+                            showProgressbar: true,
+                            timer: 120,
+                            z_index: 10031,
+                            offset: {
+                                x: 50,
+                                y: 10
+                            },
+                            // settings
+                            type: 'success',
+                            template: notification_template_ajax
+                        });
+                    },
+                    error: function(jqXHR, status, error) {
+                        console.log(jqXHR, status, error);
+                        alert(error);
+                    }
+                });
+            }
 
             //
             //---o Click event
@@ -382,5 +424,9 @@
             @endif
 
         </script>
+
+            <script>
+                $('#flash-overlay-modal').modal();
+            </script>
 
     @endsection

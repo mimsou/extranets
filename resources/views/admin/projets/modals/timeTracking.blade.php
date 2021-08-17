@@ -11,7 +11,8 @@
                 </button>
             </div>
             <div class="modal-body bg-gray-100 card-scroll">
-                <div class="card py-3 m-b-30">
+                <div class="card py-3 m-b-15">
+                    <div id="flash-data-container"></div>
                     <div class="card-body">
                         <h4 class="mb-3">Nouveau</h4>
                         {!! Form::open(['route' => ['time_tracking_store', 'id' => 4 ], 'id' => 'time_tracking_form']) !!}
@@ -19,7 +20,7 @@
                         <!-- TASK TYPE -->
                         <div class="form-row">
                             <div class="form-group col-md-12">
-                                <label for="statut">Type de tâche *</label>
+                                <label for="tt_task_type">Type de tâche *</label>
                                 <select class="form-control" required="" id="tt_task_type" name="tt_task_type">
                                     <option value="" disabled selected>Choisir</option>
                                     @foreach(\App\Models\Enum\TaskType::all() as $task)
@@ -32,7 +33,7 @@
                         @if(is_super_admin_user())
                         <div class="form-row">
                             <div class="form-group col-md-12">
-                                <label for="statut">Utilisateur</label>
+                                <label for="tt_user_id">Utilisateur</label>
                                 <select class="form-control" required="" id="tt_user_id" name="tt_user_id">
                                     @foreach($users as $key => $user)
                                         @if($key === Auth::user()->id)
@@ -44,13 +45,18 @@
                                 </select>
                             </div>
                         </div>
-                        @else
-                            <div class="form-row">
-                                <div class="form-group col-md-12">
-                                    <label for="statut">Utilisateur: {!! Auth::user()->fullname !!}</label>
-                                    {!! Form::hidden('tt_user_id', Auth::user()->id) !!}
-                                </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label for="tt_date_from">Date</label>
+                                {{ Form::date('tt_date_from', now()->format('Y-m-d'), [
+                                    'class'=>'form-control',
+                                    'id'=>'tt_date_from'
+                                    ]) }}
                             </div>
+                        </div>
+                        @else
+                            {!! Form::hidden('tt_user_id', Auth::user()->id) !!}
+                            {!! Form::hidden('tt_date_from', now()) !!}
                         @endif
                         <!-- Duration -->
                         <div class="form-group">
@@ -69,7 +75,7 @@
                                 {!! Form::textarea('tt_description',null,[
                                     'class' => 'form-control',
                                     'placeholder' => 'Entrez la description',
-                                    'rows' => 4,
+                                    'rows' => 3,
                                     'id' => 'tt_description',
                                     'maxlength' => 200,
                                     'style' => 'resize: none'
@@ -77,8 +83,14 @@
                                 <span class="pull-right label label-default" id="count_message"></span>
                             </div>
                         </div>
-
-                        <button type="submit" class="btn btn-success btn-cta mt-4">Enregistrer</button>
+                        <div class="row">
+                            <div class="col-md-6">
+                                &nbsp;
+                            </div>
+                            <div class="col-md-6">
+                                <button type="submit" class="btn m-b-15 ml-2 mr-2 btn-success float-right">Enregistrer</button>
+                            </div>
+                        </div>
                         {!! Form::close() !!}
                     </div>
                 </div>
