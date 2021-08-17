@@ -62,8 +62,15 @@ class TimeTrackingController extends Controller
      */
     public function show($id)
     {
-        $time_records = TimeRecord::all();
+        if(is_super_admin_user()){
+            $time_records = TimeRecord::where('projet_id', '=', $id)->get();
+        }else{
+            $time_records = TimeRecord::where('projet_id', '=', $id)
+                ->where('user_id', '=', Auth::user()->id)
+                ->get();
+        }
         $time_record_datas = [];
+        $total_duration = 0;
         foreach ($time_records as $time_record){
             $time_record_datas[] = [
                 'name' => $time_record->user->fullname,
@@ -72,9 +79,9 @@ class TimeTrackingController extends Controller
                 'type' => $time_record->task_type,
                 'description' => $time_record->description
             ];
+            $total_duration += $time_record->duration;
         }
-
-        $total = '24h34';
+        $total = TimeTools::floatToHours($total_duration);
         return view('admin.time-trackings.partials.record_per_project',
                     compact('time_record_datas', 'total'));
     }

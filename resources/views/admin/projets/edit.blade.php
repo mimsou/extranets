@@ -121,6 +121,14 @@
                 loadTimeTrackingContent();
             })
 
+            function emptyTimeTrackingFormInput(){
+                $('#tt_task_type').prop("selectedIndex", 0).val();
+                if(document.getElementById('tt_user_id')){
+                    document.getElementById('tt_user_id').value = $auth_user_id;
+                }
+                document.getElementById('tt_description').value ='';
+                document.getElementById('tt_duration').value ='';
+            }
             function loadTimeTrackingContent(){
                 $('#timeTracking .modal_loading').show();
                 $('#timeTracking .modal_edit_content').hide();
@@ -152,6 +160,7 @@
                     success: function(data)
                     {
                         console.log(data);
+                        emptyTimeTrackingFormInput();
                         loadTimeTrackingContent();
                     },
                     error: function(jqXHR, status, error) {
@@ -165,6 +174,7 @@
             //---o Time Tracking - Initiate TextArea counter and duration mask
             //
             $(document).ready(function(){
+                $auth_user_id = {!! \Auth::user()->id !!};
                 tt_description_text_max = 200;
                 $('#count_message').html('0 / ' + tt_description_text_max );
 
@@ -181,7 +191,8 @@
                             "C": { pattern: /[0-5]/, optional: false},
                             "D": { pattern: /[0-9]/, optional: false},
                             "E": { pattern: /[0-9]/, optional: false}
-                        }
+                        },
+                        clearIfNotMatch: true
                     };
                 $('#tt_duration').mask(SPMaskBehavior, spOptions);
             });

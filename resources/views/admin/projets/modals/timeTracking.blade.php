@@ -20,7 +20,7 @@
                         <div class="form-row">
                             <div class="form-group col-md-12">
                                 <label for="statut">Type de tâche *</label>
-                                <select class="form-control" required="" name="tt_task_type">
+                                <select class="form-control" required="" id="tt_task_type" name="tt_task_type">
                                     <option value="" disabled selected>Choisir</option>
                                     @foreach(\App\Models\Enum\TaskType::all() as $task)
                                     <option value="{!! $task !!}" >{!! $task !!}</option>
@@ -33,7 +33,15 @@
                         <div class="form-row">
                             <div class="form-group col-md-12">
                                 <label for="statut">Utilisateur</label>
-                                {!! Form::select('tt_user_id', $users, null, ['class'=>'form-control', 'required']) !!}
+                                <select class="form-control" required="" id="tt_user_id" name="tt_user_id">
+                                    @foreach($users as $key => $user)
+                                        @if($key === Auth::user()->id)
+                                        <option value="{!! $key !!}" selected >{!! $user !!}</option>
+                                        @else
+                                        <option value="{!! $key !!}" >{!! $user !!}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                         @else

@@ -11,14 +11,18 @@
             </tr>
             </thead>
             <tbody>
-            @foreach($time_record_datas as $time_record_data)
+            @forelse($time_record_datas as $time_record_data)
                 <tr title="{!! $time_record_data['description'] !!}">
                     <td>{!! $time_record_data['name'] !!}</td>
                     <td>{!! $time_record_data['date'] !!}</td>
                     <td>{!! $time_record_data['duration'] !!}</td>
                     <td>{!! $time_record_data['type'] !!}</td>
                 </tr>
-            @endforeach
+            @empty
+                <tr>
+                    <td colspan="4" style="text-align: center">Aucun</td>
+                </tr>
+            @endforelse
             </tbody>
         </table>
     </div>
