@@ -106,6 +106,7 @@ Route::post('projets/{id}/time-tracking', 'TimeTrackingController@store')->name(
 Route::get('projets/{id}/time-tracking', 'TimeTrackingController@show')->name('time_tracking_show');
 Route::get('time-tracking', 'TimeTrackingController@index')->name('time_tracking_index');
 Route::get('flash', 'TimeTrackingController@flash')->name('flash.notifications');
+Route::get('time-tracking/get-time-tracking', 'TimeTrackingController@getDatatableContent');
 
 // Route::get('/users', function () {
 //     return view('users');

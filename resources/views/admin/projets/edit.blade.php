@@ -144,7 +144,7 @@
                     },
                     error: function(jqXHR, status, error) {
                         console.log(jqXHR, status, error);
-                        alert(error);
+                        fetchErrorNotifications("Erreur", "Il y a eu un problème.");
                     }
                 });
             }
@@ -160,13 +160,13 @@
                     success: function(data)
                     {
                         console.log(data);
-                        fetchNotifications();
+                        fetchSuccessNotifications("Succès", "Enregistrement a été créé avec succès.");
                         emptyTimeTrackingFormInput();
                         loadTimeTrackingContent();
                     },
                     error: function(jqXHR, status, error) {
                         console.log(jqXHR, status, error);
-                        alert(error);
+                        fetchErrorNotifications("Erreur", "Il y a eu un problème.");
                     }
                 });
             });
@@ -207,7 +207,7 @@
             //
             //---o Flash for Ajax
             //
-            function fetchNotifications() {
+            function fetchSuccessNotifications($title, $message) {
                 console.log('fetchNotifications');
                 $.ajax({
                     url: '{{ route('flash.notifications') }}',
@@ -219,8 +219,8 @@
                         jQuery.notify({
                             // options
                             icon: 'mdi mdi-check',
-                            title: "Succès",
-                            message: "Enregistrement a été créé avec succès."
+                            title: $title,
+                            message: $message
                         }, {
                             placement: {
                                 align: "right",
@@ -240,7 +240,45 @@
                     },
                     error: function(jqXHR, status, error) {
                         console.log(jqXHR, status, error);
-                        alert(error);
+                        fetchErrorNotifications("Erreur", "Il y a eu un problème.");
+                    }
+                });
+            }
+
+            function fetchErrorNotifications($title, $message) {
+                console.log('fetchNotifications');
+                $.ajax({
+                    url: '{{ route('flash.notifications') }}',
+                    type: 'GET',
+                    success: function (result) {
+                        // Fetch any notifications if we have any
+                        //http://bootstrap-notify.remabledesigns.com/
+                        notification_template_ajax = result;
+                        jQuery.notify({
+                            // options
+                            icon: 'mdi mdi-exclamation',
+                            title: $title,
+                            message: $message
+                        }, {
+                            placement: {
+                                align: "right",
+                                from: "top"
+                            },
+                            showProgressbar: true,
+                            timer: 120,
+                            z_index: 10031,
+                            offset: {
+                                x: 50,
+                                y: 10
+                            },
+                            // settings
+                            type: 'danger',
+                            template: notification_template_ajax
+                        });
+                    },
+                    error: function(jqXHR, status, error) {
+                        console.log(jqXHR, status, error);
+                        fetchErrorNotifications("Erreur", "Il y a eu un problème.");
                     }
                 });
             }

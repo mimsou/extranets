@@ -71,6 +71,15 @@ class Projet extends Model
         return $this->hasMany('App\Models\Demande', 'projet_id', 'id');
     }
 
+
+    /**
+     * The Project that belong to many time_record.
+     */
+    public function time_records()
+    {
+        return $this->hasMany(TimeRecord::class, 'projet_id', 'id');
+    }
+
     /**
      * The news that belong to many candidats.
      */

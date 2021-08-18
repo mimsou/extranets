@@ -1,5 +1,5 @@
 <div class="col-md-12 m-b-30">
-    <h4 class="total_duration">Total: {!! $total !!}</h4>
+    <h4 class="total_duration">Total: {!! $total !!} h</h4>
     <div class="table-responsive">
         <table class="table align-td-middle table-card">
             <thead>
