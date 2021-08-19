@@ -49,26 +49,20 @@
                         <div class="filter_per_date_from">
                             <div class="form-group">
                                 <label for="filter_date_from">Filtrer par date</label>
-                                <input type="text" class="input-daterange form-control" id="filter_date">
-{{--                                {{ Form::date('filter_date_from', now()->startOfMonth()->format('Y-m-d'), [--}}
-{{--                                    'class'=>'form-control',--}}
-{{--                                    'id'=>'filter_date_from'--}}
-{{--                                    ]) }}--}}
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">
+                                    <i class="mdi mdi-calendar-multiselect"></i>
+                                </span>
+                                    </div>
+                                    {!! Form::text('date_range',null,[
+                                        'class'=>'form-control input-daterange',
+                                        'placeholder'=>'Filter Date',
+                                        'id' => 'filter_date'
+                                    ]) !!}
+                                </div>
                             </div>
                         </div>
-{{--                        <div class="filter_per_date_to">--}}
-{{--                            <div class="form-group">--}}
-{{--                                <label for="filter_date_to">Filtrer par date</label>--}}
-{{--                                <!-- https://github.com/uxsolutions/bootstrap-datepicker -->--}}
-{{--                                <input id="filter_date_to2" type="text"--}}
-{{--                                       class="js-datepicker form-control"--}}
-{{--                                       placeholder="Select a Date" value="{!! now()->endOfMonth()->format('Y-m-d') !!}">--}}
-{{--                                {{ Form::date('filter_date_to', now()->endOfMonth()->format('Y-m-d'), [--}}
-{{--                                    'class'=>'form-control',--}}
-{{--                                    'id'=>'filter_date_to'--}}
-{{--                                    ]) }}--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
                     </div>
                 </div>
 
@@ -86,9 +80,7 @@
                                         <th></th>
                                     </tr>
                                 </thead>
-                                <tbody>
-
-                                </tbody>
+                                <tbody> </tbody>
                                 <tfoot>
                                     <tr>
                                         <th># Projet</th>
@@ -106,12 +98,9 @@
             </div>
         </div>
     </div>
-
 @endsection
 
-
 @section('footer')
-
     <script src="{{ asset('atmos-assets/vendor/DataTables/datatables.min.js') }}"></script>
     <script>
         let time_tracking_table;
@@ -139,19 +128,15 @@
                         {data: 'childrow_html'},
                     ],
                     'fnInitComplete': function(){
+                        //for row child
                         this.fnSetColumnVis( 5, false);
                     }
                 }).on('draw.dt', function () {
                     $('.dataTable-async tr').each(function(i,e){
-                        var tr = $(this);
-                        var row = time_tracking_table.row( tr );
-
-                        console.log($( window ).width());
-                        console.log(row.data());
+                        let tr = $(this);
+                        let row = time_tracking_table.row( tr );
 
                         if(typeof row.data() != 'undefined' && $( window ).width() > 1024){
-                            // this.fnSetColumnVis( 5, false);
-
                             if ( !row.child.isShown() ) {
                                 row.child( row.data().childrow_html, 'dark-row' );
                                 row.child.show();
@@ -173,10 +158,12 @@
             $('#filter_date').data('daterangepicker').setEndDate(end_date);
             //Martin: I didn't found a way to put date format : d-m-Y
             $('#filter_date').daterangepicker({
-                "locale": {
-                    "format": "MM/DD/YYYY",
-                }
-            }, function(start, end, label) {
+                timePicker: false,
+                singleDatePicker: false,
+                autoApply: false,
+                minDate: '01/01/2021',
+                locale: { format: 'MM/DD/YYYY' }
+            }, function(start, end) {
                 start_date = start.format('MM/DD/YYYY');
                 end_date = end.format('MM/DD/YYYY');
                 applyFilters();

@@ -26,7 +26,7 @@
                                     <i class="mdi mdi-calendar-multiselect"></i>
                                 </span>
                             </div>
-                            {!! Form::text('date_range',null,['class'=>'form-control input-daterange-picker','placeholder'=>'Filter Date']) !!}
+                            {!! Form::text('date_range',null,['class'=>'form-control','placeholder'=>'Filter Date', 'id' => 'date_range_dashboard']) !!}
                         </div>
                     </div>
                 </div>

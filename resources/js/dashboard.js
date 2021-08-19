@@ -1,7 +1,7 @@
 (function($){
     let startDate = '';
     let endDate = '';
-    $('.input-daterange-picker').daterangepicker({
+    $('#date_range_dashboard').daterangepicker({
         timePicker:false,
         singleDatePicker: false,
         autoApply: false,
@@ -11,19 +11,19 @@
         startDate = start;
         endDate = end;
     });
-    // $('body').on('click','.applyBtn',function(){
-    //     $.ajax({
-    //         type: 'GET',
-    //         url: route+'get-dashboard-counts',
-    //         data: {
-    //             start_date: startDate.format('YYYY-MM-DD'),
-    //             end_date: endDate.format('YYYY-MM-DD')
-    //         },
-    //         success: function(result){
-    //             $('.widget-content').html(result);
-    //         }
-    //     });
-    // });
+    $('body').on('click','.applyBtn',function(){
+        $.ajax({
+            type: 'GET',
+            url: route+'get-dashboard-counts',
+            data: {
+                start_date: startDate.format('YYYY-MM-DD'),
+                end_date: endDate.format('YYYY-MM-DD')
+            },
+            success: function(result){
+                $('.widget-content').html(result);
+            }
+        });
+    });
 
      if ($("#chart-01").length) {
          let ChartData = JSON.parse($('.chartdata').text());
