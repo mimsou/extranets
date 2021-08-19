@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Classes\Utils\Tools\DateTools;
 use App\Classes\Utils\Tools\TimeTools;
+use App\Models\Employeur;
 use App\Models\Projet;
 use App\Models\TimeRecord;
 use App\Models\User;
@@ -37,14 +38,30 @@ class TimeTrackingController extends Controller
             abort(404);
         }
 
-        $users = User::all()->pluck('fullname', 'id')->toArray();
-        $projects = Projet::all()->pluck('titre', 'id')->toArray();
+        $users = User::all()
+            ->pluck('fullname', 'id')
+            ->prepend('Tous',0)
+            ->toArray();
 
-        return view('admin.time-trackings.index', compact('users', 'projects'));
+        $projects = Projet::all()
+            ->pluck('titre', 'id')
+            ->prepend('Tous',0)
+            ->toArray();
+
+        $statuts = collect(Projet::getProjetDeType())
+            ->prepend('Tous','all');
+
+        $employeurs = Employeur::orderBy('nom', 'ASC')
+            ->pluck('nom', 'id')
+            ->prepend('Tous',0);
+
+        return view('admin.time-trackings.index',
+                    compact('users', 'projects', 'statuts', 'employeurs'));
     }
 
     public function getDatatableContent(Request $request)
     {
+        // Date from to handling
         if($request->has('date_from') && $request->has('date_to')){
             if(DateTools::checkDateBeforeAfter($request->date_from, $request->date_to)){
                 $date_from = Carbon::parse($request->date_from);
@@ -58,6 +75,7 @@ class TimeTrackingController extends Controller
             $date_to = now()->endOfMonth();
         }
 
+        //Building the dynamic Query from the data received
         $query = TimeRecord::whereBetween('date_from',[$date_from,$date_to])
             ->with('projet', 'projet.employeur')
             ->selectRaw("*, SUM(duration) as total_hours")
@@ -67,8 +85,24 @@ class TimeTrackingController extends Controller
             $query = $query->where('user_id','=',$request->user);
         }
 
+        if($request->has('task_type') && $request->task_type !== "all"){
+            $query = $query->where('task_type','=',$request->task_type);
+        }
+
         if($request->has('projet') && $request->projet !== "0"){
             $query = $query->where('projet_id','=',$request->projet);
+        }
+
+        if($request->has('projet_type') && $request->projet_type !== "all"){
+            $query = $query->whereHas('projet', function ($q) use ($request){
+                $q->where('statut','=',$request->projet_type);
+            });
+        }
+
+        if($request->has('employeur') && $request->employeur !== "0"){
+            $query = $query->whereHas('projet.employeur', function ($q) use ($request){
+                $q->where('id','=',$request->employeur);
+            });
         }
 
         return Datatables::of($query->get())
@@ -84,6 +118,10 @@ class TimeTrackingController extends Controller
                 'projet.numero', function($m) {
                 return '<a href="' . action('ProjetController@edit', $m->projet->id) . '" class="btn btn-sm btn-link"><strong>' . $m->projet->numero . '</strong></a>';
             })
+            ->editColumn(
+                'projet.statut', function($m) {
+                return __($m->projet->statut);
+            })
             ->addColumn(
                 'childrow_html', function($m)  {
                     $projet = Projet::where('id', '=', $m->projet_id)
@@ -91,9 +129,9 @@ class TimeTrackingController extends Controller
                                 $q->selectRaw("*,SUM(duration) as total_hours")->with('user')->groupBy('user_id');
                             })
                     ->first();
-//                    dump($projet);
                 return view('admin.time-trackings.partials.datatable_row_child', compact('projet'));
             })
+
             ->make(true);
     }
 
@@ -136,7 +174,7 @@ class TimeTrackingController extends Controller
     public function show($id)
     {
         if(is_super_admin_user()){
-            $time_records = TimeRecord::where('projet_id', '=', $id)->get();
+            $time_records = TimeRecord::where('projet_id', '=', $id)->orderBy('created_at', 'DESC')->get();
         }else{
             $time_records = TimeRecord::where('projet_id', '=', $id)
                 ->where('user_id', '=', Auth::user()->id)

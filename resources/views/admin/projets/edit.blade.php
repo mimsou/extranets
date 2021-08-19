@@ -21,7 +21,7 @@
             <div class="row p-b-60 p-t-60">
 
                 <div class="col-lg-8 text-white p-b-30">
-                    <h1>{{ $projet->titre }} NINJA</h1>
+                    <h1>{{ $projet->titre }}</h1>
                     <h3 class="opacity-50">{{ $projet->numero }}</h3>
                 </div>
                 @if(is_admin_user())

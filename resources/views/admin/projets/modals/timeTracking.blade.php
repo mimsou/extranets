@@ -21,12 +21,16 @@
                         <div class="form-row">
                             <div class="form-group col-md-12">
                                 <label for="tt_task_type">Type de tâche *</label>
-                                <select class="form-control" required="" id="tt_task_type" name="tt_task_type">
-                                    <option value="" disabled selected>Choisir</option>
-                                    @foreach(\App\Models\Enum\TaskType::all() as $task)
-                                    <option value="{!! $task !!}" >{!! $task !!}</option>
-                                    @endforeach
-                                </select>
+                                {!! Form::select('tt_task_type',
+                                        \App\Models\Enum\TaskType::allByGroup(),
+                                        null,
+                                        [
+                                            'placeholder' => 'Choisir une tâche',
+                                            'class'=>'form-control',
+                                            'required',
+                                            'id' => 'tt_task_type'
+                                        ])
+                                !!}
                             </div>
                         </div>
                         <!-- User Selection (if Super-Admin) -->
@@ -51,7 +55,8 @@
                                 {{ Form::date('tt_date_from', now()->format('Y-m-d'), [
                                     'class'=>'form-control',
                                     'id'=>'tt_date_from'
-                                    ]) }}
+                                    ])
+                                    }}
                             </div>
                         </div>
                         @else

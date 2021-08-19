@@ -298,21 +298,23 @@ __webpack_require__(/*! ./dashboard */ "./resources/js/dashboard.js");
       format: 'YYYY-MM-DD'
     }
   }, function (start, end) {
-    startDate = start;
-    endDate = end;
+    startDate = start.format('YYYY-MM-DD');
+    endDate = end.format('YYYY-MM-DD');
   });
   $('body').on('click', '.applyBtn', function () {
-    $.ajax({
-      type: 'GET',
-      url: route + 'get-dashboard-counts',
-      data: {
-        start_date: startDate.format('YYYY-MM-DD'),
-        end_date: endDate.format('YYYY-MM-DD')
-      },
-      success: function success(result) {
-        $('.widget-content').html(result);
-      }
-    });
+    if (startDate !== '' && endDate !== '') {
+      $.ajax({
+        type: 'GET',
+        url: route + 'get-dashboard-counts',
+        data: {
+          start_date: startDate,
+          end_date: endDate
+        },
+        success: function success(result) {
+          $('.widget-content').html(result);
+        }
+      });
+    }
   });
 
   if ($("#chart-01").length) {

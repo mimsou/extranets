@@ -22,28 +22,75 @@
             <div class="col-12">
                 <div class="card m-b-10 m-t-30 bg-dots p-4 projets_filters" id="projets_filters">
                     <div class="filters d-flex flex-md-row flex-column align-items-center justify-content-between">
-                        <div class="filter_per_project">
+                        <div class="filter_project">
                             <div class="form-group">
                                 <label for="filter_project">Filtrer par projet</label>
-                                <select class="form-control form-control-sm height-35"
-                                        required="" id="filter_project" name="filter_project">
-                                    <option value="0" selected>Tous</option>
-                                    @foreach($projects as $key =>$project)
-                                        <option value="{!! $key !!}" >{!! $project !!}</option>
-                                    @endforeach
-                                </select>
+                                {!! Form::select('filter_project',
+                                    $projects,
+                                    null,
+                                    [
+                                        'id' => "filter_project",
+                                        'required' => "",
+                                        'class'=>'form-control form-control-sm select2 height-35',
+                                        'style'=>'width: 200px !important; !important;'
+                                    ])
+                                !!}
                             </div>
                         </div>
-                        <div class="filter_per_user">
+                        <div class="filter_user">
                             <div class="form-group">
                                 <label for="filter_user">Filtrer par personne</label>
-                                <select class="form-control form-control-sm height-35"
-                                        required="" id="filter_user" name="filter_user">
-                                    <option value="0" selected>Tous</option>
-                                    @foreach($users as $key =>$user)
-                                        <option value="{!! $key !!}" >{!! $user !!}</option>
-                                    @endforeach
-                                </select>
+                                {!! Form::select('filter_user',
+                                    $users,
+                                    null,
+                                    [
+                                        'id' => "filter_user",
+                                        'class'=>'form-control form-control-sm select2',
+                                        'style'=>'width: 200px !important; height: 25px !important;'
+                                    ])
+                                !!}
+                            </div>
+                        </div>
+                        <div class="filter_employeur">
+                            <div class="form-group">
+                                <label for="filter_employeur">Filtrer par employeur</label>
+                                {!! Form::select('filter_employeur',
+                                    $employeurs,
+                                    null,
+                                    [
+                                        'id' => "filter_employeur",
+                                        'class'=>'form-control form-control-sm select2',
+                                        'style'=>'width: 200px !important; height: 25px !important;'
+                                    ])
+                                !!}
+                            </div>
+                        </div>
+                        <div class="filter_project_type">
+                            <div class="form-group">
+                                <label for="filter_project_type">Filtrer par type de projet</label>
+                                {!! Form::select('filter_project_type',
+                                    $statuts,
+                                    null,
+                                    [
+                                        'id' => "filter_project_type",
+                                        'class'=>'form-control form-control-sm select2',
+                                        'style'=>'width: 200px !important; height: 25px !important;'
+                                    ])
+                                !!}
+                            </div>
+                        </div>
+                        <div class="filter_task_type">
+                            <div class="form-group">
+                                <label for="filter_task_type">Filtrer par type de tâche</label>
+                                {!! Form::select('filter_task_type',
+                                    array_merge(['all' => 'Tous'],\App\Models\Enum\TaskType::allByGroup()),
+                                    null,
+                                    [
+                                        'id' => "filter_task_type",
+                                        'class'=>'form-control form-control-sm select2',
+                                        'style'=>'width: 200px !important; height: 25px !important;'
+                                    ])
+                                !!}
                             </div>
                         </div>
                         <div class="filter_per_date_from">
@@ -147,9 +194,29 @@
                     });
                 });
             });
+            //
+            // $('#projets_filters').find('select').change(function(){
+            //     applyFilters('select');
+            // });
 
-            $('#projets_filters').find('select').change(function(){
-                applyFilters();
+            $('#filter_user').on('select2:select', function (e) {
+                applyFilters('filter_user.select');
+            });
+
+            $('#filter_employeur').on('select2:select', function (e) {
+                applyFilters('filter_employeur.select');
+            });
+
+            $('#filter_project').on('select2:select', function (e) {
+                applyFilters('filter_project.select');
+            });
+
+            $('#filter_project_type').on('select2:select', function (e) {
+                applyFilters('filter_project_type.select');
+            });
+
+            $('#filter_task_type').on('select2:select', function (e) {
+                applyFilters('filter_task_type.select');
             });
 
             //---o Initiate Date Range Picker
@@ -166,23 +233,37 @@
             }, function(start, end) {
                 start_date = start.format('MM/DD/YYYY');
                 end_date = end.format('MM/DD/YYYY');
-                applyFilters();
+                applyFilters('daterangepicker');
             });
 
             function getUrl(){
                 let dataURL = '{{ action('TimeTrackingController@getDatatableContent') }}';
-                let user_id = document.getElementById('filter_user').value;
-                let project_id = document.getElementById('filter_project').value;
-                let url = dataURL+'?user='+user_id+"&projet="+project_id;
+
+                let user_id = $('#filter_user').select2('data')[0].id;
+                let employeur_id = $('#filter_employeur').select2('data')[0].id;
+                let project_type_id = $('#filter_project_type').select2('data')[0].id;
+                let project_id = $('#filter_project').select2('data')[0].id;
+                let task_type = $('#filter_task_type').select2('data')[0].id;
+
+                // console.log('user_id '+user_id);
+                // console.log('employeur_id '+employeur_id);
+                // console.log('project_type_id '+project_type_id);
+                // console.log('project_id '+project_id);
+
+                let url = dataURL;
+                url += '?user='+user_id;
+                url += "&employeur="+employeur_id;
+                url += "&projet_type="+project_type_id;
+                url += "&projet="+project_id;
+                url += "&task_type="+task_type;
                 url += "&date_from="+start_date;
                 url += "&date_to="+end_date;
                 return url;
             }
 
-            function applyFilters(){
-                let search = "";
+            function applyFilters(from){
+                console.log('applyFilters '+from);
                 time_tracking_table.ajax.url(getUrl()).load();
-                time_tracking_table.search(search).draw();
             }
         })(window.jQuery);
     </script>
