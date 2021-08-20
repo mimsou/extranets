@@ -2,7 +2,7 @@
      id="timeTracking" tabindex="-1" role="dialog"
      aria-labelledby="slideRightModalLabel" name="timeTracking"
      aria-modal="true" aria-hidden="true" >
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog" role="document" style="max-width: 600px">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="slideRightModalLabel"><i class="fas fa-business-time fa-2x"></i></h5>

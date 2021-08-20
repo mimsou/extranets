@@ -87,33 +87,6 @@
 
     @section('footer')
         <script>
-            // $('.select2').select2({
-            //     'placeholder': "Sélectionnez un utilisateur", //Should be text not placeholder
-            //     allowClear: true
-            // });
-
-            $(".assign_demande").select2({
-                'placeholder': "Sélectionnez un utilisateur", //Should be text not placeholder
-            });
-
-            $('.select2_candidats').select2();
-           $('.select2_employeurs_rec').select2();
-           $('.select2_employeurs').select2();
-
-            var user_role = '{{ Auth::user()->role_lvl }}';
-
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-
-            $(document).on('click', '.addCandidat', function() {
-                var demande_id = $(this).data('demandeid');
-                $('#modal_demande_id').val(demande_id);
-                $('#addCandidat').modal('toggle');
-            });
-
             //
             //----o Time Tracking code
             //
@@ -129,6 +102,7 @@
                 document.getElementById('tt_description').value ='';
                 document.getElementById('tt_duration').value ='';
             }
+
             function loadTimeTrackingContent(){
                 $('#timeTracking .modal_loading').show();
                 $('#timeTracking .modal_edit_content').hide();
@@ -143,7 +117,6 @@
                         }, 1000);
                     },
                     error: function(jqXHR, status, error) {
-                        console.log(jqXHR, status, error);
                         fetchErrorNotifications("Erreur", "Il y a eu un problème.");
                     }
                 });
@@ -151,21 +124,19 @@
 
             $("#time_tracking_form").submit(function(e) {
                 e.preventDefault(); // avoid to execute the actual submit of the form.
-                var form = $(this);
-                var url = form.attr('action');
+                let form = $(this);
+                let url = form.attr('action');
                 $.ajax({
                     type: "POST",
                     url: url,
                     data: form.serialize(), // serializes the form's elements.
                     success: function(data)
                     {
-                        console.log(data);
                         fetchSuccessNotifications("Succès", "Enregistrement a été créé avec succès.");
                         emptyTimeTrackingFormInput();
                         loadTimeTrackingContent();
                     },
                     error: function(jqXHR, status, error) {
-                        console.log(jqXHR, status, error);
                         fetchErrorNotifications("Erreur", "Il y a eu un problème.");
                     }
                 });
@@ -175,16 +146,16 @@
             //---o Time Tracking - Initiate TextArea counter and duration mask
             //
             $(document).ready(function(){
-                $auth_user_id = {!! \Auth::user()->id !!};
-                tt_description_text_max = 200;
+                let $auth_user_id = {!! \Auth::user()->id !!};
+                let tt_description_text_max = 200;
                 $('#count_message').html('0 / ' + tt_description_text_max );
 
-                var SPMaskBehavior = function (val) {
+                let inputTimeMaskBehavior = function (val) {
                         return val.replace(/\D/g, '')[0] === '2' ? 'AE:CD' : 'AB:CD';
                     },
                     spOptions = {
                         onKeyPress: function(val, e, field, options) {
-                            field.mask(SPMaskBehavior.apply({}, arguments), options);
+                            field.mask(inputTimeMaskBehavior.apply({}, arguments), options);
                         },
                         translation: {
                             "A": { pattern: /[0-9]/, optional: false},
@@ -195,7 +166,7 @@
                         },
                         clearIfNotMatch: true
                     };
-                $('#tt_duration').mask(SPMaskBehavior, spOptions);
+                $('#tt_duration').mask(inputTimeMaskBehavior, spOptions);
             });
 
             $('#tt_description').keyup(function() {
@@ -208,7 +179,6 @@
             //---o Flash for Ajax
             //
             function fetchSuccessNotifications($title, $message) {
-                console.log('fetchNotifications');
                 $.ajax({
                     url: '{{ route('flash.notifications') }}',
                     type: 'GET',
@@ -246,7 +216,6 @@
             }
 
             function fetchErrorNotifications($title, $message) {
-                console.log('fetchNotifications');
                 $.ajax({
                     url: '{{ route('flash.notifications') }}',
                     type: 'GET',
@@ -282,6 +251,31 @@
                     }
                 });
             }
+        </script>
+        <script>
+            //
+            //----o Projet edit code
+            //
+            $(".assign_demande").select2({
+                'placeholder': "Sélectionnez un utilisateur",
+            });
+            $('.select2_candidats').select2();
+            $('.select2_employeurs_rec').select2();
+            $('.select2_employeurs').select2();
+
+            var user_role = '{{ Auth::user()->role_lvl }}';
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $(document).on('click', '.addCandidat', function() {
+                var demande_id = $(this).data('demandeid');
+                $('#modal_demande_id').val(demande_id);
+                $('#addCandidat').modal('toggle');
+            });
 
             //
             //---o Click event
@@ -405,7 +399,7 @@
             });
             $('body').click(function(e){
                 let target = $(e.target);
-                console.log(e.target.className);
+                // console.log(e.target.className);
                 if(e.target.className != 'select2-selection__placeholder' &&
                     e.target.className != 'select2-selection__rendered' &&
                     e.target.className != 'select2-selection select2-selection--single'
@@ -421,7 +415,7 @@
                 e.stopPropagation();
                 let elem = $(this);
                 var user_id = $(this).val();
-                console.log(user_id);
+                // console.log(user_id);
                 if(user_id != '' && user_id != null){
                     var demande_id = $(this).data('demande-id')
                     $.ajax({
@@ -462,9 +456,7 @@
             @endif
 
         </script>
-
-            <script>
-                $('#flash-overlay-modal').modal();
-            </script>
-
+        <script>
+            $('#flash-overlay-modal').modal();
+        </script>
     @endsection

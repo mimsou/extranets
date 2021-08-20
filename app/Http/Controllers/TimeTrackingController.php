@@ -85,7 +85,11 @@ class TimeTrackingController extends Controller
             $query = $query->where('user_id','=',$request->user);
         }
 
+        $has_task_type = false;
+        $task_type = null;
         if($request->has('task_type') && $request->task_type !== "all"){
+            $has_task_type = true;
+            $task_type = $request->task_type;
             $query = $query->where('task_type','=',$request->task_type);
         }
 
@@ -123,15 +127,28 @@ class TimeTrackingController extends Controller
                 return __($m->projet->statut);
             })
             ->addColumn(
-                'childrow_html', function($m)  {
+                'childrow_html', function($m)  use ($has_task_type, $task_type){
                     $projet = Projet::where('id', '=', $m->projet_id)
-                            ->with('time_records',function($q){
-                                $q->selectRaw("*,SUM(duration) as total_hours")->with('user')->groupBy('user_id');
-                            })
-                    ->first();
-                return view('admin.time-trackings.partials.datatable_row_child', compact('projet'));
+                                ->with('time_records',function($q){
+                                    $q->selectRaw("*,SUM(duration) as total_hours")
+                                        ->with('user')
+                                        ->groupBy('user_id');
+                                })
+                                ->first();
+                    if($has_task_type === true) {
+                        foreach ($projet->time_records as $tr) {
+                            $trWithTaskTypeTotal = TimeRecord::where('user_id', '=', $tr->user->id)
+                                ->where('task_type', '=', $task_type)
+                                ->selectRaw("SUM(duration) as total_for_task_type_selected")
+                                ->first();
+                            //Inject optional data if a taskType is selected
+                            $tr->total_for_task_type_selected = $trWithTaskTypeTotal->total_for_task_type_selected;
+                            $tr->task_type_selected = $task_type;
+                        }
+                    }
+                return view('admin.time-trackings.partials.datatable_row_child',
+                            compact('projet', 'has_task_type', 'task_type'));
             })
-
             ->make(true);
     }
 
@@ -174,7 +191,7 @@ class TimeTrackingController extends Controller
     public function show($id)
     {
         if(is_super_admin_user()){
-            $time_records = TimeRecord::where('projet_id', '=', $id)->orderBy('created_at', 'DESC')->get();
+            $time_records = TimeRecord::where('projet_id', '=', $id)->orderBy('date_from', 'DESC')->get();
         }else{
             $time_records = TimeRecord::where('projet_id', '=', $id)
                 ->where('user_id', '=', Auth::user()->id)

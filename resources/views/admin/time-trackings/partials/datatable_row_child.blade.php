@@ -7,8 +7,8 @@
                         <th style="padding: 5px">&nbsp;</th>
                         <th style="padding: 5px">Utilisateur</th>
                         <th style="padding: 5px">Total</th>
-                        @if(1===1)
-                            <th style="padding: 5px">Type de tâche</th>
+                        @if($has_task_type === true)
+                            <th style="padding: 5px">Type de tâche - {!! __($task_type) !!}</th>
                         @endif
                     </tr>
                 </thead>
@@ -16,10 +16,10 @@
                 @foreach($projet->time_records as $tr)
                 <tr>
                     <td width="40px">&nbsp;</td>
-                    <td width="220px">{!! $tr->user->fullname !!}: </td>
+                    <td width="220px">{!! $tr->user->fullname !!}</td>
                     <td>{!! \App\Classes\Utils\Tools\TimeTools::floatToHours($tr->total_hours) !!}</td>
-                    @if(1===1)
-                        <td>TODO Type de tâche to fill</td>
+                    @if($has_task_type === true)
+                        <td>{!! \App\Classes\Utils\Tools\TimeTools::floatToHours($tr->total_for_task_type_selected) !!}</td>
                     @endif
                 </tr>
                 @endforeach
