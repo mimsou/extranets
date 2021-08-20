@@ -409,7 +409,6 @@
 
             });
 
-
             // assign user to demande
             $('.assign_demande').change(function(e) {
                 e.stopPropagation();

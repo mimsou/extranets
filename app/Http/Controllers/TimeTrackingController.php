@@ -191,10 +191,13 @@ class TimeTrackingController extends Controller
     public function show($id)
     {
         if(is_super_admin_user()){
-            $time_records = TimeRecord::where('projet_id', '=', $id)->orderBy('date_from', 'DESC')->get();
+            $time_records = TimeRecord::where('projet_id', '=', $id)
+                ->orderBy('date_from', 'DESC')
+                ->get();
         }else{
             $time_records = TimeRecord::where('projet_id', '=', $id)
                 ->where('user_id', '=', Auth::user()->id)
+                ->orderBy('date_from', 'DESC')
                 ->get();
         }
         $time_record_datas = [];
@@ -213,5 +216,67 @@ class TimeTrackingController extends Controller
 
         return view('admin.time-trackings.partials.record_per_project',
                     compact('time_record_datas', 'total'));
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $projet_id
+     * @param  int  $user_id
+     * @return \Illuminate\Http\Response
+     */
+    public function showDetails($projet_id, $user_id)
+    {
+        //
+        //---o Time records list by projet & user
+        //
+        $time_records = TimeRecord::where('projet_id', '=', $projet_id)
+            ->where('user_id', '=', $user_id)
+            ->orderBy('date_from', 'DESC')
+            ->get();
+        $time_record_datas = [];
+        $total_duration = 0;
+        foreach ($time_records as $time_record){
+            $time_record_datas[] = [
+                'name' => $time_record->user->fullname,
+                'date' => $time_record->date_from,
+                'duration' => TimeTools::floatToHours($time_record->duration),
+                'type' => $time_record->task_type,
+                'description' => $time_record->description
+            ];
+            $total_duration += $time_record->duration;
+        }
+        //
+        //---o Time records breakdown by Task Type
+        //
+        $time_record_by_task_type = collect([]);
+        foreach ($time_records as $time_record){
+            $data = [
+                'name' => $time_record->user->fullname,
+                'date' => $time_record->date_from,
+                'duration' => TimeTools::floatToHours($time_record->duration),
+                'type' => $time_record->task_type,
+                'description' => $time_record->description
+            ];
+            //Lazy creating
+            if($time_record_by_task_type->has($time_record->task_type) === false){
+                $time_record_by_task_type->put($time_record->task_type,collect([]));
+            }
+            $time_record_by_task_type->get($time_record->task_type)->push($time_record->duration);
+        }
+        //
+        //---o Extra details
+        //
+        $total = TimeTools::floatToHours($total_duration);
+        $user = User::find($user_id);
+        $projet = Projet::find($projet_id);
+
+        $view = view('admin.time-trackings.partials.record_per_user',
+                    compact('time_record_datas', 'total', 'user', 'projet', 'time_record_by_task_type'))->render();
+
+        return response()->json([
+                'success' => true,
+                'view' => $view
+            ]);
     }
 }

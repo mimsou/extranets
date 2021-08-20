@@ -7,11 +7,14 @@
 
 @section('content')
 
+    @include('admin.time-trackings.modals.timeTrackingDetails')
+
     <div class="bg-dark m-b-30">
         <div class="container">
             <div class="row p-b-60 p-t-60">
                 <div class="col-md-6 text-white p-b-30">
                     <h1>Rapport de temps</h1>
+{{--                    <h1><i class="fas fa-business-time "></i>&nbsp;Rapport de temps</h1>--}}
                 </div>
             </div>
         </div>
@@ -112,7 +115,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="card">
                     <div class="card-body">
                         <div class="table-responsive p-t-10">
@@ -266,6 +268,114 @@
                 time_tracking_table.ajax.url(getUrl()).load();
             }
         })(window.jQuery);
+    </script>
+
+    <script>
+        $(document).ready(function(){
+            console.log('Ready');
+            $('#timeTrackingDetails .modal_loading').hide();
+        });
+
+        $('#timeTrackingDetails').on('show.bs.modal', function (e) {
+            console.log('show modal');
+            loadTimeTrackingContent();
+        })
+
+        function loadTimeTrackingContent(){
+            $('#timeTrackingDetails .modal_loading').show();
+            $('#timeTrackingDetails .modal_edit_content').hide();
+            $.ajax({
+                type: "GET",
+                url: "{!! route('time_tracking_detail_show',['projet_id'=> 4, 'user_id' => 9]) !!}",
+                success: function(data)
+                {
+                     setTimeout(function(){
+                        $('#timeTrackingDetails .modal_loading').hide();
+                        $('#timeTrackingDetails .modal_edit_content').html(data.view).show();
+                    }, 1000);
+                },
+                error: function(jqXHR, status, error) {
+                    fetchErrorNotifications("Erreur", "Il y a eu un problème.");
+                }
+            });
+        }
+
+        function fetchErrorNotifications($title, $message) {
+            $.ajax({
+                url: '{{ route('flash.notifications') }}',
+                type: 'GET',
+                success: function (result) {
+                    // Fetch any notifications if we have any
+                    //http://bootstrap-notify.remabledesigns.com/
+                    notification_template_ajax = result;
+                    jQuery.notify({
+                        // options
+                        icon: 'mdi mdi-exclamation',
+                        title: $title,
+                        message: $message
+                    }, {
+                        placement: {
+                            align: "right",
+                            from: "top"
+                        },
+                        showProgressbar: true,
+                        timer: 120,
+                        z_index: 10031,
+                        offset: {
+                            x: 50,
+                            y: 10
+                        },
+                        // settings
+                        type: 'danger',
+                        template: notification_template_ajax
+                    });
+                },
+                error: function(jqXHR, status, error) {
+                    console.log(jqXHR, status, error);
+                    fetchErrorNotifications("Erreur", "Il y a eu un problème.");
+                }
+            });
+        }
+
+        //
+        //---o Flash for Ajax
+        //
+        function fetchSuccessNotifications($title, $message) {
+            $.ajax({
+                url: '{{ route('flash.notifications') }}',
+                type: 'GET',
+                success: function (result) {
+                    // Fetch any notifications if we have any
+                    //http://bootstrap-notify.remabledesigns.com/
+                    notification_template_ajax = result;
+                    jQuery.notify({
+                        // options
+                        icon: 'mdi mdi-check',
+                        title: $title,
+                        message: $message
+                    }, {
+                        placement: {
+                            align: "right",
+                            from: "top"
+                        },
+                        showProgressbar: true,
+                        timer: 120,
+                        z_index: 10031,
+                        offset: {
+                            x: 50,
+                            y: 10
+                        },
+                        // settings
+                        type: 'success',
+                        template: notification_template_ajax
+                    });
+                },
+                error: function(jqXHR, status, error) {
+                    console.log(jqXHR, status, error);
+                    fetchErrorNotifications("Erreur", "Il y a eu un problème.");
+                }
+            });
+        }
     </script>
 
 @endsection
