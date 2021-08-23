@@ -49,12 +49,15 @@
         @endphp
 
         <div class="row">
+            <div class="col-md-12">
+                <h4>Information général</h4>
+            </div>
             <div class="form-group col-md-6">
                 {!! Form::label('etat_civil','Etat civil') !!}
                 {!! Form::select('etat_civil',$etatCivil,null,['class'=>'form-control','placeholder'=>'Etat civil']) !!}
             </div>
             <div class="form-group col-md-6">
-                {!! Form::label('nombre_d_enfants','NOMBRE D’ENFANTS') !!}
+                {!! Form::label('nombre_d_enfants','Nombre d’enfants') !!}
                 {!! Form::number('nombre_d_enfants',null,['class'=>'form-control','placeholder'=>'1','min'=>0]) !!}
             </div>
             <div class="rep_age">
@@ -73,8 +76,11 @@
                 @endif
             </div>
         </div>
-        <h4>ADRESSE DU LOGEMENT au Canada</h4>
-        <div class="row">
+
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <h4>Adresse</h4>
+            </div>
             <div class="col-md-4">
                 {!! Form::label('address_1','Adresse') !!}
                 {!! Form::text('address_1',null,['class'=>'form-control']) !!}
@@ -100,28 +106,33 @@
                 {!! Form::label('date_d_arrivee','Date d’Arrivee') !!}
                 {!! Form::date('date_d_arrivee',null,['class'=>'form-control']) !!}
             </div>
-            <div class="col-md-4 mt-3">
-                {!! Form::label('nom_de_l_accompagnateur','NOM DE L’ACCOMPAGNATEUR S’IL Y A LIEU') !!}
+        </div>
+        <div class="row mt-5">
+            <div class="col-md-12">
+                <h4>Autres</h4>
+            </div>
+            <div class="col-md-4 mt-1">
+                {!! Form::label('nom_de_l_accompagnateur','Nom de l’accompagnateur s’il y a lieu') !!}
                 {!! Form::text('nom_de_l_accompagnateur',null,['class'=>'form-control']) !!}
             </div>
-            <div class="col-md-4 mt-3">
-                {!! Form::label('la_region_de_lemploi','LA RÉGION de l’emploi') !!}
+            <div class="col-md-4 mt-1">
+                {!! Form::label('la_region_de_lemploi','La région de l’emploi') !!}
                 {!! Form::text('la_region_de_lemploi',null,['class'=>'form-control']) !!}
             </div>
-            <div class="col-md-4 mt-3">
-                {!! Form::label('contact_telephonique','CONTACT TÉLÉPHONIQUE') !!}
+            <div class="col-md-4 mt-1">
+                {!! Form::label('contact_telephonique','Contact Téléphonique') !!}
                 {!! Form::text('contact_telephonique',null,['class'=>'form-control']) !!}
             </div>
-            <div class="col-md-4 mt-3">
-                {!! Form::label('lien_facebook','LIEN FACEBOOK/GROUPE MESSENGER') !!}
+            <div class="col-md-4 mt-1">
+                {!! Form::label('lien_facebook','Lien facebook/Groupe messenger') !!}
                 {!! Form::text('lien_facebook',null,['class'=>'form-control']) !!}
             </div>
-            <div class="col-md-4 mt-3">
-                {!! Form::label('whatsapp','WHATSAPPS') !!}
+            <div class="col-md-4 mt-1">
+                {!! Form::label('whatsapp','Whatsapps') !!}
                 {!! Form::text('whatsapp',null,['class'=>'form-control']) !!}
             </div>
             <div class="col-md-12 mt-4">
-                {!! Form::label('commentaires_generaux','COMMENTAIRES GÉNÉRAUX') !!}
+                {!! Form::label('commentaires_generaux','Commentaires généraux') !!}
                 {!! Form::textarea('commentaires_generaux',null,['class'=>'form-control','rows'=>3]) !!}
             </div>
         </div>

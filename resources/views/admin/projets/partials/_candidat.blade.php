@@ -38,30 +38,52 @@
         <div class="d-flex justify-content-between">
             @if ($demande->type != 'recrutement')
                 <div class="text-muted">
-                    <i class="fas fa-paper-plane mr-2 ml-1"></i> <i class="pr-2">Envoi</i> {{ (!empty($p->permis_date_envoi))?$p->permis_date_envoi:'---- / -- / --' }}
+                    <i class="fas fa-paper-plane mr-2 ml-1"></i> <i class="pr-2">Envoi</i>
+                    @if(Auth::user()->role_lvl > 2)
+                        {{ (!empty($p->permis_date_envoi))?$p->permis_date_envoi:'---- / -- / --' }}
+                    @else
+                        Date d’Arrivee
+                    @endif
                 </div>
 
                 <div class="text-muted">
-                    <i class="fas fa-calendar-day mr-2 ml-1"></i> <i class="pr-2">Réception</i> {{ (!empty($p->permis_date_reception))?$p->permis_date_reception:'---- / -- / --' }}
+                    <i class="fas fa-calendar-day mr-2 ml-1"></i> <i class="pr-2">Réception</i>
+                    @if(Auth::user()->role_lvl > 2)
+                        {{ (!empty($p->permis_date_reception))?$p->permis_date_reception:'---- / -- / --' }}
+                    @else
+                        Date d’Arrivee
+                    @endif
                 </div>
 
                 <div class="text-muted">
-                    <i class="fas fa-alarm-clock mr-2 ml-1"></i> <i class="pr-2">Échéance</i> {{ (!empty($p->permis_date_echeance))?$p->permis_date_echeance:'---- / -- / --' }}
+                    <i class="fas fa-alarm-clock mr-2 ml-1"></i> <i class="pr-2">Échéance</i>
+                    @if(Auth::user()->role_lvl > 2)
+                        {{ (!empty($p->permis_date_echeance))?$p->permis_date_echeance:'---- / -- / --' }}
+                    @else
+                        Date d’Arrivee
+                    @endif
                 </div>
             @else
                 <div class="text-muted">
-                    <i class="fas fa-calendar-day mr-2 ml-1"></i> <i class="pr-2">Date de sélection du travailleur</i> {{ (!empty($p->date_selection))?$p->date_selection:'---- / -- / --' }}
+                    <i class="fas fa-calendar-day mr-2 ml-1"></i> <i class="pr-2">Date de sélection du travailleur</i>
+                    @if(Auth::user()->role_lvl > 2)
+                        {{ (!empty($p->date_selection))?$p->date_selection:'---- / -- / --' }}
+                    @else
+                        Date d’Arrivee
+                    @endif
                 </div>
             @endif
 
         </div>
 
-        @if (!is_null($p->statut_pt) && $p->statut_pt != 'na' && $demande->type != 'recrutement')
-        <div class="text-center mt-2 text-muted"><small>{{ permisTravailStatuts($p->statut_pt) }}</small></div>
-            <hr class="mb-0 mt-0">
-            <div class="time-progresssion mb-2">
-                <div class="progression text-right" style="transition: all 0.5s ease; background-color: aquamarine; width:{{ permisTravailProgression($p->statut_pt) }}; height:3px"></div>
-            </div>
+        @if(Auth::user()->role_lvl > 2 && $demande->type != 'accueil')
+            @if (!is_null($p->statut_pt) && $p->statut_pt != 'na' && $demande->type != 'recrutement')
+                <div class="text-center mt-2 text-muted"><small>{{ permisTravailStatuts($p->statut_pt) }}</small></div>
+                <hr class="mb-0 mt-0">
+                <div class="time-progresssion mb-2">
+                    <div class="progression text-right" style="transition: all 0.5s ease; background-color: aquamarine; width:{{ permisTravailProgression($p->statut_pt) }}; height:3px"></div>
+                </div>
+            @endif
         @endif
     </div>
 </div>

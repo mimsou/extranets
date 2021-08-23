@@ -139,12 +139,21 @@
 
   updatePages();
   var htmlAge = "\n        <div class=\"form-group col-md-3\">\n            <div class=\"age_field\">\n                <label>\xC2ge des enfants</label>\n                <input type=\"number\" name=\"age_d_enfants[]\" value=\"\" class=\"form-control\" placeholder=\"Age\" />\n            </div>\n        </div>\n    ";
+  var ages = [];
+  $('.age_field').each(function () {
+    ages.push($(this).find('input').val());
+  });
+  console.log(ages);
   $('input[name=nombre_d_enfants]').change(function () {
     var number = $(this).val();
     $('.rep_age').html('');
 
     for (var i = 1; i <= number; i++) {
       $('.rep_age').append(htmlAge);
+
+      if (ages[i - 1] !== undefined) {
+        $('.age_field:last-child').find('input').val(ages[i - 1]);
+      }
 
       if (i > 5) {
         break;
@@ -157,6 +166,11 @@
 
     for (var i = 1; i <= number; i++) {
       $('.rep_age').append(htmlAge);
+
+      if (ages[i - 1] !== undefined) {
+        console.log(ages[i - 1]);
+        $('.age_field:last-child').find('input').val(ages[i - 1]);
+      }
 
       if (i > 5) {
         break;

@@ -17,7 +17,8 @@ class Candidat extends Model implements HasMedia
 {
     use HasFactory, Notable, Loggable, InteractsWithMedia;
 
-    protected $fillable = [ 'nom',
+    protected $fillable = [
+                            'nom',
                             'numero',
                             'statut',
                             'statut_pt',
@@ -67,7 +68,9 @@ class Candidat extends Model implements HasMedia
 
 
 
-
+    public function logFields(){
+        return ['*'];
+    }
 
 
 

@@ -63,7 +63,7 @@
             </div>
         </div>
         <div class="col-md-12 form-group">
-            {!! Form::label('la_region','LA RÉGION') !!}
+            {!! Form::label('la_region','La région') !!}
             {!! Form::text('la_region',null,['class'=>'form-control','placeholder'=>'LA RÉGION']) !!}
         </div>
     </div>
@@ -107,8 +107,8 @@
 
     <div class="form-row">
         <div class="form-group col-md-12">
-            {!! Form::label('nom_de_laccompagnateur','NOM DE L’ACCOMPAGNATEUR S’IL Y A LIEU') !!}
-            {!! Form::text('nom_de_laccompagnateur',null,['class'=>'form-control','placeholder'=>'Nom de laccompagnateur']) !!}
+            {!! Form::label('nom_de_laccompagnateur','Nom de l’accompagnateur s’il y a lieu') !!}
+            {!! Form::text('nom_de_laccompagnateur',null,['class'=>'form-control']) !!}
         </div>
     </div>
 

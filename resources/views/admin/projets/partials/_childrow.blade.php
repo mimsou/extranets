@@ -42,11 +42,20 @@
                         <tr>
                             <td width="200px">
                                 <div class="pl-3">
-                                    <small>{{ demandeStatuts($d->statut, $type) }}</small>
+                                    @if($d->type == 'accueil')
+                                        <small>{{ AccueilDemandeStatus($d->statut) }}</small>
+                                    @else
+                                        <small>{{ demandeStatuts($d->statut, $type) }}</small>
+                                    @endif
                                     <hr class="mb-0 mt-0">
                                     <div class="time-progresssion mb-2">
-                                        <div class="progression text-right" id="part_prog_{{ $d->id }}"
-                                             style="transition: all 0.5s ease; background-color: aquamarine; width:{{ demandeProgression($d->statut, $type) }}; height:3px"></div>
+                                        @if($d->type == 'accueil')
+                                            <div class="progression text-right" id="part_prog_{{ $d->id }}"
+                                             style="transition: all 0.5s ease; background-color: aquamarine; width:{{ demandeAccueilProgression($d->statut) }}; height:3px"></div>
+                                        @else
+                                            <div class="progression text-right" id="part_prog_{{ $d->id }}"
+                                                 style="transition: all 0.5s ease; background-color: aquamarine; width:{{ demandeProgression($d->statut, $type) }}; height:3px"></div>
+                                        @endif
                                     </div>
                                 </div>
                             </td>

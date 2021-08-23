@@ -246,7 +246,9 @@ class TodoController extends Controller
         }
         $assignUser->save();
         $assignedUser = TodoAssignee::with(['user_details'])->find($assignUser->id);
-        $this->sendEmail($request->user, $request->todo_id);
+        if(env('APP_ENV') != 'local'){
+            $this->sendEmail($request->user, $request->todo_id);
+        }
         return response()->json(
             ['status'   => true, 'message' => 'User assigned to todo', 'user' => $assignedUser,
              'initials' => $assignedUser->user_details->initials(), 'is_exists' => $isAlreadyExists]);
