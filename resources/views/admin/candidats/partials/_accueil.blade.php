@@ -81,29 +81,29 @@
             <div class="col-md-12">
                 <h4>Adresse</h4>
             </div>
-            <div class="col-md-4">
+            <div class="form-group col-md-12">
                 {!! Form::label('address_1','Adresse') !!}
-                {!! Form::text('address_1',null,['class'=>'form-control']) !!}
-                {!! Form::text('address_2',null,['class'=>'form-control mt-1']) !!}
+                {!! Form::text('address_1',null,['class'=>'form-control', "placeholder"=>"Ligne 1"]) !!}
+                {!! Form::text('address_2',null,['class'=>'form-control mt-1', "placeholder"=>"Ligne 2 (optionnel)"]) !!}
             </div>
-            <div class="col-md-4">
+            <div class="form-group col-md-4">
                 {!! Form::label('city','Vile') !!}
                 {!! Form::text('city',null,['class'=>'form-control']) !!}
             </div>
-            <div class="col-md-4">
+            <div class="form-group col-md-4">
                 {!! Form::label('province','Province') !!}
                 {!! Form::text('province',null,['class'=>'form-control']) !!}
             </div>
-            <div class="col-md-4 mt-3">
+            <div class="form-group col-md-4">
                 {!! Form::label('country','Pays') !!}
                 {!! Form::select('country',\App\Models\Pays::orderBy('title', 'asc')->pluck('title', 'id'),null,['class'=>'form-control']) !!}
             </div>
-            <div class="col-md-4 mt-3">
+            <div class="form-group col-md-4">
                 {!! Form::label('postal_code','Code postal') !!}
                 {!! Form::text('postal_code',null,['class'=>'form-control']) !!}
             </div>
-            <div class="col-md-4 mt-3">
-                {!! Form::label('date_d_arrivee','Date d’Arrivee') !!}
+            <div class="form-group col-md-4">
+                {!! Form::label('date_d_arrivee','Date d’arrivée') !!}
                 {!! Form::date('date_d_arrivee',null,['class'=>'form-control']) !!}
             </div>
         </div>
@@ -111,27 +111,27 @@
             <div class="col-md-12">
                 <h4>Autres</h4>
             </div>
-            <div class="col-md-4 mt-1">
+            <div class="form-group col-md-4 mt-1">
                 {!! Form::label('nom_de_l_accompagnateur','Nom de l’accompagnateur s’il y a lieu') !!}
                 {!! Form::text('nom_de_l_accompagnateur',null,['class'=>'form-control']) !!}
             </div>
-            <div class="col-md-4 mt-1">
+            <div class="form-group col-md-4 mt-1">
                 {!! Form::label('la_region_de_lemploi','La région de l’emploi') !!}
                 {!! Form::text('la_region_de_lemploi',null,['class'=>'form-control']) !!}
             </div>
-            <div class="col-md-4 mt-1">
-                {!! Form::label('contact_telephonique','Contact Téléphonique') !!}
+            <div class="form-group col-md-4 mt-1">
+                {!! Form::label('contact_telephonique','Contact téléphonique') !!}
                 {!! Form::text('contact_telephonique',null,['class'=>'form-control']) !!}
             </div>
-            <div class="col-md-4 mt-1">
+            <div class="form-group col-md-6 mt-1">
                 {!! Form::label('lien_facebook','Lien facebook/Groupe messenger') !!}
                 {!! Form::text('lien_facebook',null,['class'=>'form-control']) !!}
             </div>
-            <div class="col-md-4 mt-1">
+            <div class="form-group col-md-6 mt-1">
                 {!! Form::label('whatsapp','Whatsapps') !!}
                 {!! Form::text('whatsapp',null,['class'=>'form-control']) !!}
             </div>
-            <div class="col-md-12 mt-4">
+            <div class="form-group col-md-12">
                 {!! Form::label('commentaires_generaux','Commentaires généraux') !!}
                 {!! Form::textarea('commentaires_generaux',null,['class'=>'form-control','rows'=>3]) !!}
             </div>
@@ -141,8 +141,8 @@
 
         <h2 class="mt-4">Demandes d'accueil associées</h2>
 
-        @if (!$candidat->demandesImmigration()->wherePivot('statut','approved')->count())
-            <p><i>Aucun projet en immigration n'est associé à ce candidat. Veuillez vous rendre dans <a href="{{action('ProjetController@index')}}" style="text-decoration:underline">la section projet</a> pour créer un nouveau projet ou l'associer à un existant.</i></p>
+        @if (!$candidat->demandesAccueil()->wherePivot('statut','approved')->count())
+            <p><i>Aucun projet en accueil n'est associé à ce candidat. Veuillez vous rendre dans <a href="{{action('ProjetController@index')}}" style="text-decoration:underline">la section projet</a> pour créer un nouveau projet ou l'associer à un existant.</i></p>
         @endif
 
         @foreach ($candidat->demandesAccueil()->wherePivot('statut','approved')->get() as $p)

@@ -36,41 +36,30 @@
         </div>
 
         <div class="d-flex justify-content-between">
-            @if ($demande->type != 'recrutement')
+            @if ($demande->type == 'immigration')
                 <div class="text-muted">
                     <i class="fas fa-paper-plane mr-2 ml-1"></i> <i class="pr-2">Envoi</i>
-                    @if(Auth::user()->role_lvl > 2)
-                        {{ (!empty($p->permis_date_envoi))?$p->permis_date_envoi:'---- / -- / --' }}
-                    @else
-                        Date d’Arrivee
-                    @endif
+                    {{ (!empty($p->permis_date_envoi))?$p->permis_date_envoi:'---- / -- / --' }}
                 </div>
 
                 <div class="text-muted">
                     <i class="fas fa-calendar-day mr-2 ml-1"></i> <i class="pr-2">Réception</i>
-                    @if(Auth::user()->role_lvl > 2)
-                        {{ (!empty($p->permis_date_reception))?$p->permis_date_reception:'---- / -- / --' }}
-                    @else
-                        Date d’Arrivee
-                    @endif
+                    {{ (!empty($p->permis_date_reception))?$p->permis_date_reception:'---- / -- / --' }}
                 </div>
 
                 <div class="text-muted">
                     <i class="fas fa-alarm-clock mr-2 ml-1"></i> <i class="pr-2">Échéance</i>
-                    @if(Auth::user()->role_lvl > 2)
-                        {{ (!empty($p->permis_date_echeance))?$p->permis_date_echeance:'---- / -- / --' }}
-                    @else
-                        Date d’Arrivee
-                    @endif
+                    {{ (!empty($p->permis_date_echeance))?$p->permis_date_echeance:'---- / -- / --' }}f
                 </div>
-            @else
+            @elseif ($demande->type == 'recrutement')
                 <div class="text-muted">
                     <i class="fas fa-calendar-day mr-2 ml-1"></i> <i class="pr-2">Date de sélection du travailleur</i>
-                    @if(Auth::user()->role_lvl > 2)
-                        {{ (!empty($p->date_selection))?$p->date_selection:'---- / -- / --' }}
-                    @else
-                        Date d’Arrivee
-                    @endif
+                    {{ (!empty($p->date_selection))?$p->date_selection:'---- / -- / --' }}
+                </div>
+            @elseif ($demande->type == 'accueil')
+                <div class="text-muted">
+                    <i class="fas fa-calendar-day mr-2 ml-1"></i> <i class="pr-2">Date d’arrivée</i>
+                    {{ (!empty($p->date_d_arrivee))?$p->date_d_arrivee:'---- / -- / --' }}
                 </div>
             @endif
 

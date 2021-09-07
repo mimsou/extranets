@@ -66,7 +66,7 @@
                                         data-target="#addDemandeRec"><i class="fas fa-plus-circle pr-2"></i> DEMANDE DE
                                         RECRUTEMENT</button>
                                 @endif
-                                @if (Str::contains($projet->statut, 'acc_accueil') || Str::contains($projet->statut, 'new'))
+                                @if (Str::contains($projet->statut, 'acc') || Str::contains($projet->statut, 'new'))
                                     <button class="btn btn-success mr-2" data-toggle="modal" data-target="#addDemandeAccueil">
                                         <i class="fas fa-plus-circle pr-2"></i> DEMANDE DE ACCUEIL
                                     </button>

@@ -3,7 +3,7 @@
         <div class="d-flex justify-content-between">
             <div>
                 <h5 class="searchBy-name">
-                    <div class="badge badge-soft-secondary mr-3"><small>#{{ $p->projet->numero }}</small></div><a href="{{ action('ProjetController@edit', $p->projet_id) }}" target="_blank" class="pr-3">{{ $p->projet->titre }}</a>
+                    <div class="badge badge-soft-success mr-3"><small>#{{ $p->projet->numero }}</small></div><a href="{{ action('ProjetController@edit', $p->projet_id) }}" target="_blank" class="pr-3">{{ $p->projet->titre }}</a>
                 </h5>
 
             </div>

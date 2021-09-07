@@ -8,13 +8,13 @@
     ];
 @endphp
 
-<div class="form-group col-md-10 mx-auto mb-4">
+<div class="form-group col-md-12 mx-auto mb-4">
     <div class="row">
         <div class="col-md-4 text-left">
             {!! Form::label('statut','Statut de la demande') !!}
             {{ Form::select('statut', AccueilDemandeStatus(null, STATUTS_DEMANDE_ACCUEIL), null, ['class'=>'form-control text-center']) }}
         </div>
-        <div class="col-md-3 form-group text-left">
+        <div class="col-md-4 form-group text-left">
             {!! Form::label('type_de_demande','Type de demande') !!}
             {!! Form::select('type_de_demande',$typeDeDemande,null,['class'=>'form-control']) !!}
         </div>
