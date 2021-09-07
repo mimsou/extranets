@@ -53,7 +53,7 @@
                 <h4>Information général</h4>
             </div>
             <div class="form-group col-md-6">
-                {!! Form::label('etat_civil','Etat civil') !!}
+                {!! Form::label('etat_civil','État civil') !!}
                 {!! Form::select('etat_civil',$etatCivil,null,['class'=>'form-control','placeholder'=>'Etat civil']) !!}
             </div>
             <div class="form-group col-md-6">
@@ -87,7 +87,7 @@
                 {!! Form::text('address_2',null,['class'=>'form-control mt-1', "placeholder"=>"Ligne 2 (optionnel)"]) !!}
             </div>
             <div class="form-group col-md-4">
-                {!! Form::label('city','Vile') !!}
+                {!! Form::label('city','Ville') !!}
                 {!! Form::text('city',null,['class'=>'form-control']) !!}
             </div>
             <div class="form-group col-md-4">
@@ -128,7 +128,7 @@
                 {!! Form::text('lien_facebook',null,['class'=>'form-control']) !!}
             </div>
             <div class="form-group col-md-6 mt-1">
-                {!! Form::label('whatsapp','Whatsapps') !!}
+                {!! Form::label('whatsapp','WhatsApps') !!}
                 {!! Form::text('whatsapp',null,['class'=>'form-control']) !!}
             </div>
             <div class="form-group col-md-12">
