@@ -272,21 +272,21 @@
 
     <script>
         $(document).ready(function(){
-            console.log('Ready');
             $('#timeTrackingDetails .modal_loading').hide();
         });
 
         $('#timeTrackingDetails').on('show.bs.modal', function (e) {
-            console.log('show modal');
-            loadTimeTrackingContent();
+            var projetId = e.relatedTarget.dataset.projetId;
+            var userId = e.relatedTarget.dataset.userId;
+            loadTimeTrackingContent(projetId, userId);
         })
 
-        function loadTimeTrackingContent(){
+        function loadTimeTrackingContent(projetId, userId){
             $('#timeTrackingDetails .modal_loading').show();
             $('#timeTrackingDetails .modal_edit_content').hide();
             $.ajax({
                 type: "GET",
-                url: "{!! route('time_tracking_detail_show',['projet_id'=> 4, 'user_id' => 9]) !!}",
+                url: "/admin/projets/"+projetId+"/time-tracking/"+userId,
                 success: function(data)
                 {
                      setTimeout(function(){
