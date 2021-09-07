@@ -176,6 +176,7 @@ class ProjetController extends Controller
 
         if($demande->type == 'immigration') $form = '_demandeForm';;
         if($demande->type == 'recrutement') $form = '_demandeRecForm';
+        if($demande->type == 'accueil') $form = '_demandeAccueilForm';
 
         return view('admin.projets.modals._editDemandeForm', compact('demande', 'projet', 'form'));
     }

@@ -10,6 +10,7 @@
     @include('admin.projets.modals.addCandidat')
     @include('admin.projets.modals.addDemande')
     @include('admin.projets.modals.addDemandeRec')
+    @include('admin.projets.modals.addDemandeAccueil')
     @include('admin.projets.modals.editDemande')
     @include('admin.projets.modals.timeTracking')
 
@@ -64,6 +65,11 @@
                                     <button class="btn btn-secondary mr-2" data-toggle="modal"
                                         data-target="#addDemandeRec"><i class="fas fa-plus-circle pr-2"></i> DEMANDE DE
                                         RECRUTEMENT</button>
+                                @endif
+                                @if (Str::contains($projet->statut, 'acc_accueil') || Str::contains($projet->statut, 'new'))
+                                    <button class="btn btn-success mr-2" data-toggle="modal" data-target="#addDemandeAccueil">
+                                        <i class="fas fa-plus-circle pr-2"></i> DEMANDE DE ACCUEIL
+                                    </button>
                                 @endif
                             @endif
                         </div>
@@ -340,6 +346,40 @@
                             $('#addDemande #contact_phone').val("");
                             $('#addDemande #contact_ext').val("");
                             $('#addDemande #contact_email').val("");
+                        }
+
+
+                    },
+                    error: function(jqXHR, status, error) {
+                        console.log(jqXHR, status, error);
+                        alert(error);
+                    }
+                });
+            });
+
+            $(document).on('change', "#addDemandeAccueil #employeur_id_accueil", function() {
+                var employeur_id = $(this).val();
+                $.ajax({
+                    url: "{{ action('ProjetController@getEmployeurContact', $projet->id) }}",
+                    type: 'POST',
+                    data: {
+                        "employeur_id": employeur_id
+                    },
+                    success: function(data) {
+                        if (data !== "") {
+                            $('#addDemandeAccueil #contact_prenom').val(data.contact_prenom);
+                            $('#addDemandeAccueil #contact_nom').val(data.contact_nom);
+                            $('#addDemandeAccueil #contact_titre').val(data.contact_titre);
+                            $('#addDemandeAccueil #contact_phone').val(data.contact_phone);
+                            $('#addDemandeAccueil #contact_ext').val(data.contact_ext);
+                            $('#addDemandeAccueil #contact_email').val(data.contact_email);
+                        } else {
+                            $('#addDemandeAccueil #contact_prenom').val("");
+                            $('#addDemandeAccueil #contact_nom').val("");
+                            $('#addDemandeAccueil #contact_titre').val("");
+                            $('#addDemandeAccueil #contact_phone').val("");
+                            $('#addDemandeAccueil #contact_ext').val("");
+                            $('#addDemandeAccueil #contact_email').val("");
                         }
 
 

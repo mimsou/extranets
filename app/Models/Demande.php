@@ -58,6 +58,9 @@ class Demande extends Model
                            'salaire',
                            'lieu_travail',
                            'code_cnp',
+                           'la_region',
+                           'nom_de_laccompagnateur',
+                           'type_de_demande',
                            'notes',
                            'completed'
     ];
@@ -167,5 +170,7 @@ class Demande extends Model
     public function todo_groups(){
         return $this->hasMany(TodoGroup::class,'demande_id','id');
     }
+
+
 
 }

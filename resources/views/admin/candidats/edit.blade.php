@@ -77,6 +77,7 @@
                             @include('admin.candidats.partials._recrutement')
                             {{-- @include('admin.candidats.partials._administration') --}}
                             @include('admin.candidats.partials._immigration')
+                            @include('admin.candidats.partials._accueil')
                             @include('admin.candidats.partials._commentaires')
                             @include('admin.candidats.partials._historique')
 
@@ -294,9 +295,9 @@
                 $('.candidat-frm :input').prop("disabled", true);
                 $(".dz-hidden-input").prop("disabled",true);
             }
-            let isAssociateUser = "{{ is_associate_user() }}";
+            let isAssociateUser = '{{ is_associate_user() }}';
 
-            if(isAssociateUser == "true"){
+            if(isAssociateUser === 'true'){
                 $('select,input,textarea,button').prop('disabled',true).addClass('disabled');
             }
         })

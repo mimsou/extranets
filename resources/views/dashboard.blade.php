@@ -28,6 +28,10 @@
                             </div>
                             {!! Form::text('date_range',null,['class'=>'form-control','placeholder'=>'Filter Date', 'id' => 'date_range_dashboard']) !!}
                         </div>
+                        <div class="form-group text-left">
+                            {!! Form::checkbox('compare_condition',null,null,['id'=>'compare_condition']) !!}
+                            {!! Form::label('compare_condition','Comparer avec l\'an dernier') !!}
+                        </div>
                     </div>
                 </div>
             </div>

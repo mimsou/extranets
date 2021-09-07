@@ -28,6 +28,12 @@
     </div>
 </a>
 
+<a href="#accueil" class=" mail-sidebar-item btn-ghost">
+    <div class="w-100 text-truncate">
+        Accueil
+    </div>
+</a>
+
 
 {{-- <a href="#resources" class="m-t-20 mail-sidebar-item btn-ghost clearfix border-bottom border-white">
     <div class="w-100 text-truncate">

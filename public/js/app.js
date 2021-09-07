@@ -302,19 +302,19 @@ __webpack_require__(/*! ./dashboard */ "./resources/js/dashboard.js");
     endDate = end.format('YYYY-MM-DD');
   });
   $('body').on('click', '.applyBtn', function () {
-    if (startDate !== '' && endDate !== '') {
-      $.ajax({
-        type: 'GET',
-        url: route + 'get-dashboard-counts',
-        data: {
-          start_date: startDate,
-          end_date: endDate
-        },
-        success: function success(result) {
-          $('.widget-content').html(result);
-        }
-      });
-    }
+    var compareCondition = $('input[name=compare_condition]').is(':checked');
+    $.ajax({
+      type: 'GET',
+      url: route + 'get-dashboard-counts',
+      data: {
+        start_date: startDate.format('YYYY-MM-DD'),
+        end_date: endDate.format('YYYY-MM-DD'),
+        compareCondition: compareCondition
+      },
+      success: function success(result) {
+        $('.widget-content').html(result);
+      }
+    });
   });
 
   if ($("#chart-01").length) {
@@ -342,7 +342,7 @@ __webpack_require__(/*! ./dashboard */ "./resources/js/dashboard.js");
         colors: ['transparent']
       },
       series: [{
-        name: 'EIMT',
+        name: 'EIMT Envoyées',
         data: Object.values(ChartData['emit'])
       }, {
         name: 'EIMT Approuvées',

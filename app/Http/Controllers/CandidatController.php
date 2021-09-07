@@ -108,7 +108,6 @@ class CandidatController extends Controller
      */
     public function update(Request $request, $id)
     {
-
         $candidat = Candidat::find($id);
         $validator = Validator::make($request->all(), [
             'nom' => 'required',
@@ -121,9 +120,11 @@ class CandidatController extends Controller
 
             return back()->withErrors($validator)->withInput();
         }
-
-        $candidat->update($request->all());
-
+        $candidat->update($request->except(['age_d_enfants']));
+        if($request->age_d_enfants != null && !empty($request->age_d_enfants)){
+            $candidat->age_d_enfants = serialize($request->age_d_enfants);
+            $candidat->save();
+        }
         flash('Le candidat a été mis à jour avec succès')->success();
 
         return back();
