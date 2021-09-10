@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Classes\Utils\HasComments;
 use Str;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -15,7 +16,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Candidat extends Model implements HasMedia
 {
-    use HasFactory, Notable, Loggable, InteractsWithMedia;
+    use HasFactory, Notable, Loggable, InteractsWithMedia, HasComments;
 
     protected $fillable = [
                             'nom',

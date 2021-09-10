@@ -27,7 +27,11 @@
                         <td style="max-width: 100%">&nbsp;</td>
                     @endif
                     <td class="align-middle" style="padding: 5px;padding-right:40px;text-align: right">
-                        <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#timeTrackingDetails">
+                        <button type="button" class="btn btn-warning btn-sm"
+                                data-toggle="modal"
+                                data-user-id="{!! $tr->user->id !!}"
+                                data-projet-id="{!! $projet->id !!}"
+                                data-target="#timeTrackingDetails">
                             <i class="fas fa-business-time "></i>&nbsp;Détails
                         </button>
                     </td>

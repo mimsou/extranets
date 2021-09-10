@@ -109,6 +109,10 @@ Route::get('time-tracking', 'TimeTrackingController@index')->name('time_tracking
 Route::get('flash', 'TimeTrackingController@flash')->name('flash.notifications');
 Route::get('time-tracking/get-time-tracking', 'TimeTrackingController@getDatatableContent');
 
+Route::post('/candidats/{candidat_id}/comments','CommentaireController@ajoutAuCandidat')->name('candidat_add_comment');
+Route::get('/candidats/{candidat_id}/comments','CommentaireController@getAuCandidat')->name('candidat_get_comment');
+
+
 // Route::get('/users', function () {
 //     return view('users');
 // })->name('users');
