@@ -6,6 +6,7 @@
                 <label>Ajouter une observation</label>
                 <textarea id="comment-ta" rows="4" cols="50"
                           class="form-control js-autogrow-input comment-ta trumbowyg-textarea"></textarea>
+                <small>Attention, les observations peuvent être consultées par tous les utilisateurs.</small>
             </div>
             <div class="p-t-10 text-right">
                 <button class="btn btn-success btn-block add-comment-candidat" data-candidat-id="{!! $candidat->id !!}"><i class="mdi mdi-plus"></i> Ajouter</button>
