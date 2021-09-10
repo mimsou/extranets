@@ -5,6 +5,8 @@
     <link rel="stylesheet" href="{{ asset('atmos-assets/vendor/dropzone/dropzone.css') }}"/>
     <link rel="stylesheet" href="{{ asset('atmos-assets/vendor/DataTables/datatables.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('atmos-assets/vendor/DataTables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css') }}" />
+{{--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.25.1/ui/trumbowyg.min.css"--}}
+{{--          integrity="sha512-nwpMzLYxfwDnu68Rt9PqLqgVtHkIJxEPrlu3PfTfLQKVgBAlTKDmim1JvCGNyNRtyvCx1nNIVBfYm8UZotWd4Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />--}}
 @endsection
 
 @section('modal')
@@ -74,6 +76,7 @@
                         <div class=" mail-window-body">
 
                             @include('admin.candidats.partials._informations')
+                            @include('admin.candidats.partials._observation')
                             @include('admin.candidats.partials._recrutement')
                             {{-- @include('admin.candidats.partials._administration') --}}
                             @include('admin.candidats.partials._immigration')
@@ -153,6 +156,8 @@
     <script src="{{ asset('js/candidat.js') }}?v1.{{rand()}}"></script>
     <script src="{{ asset('atmos-assets/vendor/dropzone/dropzone.js') }}?v=2.2.2"></script>
     <script src="{{ asset('atmos-assets/vendor/DataTables/datatables.min.js') }}"></script>
+{{--    <script src="https://cdn.jsdelivr.net/npm/trumbowyg@2.25.1/dist/trumbowyg.min.js"></script>--}}
+
     <script>
         Dropzone.autoDiscover = false;
 
@@ -299,7 +304,44 @@
             if(isAssociateUser == "true"){
                 $('select,input,textarea,button').prop('disabled',true).addClass('disabled');
             }
+
+            $('.add-comment-candidat').click(function(event) {
+                event.preventDefault();
+                var candidat_id = $(this).data('candidat-id');
+                var body = $.trim($('#comment-ta').val());
+                $.ajax({
+                    url: "{{ route('candidat_add_comment',['candidat_id' => $candidat->id]) }}",
+                    type: 'POST',
+                    data: {
+                        "body":body,
+                    },
+                    success: function(data) {
+                        $('#comments-content').html(data.view);
+                        $('#comment-ta').val('');
+                    },
+                    error: function(jqXHR, status, error){
+                        console.log(jqXHR, status, error);
+                    }
+                });
+            })
+
+            $(function() {
+                $.ajax({
+                    url: "{{ route('candidat_get_comment',['candidat_id' => $candidat->id]) }}",
+                    type: 'GET',
+                    data: {
+                        "candidat_id": {!! $candidat->id !!},
+                    },
+                    success: function(data) {
+                        $('#comments-content').html(data.view);
+                    },
+                    error: function(jqXHR, status, error){
+                        console.log(jqXHR, status, error);
+                    }
+                });
+            });
         })
     </script>
+
 
 @endsection
