@@ -31,61 +31,78 @@ class DashboardController extends Controller
     public function dashboardRecords(Request $request){
         if($request->has('start_date') && $request->has('end_date')){
             $startDate = Carbon::parse($request->start_date);
-            if($request->has('compareCondition') && $request->compareCondition == "true"){
-                $startDate = $startDate->subYears(1);
-            }
             $endDate = Carbon::parse($request->end_date);
-            $dateSevendDaysBefore = $startDate->format('Y-m-d');
-            $fourteenDaysBefore = $startDate->subDays($startDate->diffInDays($endDate))->format('Y-m-d');
+            $range = $startDate->diffInDays($endDate);
+            // Compared date - Previous period
+            $date_compare_to_date = $startDate->subDays();
+            $date_compare_to = $startDate->format('Y-m-d');
+            $startDate = Carbon::parse($request->start_date);
+            $date_compare_from = $date_compare_to_date->subDays($range)->format('Y-m-d');
+            $startDate = Carbon::parse($request->start_date);
             $endDate = $request->end_date;
         }else{
-            $dateSevendDaysBefore = Carbon::now()->subDays(7);
-            $fourteenDaysBefore = Carbon::now()->subDays(14)->format('Y-m-d');
-            $dateSevendDaysBefore = $dateSevendDaysBefore->format('Y-m-d');
+            $startDate = Carbon::now()->subDays(7);
+            $date_compare_to = Carbon::now()->subDays(8);
+            $date_compare_from = Carbon::now()->subDays(15)->format('Y-m-d');
+            $date_compare_to = $date_compare_to->format('Y-m-d');
             $endDate = Carbon::now()->format('Y-m-d');
         }
 
+        if($request->has('compareCondition') && $request->compareCondition == "true"){
+            $date_compare_from = Carbon::parse($request->start_date)->subYear()->format('Y-m-d');
+            $date_compare_to = Carbon::parse($request->end_date)->subYear()->format('Y-m-d');
+        }
+
+        $startDate = $startDate->format('Y-m-d');
+
+
         //Emit
-        $demandesModel = Demande::whereBetween('eimt_date_envoi',[$fourteenDaysBefore,$endDate])->get();
-        $demandesCount = $demandesModel->whereBetween('eimt_date_envoi',[$dateSevendDaysBefore,$endDate]);
+        $demandesModel = Demande::whereBetween('eimt_date_envoi',[$date_compare_from,$endDate])->get();
+        $demandesCount = $demandesModel->whereBetween('eimt_date_envoi',[$date_compare_to,$endDate]);
         $emitCount = $demandesCount->count();
-        $avgCount = $demandesModel->whereBetween('eimt_date_envoi',[$fourteenDaysBefore,$dateSevendDaysBefore]);
+        $avgCount = $demandesModel->whereBetween('eimt_date_envoi',[$date_compare_from,$date_compare_to]);
         $lastWeekCount = $avgCount->count();
         $emitPercentage = $this->getPercentage($lastWeekCount,$emitCount);
 
-        $demandesModel = Demande::whereBetween('eimt_date_reception',[$fourteenDaysBefore,$endDate])->get();
-        $emitApprovedCount = $demandesModel->whereBetween('eimt_date_reception',[$dateSevendDaysBefore,$endDate])->count();
-        $lastWeekCount = $demandesModel->whereBetween('eimt_date_reception',[$fourteenDaysBefore,$dateSevendDaysBefore])->count();
+        $demandesModel = Demande::whereBetween('eimt_date_reception',[$date_compare_from,$endDate])->get();
+        $emitApprovedCount = $demandesModel->whereBetween('eimt_date_reception',[$date_compare_to,$endDate])->count();
+        $lastWeekCount = $demandesModel->whereBetween('eimt_date_reception',[$date_compare_from,$date_compare_to])->count();
         $emitApprovePercent = $this->getPercentage($lastWeekCount,$emitApprovedCount);
 
         //DST Count
-        $demandeModel = Demande::whereBetween('dst_date_envoi',[$fourteenDaysBefore,$endDate])->get();
-        $dstCount = $demandeModel->whereBetween('dst_date_envoi',[$dateSevendDaysBefore,$endDate])->count();
-        $lastWeekCount = $demandeModel->whereBetween('dst_date_envoi',[$fourteenDaysBefore,$dateSevendDaysBefore])->count();
+        $demandeModel = Demande::whereBetween('dst_date_envoi',[$date_compare_from,$endDate])->get();
+        $dstCount = $demandeModel->whereBetween('dst_date_envoi',[$date_compare_to,$endDate])->count();
+        $lastWeekCount = $demandeModel->whereBetween('dst_date_envoi',[$date_compare_from,$date_compare_to])->count();
         $dstPercent = $this->getPercentage($lastWeekCount,$dstCount);
 
-        $demandesModel = Demande::whereBetween('dst_date_reception',[$fourteenDaysBefore,$endDate])->get();
-        $dstApprovedCunt = $demandesModel->whereBetween('dst_date_reception',[$dateSevendDaysBefore,$endDate])->count();
-        $lastWeekCount = $demandesModel->whereBetween('dst_date_reception',[$fourteenDaysBefore,$dateSevendDaysBefore])->count();
+        $demandesModel = Demande::whereBetween('dst_date_reception',[$date_compare_from,$endDate])->get();
+        $dstApprovedCunt = $demandesModel->whereBetween('dst_date_reception',[$date_compare_to,$endDate])->count();
+        $lastWeekCount = $demandesModel->whereBetween('dst_date_reception',[$date_compare_from,$date_compare_to])->count();
         $dstApprovedPercent = $this->getPercentage($lastWeekCount,$dstApprovedCunt);
 
         //project completed
-        $projetModel = Projet::whereBetween('date_selection',[$fourteenDaysBefore,$endDate])->get();
-        $completedCount = $projetModel->whereBetween('date_selection',[$dateSevendDaysBefore,$endDate])->count();
-        $lastWeekCount = $projetModel->whereBetween('date_selection',[$fourteenDaysBefore,$dateSevendDaysBefore])->count();
+        $projetModel = Projet::whereBetween('date_selection',[$date_compare_from,$endDate])->get();
+        $completedCount = $projetModel->whereBetween('date_selection',[$date_compare_to,$endDate])->count();
+        $lastWeekCount = $projetModel->whereBetween('date_selection',[$date_compare_from,$date_compare_to])->count();
         $projetPercent = $this->getPercentage($lastWeekCount,$completedCount);
 
         //PT sent
-        $candidateModel = Candidat::whereBetween('permis_date_envoi',[$fourteenDaysBefore,$endDate])->get();
-        $permisDateEnvoiCount = $candidateModel->whereBetween('permis_date_envoi',[$dateSevendDaysBefore,$endDate])->count();
-        $lastWeekCount = $candidateModel->whereBetween('permis_date_envoi',[$fourteenDaysBefore,$dateSevendDaysBefore])->count();
+        $candidateModel = Candidat::whereBetween('permis_date_envoi',[$date_compare_from,$endDate])->get();
+        $permisDateEnvoiCount = $candidateModel->whereBetween('permis_date_envoi',[$date_compare_to,$endDate])->count();
+        $lastWeekCount = $candidateModel->whereBetween('permis_date_envoi',[$date_compare_from,$date_compare_to])->count();
         $candidatePercent = $this->getPercentage($lastWeekCount,$permisDateEnvoiCount);
 
         //PT received
-        $candidateModel = Candidat::whereBetween('permis_date_reception',[$fourteenDaysBefore,$endDate])->get();
-        $permisDateApprovedCount = $candidateModel->whereBetween('permis_date_reception',[$dateSevendDaysBefore,$endDate])->count();
-        $lastWeekCount = $candidateModel->whereBetween('permis_date_reception',[$fourteenDaysBefore,$dateSevendDaysBefore])->count();
+        $candidateModel = Candidat::whereBetween('permis_date_reception',[$date_compare_from,$endDate])->get();
+        $permisDateApprovedCount = $candidateModel->whereBetween('permis_date_reception',[$date_compare_to,$endDate])->count();
+        $lastWeekCount = $candidateModel->whereBetween('permis_date_reception',[$date_compare_from,$date_compare_to])->count();
         $permisDateApprovedPercent = $this->getPercentage($lastWeekCount,$permisDateApprovedCount);
+
+        //PT received
+        $candidateModel = Candidat::whereBetween('date_selection',[$date_compare_from,$endDate])->get();
+        $dateSelectionApprovedCount = $candidateModel->whereBetween('date_selection',[$date_compare_to,$endDate])->count();
+        $lastWeekCount = $candidateModel->whereBetween('date_selection',[$date_compare_from,$date_compare_to])->count();
+        $dateSelectionApprovedPercent = $this->getPercentage($lastWeekCount,$permisDateApprovedCount);
 
         return [
                 'emit'=>$emitCount,
@@ -101,7 +118,13 @@ class DashboardController extends Controller
                 'pt_sent'=>$permisDateEnvoiCount,
                 'pt_sent_percent' => $candidatePercent,
                 'pt_received'=>$permisDateApprovedCount,
-                'pt_received_percent'=>$permisDateApprovedPercent
+                'pt_received_percent'=>$permisDateApprovedPercent,
+                'date_selection'=>$dateSelectionApprovedCount,
+                'date_selection_percent'=>$dateSelectionApprovedPercent,
+                'date_compare_from'=>$date_compare_from,
+                'date_compare_to'=>$date_compare_to,
+                'date_from'=>$startDate,
+                'date_to'=>$endDate,
         ];
     }
 

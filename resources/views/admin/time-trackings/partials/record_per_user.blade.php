@@ -1,8 +1,14 @@
+@php
+    $class = "link";
+    if(Str::contains($projet->statut, 'imm_')) $class = "danger";
+    if(Str::contains($projet->statut, 'rec_')) $class = "secondary";
+    if(Str::contains($projet->statut, 'acc_')) $class = "success";
+@endphp
+
 <div class="col-md-12 m-b-30">
-    <h2 class="total_duration">{!! $user->fullname !!}</h2>
-    <h3 class="total_duration">{!! $projet->titre !!} - {!! $projet->numero !!}</h3>
-    <h4 class="total_duration">{!! $projet->employeur->nom !!}</h4>
-    <h4 class="total_duration">Total: {!! $total !!}</h4>
+    <h2 class="total_duration"><small><i class="fas fa-user mr-2"></i></small> {!! $user->fullname !!}</h2>
+    <div><a href="{{ action('ProjetController@edit', $projet->id) }}" target="blank" class="mr-3 btn btn-sm btn-{{ $class }}">{!! $projet->numero !!}</a> {!! $projet->titre !!}</div>
+    <h4 class="total_duration mt-4">Total: {!! $total !!}</h4>
     <div class="table-responsive">
         <table class="table align-td-middle table-card">
             <thead>

@@ -5,7 +5,7 @@
     <div class="modal-dialog" role="document" style="max-width: 600px">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="slideRightModalLabel"><i class="fas fa-business-time fa-2x"></i></h5>
+                <h5 class="modal-title" id="slideRightModalLabel"><i class="fas fa-business-time"></i></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
@@ -14,7 +14,7 @@
                 <div class="card py-3 m-b-15">
                     <div id="flash-data-container"></div>
                     <div class="card-body">
-                        <h4 class="mb-3">Nouveau</h4>
+                        <h4 class="mb-3">Nouvelle entrée de temps</h4>
                         {!! Form::open(['route' => ['time_tracking_store', 'id' => 4 ], 'id' => 'time_tracking_form']) !!}
                         {!! Form::hidden('tt_projet_id', $projet->id) !!}
                         <!-- TASK TYPE -->

@@ -5,20 +5,21 @@
         timePicker:false,
         singleDatePicker: false,
         autoApply: false,
-        minDate: '2021-01-01',
+        minDate: '2020-01-01',
         locale: { format: 'YYYY-MM-DD' }
     }, function(start,end){
         startDate = start.format('YYYY-MM-DD');
         endDate = end.format('YYYY-MM-DD');
     });
     $('body').on('click','.applyBtn',function(){
+        console.log(startDate, "test");
         let compareCondition = $('input[name=compare_condition]').is(':checked');
         $.ajax({
             type: 'GET',
             url: route+'get-dashboard-counts',
             data: {
-                start_date: startDate.format('YYYY-MM-DD'),
-                end_date: endDate.format('YYYY-MM-DD'),
+                start_date: startDate,
+                end_date: endDate,
                 compareCondition: compareCondition
             },
             success: function(result){
@@ -28,8 +29,8 @@
     });
 
      if ($("#chart-01").length) {
-         let ChartData = JSON.parse($('.chartdata').text());
-        console.log(ChartData);
+        let ChartData = JSON.parse($('.chartdata').text());
+
         var options = {
             colors: colors,
             chart: {

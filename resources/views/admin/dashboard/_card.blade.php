@@ -45,7 +45,7 @@
                 Bravo! Vous avez effectuez {{ number_format($percent,2) }}% de plus que la période précédente
             @else
                 <span class="text-gray-400"> {{ number_format(abs($percent),2) }}% </span>
-                Vous gardez le rythme! Même chiffre que pour la période précédente
+                Vous gardez le rythme!
             @endif
         </div>
     </div>

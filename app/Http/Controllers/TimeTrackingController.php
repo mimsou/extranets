@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Str;
 use App\Classes\Utils\Tools\DateTools;
 use App\Classes\Utils\Tools\TimeTools;
 use App\Models\Employeur;
@@ -120,7 +121,13 @@ class TimeTrackingController extends Controller
             })
             ->editColumn(
                 'projet.numero', function($m) {
-                return '<a href="' . action('ProjetController@edit', $m->projet->id) . '" class="btn btn-sm btn-link"><strong>' . $m->projet->numero . '</strong></a>';
+                $class = "link";
+                $p = $m->projet;
+                if(Str::contains($p->statut, 'imm_')) $class = "danger";
+                if(Str::contains($p->statut, 'rec_')) $class = "secondary";
+                if(Str::contains($p->statut, 'acc_')) $class = "success";
+
+                return '<a href="' . action('ProjetController@edit', $m->projet->id) . '" class="btn btn-sm btn-'.$class.'"><strong>' . $m->projet->numero . '</strong></a>';
             })
             ->editColumn(
                 'projet.statut', function($m) {

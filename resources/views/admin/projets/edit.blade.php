@@ -28,7 +28,7 @@
                 @if(is_admin_user())
                 <div class="col-lg-4 text-right text-white p-b-30">
                     <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#timeTracking">
-                        <i class="fas fa-business-time fa-2x"></i>
+                        <i class="fas fa-business-time mr-2"></i> Feuille de temps
                     </button>
                 </div>
                 @endif

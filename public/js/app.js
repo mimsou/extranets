@@ -293,7 +293,7 @@ __webpack_require__(/*! ./dashboard */ "./resources/js/dashboard.js");
     timePicker: false,
     singleDatePicker: false,
     autoApply: false,
-    minDate: '2021-01-01',
+    minDate: '2020-01-01',
     locale: {
       format: 'YYYY-MM-DD'
     }
@@ -302,13 +302,14 @@ __webpack_require__(/*! ./dashboard */ "./resources/js/dashboard.js");
     endDate = end.format('YYYY-MM-DD');
   });
   $('body').on('click', '.applyBtn', function () {
+    console.log(startDate, "test");
     var compareCondition = $('input[name=compare_condition]').is(':checked');
     $.ajax({
       type: 'GET',
       url: route + 'get-dashboard-counts',
       data: {
-        start_date: startDate.format('YYYY-MM-DD'),
-        end_date: endDate.format('YYYY-MM-DD'),
+        start_date: startDate,
+        end_date: endDate,
         compareCondition: compareCondition
       },
       success: function success(result) {
@@ -319,7 +320,6 @@ __webpack_require__(/*! ./dashboard */ "./resources/js/dashboard.js");
 
   if ($("#chart-01").length) {
     var ChartData = JSON.parse($('.chartdata').text());
-    console.log(ChartData);
     var options = {
       colors: colors,
       chart: {
@@ -1050,13 +1050,13 @@ $(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/ninja/Projects/MediaSimple/Immigreemploi/immigremploi/resources/js/app.js */"./resources/js/app.js");
-__webpack_require__(/*! /Users/ninja/Projects/MediaSimple/Immigreemploi/immigremploi/resources/sass/candidat.scss */"./resources/sass/candidat.scss");
-__webpack_require__(/*! /Users/ninja/Projects/MediaSimple/Immigreemploi/immigremploi/resources/sass/projet.scss */"./resources/sass/projet.scss");
-__webpack_require__(/*! /Users/ninja/Projects/MediaSimple/Immigreemploi/immigremploi/resources/sass/general.scss */"./resources/sass/general.scss");
-__webpack_require__(/*! /Users/ninja/Projects/MediaSimple/Immigreemploi/immigremploi/resources/sass/chat.scss */"./resources/sass/chat.scss");
-__webpack_require__(/*! /Users/ninja/Projects/MediaSimple/Immigreemploi/immigremploi/resources/sass/comments.scss */"./resources/sass/comments.scss");
-module.exports = __webpack_require__(/*! /Users/ninja/Projects/MediaSimple/Immigreemploi/immigremploi/resources/css/app.css */"./resources/css/app.css");
+__webpack_require__(/*! /Users/jcgaudette/Sites/immigremploi/resources/js/app.js */"./resources/js/app.js");
+__webpack_require__(/*! /Users/jcgaudette/Sites/immigremploi/resources/sass/candidat.scss */"./resources/sass/candidat.scss");
+__webpack_require__(/*! /Users/jcgaudette/Sites/immigremploi/resources/sass/projet.scss */"./resources/sass/projet.scss");
+__webpack_require__(/*! /Users/jcgaudette/Sites/immigremploi/resources/sass/general.scss */"./resources/sass/general.scss");
+__webpack_require__(/*! /Users/jcgaudette/Sites/immigremploi/resources/sass/chat.scss */"./resources/sass/chat.scss");
+__webpack_require__(/*! /Users/jcgaudette/Sites/immigremploi/resources/sass/comments.scss */"./resources/sass/comments.scss");
+module.exports = __webpack_require__(/*! /Users/jcgaudette/Sites/immigremploi/resources/css/app.css */"./resources/css/app.css");
 
 
 /***/ })

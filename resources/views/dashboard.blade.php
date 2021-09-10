@@ -40,35 +40,37 @@
     <div class="widget-content">
         @include('admin.dashboard.widgets')
     </div>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-12  m-b-30">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title">Visualisation par mois</div>
-                    </div>
-                    <div class="card-body">
-                        <textarea class="d-none chartdata">{{ json_encode($chartData) }}</textarea>
-                        <h5 class="text-center">Records</h5>
-                        <h6 class="text-center">
-                            <span class="badge badge-primary">{{ $chartData['from_date'] }}</span> To <span class="badge badge-primary">{{ $chartData['to_date'] }}</span>
-                        </h6>
-                        <div id="chart-01"></div>
-                    </div>
-                    <div class="">
-                    </div>
+    <!--
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12  m-b-30">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Visualisation par mois</div>
+                        </div>
+                        <div class="card-body">
+                            <textarea class="d-none chartdata">{{ json_encode($chartData) }}</textarea>
+                            <h5 class="text-center">Données</h5>
+                            <h6 class="text-center">
+                                <span class="badge badge-primary">{{ $chartData['from_date'] }}</span> au <span class="badge badge-primary">{{ $chartData['to_date'] }}</span>
+                            </h6>
+                            <div id="chart-01"></div>
+                        </div>
+                        <div class="">
+                        </div>
 
-{{--                    <div class="card-footer">--}}
-{{--                        <div class="d-flex  justify-content-between">--}}
-{{--                            <h6 class="m-b-0 my-auto"><span class="opacity-75"> <i class="mdi mdi-information"></i> Restart your Re-targeting Campaigns</span>--}}
-{{--                            </h6>--}}
-{{--                            <a href="#!" class="btn btn-white shadow-none">See Campaigns</a>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
+    {{--                    <div class="card-footer">--}}
+    {{--                        <div class="d-flex  justify-content-between">--}}
+    {{--                            <h6 class="m-b-0 my-auto"><span class="opacity-75"> <i class="mdi mdi-information"></i> Restart your Re-targeting Campaigns</span>--}}
+    {{--                            </h6>--}}
+    {{--                            <a href="#!" class="btn btn-white shadow-none">See Campaigns</a>--}}
+    {{--                        </div>--}}
+    {{--                    </div>--}}
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    -->
 
 
 
