@@ -5,7 +5,7 @@
             <div class="form-group col-md-12">
                 <label>Ajouter une observation</label>
                 <textarea id="comment-ta" rows="4" cols="50"
-                          class="form-control js-autogrow-input comment-ta trumbowyg-textarea"></textarea>
+                          class="form-control comment-ta"></textarea>
                 <small>Attention, les observations peuvent être consultées par tous les utilisateurs.</small>
             </div>
             <div class="p-t-10 text-right">

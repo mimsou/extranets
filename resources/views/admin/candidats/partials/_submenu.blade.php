@@ -34,12 +34,13 @@
     </div>
 </a>
 
-<a href="#accueil" class=" mail-sidebar-item btn-ghost">
-    <div class="w-100 text-truncate">
-        Accueil
-    </div>
-</a>
-
+@if(Auth::user()->role_lvl > 3)
+    <a href="#accueil" class=" mail-sidebar-item btn-ghost">
+        <div class="w-100 text-truncate">
+            Accueil
+        </div>
+    </a>
+@endif
 
 {{-- <a href="#resources" class="m-t-20 mail-sidebar-item btn-ghost clearfix border-bottom border-white">
     <div class="w-100 text-truncate">

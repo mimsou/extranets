@@ -54,11 +54,11 @@
             </div>
             <div class="form-group col-md-6">
                 {!! Form::label('etat_civil','État civil') !!}
-                {!! Form::select('etat_civil',$etatCivil,null,['class'=>'form-control','placeholder'=>'Etat civil']) !!}
+                {!! Form::select('etat_civil',$etatCivil,null,['class'=>'form-control','placeholder'=>'Sélectionner']) !!}
             </div>
             <div class="form-group col-md-6">
                 {!! Form::label('nombre_d_enfants','Nombre d’enfants') !!}
-                {!! Form::number('nombre_d_enfants',null,['class'=>'form-control','placeholder'=>'1','min'=>0]) !!}
+                {!! Form::number('nombre_d_enfants',null,['class'=>'form-control','min'=>0]) !!}
             </div>
             <div class="rep_age">
                 @if(isset($candidat) && $candidat->age_d_enfants != '')
@@ -69,7 +69,7 @@
                         <div class="form-group col-md-3">
                             <div class="age_field">
                                 <label>Âge des enfants</label>
-                                <input type="number" name="age_d_enfants[]" value="{{ $age }}" class="form-control" placeholder="Age" />
+                                <input type="number" name="age_d_enfants[]" value="{{ $age }}" class="form-control" />
                             </div>
                         </div>
                     @endforeach
@@ -83,8 +83,8 @@
             </div>
             <div class="form-group col-md-12">
                 {!! Form::label('address_1','Adresse') !!}
-                {!! Form::text('address_1',null,['class'=>'form-control', "placeholder"=>"Ligne 1"]) !!}
-                {!! Form::text('address_2',null,['class'=>'form-control mt-1', "placeholder"=>"Ligne 2 (optionnel)"]) !!}
+                {!! Form::text('address_1',null,['class'=>'form-control']) !!}
+                {!! Form::text('address_2',null,['class'=>'form-control mt-1']) !!}
             </div>
             <div class="form-group col-md-4">
                 {!! Form::label('city','Ville') !!}
@@ -96,7 +96,7 @@
             </div>
             <div class="form-group col-md-4">
                 {!! Form::label('country','Pays') !!}
-                {!! Form::select('country',\App\Models\Pays::orderBy('title', 'asc')->pluck('title', 'id'),null,['class'=>'form-control']) !!}
+                {!! Form::select('country',\App\Models\Pays::orderBy('title', 'asc')->pluck('title', 'id'),null,['class'=>'form-control', 'placeholder'=>'Sélectionner']) !!}
             </div>
             <div class="form-group col-md-4">
                 {!! Form::label('postal_code','Code postal') !!}

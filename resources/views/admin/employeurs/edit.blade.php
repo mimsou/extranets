@@ -56,7 +56,7 @@
                     <div class="card py-3 m-b-30">
                         <div class="card-body">
                             <h3 class="mb-0">{{ __("Projets") }}</h3>
-                            <h5 class="">{{ __("Recrutement") }}</h5>
+                            <h5 class="mt-3">{{ __("Recrutement") }}</h5>
                             @if (!$employeur->projets()->where('statut', 'LIKE', 'rec_%')->count())
                                 <p class="text-muted opacity-50"><i>Aucun projet de recrutement n'a été associé à ce
                                         compte. </i></p>
@@ -147,6 +147,55 @@
                                 </div>
                             @endforeach
                         </div>
+
+
+
+                        <div class="card-body">
+                            <h5 class="mt-5">{{ __("Accueil") }}</h5>
+                            @if (!$employeur->projets()->where('statut', 'LIKE', 'acc_%')->count())
+                                <p class="text-muted opacity-50"><i>Aucun projet d'accueil n'a été associé à ce
+                                        compte. </i></p>
+                            @endif
+                        </div>
+
+                        <div class="list-group list-group-flush ">
+                            @foreach ($employeur->projets()->where('statut', 'LIKE', 'acc_%')->get() as $p)
+                                <div class="list-group-item suivi-projets">
+
+                                    <div class="d-flex align-items-center">
+                                        <div class="badge badge-success mr-3">
+                                            <strong>#{{ $p->numero }}</strong>
+                                        </div>
+                                        <div class="content">
+                                            <h5 class="pt-2"><a href="{{ action('ProjetController@edit', $p->id) }}"
+                                                                target="_blank" class="pr-3">{{ $p->titre }}</a></h5>
+                                        </div>
+                                    </div>
+
+                                    @foreach ($p->demandes()->where('type', 'accueil')->get() as $d)
+                                        <div class="d-flex align-items-top">
+
+
+                                            <div class="content mb-3">
+                                                {{ $d->employeur->nom }}
+
+                                                <div class="progress-bar-container mt-1">
+                                                    <span class="progress-bar"
+                                                          style="width:{{ demandeAccueilProgression($d->statut) }}"></span>
+                                                </div>
+
+                                                <small>{{ AccueilDemandeStatus($d->statut) }} </small>
+
+                                            </div>
+
+                                        </div>
+                                    @endforeach
+
+
+                                </div>
+                            @endforeach
+                        </div>
+
 
                     </div>
 

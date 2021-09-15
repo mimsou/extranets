@@ -5,9 +5,11 @@
     <link rel="stylesheet" href="{{ asset('atmos-assets/vendor/dropzone/dropzone.css') }}"/>
     <link rel="stylesheet" href="{{ asset('atmos-assets/vendor/DataTables/datatables.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('atmos-assets/vendor/DataTables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('atmos-assets/vendor/summernote/summernote.css') }}">
 {{--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.25.1/ui/trumbowyg.min.css"--}}
 {{--          integrity="sha512-nwpMzLYxfwDnu68Rt9PqLqgVtHkIJxEPrlu3PfTfLQKVgBAlTKDmim1JvCGNyNRtyvCx1nNIVBfYm8UZotWd4Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />--}}
 @endsection
+
 
 @section('modal')
     @include('admin.modals.preview-doc')
@@ -81,7 +83,7 @@
                             {{-- @include('admin.candidats.partials._administration') --}}
                             @include('admin.candidats.partials._immigration')
                             @include('admin.candidats.partials._accueil')
-                            @include('admin.candidats.partials._commentaires')
+                            {{-- @include('admin.candidats.partials._commentaires') --}}
                             @include('admin.candidats.partials._historique')
 
 
@@ -157,12 +159,14 @@
     <script src="{{ asset('js/candidat.js') }}?v1.{{rand()}}"></script>
     <script src="{{ asset('atmos-assets/vendor/dropzone/dropzone.js') }}?v=2.2.2"></script>
     <script src="{{ asset('atmos-assets/vendor/DataTables/datatables.min.js') }}"></script>
+    <script src="{{ asset('atmos-assets/vendor/summernote/summernote.min.js') }}"></script>
 {{--    <script src="https://cdn.jsdelivr.net/npm/trumbowyg@2.25.1/dist/trumbowyg.min.js"></script>--}}
 
     <script>
         Dropzone.autoDiscover = false;
 
         var user_role = '{{ Auth::user()->role_lvl }}';
+        var obs_summernote;
 
         $(document).ready(function() {
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
@@ -176,6 +180,8 @@
                 var fileName = e.target.files[0].name;
                 $('#avatar').text(fileName);
             });
+
+
 
 
             $("div#additional_resources").dropzone({
@@ -296,18 +302,41 @@
                 $('#modalConfirmation_removeFile').modal('toggle');
             });
 
-            if(user_role == 3) {
+            let isAssociateUser = '{{ is_associate_user() }}';
+
+            if(user_role == 3 || isAssociateUser === 'true') {
                 $('.candidat-frm :input').prop("disabled", true);
                 $(".dz-hidden-input").prop("disabled",true);
             }
-            let isAssociateUser = '{{ is_associate_user() }}';
 
-            if(isAssociateUser === 'true'){
-                $('select,input,textarea,button').prop('disabled',true).addClass('disabled');
+            // Make sur Observations field are available ALWAYS
+            $("#observation :input").prop("disabled", false);
+
+
+
+            var summernote_options = {
+                minHeight: 150,
+                // width: 100%,
+                popover: { image: [], link: [], air: [] },
+                toolbar: [
+                    // [groupName, [list of button]]
+                    ['style', ['bold', 'italic', 'underline', 'clear']],
+                    ['font', ['strikethrough', 'superscript', 'subscript']],
+                    // ['fontsize', ['fontsize']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    // ['height', ['height']]
+                ]
             }
 
+            obs_summernote = $('#observation #comment-ta').summernote(summernote_options);
+
+
+
             $('.add-comment-candidat').click(function(event) {
+
                 event.preventDefault();
+
                 var candidat_id = $(this).data('candidat-id');
                 var body = $.trim($('#comment-ta').val());
                 $.ajax({
@@ -318,7 +347,7 @@
                     },
                     success: function(data) {
                         $('#comments-content').html(data.view);
-                        $('#comment-ta').val('');
+                        obs_summernote.summernote('reset')
                     },
                     error: function(jqXHR, status, error){
                         console.log(jqXHR, status, error);

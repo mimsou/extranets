@@ -38,89 +38,91 @@
     <div class="container-fluid  pull-up">
         <div class="row">
             <div class="col-12">
-                <div class="card m-b-10 m-t-30 bg-dots p-4 projets_filters" id="projets_filters">
-                    <div class="filters d-flex flex-md-row flex-column align-items-center justify-content-between">
-                        @if(auth()->user()->role_lvl > 3)
-                            <div class="filter_per_personne">
+                @if(auth()->user()->role_lvl > 3)
+                    <div class="card m-b-10 m-t-30 bg-dots p-4 projets_filters" id="projets_filters">
+                        <div class="filters d-flex flex-md-row flex-column align-items-center justify-content-between">
+
+                                <div class="filter_per_personne">
+                                    <div class="form-group">
+                                        <label for="auditor">Filtrer par personne</label>
+                                        {!! Form::select('personne',$personne,null,['class'=>'form-control form-control-sm height-35']) !!}
+                                    </div>
+                                </div>
+
+                            <div class="filter_per_type">
                                 <div class="form-group">
-                                    <label for="auditor">Filtrer par personne</label>
-                                    {!! Form::select('personne',$personne,null,['class'=>'form-control form-control-sm height-35']) !!}
+                                    <label for="type_de_projet" class="">Type de projet</label>
+                                    <select name="type_de_projet" class="form-control form-control-sm height-35">
+                                        <option value="">TOUS</option>
+                                        @foreach($statuts as $key => $options)
+
+                                            @if(is_array($options))
+                                                <option value="{{ $key }}" class="optionGroup">{{ $key }}</option>
+                                                @foreach($options as $k => $option)
+                                                    <option value="{{ $k }}">&nbsp;&nbsp;&nbsp;{{ $option }}</option>
+                                                @endforeach
+                                            @else
+                                                <option value="{{ $key }}">{{ $options }}</option>
+                                            @endif
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
-                        @endif
-                        <div class="filter_per_type">
-                            <div class="form-group">
-                                <label for="type_de_projet" class="">Type de projet</label>
-                                <select name="type_de_projet" class="form-control form-control-sm height-35">
-                                    <option value="">TOUS</option>
-                                    @foreach($statuts as $key => $options)
 
-                                        @if(is_array($options))
-                                            <option value="{{ $key }}" class="optionGroup">{{ $key }}</option>
-                                            @foreach($options as $k => $option)
-                                                <option value="{{ $k }}">&nbsp;&nbsp;&nbsp;{{ $option }}</option>
-                                            @endforeach
-                                        @else
-                                            <option value="{{ $key }}">{{ $options }}</option>
-                                        @endif
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        @if(auth()->user()->role_lvl > 3)
-                            <div class="filter_per_employer">
+                                <div class="filter_per_employer">
+                                    <div class="form-group">
+                                        <label for="employeur">Employeur</label><br>
+                                        {!! Form::select('employeur',\App\Models\Employeur::orderBy('nom', 'ASC')->pluck('nom', 'id')->prepend('TOUS',''),null,['class'=>'form-control form-control-sm select2','style'=>'width: 184px !important; height: 25px !important;']) !!}
+                                    </div>
+                                </div>
+
+                            <div class="filter_per_status">
                                 <div class="form-group">
-                                    <label for="employeur">Employeur</label><br>
-                                    {!! Form::select('employeur',\App\Models\Employeur::orderBy('nom', 'ASC')->pluck('nom', 'id')->prepend('TOUS',''),null,['class'=>'form-control form-control-sm select2','style'=>'width: 184px !important; height: 25px !important;']) !!}
+                                    @php
+                                        $demandeStatuArray = [];
+                                        $demandeStatuArray['IMMIGRATION'] = demandeStatuts();
+                                        $demandeStatuArray['RECRUTEMENT'] = demandeStatuts(null,STATUTS_DEMANDE_REC);
+                                    @endphp
+                                    <label for="market" class="">Statut du dossier</label>
+                                    <select name="statut_du_dossier" class="form-control form-control-sm height-35" >
+                                        <option value="">TOUS</option>
+                                        @foreach($demandeStatuArray as $key => $options)
+
+                                            @if(is_array($options))
+                                                <option value="{{ $key }}" class="optionGroup">{{ $key }}</option>
+                                                @foreach($options as $k => $option)
+                                                    <option value="{{ $k }}">&nbsp;&nbsp;&nbsp;{{ $option }}</option>
+                                                @endforeach
+                                            @else
+                                                <option value="{{ $key }}">{{ $options }}</option>
+                                            @endif
+
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
-                        @endif
-                        <div class="filter_per_status">
-                            <div class="form-group">
-                                @php
-                                    $demandeStatuArray = [];
-                                    $demandeStatuArray['IMMIGRATION'] = demandeStatuts();
-                                    $demandeStatuArray['RECRUTEMENT'] = demandeStatuts(null,STATUTS_DEMANDE_REC);
-                                @endphp
-                                <label for="market" class="">Statut du dossier</label>
-                                <select name="statut_du_dossier" class="form-control form-control-sm height-35" >
-                                    <option value="">TOUS</option>
-                                    @foreach($demandeStatuArray as $key => $options)
-
-                                        @if(is_array($options))
-                                            <option value="{{ $key }}" class="optionGroup">{{ $key }}</option>
-                                            @foreach($options as $k => $option)
-                                                <option value="{{ $k }}">&nbsp;&nbsp;&nbsp;{{ $option }}</option>
-                                            @endforeach
-                                        @else
-                                            <option value="{{ $key }}">{{ $options }}</option>
-                                        @endif
-
-                                    @endforeach
-                                </select>
+                            <div class="filter_per_termine">
+                                <div class="form-group m-b-10">
+                                    <label class="cstm-switch">
+                                        <input type="checkbox" name="completed_demande" value="1" class="cstm-switch-input">
+                                        <span class="cstm-switch-indicator "></span>
+                                        <span class="cstm-switch-description">Afficher les demandes terminées </span>
+                                    </label>
+                                </div>
                             </div>
-                        </div>
-                        <div class="filter_per_termine">
-                            <div class="form-group m-b-10">
-                                <label class="cstm-switch">
-                                    <input type="checkbox" name="completed_demande" value="1" class="cstm-switch-input">
-                                    <span class="cstm-switch-indicator "></span>
-                                    <span class="cstm-switch-description">Afficher les demandes terminées </span>
-                                </label>
-                            </div>
-                        </div>
 
-                        <div class="filter_per_horaire">
-                            <div class="form-group m-b-10">
-                                <label class="cstm-switch">
-                                    <input type="checkbox" name="hourly_checkbox" value="1" class="cstm-switch-input">
-                                    <span class="cstm-switch-indicator "></span>
-                                    <span class="cstm-switch-description">Afficher facturation horaire </span>
-                                </label>
+                            <div class="filter_per_horaire">
+                                <div class="form-group m-b-10">
+                                    <label class="cstm-switch">
+                                        <input type="checkbox" name="hourly_checkbox" value="1" class="cstm-switch-input">
+                                        <span class="cstm-switch-indicator "></span>
+                                        <span class="cstm-switch-description">Afficher facturation horaire </span>
+                                    </label>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                @endif
 
                 <div class="card">
                     <div class="card-body">

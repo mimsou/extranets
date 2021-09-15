@@ -54,7 +54,7 @@
         <div class="form-group col-md-3">
             <div class="age_field">
                 <label>Âge des enfants</label>
-                <input type="number" name="age_d_enfants[]" value="" class="form-control" placeholder="Age" />
+                <input type="number" name="age_d_enfants[]" value="" class="form-control" />
             </div>
         </div>
     `;

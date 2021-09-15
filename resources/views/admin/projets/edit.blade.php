@@ -6,13 +6,17 @@
 @endsection
 
 @section('content')
-    @include('admin.partials._notes', ['model'=>$projet])
+
     @include('admin.projets.modals.addCandidat')
     @include('admin.projets.modals.addDemande')
     @include('admin.projets.modals.addDemandeRec')
     @include('admin.projets.modals.addDemandeAccueil')
     @include('admin.projets.modals.editDemande')
     @include('admin.projets.modals.timeTracking')
+
+    @if(Auth::user()->role_lvl > 3)
+        @include('admin.partials._notes', ['model'=>$projet])
+    @endif
 
     @if(request()->has('demande'))
         {!! Form::hidden('open_modal',request()->demande) !!}
