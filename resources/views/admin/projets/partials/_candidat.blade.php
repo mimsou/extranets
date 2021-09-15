@@ -49,7 +49,7 @@
 
                 <div class="text-muted">
                     <i class="fas fa-alarm-clock mr-2 ml-1"></i> <i class="pr-2">Échéance</i>
-                    {{ (!empty($p->permis_date_echeance))?$p->permis_date_echeance:'---- / -- / --' }}f
+                    {{ (!empty($p->permis_date_echeance))?$p->permis_date_echeance:'---- / -- / --' }}
                 </div>
             @elseif ($demande->type == 'recrutement')
                 <div class="text-muted">
