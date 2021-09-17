@@ -143,8 +143,8 @@
                     success: function(data)
                     {
                         fetchSuccessNotifications("Succès", "Enregistrement a été créé avec succès.");
-                        emptyTimeTrackingFormInput();
                         loadTimeTrackingContent();
+                        emptyTimeTrackingFormInput();
                     },
                     error: function(jqXHR, status, error) {
                         fetchErrorNotifications("Erreur", "Il y a eu un problème.");

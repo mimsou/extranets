@@ -45,7 +45,7 @@ class TimeTrackingController extends Controller
             ->toArray();
 
         $projects = Projet::all()
-            ->pluck('titre', 'id')
+            ->pluck('numero', 'id')
             ->prepend('Tous',0)
             ->toArray();
 
@@ -155,6 +155,13 @@ class TimeTrackingController extends Controller
                     }
                 return view('admin.time-trackings.partials.datatable_row_child',
                             compact('projet', 'has_task_type', 'task_type'));
+            })
+            ->with('sums', function() use ($query) {
+                $sum = $query->get()->sum('total_hours');
+                if($sum === null){
+                    return TimeTools::floatToHours(0);
+                }
+                return TimeTools::floatToHours($sum);
             })
             ->make(true);
     }

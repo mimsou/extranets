@@ -136,7 +136,7 @@
                                         <th>Projet</th>
                                         <th>Employeur</th>
                                         <th>Type de projet</th>
-                                        <th>Total h.</th>
+                                        <th id="total_hour_footer">Total h.</th>
                                         <th></th>
                                     </tr>
                                 </tfoot>
@@ -180,7 +180,12 @@
                         //for row child
                         this.fnSetColumnVis( 5, false);
                     }
-                }).on('draw.dt', function () {
+                ,
+                drawCallback:function(settings)
+                {
+                    $('#total_hour_footer').html('<span>'+settings.json.sums+'</span>');
+                }
+            }).on('draw.dt', function () {
                     $('.dataTable-async tr').each(function(i,e){
                         let tr = $(this);
                         let row = time_tracking_table.row( tr );
@@ -190,16 +195,11 @@
                                 row.child( row.data().childrow_html, 'dark-row' );
                                 row.child.show();
                                 tr.addClass('shown');
-
                             }
                         }
                     });
                 });
             });
-            //
-            // $('#projets_filters').find('select').change(function(){
-            //     applyFilters('select');
-            // });
 
             $('#filter_user').on('select2:select', function (e) {
                 applyFilters('filter_user.select');
