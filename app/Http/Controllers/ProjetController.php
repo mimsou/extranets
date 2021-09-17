@@ -99,13 +99,14 @@ class ProjetController extends Controller
                 return redirect()->back();
             }
         }
-        if(Auth::user()->role_lvl == 3 && !in_array($id, Auth::user()->employerProjects()->get()->pluck('id')->toArray())) { // user with employer role
+        if(Auth::user()->role_lvl <= 3 && !in_array($id, Auth::user()->employerProjects()->get()->pluck('id')->toArray())) {
+            // user with employer role
             return abort('403');
         }
         $projet = Projet::find($id);
 
         // for time tracking right panel
-        $users = User::all()->pluck('fullname', 'id')->toArray();
+        $users = User::whereIn('role_lvl', [10, 5])->get()->pluck('fullname', 'id')->toArray();
 
         return view('admin.projets.edit', compact('projet','users','id'));
     }

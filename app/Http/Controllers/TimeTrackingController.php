@@ -39,7 +39,7 @@ class TimeTrackingController extends Controller
             abort(404);
         }
 
-        $users = User::all()
+        $users = User::whereIn('role_lvl', [10, 5])->get()
             ->pluck('fullname', 'id')
             ->prepend('Tous',0)
             ->toArray();
@@ -78,7 +78,7 @@ class TimeTrackingController extends Controller
 
         //Building the dynamic Query from the data received
         $query = TimeRecord::whereBetween('date_from',[$date_from,$date_to])
-            ->with('projet', 'projet.employeur')
+            ->with('projet', 'projet.employeur', 'projet.time_records')
             ->selectRaw("*, SUM(duration) as total_hours")
             ->groupBy('projet_id');
 
@@ -134,12 +134,19 @@ class TimeTrackingController extends Controller
                 return __($m->projet->statut);
             })
             ->addColumn(
-                'childrow_html', function($m)  use ($has_task_type, $task_type){
+                'childrow_html', function($m)  use ($has_task_type, $task_type, $request){
                     $projet = Projet::where('id', '=', $m->projet_id)
-                                ->with('time_records',function($q){
-                                    $q->selectRaw("*,SUM(duration) as total_hours")
-                                        ->with('user')
-                                        ->groupBy('user_id');
+                                ->with('time_records',function($q) use ($request){
+                                    if($request->user !== "0"){
+                                        $q->selectRaw("*,SUM(duration) as total_hours")
+                                            ->where('user_id','=',$request->user)
+                                            ->with('user')
+                                            ->groupBy('user_id');
+                                    }else{
+                                        $q->selectRaw("*,SUM(duration) as total_hours")
+                                            ->with('user')
+                                            ->groupBy('user_id');
+                                    }
                                 })
                                 ->first();
                     if($has_task_type === true) {
