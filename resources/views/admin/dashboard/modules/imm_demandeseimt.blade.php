@@ -10,7 +10,7 @@
                 <tr>
                     <th>#Projet</th>
                     <th>Client</th>
-                    <th>Création</th>
+                    <th>Sélection</th>
                 </tr>
             </thead>
             <tbody>
@@ -22,8 +22,8 @@
                         <td><a href="{{ action('ProjetController@edit', $d->id) }}" class="btn btn-sm btn-danger">{{ $d->numero }}</a></td>
                         <td>{{ $d->nom }}</td>
                         <td style="line-height:14px">
-                            <p class="mb-0">{{ \Carbon\Carbon::parse($d->date_creation)->format('Y-m-d') }}</p>
-                            <small>{{ \Carbon\Carbon::parse($d->date_creation)->diffForHumans() }}</small>
+                            <p class="mb-0">{{ \Carbon\Carbon::parse($d->date_selection)->format('Y-m-d') }}</p>
+                            <small>{{ \Carbon\Carbon::parse($d->date_selection)->diffForHumans() }}</small>
                         </td>
                     </tr>
                 @endforeach

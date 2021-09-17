@@ -360,13 +360,13 @@ if (!function_exists('imm_demandeEIMT')) {
         $demandes = DB::table('demandes AS d')
                                        ->join('projets AS p', 'p.id', '=', 'd.projet_id')
                                        ->join('employeurs AS e', 'e.id', '=', 'p.employeur_id')
-                                       ->select(['p.numero', 'p.id', 'e.nom', 'p.date_creation'])
-                                       ->where('p.date_creation', '<', \Carbon\Carbon::now()->subMonth())
+                                       ->select(['p.numero', 'p.id', 'e.nom', 'p.date_selection'])
+                                       ->where('p.date_selection', '<', \Carbon\Carbon::now()->subMonth())
                                        ->whereNull('d.eimt_date_envoi')
                                        ->whereNotIn('d.statut', ['annule'])
                                        ->whereNotIn('p.statut', ['new_projet'])
                                        ->where('d.type', 'LIKE', 'imm_%')
-                                       ->orderBy('date_creation', 'ASC')
+                                       ->orderBy('date_selection', 'ASC')
                                        ->get()->unique();
 
         return $demandes;
