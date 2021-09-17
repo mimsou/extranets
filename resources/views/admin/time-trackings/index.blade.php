@@ -183,8 +183,10 @@
                 ,
                 drawCallback:function(settings)
                 {
-                    $('#total_hour_footer').html('<span>'+settings.json.sums+'</span>');
-                }
+                    var api = this.api();
+                    $(api.column(4).footer()).html("TOTAL H.: " + settings.json.sums);
+                },
+
             }).on('draw.dt', function () {
                     $('.dataTable-async tr').each(function(i,e){
                         let tr = $(this);
