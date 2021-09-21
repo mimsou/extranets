@@ -14,8 +14,6 @@ git clean -fd
 git checkout -f
 git pull origin master
 
-#WE MIGRATE THE DG
-/opt/plesk/php/7.4/bin/php artisan migrate
 
 # DO A COMPOSER UPDATE IF PARAMETER IS SET
 if [ $# -eq 1 ]
@@ -25,6 +23,9 @@ then
         /opt/plesk/php/7.4/bin/php -d memory_limit=-1 composer.phar install
     fi
 fi
+
+#WE MIGRATE THE DG
+/opt/plesk/php/7.4/bin/php artisan migrate
 
 #ASSURE GOOD FOLDER PERMISSIONS
 chown -R iemploi:psaserv /var/www/vhosts/immigremploi.ca/extranet
