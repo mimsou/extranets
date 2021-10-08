@@ -18,3 +18,7 @@ Route::get('/', function () {
     return Redirect::to('/admin');
 });
 
+Route::get('/dashboard', function () {
+    return Redirect::to('/admin');
+});
+

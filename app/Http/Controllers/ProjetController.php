@@ -99,10 +99,16 @@ class ProjetController extends Controller
                 return redirect()->back();
             }
         }
-        if(Auth::user()->role_lvl <= 3 && !in_array($id, Auth::user()->employerProjects()->get()->pluck('id')->toArray())) {
+
+        $employerProjects = Auth::user()->employerProjects();//Return a query builder OR false
+        if(Auth::user()->role_lvl <= 3 &&
+            $employerProjects !== false &&
+            !in_array($id, $employerProjects->get()->pluck('id')->toArray()))
+        {
             // user with employer role
             return abort('403');
         }
+
         $projet = Projet::find($id);
 
         // for time tracking right panel
