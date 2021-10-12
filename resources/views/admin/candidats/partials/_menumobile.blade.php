@@ -4,6 +4,11 @@
             Information
         </div>
     </a>
+    <a href="#observation" class=" mail-sidebar-item btn-ghost">
+        <div class="w-100 text-truncate">
+            Observation
+        </div>
+    </a>
     <a href="#recrutement" class="mail-sidebar-item btn-ghost">
         <div class="w-100 text-truncate">
             Recrutement
