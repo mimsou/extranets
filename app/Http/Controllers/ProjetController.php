@@ -105,7 +105,7 @@ class ProjetController extends Controller
             !in_array($id, $employerProjects->get()->pluck('id')->toArray()))
         {
             // user with employer role
-            dd(Auth::user()->role_lvl, $employerProjects, $id, $employerProjects->get()->pluck('id')->toArray());
+            dd(Auth::user()->role_lvl, $employerProjects->get(), $id, $employerProjects->get()->pluck('id')->toArray());
             return abort('403','user with employer role');
         }
 
