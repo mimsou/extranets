@@ -101,11 +101,11 @@ class ProjetController extends Controller
         }
 
         $employerProjects = Auth::user()->employerProjects();//Return a query builder OR false
-        if(Auth::user()->role_lvl <= 3 &&
-            $employerProjects !== false &&
+        if(Auth::user()->role_lvl <= 3 && $employerProjects !== false &&
             !in_array($id, $employerProjects->get()->pluck('id')->toArray()))
         {
             // user with employer role
+            dd(Auth::user()->role_lvl, $employerProjects, $id, $employerProjects->get()->pluck('id')->toArray());
             return abort('403','user with employer role');
         }
 
