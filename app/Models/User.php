@@ -87,9 +87,15 @@ class User extends Authenticatable
         $projects = Projet::where(function($query) use($employer_id) {
             $query->where('employeur_id', '=', $employer_id)
                     ->orwhereHas('demandes', function($q) use ($employer_id) {
-                        $q->where('employeur_id', '=', \Auth::user()->employeur_id);
+                        $q->where('employeur_id', '=', $employer_id);
                     });
         });
+//        $projects = Projet::where(function($query) use($employer_id) {
+//            $query->where('employeur_id', '=', $employer_id)
+//                    ->orwhereHas('demandes', function($q) use ($employer_id) {
+//                        $q->where('employeur_id', '=', \Auth::user()->employeur_id);
+//                    });
+//        });
 
         return $projects;
     }
