@@ -84,14 +84,19 @@ class User extends Authenticatable
         $employer_id = $this->employeur_id;
         if(is_null($this->employeur_id)) return false;
 
-        $projects = Projet::with('demandes')
-            ->where(function($query) use($employer_id) {
-                $query
-                    ->where('employeur_id', '=', $employer_id)
-                    ->orWhereHas('demandes', function($q) use ($employer_id) {
-                        $q->where('employeur_id', '=', $employer_id);
-                    });
+        return Projet::has('employeur')
+            ->orWhereHas('demandes', function($q) use ($employer_id) {
+                $q->where('employeur_id', '=', $employer_id);
             });
+
+//        $projects = Projet::with('demandes')
+//            ->where(function($query) use($employer_id) {
+//                $query
+//                    ->where('employeur_id', '=', $employer_id)
+//                    ->orWhereHas('demandes', function($q) use ($employer_id) {
+//                        $q->where('employeur_id', '=', $employer_id);
+//                    });
+//            });
 //        $projects = Projet::where(function($query) use($employer_id) {
 //            $query->where('employeur_id', '=', $employer_id)
 //                    ->orwhereHas('demandes', function($q) use ($employer_id) {
@@ -99,7 +104,7 @@ class User extends Authenticatable
 //                    });
 //        });
 
-        return $projects;
+//        return $projects;
     }
 
     public function assignedUsers(){
