@@ -41,13 +41,14 @@
                             <table id="datatable" class="table" style="width:100%">
                                 <thead>
                                     <tr>
+{{--                                        <th>Id</th>--}}
                                         <th>Statut</th>
                                         <th>Numéro</th>
                                         <th>Nom</th>
-                                        <th>Pays</th>
+                                        <th >Pays</th>
                                         {{-- <th>Recruteur</th> --}}
-                                        <th>Emploi</th>
-                                        <th>Regroupement</th>
+                                        <th >Emploi</th>
+                                        <th >Regroupement</th>
                                         {{-- <th>Mission</th> --}}
                                         <th>Dernière modification</th>
                                         <th width="60px">Action</th>
@@ -58,13 +59,14 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
+{{--                                        <th>Id</th>--}}
                                         <th>Statut</th>
                                         <th>Numéro</th>
                                         <th>Nom</th>
-                                        <th data-orderable="false">Pays</th>
+                                        <th >Pays</th>
                                         {{-- <th data-orderable="false">Recruteur</th> --}}
-                                        <th data-orderable="false">Emploi</th>
-                                        <th data-orderable="false">Regroupement</th>
+                                        <th >Emploi</th>
+                                        <th >Regroupement</th>
                                         {{-- <th>Mission</th> --}}
                                         <th>Dernière modification</th>
                                         <th>Action</th>
@@ -98,13 +100,14 @@
                     "order":        [[ 1, "asc" ]],
                     ajax: '{{ action('DatatablesController@getCandidats') }}',
                     columns: [
+                        // {data: 'id'},
                         {data: 'statut'},
                         {data: 'numero'},
                         {data: 'nom'},
-                        {data: 'pays', name: 'pays.title'},
+                        {data: 'pays.title', name: 'pays.title', "defaultContent": "<i>Not set</i>"},
                         // {data: 'recruteur', name: 'recruteur.firstname'},
-                        {data: 'emploi', name: 'emploi.title'},
-                        {data: 'regroupement', name: 'regroupement.title'},
+                        {data: 'emploi.title', name: 'emploi.title', "defaultContent": "<i>Not set</i>"},
+                        {data: 'regroupement.title', name: 'regroupement.title', "defaultContent": "<i>Not set</i>"},
                         {data: 'updated_at', class:'text-right'},
                         {data: 'action'},
                     ]

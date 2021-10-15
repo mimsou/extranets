@@ -19,7 +19,6 @@ use Yajra\Datatables\Datatables;
 class DatatablesController extends Controller
 {
 
-
     /**
      * Process datatables ajax request.
      *
@@ -27,55 +26,60 @@ class DatatablesController extends Controller
      */
     public function getCandidats()
     {
-        return Datatables::of(Candidat::with('pays')->with('recruteur')->with('emploi')->with('regroupement'))
-            ->editColumn(
-                'statut', function(Candidat $c) {
+//        $query = Candidat::query();
+        $query = Candidat::with(['pays','recruteur','emploi','regroupement']);
+//        $query = Candidat::with('pays')->with('recruteur')->with('emploi')->with('regroupement');
+        //
+        return Datatables::of($query->get())
+            ->editColumn('statut', function(Candidat $c) {
+                \Log::info('statut', ['DATA' =>$c]);
                 return '<h5>' . $c->statutIconHTML() . '<small class="pl-2">' . $c->statutReadable() . '</small></h5>';
             })
-            ->editColumn(
-                'nom', function(Candidat $c) {
+            ->editColumn('nom', function(Candidat $c) {
+                \Log::info('nom', ['DATA' =>$c]);
                 return '<a href="' . action('CandidatController@edit', $c->id) . '"><h5>' . $c->nom . '</h5></a>';
             })
-            ->addColumn(
-                'pays', function(Candidat $c) {
-                if(!is_null($c->pays)) return $c->pays->title;
+            ->editColumn('pays.title', function (Candidat $c){
+                \Log::info('pays.title', ['DATA' =>$c]);
+                if($c->pays !== null) {
+                    return $c->pays->title;
+                }
                 return ' -- ';
             })
-            ->addColumn(
-                'recruteur', function(Candidat $c) {
+            ->addColumn('recruteur', function(Candidat $c) {
+                \Log::info('recruteur', ['DATA' =>$c]);
                 if(!is_null($c->recruteur)) return $c->recruteur->firstname;
                 return ' -- ';
             })
-            ->addColumn(
-                'emploi', function(Candidat $c) {
+            ->addColumn('emploi.title', function(Candidat $c) {
+                \Log::info('emploi', ['DATA' =>$c]);
                 if(!is_null($c->emploi)) return $c->emploi->title;
                 return ' -- ';
             })
-            ->addColumn(
-                'regroupement', function(Candidat $c) {
+            ->addColumn('regroupement.title', function(Candidat $c) {
+                \Log::info('regroupement', ['DATA' =>$c]);
                 if(!is_null($c->regroupement)) return $c->regroupement->title;
                 return ' -- ';
             })
-            ->addColumn(
-                'mission', function(Candidat $c) {
+            ->addColumn('mission', function(Candidat $c) {
+                \Log::info('mission', ['DATA' =>$c]);
                 if(!is_null($c->mission)) return $c->mission->numero;
                 return ' -- ';
             })
-            ->editColumn(
-                'updated_at', function(Candidat $c) {
+            ->editColumn('updated_at', function(Candidat $c) {
+                \Log::info('updated_at', ['DATA' =>$c]);
                 return $c->updated_at->diffForHumans() . '<br><small>' . $c->updated_at . '</small>';
             })
-            ->addColumn(
-                'action', function(Candidat $c) {
+            ->addColumn('action', function(Candidat $c) {
                 $delete = '';
-                if($c->demandes()->count() == 0)
+                if($c->demandes()->count() == 0){
                     $delete = '<button class="btn btn-sm btn-danger delete_candidate" data-candidat="' . $c->id . '"><i class="fas fa-trash"></i></button>';
-
+                }
+                \Log::info('action', ['DATA' =>$c]);
                 return '<a href="' . action('CandidatController@edit', $c->id) . '" class="btn btn-sm btn-primary mr-2"><i class="fas fa-user-edit"></i></a>' . $delete;
             })
             ->make(true);
     }
-
 
     public function getProjets($personne = null, $type_de_projet = null, $employeur = null, $statut_du_dossier = null,
                                $isCompletedChecked = false, $isHourlyChecked = false)
