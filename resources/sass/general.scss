@@ -1,0 +1,340 @@
+.menu-link {
+    &.active {
+        .menu-name {
+            color: white !important;
+        }
+    }
+}
+
+.suivi-projets {
+    .content {
+        width: 100%;
+    }
+
+    .progress-bar-container {
+        position: relative;
+        width: 100%;
+        height: 8px;
+        padding: 2px;
+        background-color: lighten($color: rgb(201, 201, 201), $amount: 15);
+        border-radius: 10px;
+        margin-right: 1em;
+
+        .progress-bar {
+            height: 4px;
+            border-radius: 10px;
+            background-color: aquamarine;
+        }
+    }
+}
+
+tr.dark-row {
+    background-color: #f7f9fb !important;
+    margin-bottom: 40px;
+
+    border-bottom: 10px solid white;
+}
+
+td.dark-row {
+    padding: 0;
+}
+
+.child-row-table, .child-row-table tr, .child-row-table td {
+    padding: 0;
+}
+
+
+.todo-strip.in-active {
+    background-color: #d0d0d0;
+
+    .fas {
+        color: #d0d0d0;
+    }
+}
+
+.todo-strip {
+    width: 150px;
+    cursor: pointer;
+    background-color: #212841;
+    color: #FFF;
+    padding-left: 3px;
+    border-radius: 100px;
+    font-size: 13px;
+    padding-right: 16px;
+    padding-top: 2px;
+    padding-bottom: 3px;
+    label{
+        cursor: pointer;
+    }
+    .bg-aqua {
+        background-color: #7fffd4;
+    }
+
+    .fas {
+        color: #212841;
+        border-radius: 100px;
+        padding: 4px;
+        font-size: 10px;
+        cursor: pointer;
+    }
+
+    label {
+        margin-bottom: 0px;
+        margin-left: 3px;
+    }
+
+}
+
+.sort-handle {
+    position: absolute;
+    right: 7px;
+    top: 13px;
+    color: #c7c7c7;
+}
+
+.f-loader {
+    display: none;
+
+    .full-screen-loader {
+        width: 100%;
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        height: 1000px;
+        background-color: #000;
+        opacity: 0.5;
+        z-index: 998;
+    }
+
+    .full-screen-loader-image {
+        position: fixed;
+        z-index: 999;
+        top: 40%;
+        left: 45%;
+    }
+}
+
+//Todo
+#todo-list-modal, #todo-template-modal, #create-todo-template-modal {
+    .todo-tick {
+        background-color: #178ae1;
+        color: #FFF;
+        border-radius: 100px;
+        padding: 22px;
+        font-size: 56px;
+    }
+
+    .create-template {
+        cursor: pointer;
+    }
+
+    .sort-handle {
+        cursor: move;
+    }
+
+    .time-progresssion {
+        background: #CCC;
+        border-radius: 13px;
+        height: 7px;
+    }
+
+    .option-box-grid {
+        display: inherit !important;
+    }
+
+    .option-box-grid label {
+        border: none !important;
+        border-radius: none;
+        box-shadow: none;
+        top: -4px;
+        left: 2px;
+    }
+
+    .option-box-grid input[type="checkbox"]:checked + label:before, .option-box-grid input[type="radio"]:checked + label:before {
+        color: #0b436d !important;
+    }
+
+    p {
+        width: 90%;
+        display: inline-flex;
+        margin: 0px;
+    }
+
+    .add-todo-list {
+        background: #1ac51a;
+        border-radius: 110px;
+        padding: 6px;
+        font-size: 11px;
+        color: #FFF;
+        line-height: 9px;
+        margin-left: -2px;
+        margin-top: 10px;
+    }
+
+    .todo-list-section {
+        width: 100%;
+        min-height: 10px;
+    }
+
+    .task-completed {
+        text-decoration: line-through;
+    }
+
+    .todo-list-div {
+        height: auto;
+        //overflow: scroll;
+        overflow-x: hidden;
+        // max-height: 600px;
+        padding-left: 7px;
+    }
+
+    .todo-list-div::-webkit-scrollbar{
+        width: 1em;
+    }
+
+    .todo-text {
+        font-style: italic;
+        border: none;
+        margin-left: 10px;
+        width: 80%;
+    }
+
+    .todo-text:focus {
+        outline: none;
+    }
+
+    .save-todo-message {
+        background-color: #1ac51a;
+        color: #FFF;
+        padding: 5px;
+        border-radius: 4px;
+        font-size: 11px;
+        cursor: pointer;
+        display: none;
+    }
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.see-all-comments {
+    cursor: pointer;
+}
+
+.pr-sm{
+    padding-right: 20px;
+}
+
+#datatable .assigned-users{
+    text-align: right;
+}
+
+.optionGroup {
+    font-weight: bold;
+}
+
+.demande-todo{
+    display: inline-block;
+    position: relative;
+    top: -7px;
+    cursor: pointer;
+}
+
+.text-gray-400{
+    color: #cdcdcd;
+}
+
+.badge-icon{
+    margin-top: -29px;
+}
+
+.add-admin-icon{
+    font-size: 20px;
+    transform: scaleX(-1);
+    color: #000000;
+}
+
+.avatar-title{
+    background-color: #f0eff0;
+}
+
+
+.hide-demande-tick-icon{
+    display: none;
+}
+
+.select2-dropdown{
+    width: 325px !important;
+}
+
+.height-35{
+    height: 35px;
+}
+.complete_demande{
+    .bg-success{
+        margin-top: -5px;
+    }
+}
+
+
+.projets_filters {
+    .filters {
+        div {
+            max-width: 250px;
+        }
+    }
+}
+
+.remove_assignee_icon{
+    position: absolute;
+    top: -4px;
+    right: 0px;
+    background: red;
+    border-radius: 100px;
+    height: 15px;
+    line-height: 5px;
+    width: 15px;
+    padding-top: 5px;
+    padding-left: 4px;
+    font-size: 11px;
+    cursor: pointer;
+    display: none;
+}
+
+.remove_assignee_icon.small-icon{
+    font-size: 8px;
+    width: 13px;
+    height: 13px;
+    line-height: 3px;
+    text-align: left;
+}
+
+.remove_assignee:hover{
+    .remove_assignee_icon{
+        display: block;
+    }
+}
+
+.scroll-height{
+    //height: 280px;
+    //overflow: scroll;
+    overflow-x: hidden;
+}
+
+.completed-at-todo{
+    font-size: 9px;
+    margin-left: 22px;
+}
+
+.edit-immigration{
+    .select2-selection{
+        height: 30px !important;
+    }
+    .select2-container{
+        width: 100% !important;
+    }
+}
+.text-orange{
+    color: orange;
+}
